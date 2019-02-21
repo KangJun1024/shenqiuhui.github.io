@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "848cdfe0"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,NodeJS,源码分析,CommonJS," />
+
+
+
+
+
+  <link rel="alternate" href="/rss2.xml" title="Panda Shen" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="CommonJS 概述CommonJS 是一种模块化的标准，而 NodeJS 是这种标准的实现，每个文件就是一个模块，有自己的作用域。在一个文件里面定义的变量、函数、类，都是私有的，对其他文件不可见。">
+<meta name="keywords" content="JavaScript,NodeJS,源码分析,CommonJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CommonJS 模块化简易实现">
+<meta property="og:url" content="https://www.pandashen.com/2018/06/26/20180626142825/index.html">
+<meta property="og:site_name" content="Panda Shen">
+<meta property="og:description" content="CommonJS 概述CommonJS 是一种模块化的标准，而 NodeJS 是这种标准的实现，每个文件就是一个模块，有自己的作用域。在一个文件里面定义的变量、函数、类，都是私有的，对其他文件不可见。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.pandashen.com/2018/06/26/20180626142825/commonjs.png">
+<meta property="og:image" content="https://www.pandashen.com/2018/06/26/20180626142825/commonjs-arrow.svg">
+<meta property="og:updated_time" content="2018-11-12T10:21:27.950Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CommonJS 模块化简易实现">
+<meta name="twitter:description" content="CommonJS 概述CommonJS 是一种模块化的标准，而 NodeJS 是这种标准的实现，每个文件就是一个模块，有自己的作用域。在一个文件里面定义的变量、函数、类，都是私有的，对其他文件不可见。">
+<meta name="twitter:image" content="https://www.pandashen.com/2018/06/26/20180626142825/commonjs.png">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'SIUJA7EEMV',
+      apiKey: 'bd003fb67269946195a6faa118759b02',
+      indexName: 'search_controller',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键词进行搜索","hits_empty":"找不到关于 “${query}” 的文章","hits_stats":"共找到 ${hits} 篇文章，花了 ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.pandashen.com/2018/06/26/20180626142825/"/>
+
+
+
+
+
+  <title>CommonJS 模块化简易实现 | Panda Shen</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Panda Shen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">饿厂最菜程序猿的误人子弟之旅，Come on，发车了！</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="输入关键词进行搜索" spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result">
+    <div id="no-result"><i class="fa fa-search fa-5x"></i></div>
+  </div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.pandashen.com/2018/06/26/20180626142825/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Panda Shen">
+      <meta itemprop="description" content="Keep fucking the world">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Panda Shen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">CommonJS 模块化简易实现</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于&#58;</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-26T14:28:25+08:00">
+                2018-06-26
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-11-12T18:21:27+08:00">
+                2018-11-12
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/06/26/20180626142825/" class="leancloud_visitors" data-flag-title="CommonJS 模块化简易实现">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-edit"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,656 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长&#58;</span>
+                
+                <span title="阅读时长">
+                  11 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2018/06/26/20180626142825/commonjs.png" alt="commonjs" style="border: none;"></p>
+<h2 id="CommonJS-概述"><a href="#CommonJS-概述" class="headerlink" title="CommonJS 概述"></a>CommonJS 概述</h2><div class="note warning"><p>CommonJS 是一种模块化的标准，而 NodeJS 是这种标准的实现，每个文件就是一个模块，有自己的作用域。在一个文件里面定义的变量、函数、类，都是私有的，对其他文件不可见。</p></div>
+<hr>
+
+<a id="more"></a>
+<h2 id="NodeJS-模块化的简易实现"><a href="#NodeJS-模块化的简易实现" class="headerlink" title="NodeJS 模块化的简易实现"></a>NodeJS 模块化的简易实现</h2><p>在实现模块加载之前，我们需要清除模块的加载过程：</p>
+<ul>
+<li>假设 <code>A</code> 文件夹下有一个 <code>a.js</code>，我们要解析出一个绝对路径来；</li>
+<li>我们写的路径可能没有后缀名 <code>.js</code>、<code>.json</code>；</li>
+<li>得到一个真实的加载路径（模块会被缓存）先去缓存中看一下这个文件是否存在，如果存在返回缓存 没有则创建一个模块；</li>
+<li>得到对应文件的内容，加一个闭包，把内容塞进去，之后执行即可。</li>
+</ul>
+<h3 id="1、提前加载需要用到的模块"><a href="#1、提前加载需要用到的模块" class="headerlink" title="1、提前加载需要用到的模块"></a>1、提前加载需要用到的模块</h3><p>因为我们只是实现 CommonJS 的模块加载方法，并不会去实现整个 Node，在这里我们需要依赖一些 Node 的模块，所以我们就 “不要脸” 的使用 Node 自带的 <code>require</code> 方法把模块加载进来。</p>
+<figure class="highlight js"><figcaption><span>依赖模块</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 操作文件的模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理路径的模块</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 虚拟机，帮我们创建一个黑箱执行代码，防止变量污染</span></span><br><span class="line"><span class="keyword">const</span> vm = <span class="built_in">require</span>(<span class="string">"vm"</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="2、创建-Module-构造函数"><a href="#2、创建-Module-构造函数" class="headerlink" title="2、创建 Module 构造函数"></a>2、创建 Module 构造函数</h3><p>其实 CommonJS 中引入的每一个模块我们都需要通过 <code>Module</code> 构造函数创建一个实例。</p>
+<figure class="highlight js"><figcaption><span>创建 Module 构造函数</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* @param &#123;String&#125; p</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Module</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.id = p; <span class="comment">// 当前文件的表示（绝对路径）</span></span><br><span class="line">    <span class="keyword">this</span>.exports = &#123;&#125;; <span class="comment">// 每个模块都有一个 exports 属性，用来存储模块的内容</span></span><br><span class="line">    <span class="keyword">this</span>.loaded = <span class="literal">false</span>; <span class="comment">// 标记是否被加载过</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3、定义静态属性存储我们需要使用的一些值"><a href="#3、定义静态属性存储我们需要使用的一些值" class="headerlink" title="3、定义静态属性存储我们需要使用的一些值"></a>3、定义静态属性存储我们需要使用的一些值</h3><figure class="highlight js"><figcaption><span>Module 静态变量</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数后面需要使用的闭包的字符串</span></span><br><span class="line">Module.wrapper = [</span><br><span class="line">    <span class="string">"(function (exports, require, module, __dirname, __filename) &#123;"</span>,</span><br><span class="line">    <span class="string">"\n&#125;)"</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据绝对路径进行缓存的模块的对象</span></span><br><span class="line">Module._cacheModule = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理不同文件后缀名的方法</span></span><br><span class="line">Module._extensions = &#123;</span><br><span class="line">    <span class="string">".js"</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;,</span><br><span class="line">    <span class="string">".json"</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="4、创建引入模块的-req-方法"><a href="#4、创建引入模块的-req-方法" class="headerlink" title="4、创建引入模块的 req 方法"></a>4、创建引入模块的 req 方法</h3><p>为了防止和 Node 自带的 <code>require</code> 方法重名，我们将模拟的方法重命名为 <code>req</code>。</p>
+<figure class="highlight js"><figcaption><span>引入模块方法 req</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* @param &#123;String&#125; moduleId</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">req</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 将 req 传入的参数处理成绝对路径</span></span><br><span class="line">    <span class="keyword">let</span> p = Module._resolveFileName(moduleId);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 生成一个新的模块</span></span><br><span class="line">    <span class="keyword">let</span> <span class="built_in">module</span> = <span class="keyword">new</span> Module(p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面代码中，我们先把传入的参数通过 <code>Module._resolveFileName</code> 处理成了一个绝对路径，并创建模块实例把绝对路径作为参数传入，我们现在实现一下 <code>Module._resolveFileName</code> 方法。</p>
+<h3 id="5、返回文件绝对路径-Module-resolveFileName-方法的实现"><a href="#5、返回文件绝对路径-Module-resolveFileName-方法的实现" class="headerlink" title="5、返回文件绝对路径 Module._resolveFileName 方法的实现"></a>5、返回文件绝对路径 Module._resolveFileName 方法的实现</h3><p>这个方法的功能就是将 <code>req</code> 方法的参数根据是否有后缀名两种方式处理成带后缀名的文件绝对路径，如果 <code>req</code> 的参数没有后缀名，会去按照 <code>Module._extensions</code> 的键的后缀名顺序进行查找文件，直到找到后缀名对应文件的绝对路径，优先 <code>.js</code>，然后是 <code>.json</code>，这里我们只实现这两种文件类型的处理。</p>
+<figure class="highlight js"><figcaption><span>处理绝对路径 _resolveFileName 方法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* @param &#123;String&#125; moduleId</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">Module._resolveFileName = <span class="function"><span class="keyword">function</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 将参数拼接成绝对路径</span></span><br><span class="line">    <span class="keyword">let</span> p = path.resolve(moduleId);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断是否含有后缀名</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="regexp">/\.\w+$/</span>.test(p)) &#123;</span><br><span class="line">        <span class="comment">// 创建规范规定查找文件后缀名顺序的数组 .js .json</span></span><br><span class="line">        <span class="keyword">let</span> arr = <span class="built_in">Object</span>.keys(Module._extensions);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 循环查找</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            <span class="comment">// 将绝对路径与后缀名进行拼接</span></span><br><span class="line">            <span class="keyword">let</span> file = p + arr[i];</span><br><span class="line">            <span class="comment">// 查找不到文件时捕获异常</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 并通过 fs 模块同步查找文件的方法对改路径进行查找，文件未找到会直接进入 catch 语句</span></span><br><span class="line">                fs.accessSync(file);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 如果找到文件将该文件绝对路径返回</span></span><br><span class="line">                <span class="keyword">return</span> file;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                <span class="comment">// 当后缀名循环完毕都没有找到对应文件时，抛出异常</span></span><br><span class="line">                <span class="keyword">if</span> (i &gt;= arr.length) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"not found module"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 有后缀名直接返回该绝对路径</span></span><br><span class="line">        <span class="keyword">return</span> p;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="6、加载模块的-load-方法"><a href="#6、加载模块的-load-方法" class="headerlink" title="6、加载模块的 load 方法"></a>6、加载模块的 load 方法</h3><figure class="highlight js"><figcaption><span>完善 req 方法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* @param &#123;String&#125; moduleId</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">req</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 将 req 传入的参数处理成绝对路径</span></span><br><span class="line">    <span class="keyword">let</span> p = Module._resolveFileName(moduleId);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 生成一个新的模块</span></span><br><span class="line">    <span class="keyword">let</span> <span class="built_in">module</span> = <span class="keyword">new</span> Module(p);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ********** 下面为新增代码 **********</span></span><br><span class="line">    <span class="comment">// 加载模块</span></span><br><span class="line">    <span class="keyword">let</span> content = <span class="built_in">module</span>.load(p);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将加载后返回的内容赋值给模块实例的 exports 属性上</span></span><br><span class="line">    <span class="built_in">module</span>.exports = content;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 最后返回 模块实例的 exports 属性，即加载模块的内容</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line">    <span class="comment">// ********** 上面为新增代码 **********</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码实现了一个实例方法 <code>load</code>，传入文件的绝对路径，为模块加载文件的内容，在加载后将值存入模块实例的 <code>exports</code> 属性上最后返回，其实 <code>req</code> 函数返回的就是模块加载回来的内容。</p>
+<figure class="highlight js"><figcaption><span>load 方法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 模块加载的方法</span></span><br><span class="line">Module.prototype.load = <span class="function"><span class="keyword">function</span>(<span class="params">filepath</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 判断加载的文件是什么后缀名</span></span><br><span class="line">    <span class="keyword">let</span> ext = path.extname(filepath);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 根据不同的后缀名处理文件内容，参数是当前实例</span></span><br><span class="line">    <span class="keyword">let</span> content = Moudule._extensions[ext](<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将处理后的结果返回</span></span><br><span class="line">    <span class="keyword">return</span> content;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="7、实现加载-js-文件和-json-文件的方法"><a href="#7、实现加载-js-文件和-json-文件的方法" class="headerlink" title="7、实现加载 .js 文件和 .json 文件的方法"></a>7、实现加载 .js 文件和 .json 文件的方法</h3><p>还记得前面准备的静态属性中有 <code>Module._extensions</code> 就是用来存储这两个方法的，下面我们来完善这两个方法。</p>
+<figure class="highlight js"><figcaption><span>处理后缀名方法的 _extensions 对象</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Module._extensions = &#123;</span><br><span class="line">    <span class="string">".js"</span>: <span class="function"><span class="keyword">function</span>(<span class="params">module</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 读取 js 文件，返回文件的内容</span></span><br><span class="line">        <span class="keyword">let</span> script = fs.readFileSync(<span class="built_in">module</span>.id, <span class="string">"utf8"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 给 js 文件的内容增加一个闭包环境</span></span><br><span class="line">        <span class="keyword">let</span> fn = Module.wrap(script);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建虚拟机，将我们创建的 js 函数执行，将 this 指向模块实例的 exports 属性</span></span><br><span class="line">        vm.runInThisContext(fn).call(</span><br><span class="line">            <span class="built_in">module</span>.exports,</span><br><span class="line">            <span class="built_in">module</span>.exports,</span><br><span class="line">            req,</span><br><span class="line">            <span class="built_in">module</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 返回模块实例上的 exports 属性（即模块的内容）</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">".json"</span>: <span class="function"><span class="keyword">function</span>(<span class="params">module</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// .json 文件的处理相对简单，将读出的字符串转换成对象即可</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(fs.readFileSync(<span class="built_in">module</span>.id, <span class="string">"utf8"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们这里使用了 <code>Module.wrap</code> 方法，代码如下，其实帮助我们加了一个闭包环境（即套了一层函数并传入了我们需要的参数），里面所有的变量都是私有的。</p>
+<figure class="highlight js"><figcaption><span>创建闭包 wrap 方法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Module.wrap = <span class="function"><span class="keyword">function</span>(<span class="params">content</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Module.wrapper[<span class="number">0</span>] + content + Module.wrapper[<span class="number">1</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>Module.wrapper</code> 的两个值其实就是我们需要在外层包了一个函数的前半段和后半段。</p>
+<div class="note warning"><p><strong>这里我们要划重点了，非常重要：</strong><br>1、我们在虚拟机中执行构建的闭包函数时利用执行上/下文 <code>call</code> 将 <code>this</code> 指向了模块实例的 <code>exports</code> 属性上，所以这也是为什么我们用 Node 启动一个 <code>js</code> 文件，打印 <code>this</code> 时，不是全局对象 <code>global</code>，而是一个空对象，这个空对象就是我们的 <code>module.exports</code>，即当前模块实例的 <code>exports</code> 属性。<br>2、还是第一条的函数执行，我们传入的第一个参数是改变 <code>this</code> 指向，那第二个参数是 <code>module.exports</code>，所以在每个模块导出的时候，使用 <code>module.exports = xxx</code>，其实直接替换了模块实例的值，即直接把模块的内容存放在了模块实例的 <code>exports</code> 属性上，而 <code>req</code> 最后返回的就是我们模块导出的内容。<br>3、第三个参数之所以传入 <code>req</code> 是因为我们还可能在一个模块中导入其他模块，而 <code>req</code> 会返回其他模块的导出在当前模块使用，这样整个 CommonJS 的规则就这样建立起来了。</p></div>
+<h3 id="8、对加载过的模块进行缓存"><a href="#8、对加载过的模块进行缓存" class="headerlink" title="8、对加载过的模块进行缓存"></a>8、对加载过的模块进行缓存</h3><p>我们现在的程序是有问题的，当重复加载了一个已经加载过得模块，当执行 <code>req</code> 方法的时候会发现，又创建了一个新的模块实例，这是不合理的，所以我们下面来实现一下缓存机制。</p>
+<p>还记得之前的一个静态属性 <code>Module._cacheModule</code>，它的值是一个空对象，我们会把所有加载过的模块的实例存储到这个对象上。</p>
+<figure class="highlight js"><figcaption><span>完善 req 方法（处理缓存）</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* @param &#123;String&#125; moduleId</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">req</span>(<span class="params">moduleId</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 将 req 传入的参数处理成绝对路径</span></span><br><span class="line">    <span class="keyword">let</span> p = Module._resolveFileName(moduleId);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ********** 下面为新增代码 **********</span></span><br><span class="line">    <span class="comment">// 判断是否已经加载过</span></span><br><span class="line">    <span class="keyword">if</span> (Module._cacheModule[p]) &#123;</span><br><span class="line">        <span class="comment">// 模块存在，如果有直接把 exports 对象返回即可</span></span><br><span class="line">        <span class="keyword">return</span> Module._cacheModule[p].exprots;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ********** 上面为新增代码 **********</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 生成一个新的模块</span></span><br><span class="line">    <span class="keyword">let</span> <span class="built_in">module</span> = <span class="keyword">new</span> Module(p);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 加载模块</span></span><br><span class="line">    <span class="keyword">let</span> content = <span class="built_in">module</span>.load(p);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ********** 下面为新增代码 **********</span></span><br><span class="line">    <span class="comment">// 存储时是拿模块的绝对路径作为键与模块内容相对应的</span></span><br><span class="line">    Module._cacheModule[p] = <span class="built_in">module</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 是否缓存表示改为 true</span></span><br><span class="line">    <span class="built_in">module</span>.loaded = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">// ********** 上面为新增代码 **********</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将加载后返回的内容赋值给模块实例的 exports 属性上</span></span><br><span class="line">    <span class="built_in">module</span>.exports = content;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 最后返回 模块实例的 exports 属性，即加载模块的内容</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">module</span>.exports;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="9、试用-req-加载模块"><a href="#9、试用-req-加载模块" class="headerlink" title="9、试用 req 加载模块"></a>9、试用 req 加载模块</h3><p>在同级目录下新建一个文件 <code>a.js</code>，使用 <code>module.exports</code> 随便导出一些内容，在我们实现模块加载的最下方尝试引入并打印内容。</p>
+<figure class="highlight js"><figcaption><span>导出自定义模块</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="string">"Hello world"</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><figcaption><span>检测 req 方法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = req(<span class="string">"./a"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// Hello world</span></span><br></pre></td></tr></table></figure>
+<hr>
+
+<h2 id="CommonJS-模块查找规范"><a href="#CommonJS-模块查找规范" class="headerlink" title="CommonJS 模块查找规范"></a>CommonJS 模块查找规范</h2><div class="note primary"><p>其实我们只实现了 CommonJS 规范的一部分，即自定义模块的加载，其实在 CommonJS 的规范当中关于模块查找的规则还有很多，具体的我们就用下面的流程图来表示。</p></div>
+<p><br><img src="/2018/06/26/20180626142825/commonjs-arrow.svg" alt="CommonJS模块加载流程图" style="border: none;"><br></p>
+<div class="note success"><p>这篇文章让我们了解了 CommonJS 是什么，主要目的在于理解 Node 模块化的实现思路，想要更深入的了解 CommonJS 的实现细节，建议看一看 NodeJS 源码对应的部分，如果觉得源码比较多，不容易找到模块化实现的代码，也可以在 VSCode 中通过调用 <code>require</code> 方法引入模块时，打断点调试，一步一步的跟进到 Node 源码中查看。</p></div>
+<hr>
+
+      
+    </div>
+
+    
+    
+    
+    <div>
+      
+        <div class="read-end">
+    
+        <div style="text-align:center;color: #ccc;">
+          <span class="read-end-max">--------------</span>
+          <span class="read-end-mid">----------</span>
+          <span class="read-end-min">-------</span>
+          本文结束
+          <i class="fa fa-paw"></i>
+          感谢您的阅读
+          <span class="read-end-min">-------</span>
+          <span class="read-end-mid">----------</span>
+          <span class="read-end-max">--------------</span>
+        </div>
+    
+</div>
+
+      
+    </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div class="reward-comment" style="margin-bottom: 10px;">坚持技术分享，对您有帮助就赏一个吧 ^ ^</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Panda Shen 微信"/>
+        <p>微信</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Panda Shen 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Panda Shen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.pandashen.com/2018/06/26/20180626142825/" title="CommonJS 模块化简易实现">https://www.pandashen.com/2018/06/26/20180626142825/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
+          
+            <a href="/tags/NodeJS/" rel="tag"><i class="fa fa-tag"></i> NodeJS</a>
+          
+            <a href="/tags/源码分析/" rel="tag"><i class="fa fa-tag"></i> 源码分析</a>
+          
+            <a href="/tags/CommonJS/" rel="tag"><i class="fa fa-tag"></i> CommonJS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/23/20180623084025/" rel="next" title="高阶函数应用 —— 柯里化与反柯里化">
+                <i class="fa fa-chevron-left"></i> 高阶函数应用 —— 柯里化与反柯里化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/28/20180628204755/" rel="prev" title="EventEmitter 源码分析与简易实现">
+                EventEmitter 源码分析与简易实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b4dbb54f6ab0d36" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="gitalk-container"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Panda Shen" />
+            
+              <p class="site-author-name" itemprop="name">Panda Shen</p>
+              <p class="site-description motion-element" itemprop="description">Keep fucking the world</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/rss2.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/shenqiuhui" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:pandashen821@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.pandashen.cn" target="_blank" title="WeChat">
+                    
+                      <i class="fa fa-fw fa-weixin"></i>WeChat</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cherryblog.site/" title="Cherry's Blog" target="_blank">Cherry's Blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://asdfv1929.github.io/" title="asdfv1929 's Home" target="_blank">asdfv1929 's Home</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pineapplexue.vip/" title="菠萝吹雪" target="_blank">菠萝吹雪</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CommonJS-概述"><span class="nav-number">1.</span> <span class="nav-text">CommonJS 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NodeJS-模块化的简易实现"><span class="nav-number">2.</span> <span class="nav-text">NodeJS 模块化的简易实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、提前加载需要用到的模块"><span class="nav-number">2.1.</span> <span class="nav-text">1、提前加载需要用到的模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、创建-Module-构造函数"><span class="nav-number">2.2.</span> <span class="nav-text">2、创建 Module 构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、定义静态属性存储我们需要使用的一些值"><span class="nav-number">2.3.</span> <span class="nav-text">3、定义静态属性存储我们需要使用的一些值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、创建引入模块的-req-方法"><span class="nav-number">2.4.</span> <span class="nav-text">4、创建引入模块的 req 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、返回文件绝对路径-Module-resolveFileName-方法的实现"><span class="nav-number">2.5.</span> <span class="nav-text">5、返回文件绝对路径 Module._resolveFileName 方法的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、加载模块的-load-方法"><span class="nav-number">2.6.</span> <span class="nav-text">6、加载模块的 load 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、实现加载-js-文件和-json-文件的方法"><span class="nav-number">2.7.</span> <span class="nav-text">7、实现加载 .js 文件和 .json 文件的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、对加载过的模块进行缓存"><span class="nav-number">2.8.</span> <span class="nav-text">8、对加载过的模块进行缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、试用-req-加载模块"><span class="nav-number">2.9.</span> <span class="nav-text">9、试用 req 加载模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CommonJS-模块查找规范"><span class="nav-number">3.</span> <span class="nav-text">CommonJS 模块查找规范</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Panda Shen</span>
+
+</div>
+
+
+
+
+
+
+  <span class="footer-custom">Hosted by <a href="https://pages.coding.me" target="_blank">Coding Pages</a></span>
+
+
+
+  <span class="footer-custom-flag post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+  <span class="post-meta-item-icon">
+    <i class="fa fa-bar-chart"></i>
+  </span>
+  
+    <span class="post-meta-item-text">网站文字统计&#58;</span>
+  
+  <span title="网站文字统计">202.6k</span>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" id="busuanzi_container_site_uv" style="display: none;">
+      <i class="fa fa-user"></i> 访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+      
+        <span class="post-meta-divider">|</span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv" id="busuanzi_container_site_pv" style="display: none;">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="/js/src/md5.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '708ca5b4fc1f08259651',
+      clientSecret: '347014dfe70a72dea9c207152fd04e8d3ebcc3b4',
+      repo: 'shenqiuhui.github.io',
+      owner: 'shenqiuhui',
+      admin: ['shenqiuhui'],
+      // id: location.pathname,
+      id: md5(location.pathname),
+      distractionFreeMode: 'true'
+    })
+    gitalk.render('gitalk-container')
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').html('<div id="no-result"><i class="fa fa-search fa-5x" /></div>');
+      $('#no-result').html('<i class="fa fa-search fa-5x" />');
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("RqIV72rdY61eUlDassFQDxPG-gzGzoHsz", "Mvo4cTDcS9hw0l03mINzvdNk");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+  <!-- 修改代码块编译有标题和无标题的问题 -->
+  <script type="text/javascript" src="/js/src/changehighlight.js"></script>
+</body>
+</html>

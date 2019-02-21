@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "848cdfe0"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NodeJS,加密,crypto," />
+
+
+
+
+
+  <link rel="alternate" href="/rss2.xml" title="Panda Shen" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="加密简介加密是以某种算法改变原有的信息数据，使得未授权用户即使获得了已加密信息，因不知解密的方法，无法得知信息真正的含义，通过这种方式提高网络数据传输的安全性，加密算法常见的有哈希算法、HMAC 算法、签名、对称性加密算法和非对称性加密算法，加密算法也分为可逆和不可逆，比如 md5 就是不可逆加密，只能暴力破解（撞库），我们在 NodeJS 开发中就是直接使用这些加密算法，crypto 模块提供">
+<meta name="keywords" content="NodeJS,加密,crypto">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NodeJS 加密 —— crypto 模块">
+<meta property="og:url" content="https://www.pandashen.com/2018/07/19/20180719190551/index.html">
+<meta property="og:site_name" content="Panda Shen">
+<meta property="og:description" content="加密简介加密是以某种算法改变原有的信息数据，使得未授权用户即使获得了已加密信息，因不知解密的方法，无法得知信息真正的含义，通过这种方式提高网络数据传输的安全性，加密算法常见的有哈希算法、HMAC 算法、签名、对称性加密算法和非对称性加密算法，加密算法也分为可逆和不可逆，比如 md5 就是不可逆加密，只能暴力破解（撞库），我们在 NodeJS 开发中就是直接使用这些加密算法，crypto 模块提供">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.pandashen.com/2018/07/19/20180719190551/crypto.png">
+<meta property="og:image" content="https://www.pandashen.com/2018/07/19/20180719190551/sign.png">
+<meta property="og:updated_time" content="2018-11-12T10:21:27.973Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NodeJS 加密 —— crypto 模块">
+<meta name="twitter:description" content="加密简介加密是以某种算法改变原有的信息数据，使得未授权用户即使获得了已加密信息，因不知解密的方法，无法得知信息真正的含义，通过这种方式提高网络数据传输的安全性，加密算法常见的有哈希算法、HMAC 算法、签名、对称性加密算法和非对称性加密算法，加密算法也分为可逆和不可逆，比如 md5 就是不可逆加密，只能暴力破解（撞库），我们在 NodeJS 开发中就是直接使用这些加密算法，crypto 模块提供">
+<meta name="twitter:image" content="https://www.pandashen.com/2018/07/19/20180719190551/crypto.png">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'SIUJA7EEMV',
+      apiKey: 'bd003fb67269946195a6faa118759b02',
+      indexName: 'search_controller',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键词进行搜索","hits_empty":"找不到关于 “${query}” 的文章","hits_stats":"共找到 ${hits} 篇文章，花了 ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.pandashen.com/2018/07/19/20180719190551/"/>
+
+
+
+
+
+  <title>NodeJS 加密 —— crypto 模块 | Panda Shen</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Panda Shen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">饿厂最菜程序猿的误人子弟之旅，Come on，发车了！</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="输入关键词进行搜索" spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result">
+    <div id="no-result"><i class="fa fa-search fa-5x"></i></div>
+  </div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.pandashen.com/2018/07/19/20180719190551/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Panda Shen">
+      <meta itemprop="description" content="Keep fucking the world">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Panda Shen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">NodeJS 加密 —— crypto 模块</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于&#58;</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-19T19:05:51+08:00">
+                2018-07-19
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-11-12T18:21:27+08:00">
+                2018-11-12
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/07/19/20180719190551/" class="leancloud_visitors" data-flag-title="NodeJS 加密 —— crypto 模块">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-edit"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,697 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长&#58;</span>
+                
+                <span title="阅读时长">
+                  11 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2018/07/19/20180719190551/crypto.png" alt="NodeJS 加密模块 crypto" style="border: none;"></p>
+<h2 id="加密简介"><a href="#加密简介" class="headerlink" title="加密简介"></a>加密简介</h2><div class="note default"><p>加密是以某种算法改变原有的信息数据，使得未授权用户即使获得了已加密信息，因不知解密的方法，无法得知信息真正的含义，通过这种方式提高网络数据传输的安全性，加密算法常见的有哈希算法、HMAC 算法、签名、对称性加密算法和非对称性加密算法，加密算法也分为可逆和不可逆，比如 <code>md5</code> 就是不可逆加密，只能暴力破解（撞库），我们在 NodeJS 开发中就是直接使用这些加密算法，<code>crypto</code> 模块提供了加密功能，包含对 <code>OpenSSL</code> 的哈希、HMAC、加密、解密、签名以及验证功能的一整套封装，核心模块，使用时不需安装。</p></div>
+<hr>
+
+<a id="more"></a>
+<h2 id="哈希算法"><a href="#哈希算法" class="headerlink" title="哈希算法"></a>哈希算法</h2><p>哈希算法也叫散列算法，用来把任意长度的输入变换成固定长度的输出，常见的有 <code>md5</code>、<code>sha1</code> 等，这类算法实现对原数据的转化过程是否能被称为加密备受争议，为了后面叙述方便我们姑且先叫做加密。</p>
+<figure class="highlight js"><figcaption><span>查看哈希加密算法的种类</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">"crypto"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// getHashes 方法用于查看支持的加密算法</span></span><br><span class="line"><span class="built_in">console</span>.log(crypto.getHashes());</span><br><span class="line"></span><br><span class="line"><span class="comment">// [ 'DSA', 'DSA-SHA', 'DSA-SHA1', 'DSA-cSHA1-old',</span></span><br><span class="line"><span class="comment">//   'RSA-MD4', 'RSA-MD5', 'RSA-MDC2', 'RSA-RIPEMD160',</span></span><br><span class="line"><span class="comment">//   'RSA-SHA', 'RSA-SHA1', 'RSA-SHA1-2', 'RSA-SHA224',</span></span><br><span class="line"><span class="comment">//   'RSA-SHA256', 'RSA-SHA384', 'RSA-SHA512',</span></span><br><span class="line"><span class="comment">//   'dsaEncryption', 'dsaWithSHA', 'dsaWithSHA1', 'dss1',</span></span><br><span class="line"><span class="comment">//   'ecdsa-with-SHA1', 'md4', 'md4WithRSAEncryption',</span></span><br><span class="line"><span class="comment">//   'md5', 'md5WithRSAEncryption', 'mdc2', 'mdc2WithRSA',</span></span><br><span class="line"><span class="comment">//   'ripemd', 'ripemd160', 'ripemd160WithRSA', 'rmd160',</span></span><br><span class="line"><span class="comment">//   'sha', 'sha1', 'sha1WithRSAEncryption', 'sha224',</span></span><br><span class="line"><span class="comment">//   'sha224WithRSAEncryption', 'sha256',</span></span><br><span class="line"><span class="comment">//   'sha256WithRSAEncryption', 'sha384',</span></span><br><span class="line"><span class="comment">//   'sha384WithRSAEncryption', 'sha512',</span></span><br><span class="line"><span class="comment">//   'sha512WithRSAEncryption', 'shaWithRSAEncryption',</span></span><br><span class="line"><span class="comment">//   'ssl2-md5', 'ssl3-md5', 'ssl3-sha1', 'whirlpool' ]</span></span><br></pre></td></tr></table></figure>
+<p><code>md5</code> 是开发中经常使用的算法之一，官方称为摘要算法，具有以下几个特点：</p>
+<ul>
+<li>不可逆；</li>
+<li>不管加密的内容多长，最后输出的结果长度都是相等的；</li>
+<li>内容不同输出的结果完全不同，内容相同输出的结果完全相同。</li>
+</ul>
+<p>由于相同的输入经过 <code>md5</code> 加密后返回的结果完全相同，所以破解时通过 “撞库” 进行暴力破解，当连续被 <code>md5</code> 加密 <code>3</code> 次以上时就很难被破解了，所以使用 <code>md5</code> 一般会进行多次加密。</p>
+<figure class="highlight js"><figcaption><span>md5 加密 —— 返回 Buffer</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> crytpo = <span class="built_in">require</span>(<span class="string">"crytpo"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> md5 = crytpo.createHash(<span class="string">"md5"</span>); <span class="comment">// 创建 md5</span></span><br><span class="line"><span class="keyword">let</span> md5Sum = md5.update(<span class="string">"hello"</span>); <span class="comment">// update 加密</span></span><br><span class="line"><span class="keyword">let</span> result = md5Sum.digest(); <span class="comment">// 获取加密后结果</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// &lt;Buffer 5d 41 40 2a bc 4b 2a 76 b9 71 9d 91 10 17 c5 92&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>digest</code> 方法参数用于指定加密后的返回值的格式，不传参默认返回加密后的 Buffer，常用的参数有 <code>hex</code> 和 <code>Base64</code>，<code>hex</code> 代表十六进制，加密后长度为 <code>32</code>，<code>Base64</code> 的结果长度为 <code>24</code>，以 <code>==</code> 结尾。</p>
+<figure class="highlight js"><figcaption><span>md5 加密 —— 返回十六进制</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">"crypto"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> md5 = crypto.createHash(<span class="string">"md5"</span>);</span><br><span class="line"><span class="keyword">let</span> md5Sum = md5.update(<span class="string">"hello"</span>);</span><br><span class="line"><span class="keyword">let</span> result = md5Sum.digest(<span class="string">"hex"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// 5d41402abc4b2a76b9719d911017c592</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><figcaption><span>md5 加密 —— 返回 Base64</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">"crypto"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> md5 = crypto.createHash(<span class="string">"md5"</span>);</span><br><span class="line"><span class="keyword">let</span> md5Sum = md5.update(<span class="string">"hello"</span>);</span><br><span class="line"><span class="keyword">let</span> result = md5Sum.digest(<span class="string">"Base64"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// XUFAKrxLKna5cZ2REBfFkg==</span></span><br></pre></td></tr></table></figure>
+<p><code>update</code> 方法的返回值就是 <code>this</code>，即当前实例，所以支持链式调用，较长的信息也可以多次调用 <code>update</code> 方法进行分段加密，调用 <code>digest</code> 方法同样会返回整个加密后的值。</p>
+<figure class="highlight js"><figcaption><span>链式调用和分段加密</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">"crypto"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result = crypto</span><br><span class="line">    .createHash(<span class="string">"md5"</span>)</span><br><span class="line">    .update(<span class="string">"he"</span>)</span><br><span class="line">    .update(<span class="string">"llo"</span>)</span><br><span class="line">    .digest(<span class="string">"hex"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// 5d41402abc4b2a76b9719d911017c592</span></span><br></pre></td></tr></table></figure>
+<p>由于可以使用 <code>update</code> 进行分段加密，就可以结合流来使用，其实 <code>crypto</code> 的本质是创建 <code>Transform</code> 类型的转化流，可以将可读流转化成可写流。</p>
+<figure class="highlight js"><figcaption><span>对可读流读取的数据进行 md5 加密</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">"crypto"</span>);</span><br><span class="line"><span class="keyword">let</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> md5 = crypto.createHash(<span class="string">"md5"</span>);</span><br><span class="line"><span class="keyword">let</span> rs = fs.createReadSteam(<span class="string">"./readme.txt"</span>, &#123;</span><br><span class="line">    highWaterMark: <span class="number">3</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取数据并加密</span></span><br><span class="line">rs.on(<span class="string">"data"</span>, data =&gt; md5.update(data));</span><br><span class="line"></span><br><span class="line">rs.on(<span class="string">"end"</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> result = md5.digest(<span class="string">"hex"</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<div class="note info"><p><em><strong>使用场景 1：经常被使用在数据的校验，比如服务器与服务器之间进行通信发送的明文摘要加 <code>md5</code> 加密摘要后的暗文，接收端拿到数据以后将明文摘要按照相同的 <code>md5</code> 算法加密后与暗文摘要对比验证，目的是防止数据传输过程中被劫持并篡改。</strong></em><br><em><strong>使用场景 2：在浏览器缓存策略中，可以通过对静态资源的信息摘要使用 <code>md5</code> 加密，每次向服务器发送加密后的密钥进行比对就可以了，不至于对整个文件内容进行比较。</strong></em></p></div>
+<div class="note warning"><p><em><strong>缺点：由于规定使用 <code>md5</code> 的哈希算法加密，别人可以使用同样的算法对信息进行伪造，安全性不高。</strong></em></p></div>
+<hr>
+
+<h2 id="Hmac-算法"><a href="#Hmac-算法" class="headerlink" title="Hmac 算法"></a>Hmac 算法</h2><h3 id="1、Hmac-算法的使用"><a href="#1、Hmac-算法的使用" class="headerlink" title="1、Hmac 算法的使用"></a>1、Hmac 算法的使用</h3><p>Hmac 算法又称加盐算法，是将哈希算法与一个密钥结合在一起，用来阻止对签名完整性的破坏，同样具备 <code>md5</code> 加密的几个特点。</p>
+<figure class="highlight js"><figcaption><span>使用加盐算法加密</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> crytpo = <span class="built_in">require</span>(<span class="string">"crytpo"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> hmac = crytpo.createHmac(<span class="string">"sha1"</span>, <span class="string">"panda"</span>);</span><br><span class="line"><span class="keyword">let</span> result = hmac.update(<span class="string">"hello"</span>).digest(<span class="string">"Base64"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// 7spMLxN8WJdcEtQ8Hm/LR9pUE3YsIGag9Dcai7lwioo=</span></span><br></pre></td></tr></table></figure>
+<p><code>crytpo.createHmac</code> 第一个参数同 <code>crytpo.createHash</code>，为加密的算法，常用 <code>sha1</code> 和 <code>sha256</code>，第二个参数为密钥。</p>
+<p><code>digest</code> 方法生成的加密结果长度要大于 <code>md5</code>，<code>hex</code> 生成的结果长度为 <code>64</code>，<code>Base64</code> 生成的结果长度为 <code>44</code>，以 <code>=</code> 结尾。</p>
+<div class="note success"><p><em><strong>安全性高于 <code>md5</code>，通过密钥来加密，不知道密钥无法破解，缺点是密钥传输的过程容易被劫持，可以通过一些生成随机密钥的方式避免。</strong></em></p></div>
+<h3 id="2、创建密钥的方法"><a href="#2、创建密钥的方法" class="headerlink" title="2、创建密钥的方法"></a>2、创建密钥的方法</h3><p>可以安装 <code>openSSH</code> 客户端，并通过命令行生成存储密钥的文件，命令如下。</p>
+<blockquote>
+<p>openssl genrsa -out rsa_private.key 1024</p>
+</blockquote>
+<p><code>openssl genrsa</code> 代表生成密钥，<code>-out</code> 代表输出文件，<code>rsa_private.key</code> 代表文件名，<code>1024</code> 代表输出密钥的大小。</p>
+<figure class="highlight js"><figcaption><span>直接读取密钥文件配合加盐算法加密</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> crytpo = <span class="built_in">require</span>(<span class="string">"crytpo"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> key = fs.readFileSync(path.join(__dirname, <span class="string">"/rsa_private.key"</span>));</span><br><span class="line"><span class="keyword">let</span> hmac = crytpo.createHmac(<span class="string">"sha256"</span>, key);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result = hmac.update(<span class="string">"hello"</span>).digest(<span class="string">"Base64"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// bmi2N+6kwgwt5b+U+zSgjL/NFs+GsUnZmcieqLKBy4M=</span></span><br></pre></td></tr></table></figure>
+<hr>
+
+<h2 id="对称性加密"><a href="#对称性加密" class="headerlink" title="对称性加密"></a>对称性加密</h2><p>对称性加密是发送数据时使用密钥和加密算法进行加密，接收数据时需要使用相同的密钥和加密算法的逆算法（解密算法）进行解密，也就是说对称性加密的过程是可逆的，<code>crytpo</code> 中使用的算法为 <code>blowfish</code>。</p>
+<figure class="highlight js"><figcaption><span>对称性加密</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">"crypto"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> key = fs.readFileSync(path.join(__dirname, <span class="string">"/rsa_private.key"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加密</span></span><br><span class="line"><span class="keyword">let</span> cipher = crypto.createCipher(<span class="string">"blowfish"</span>, key);</span><br><span class="line">cipher.update(<span class="string">"hello"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// final 方法不能链式调用</span></span><br><span class="line"><span class="keyword">let</span> result = cipher.final(<span class="string">"hex"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// 3eb9943113c7aa1e</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 解密</span></span><br><span class="line"><span class="keyword">let</span> decipher = crypto.createDecipher(<span class="string">"blowfish"</span>, key);</span><br><span class="line">decipher.update(result, <span class="string">"hex"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> data = decipher.final(<span class="string">"utf8"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(data); <span class="comment">// hello</span></span><br></pre></td></tr></table></figure>
+<p>加密使用 <code>crypto.createCipher</code> 方法，解密使用 <code>crypto.createDecipher</code> 方法，但是使用的算法和密钥必须相同，需要注意的是解密过程中 <code>update</code> 中需要在第二个参数中指定加密时的格式，如 <code>hex</code>，在 <code>final</code> 还原数据时需要指定加密字符的编码格式，如 <code>utf8</code>。</p>
+<div class="note warning"><p><em><strong>注意：使用对称性加密的字符串有长度限制，不得超过 <code>7</code> 个字符，否则虽然可以加密成功，但是无法解密。</strong></em></p></div>
+<div class="note danger"><p><em><strong>缺点：密钥在传输过程中容易被截获，存在安全风险。</strong></em></p></div>
+<hr>
+
+<h2 id="非对称性加密"><a href="#非对称性加密" class="headerlink" title="非对称性加密"></a>非对称性加密</h2><p>非对称性加密相也是可逆的，较于对称性加密要更安全，消息传输方和接收方都会在本地创建一对密钥，公钥和私钥，互相将自己的公钥发送给对方，每次消息传递时使用对方的公钥加密，对方接收消息后使用他的的私钥解密，这样在公钥传递的过程中被截获也无法解密，因为公钥加密的消息只有配对的私钥可以解密。</p>
+<p>接下来我们使用 <code>openSSH</code> 对之前生成的私钥 <code>rsa_private.key</code> 产生一个对应的公钥，命令如下。</p>
+<blockquote>
+<p>openssl rsa -in rsa_private.key -pubout -out rsa_public.key</p>
+</blockquote>
+<p>上面的命令意思根据一个私钥生成对应的公钥，<code>-pubout -out</code> 代表公钥输出，<code>rsa_public.key</code> 为公钥的文件名。</p>
+<figure class="highlight js"><figcaption><span>非对称性加密</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">"crypto"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取公钥和私钥</span></span><br><span class="line"><span class="keyword">let</span> publicKey = fs.readFileSync(path.join(__dirname, <span class="string">"/rsa_public.key"</span>));</span><br><span class="line"><span class="keyword">let</span> privateKey = fs.readFileSync(path.join(__dirname, <span class="string">"/rsa_private.key"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加密</span></span><br><span class="line"><span class="keyword">let</span> secret = crytpo.publicEncrypt(publicKey, Buffer.from(<span class="string">"hello"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解密</span></span><br><span class="line"><span class="keyword">let</span> result = crytpo.provateDecrypt(privateKey, secret);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// hello</span></span><br></pre></td></tr></table></figure>
+<p>使用公钥加密的方法是 <code>crytpo.publicEncrypt</code>，第一个参数为公钥，第二个参数为加密信息（必须是 Buffer），使用私钥解密的方法是 <code>crytpo.provateDecrypt</code>，第一个参数为私钥，第二个参数为解密的信息。</p>
+<hr>
+
+<h2 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h2><p>签名与非对称性加密非常类似，同样有公钥和私钥，不同的是使用私钥加密，对方使用公钥进行解密验证，以确保这段数据是私钥的拥有者所发出的原始数据，且在网络中的传输过程中未被修改。</p>
+<p><br><img src="/2018/07/19/20180719190551/sign.png" alt="crypto 签名"><br></p>
+<p>我们还使用 <code>rsa_public.key</code> 和 <code>rsa_private.key</code> 作为公钥和私钥，<code>crypto</code> 实现签名代码如下。</p>
+<figure class="highlight js"><figcaption><span>签名</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">"crypto"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取公钥和私钥</span></span><br><span class="line"><span class="keyword">let</span> publicKey = fs.readFileSync(path.join(__dirname, <span class="string">"rsa_public.key"</span>), <span class="string">"ascii"</span>);</span><br><span class="line"><span class="keyword">let</span> privateKey = fs.readFileSync(path.join(__dirname, <span class="string">"rsa_private.key"</span>), <span class="string">"ascii"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成签名</span></span><br><span class="line"><span class="keyword">let</span> sign = crypto.createSign(<span class="string">"RSA-SHA256"</span>);</span><br><span class="line">sign.update(<span class="string">"panda"</span>);</span><br><span class="line"><span class="keyword">let</span> signed = sign.sign(privateKey, <span class="string">"hex"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 验证签名</span></span><br><span class="line"><span class="keyword">let</span> verify = crypto.createVerify(<span class="string">"RSA-SHA256"</span>);</span><br><span class="line">verify.update(<span class="string">"panda"</span>);</span><br><span class="line"><span class="keyword">let</span> verifyResult = verify.verify(publicKey, signed, <span class="string">"hex"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(verifyResult); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>生成签名的 <code>sign</code> 方法有两个参数，第一个参数为私钥，第二个参数为生成签名的格式，最后返回的 <code>signed</code> 为生成的签名（字符串）。</p>
+<p>验证签名的 <code>verify</code> 方法有三个参数，第一个参数为公钥，第二个参数为被验证的签名，第三个参数为生成签名时的格式，返回为布尔值，即是否通过验证。</p>
+<div class="note primary"><p><em><strong>使用场景：经常用于对 cookie 签名返回浏览器，当浏览器访问同域服务器将 cookie 带过来时再进行验证，防止 cookie 被篡改和 CSRF 跨站请求伪造。</strong></em></p></div>
+<hr>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><div class="note success"><p>各种项目在数据传输时根据信息的敏感度以及用途进行不同的加密算法和加密方式，在 NodeJS 中，<code>crypto</code> 的 API 完全可以实现我们的加密需求，也可以将上面的加密方案组合使用实现更复杂的加密方案。</p></div>
+<hr>
+
+      
+    </div>
+
+    
+    
+    
+    <div>
+      
+        <div class="read-end">
+    
+        <div style="text-align:center;color: #ccc;">
+          <span class="read-end-max">--------------</span>
+          <span class="read-end-mid">----------</span>
+          <span class="read-end-min">-------</span>
+          本文结束
+          <i class="fa fa-paw"></i>
+          感谢您的阅读
+          <span class="read-end-min">-------</span>
+          <span class="read-end-mid">----------</span>
+          <span class="read-end-max">--------------</span>
+        </div>
+    
+</div>
+
+      
+    </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div class="reward-comment" style="margin-bottom: 10px;">坚持技术分享，对您有帮助就赏一个吧 ^ ^</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Panda Shen 微信"/>
+        <p>微信</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Panda Shen 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Panda Shen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.pandashen.com/2018/07/19/20180719190551/" title="NodeJS 加密 —— crypto 模块">https://www.pandashen.com/2018/07/19/20180719190551/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/NodeJS/" rel="tag"><i class="fa fa-tag"></i> NodeJS</a>
+          
+            <a href="/tags/加密/" rel="tag"><i class="fa fa-tag"></i> 加密</a>
+          
+            <a href="/tags/crypto/" rel="tag"><i class="fa fa-tag"></i> crypto</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/18/20180718181823/" rel="next" title="NodeJS 服务器实现 gzip 压缩">
+                <i class="fa fa-chevron-left"></i> NodeJS 服务器实现 gzip 压缩
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/20/20180720110647/" rel="prev" title="HTTP 缓存的那些事儿">
+                HTTP 缓存的那些事儿 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b4dbb54f6ab0d36" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="gitalk-container"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Panda Shen" />
+            
+              <p class="site-author-name" itemprop="name">Panda Shen</p>
+              <p class="site-description motion-element" itemprop="description">Keep fucking the world</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/rss2.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/shenqiuhui" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:pandashen821@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.pandashen.cn" target="_blank" title="WeChat">
+                    
+                      <i class="fa fa-fw fa-weixin"></i>WeChat</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cherryblog.site/" title="Cherry's Blog" target="_blank">Cherry's Blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://asdfv1929.github.io/" title="asdfv1929 's Home" target="_blank">asdfv1929 's Home</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pineapplexue.vip/" title="菠萝吹雪" target="_blank">菠萝吹雪</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#加密简介"><span class="nav-number">1.</span> <span class="nav-text">加密简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希算法"><span class="nav-number">2.</span> <span class="nav-text">哈希算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hmac-算法"><span class="nav-number">3.</span> <span class="nav-text">Hmac 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Hmac-算法的使用"><span class="nav-number">3.1.</span> <span class="nav-text">1、Hmac 算法的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、创建密钥的方法"><span class="nav-number">3.2.</span> <span class="nav-text">2、创建密钥的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对称性加密"><span class="nav-number">4.</span> <span class="nav-text">对称性加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非对称性加密"><span class="nav-number">5.</span> <span class="nav-text">非对称性加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#签名"><span class="nav-number">6.</span> <span class="nav-text">签名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Panda Shen</span>
+
+</div>
+
+
+
+
+
+
+  <span class="footer-custom">Hosted by <a href="https://pages.coding.me" target="_blank">Coding Pages</a></span>
+
+
+
+  <span class="footer-custom-flag post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+  <span class="post-meta-item-icon">
+    <i class="fa fa-bar-chart"></i>
+  </span>
+  
+    <span class="post-meta-item-text">网站文字统计&#58;</span>
+  
+  <span title="网站文字统计">202.6k</span>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" id="busuanzi_container_site_uv" style="display: none;">
+      <i class="fa fa-user"></i> 访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+      
+        <span class="post-meta-divider">|</span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv" id="busuanzi_container_site_pv" style="display: none;">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="/js/src/md5.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '708ca5b4fc1f08259651',
+      clientSecret: '347014dfe70a72dea9c207152fd04e8d3ebcc3b4',
+      repo: 'shenqiuhui.github.io',
+      owner: 'shenqiuhui',
+      admin: ['shenqiuhui'],
+      // id: location.pathname,
+      id: md5(location.pathname),
+      distractionFreeMode: 'true'
+    })
+    gitalk.render('gitalk-container')
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').html('<div id="no-result"><i class="fa fa-search fa-5x" /></div>');
+      $('#no-result').html('<i class="fa fa-search fa-5x" />');
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("RqIV72rdY61eUlDassFQDxPG-gzGzoHsz", "Mvo4cTDcS9hw0l03mINzvdNk");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+  <!-- 修改代码块编译有标题和无标题的问题 -->
+  <script type="text/javascript" src="/js/src/changehighlight.js"></script>
+</body>
+</html>

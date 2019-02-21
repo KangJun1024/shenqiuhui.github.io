@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "848cdfe0"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,HTML,CSS,Canvas,WebSocket,Redis," />
+
+
+
+
+
+  <link rel="alternate" href="/rss2.xml" title="Panda Shen" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="页面布局首先，我们需要实现页面布局，在根目录创建 index.html 布局中我们需要有一个 video 多媒体标签引入我们的本地视频，添加输入弹幕的输入框、确认发送的按钮、颜色选择器、字体大小滑动条，创建一个 style.css 来调整页面布局的样式，这里我们顺便创建一个 index.js 文件用于后续实现我们的核心逻辑，先引入到页面当中。">
+<meta name="keywords" content="JavaScript,HTML,CSS,Canvas,WebSocket,Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Canvas + WebSocket + Redis 实现一个视频弹幕">
+<meta property="og:url" content="https://www.pandashen.com/2018/06/21/20180621113025/index.html">
+<meta property="og:site_name" content="Panda Shen">
+<meta property="og:description" content="页面布局首先，我们需要实现页面布局，在根目录创建 index.html 布局中我们需要有一个 video 多媒体标签引入我们的本地视频，添加输入弹幕的输入框、确认发送的按钮、颜色选择器、字体大小滑动条，创建一个 style.css 来调整页面布局的样式，这里我们顺便创建一个 index.js 文件用于后续实现我们的核心逻辑，先引入到页面当中。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.pandashen.com/2018/06/21/20180621113025/barrage.png">
+<meta property="og:image" content="https://www.pandashen.com/2018/06/21/20180621113025/barrage-html.png">
+<meta property="og:updated_time" content="2018-11-12T10:21:27.948Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Canvas + WebSocket + Redis 实现一个视频弹幕">
+<meta name="twitter:description" content="页面布局首先，我们需要实现页面布局，在根目录创建 index.html 布局中我们需要有一个 video 多媒体标签引入我们的本地视频，添加输入弹幕的输入框、确认发送的按钮、颜色选择器、字体大小滑动条，创建一个 style.css 来调整页面布局的样式，这里我们顺便创建一个 index.js 文件用于后续实现我们的核心逻辑，先引入到页面当中。">
+<meta name="twitter:image" content="https://www.pandashen.com/2018/06/21/20180621113025/barrage.png">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'SIUJA7EEMV',
+      apiKey: 'bd003fb67269946195a6faa118759b02',
+      indexName: 'search_controller',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键词进行搜索","hits_empty":"找不到关于 “${query}” 的文章","hits_stats":"共找到 ${hits} 篇文章，花了 ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.pandashen.com/2018/06/21/20180621113025/"/>
+
+
+
+
+
+  <title>Canvas + WebSocket + Redis 实现一个视频弹幕 | Panda Shen</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Panda Shen</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">饿厂最菜程序猿的误人子弟之旅，Come on，发车了！</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="输入关键词进行搜索" spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result">
+    <div id="no-result"><i class="fa fa-search fa-5x"></i></div>
+  </div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.pandashen.com/2018/06/21/20180621113025/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Panda Shen">
+      <meta itemprop="description" content="Keep fucking the world">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Panda Shen">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Canvas + WebSocket + Redis 实现一个视频弹幕</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于&#58;</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-21T11:30:25+08:00">
+                2018-06-21
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-11-12T18:21:27+08:00">
+                2018-11-12
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/06/21/20180621113025/" class="leancloud_visitors" data-flag-title="Canvas + WebSocket + Redis 实现一个视频弹幕">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-edit"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  9,313 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长&#58;</span>
+                
+                <span title="阅读时长">
+                  38 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2018/06/21/20180621113025/barrage.png" alt="弹幕" style="border: none;"></p>
+<h2 id="页面布局"><a href="#页面布局" class="headerlink" title="页面布局"></a>页面布局</h2><p>首先，我们需要实现页面布局，在根目录创建 <code>index.html</code> 布局中我们需要有一个 <code>video</code> 多媒体标签引入我们的本地视频，添加输入弹幕的输入框、确认发送的按钮、颜色选择器、字体大小滑动条，创建一个 <code>style.css</code> 来调整页面布局的样式，这里我们顺便创建一个 <code>index.js</code> 文件用于后续实现我们的核心逻辑，先引入到页面当中。</p>
+<a id="more"></a>
+<p><strong>HTML 布局代码如下：</strong></p>
+<figure class="highlight html"><figcaption><span>文件：index.html</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"style.css"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>视频弹幕<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"cantainer"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h2</span>&gt;</span>Canvas + WebSocket + Redis 实现视频弹幕<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"canvas"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">video</span> <span class="attr">id</span>=<span class="string">"video"</span> <span class="attr">src</span>=<span class="string">"./barrage.mp4"</span> <span class="attr">controls</span>&gt;</span><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 输入弹幕内容 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"text"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 添加弹幕按钮 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"add"</span>&gt;</span>发送<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 选择文字颜色 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"color"</span> <span class="attr">id</span>=<span class="string">"color"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 调整字体大小 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"range"</span> <span class="attr">max</span>=<span class="string">"40"</span> <span class="attr">min</span>=<span class="string">"20"</span> <span class="attr">id</span>=<span class="string">"range"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./index.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>CSS 样式代码如下：</strong></p>
+<figure class="highlight css"><figcaption><span>文件：style.css</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#cantainer</span> &#123;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#content</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">640px</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> auto;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#canvas</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">video</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">640px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">360px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">input</span> &#123;</span><br><span class="line">    <span class="attribute">vertical-align</span>: middle;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>布局效果如下图：</strong></p>
+<p><img src="/2018/06/21/20180621113025/barrage-html.png" alt="弹幕布局" style="border: none;"></p>
+<hr>
+
+<h2 id="定义接口，构造假数据"><a href="#定义接口，构造假数据" class="headerlink" title="定义接口，构造假数据"></a>定义接口，构造假数据</h2><p>我们弹幕中的弹幕数据正常情况下应该是通过与后台数据交互请求回来，所以我们需要先定义数据接口，并构造假数据来实现前端逻辑。</p>
+<p><strong>数据字段定义：</strong></p>
+<ul>
+<li>value：表示弹幕的内容（必填）</li>
+<li>time：表示弹幕出现的时间（必填）</li>
+<li>speed：表示弹幕移动的速度（选填）</li>
+<li>color：表示弹幕文字的颜色（选填）</li>
+<li>fontSize：表示弹幕的字体大小（选填）</li>
+<li>opacity：表示弹幕文字的透明度（选填）</li>
+</ul>
+<p>上面的 <code>value</code> 和 <code>time</code> 是必填参数，其他的选填参数可以在前端设置默认值。</p>
+<p><strong>前端定义的假数据如下：</strong></p>
+<figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> data = [</span><br><span class="line">    &#123;</span><br><span class="line">        value: <span class="string">"这是第一条弹幕"</span>,</span><br><span class="line">        speed: <span class="number">2</span>,</span><br><span class="line">        time: <span class="number">0</span>,</span><br><span class="line">        color: <span class="string">"red"</span>,</span><br><span class="line">        fontSize: <span class="number">20</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        value: <span class="string">"这是第二条弹幕"</span>,</span><br><span class="line">        time: <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<hr>
+
+<h2 id="实现前端弹幕的逻辑"><a href="#实现前端弹幕的逻辑" class="headerlink" title="实现前端弹幕的逻辑"></a>实现前端弹幕的逻辑</h2><p>我们希望是把弹幕封装成一个功能，只要有需要的地方就可以使用，从而实现复用，那么不同的地方使用这个功能通常的方式是 <code>new</code> 一个实例，传入当前使用该功能对应的参数，我们也使用这种方式来实现，所以我们需要封装一个统一的构造函数或者类，参数为当前的 <code>canvas</code> 元素、<code>video</code> 元素和一个 <code>options</code> 对象，<code>options</code> 里面的 <code>data</code> 属性为我们的弹幕数据，之所以不直接传入 <code>data</code> 是为了后续参数的扩展，严格遵循开放封闭原则，这里我们就统一使用 ES6 的 <code>class</code> 类来实现。</p>
+<h3 id="1、创建弹幕功能的类及基本参数处理"><a href="#1、创建弹幕功能的类及基本参数处理" class="headerlink" title="1、创建弹幕功能的类及基本参数处理"></a>1、创建弹幕功能的类及基本参数处理</h3><div class="note warning"><p>布局时需要注意 Canvas 的默认宽为 <code>300px</code>，高为 <code>150px</code>，我们要保证 Canvas 完全覆盖整个视频，需要让 Canvas 与 <code>video</code> 宽高相等。<br>因为我们不确定每一个使用该功能的视频的宽高都是一样的，所以 Canvas 画布的宽高并没有通过 CSS 来设置，而是通过 JS 在类创建实例初始化属性的时候动态设置。</p></div>
+<figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CanvasBarrage</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(canvas, video, options = &#123;&#125;) &#123;</span><br><span class="line">        <span class="comment">// 如果没有传入 canvas 或者 video 直接跳出</span></span><br><span class="line">        <span class="keyword">if</span> (!canvas || !video) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">this</span>.canvas = canvas; <span class="comment">// 当前的 canvas 元素</span></span><br><span class="line">        <span class="keyword">this</span>.video = video; <span class="comment">// 当前的 video 元素</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置 canvas 与 video 等高</span></span><br><span class="line">        <span class="keyword">this</span>.canvas.width = video.clientWidth;</span><br><span class="line">        <span class="keyword">this</span>.canvas.height = video.clientHeight;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 默认暂停播放，表示不渲染弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.isPaused = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 没传参数的默认值</span></span><br><span class="line">        <span class="keyword">let</span> defaultOptions = &#123;</span><br><span class="line">            fontSize: <span class="number">20</span>,</span><br><span class="line">            color: <span class="string">"gold"</span>,</span><br><span class="line">            speed: <span class="number">2</span>,</span><br><span class="line">            opacity: <span class="number">0.3</span>,</span><br><span class="line">            data: []</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对象的合并，将默认参数对象的属性和传入对象的属性统一放到当前实例上</span></span><br><span class="line">        <span class="built_in">Object</span>.assign(<span class="keyword">this</span>, defaultOptions, options);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>应该挂在实例上的属性除了有当前的 <code>canvas</code> 元素、<code>video</code> 元素、弹幕数据的默认选项以及弹幕数据之外，还应该有一个代表当前是否渲染弹幕的参数，因为视频暂停的时候，弹幕也是暂停的，所以没有重新渲染，因为是否暂停与弹幕是否渲染的状态是一致的，所以我们这里就用 <code>isPaused</code> 参数来代表当前是否暂停或重新渲染弹幕，值类型为布尔值。</p>
+<h3 id="2、创建构造每一条弹幕的类"><a href="#2、创建构造每一条弹幕的类" class="headerlink" title="2、创建构造每一条弹幕的类"></a>2、创建构造每一条弹幕的类</h3><p>我们知道，后台返回给我们的弹幕数据是一个数组，这个数组里的每一个弹幕都是一个对象，而对象上有着这条弹幕的信息，如果我们需要在每一个弹幕对象上再加一些新的信息或者在每一个弹幕对象的处理时用到了当前弹幕功能类 <code>CanvasBarrage</code> 实例的一些属性值，取值显然是不太方便的，这样为了后续方便扩展，遵循开放封闭原则，我们把每一个弹幕的对象转变成同一个类的实例，所以我们创建一个名为 <code>Barrage</code> 的类，让我们每一条弹幕的对象进入这个类里面走一遭，挂上一些扩展的属性。</p>
+<figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Barrage</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(item, ctx) &#123;</span><br><span class="line">        <span class="keyword">this</span>.value = item.value; <span class="comment">// 弹幕的内容</span></span><br><span class="line">        <span class="keyword">this</span>.time = item.time; <span class="comment">// 弹幕出现的时间</span></span><br><span class="line">        <span class="keyword">this</span>.item = item; <span class="comment">// 每一个弹幕的数据对象</span></span><br><span class="line">        <span class="keyword">this</span>.ctx = ctx; <span class="comment">// 弹幕功能类的执行上下文</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在我们的 <code>CanvasBarrage</code> 类上有一个存储弹幕数据的数组 <code>data</code>，此时我们需要给 <code>CanvasBarrage</code> 增加一个属性用来存放 “加工” 后的每条弹幕对应的实例。</p>
+<figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CanvasBarrage</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(canvas, video, options = &#123;&#125;) &#123;</span><br><span class="line">        <span class="comment">// 如果没有传入 canvas 或者 video 直接跳出</span></span><br><span class="line">        <span class="keyword">if</span> (!canvas || !video) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">this</span>.canvas = canvas; <span class="comment">// 当前的 canvas 元素</span></span><br><span class="line">        <span class="keyword">this</span>.video = video; <span class="comment">// 当前的 video 元素</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置 canvas 与 video 等高</span></span><br><span class="line">        <span class="keyword">this</span>.canvas.width = video.clientWidth;</span><br><span class="line">        <span class="keyword">this</span>.canvas.height = video.clientHeight;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 默认暂停播放，表示不渲染弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.isPaused = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 没传参数的默认值</span></span><br><span class="line">        <span class="keyword">let</span> defaultOptions = &#123;</span><br><span class="line">            fontSize: <span class="number">20</span>,</span><br><span class="line">            color: <span class="string">"gold"</span>,</span><br><span class="line">            speed: <span class="number">2</span>,</span><br><span class="line">            opacity: <span class="number">0.3</span>,</span><br><span class="line">            data: []</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对象的合并，将默认参数对象的属性和传入对象的属性统一放到当前实例上</span></span><br><span class="line">        <span class="built_in">Object</span>.assign(<span class="keyword">this</span>, defaultOptions, options);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// ********** 以下为新增代码 **********</span></span><br><span class="line">        <span class="comment">// 存放所有弹幕实例，Barrage 是创造每一条弹幕的实例的类</span></span><br><span class="line">        <span class="keyword">this</span>.barrages = <span class="keyword">this</span>.data.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="keyword">new</span> Barrage(item, <span class="keyword">this</span>));</span><br><span class="line">        <span class="comment">// ********** 以上为新增代码 **********</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实通过上面操作以后，我们相当于把 <code>data</code> 里面的每一条弹幕对象转换成了一个 <code>Barrage</code> 类的一个实例，把当前的上下文 <code>this</code> 传入后可以随时在每一个弹幕实例上获取 <code>CanvasBarrage</code> 类实例的属性，也方便我们后续扩展方法，遵循这种开放封闭原则的方式开发，意义是不言而喻的。</p>
+<h3 id="3、在-CanvasBarrage-类实现渲染所有弹幕的-render-方法"><a href="#3、在-CanvasBarrage-类实现渲染所有弹幕的-render-方法" class="headerlink" title="3、在 CanvasBarrage 类实现渲染所有弹幕的 render 方法"></a>3、在 CanvasBarrage 类实现渲染所有弹幕的 render 方法</h3><p><code>CanvasBarrage</code> 的 <code>render</code> 方法是在创建弹幕功能实例的时候应该渲染 Canvas 所以应该在 <code>CanvasBarrage</code> 中调用，在 <code>render</code> 内部，每一次渲染之前都应该先将 Canvas 画布清空，所以需要给当前的 <code>CanvasBarrage</code> 类新增一个属性用于存储 Canvas 画布的内容。</p>
+<figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CanvasBarrage</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(canvas, video, options = &#123;&#125;) &#123;</span><br><span class="line">        <span class="comment">// 如果没有传入 canvas 或者 video 直接跳出</span></span><br><span class="line">        <span class="keyword">if</span> (!canvas || !video) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">this</span>.canvas = canvas; <span class="comment">// 当前的 canvas 元素</span></span><br><span class="line">        <span class="keyword">this</span>.video = video; <span class="comment">// 当前的 video 元素</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置 canvas 与 video 等高</span></span><br><span class="line">        <span class="keyword">this</span>.canvas.width = video.clientWidth;</span><br><span class="line">        <span class="keyword">this</span>.canvas.height = video.clientHeight;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 默认暂停播放，表示不渲染弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.isPaused = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 没传参数的默认值</span></span><br><span class="line">        <span class="keyword">let</span> defaultOptions = &#123;</span><br><span class="line">            fontSize: <span class="number">20</span>,</span><br><span class="line">            color: <span class="string">"gold"</span>,</span><br><span class="line">            speed: <span class="number">2</span>,</span><br><span class="line">            opacity: <span class="number">0.3</span>,</span><br><span class="line">            data: []</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对象的合并，将默认参数对象的属性和传入对象的属性统一放到当前实例上</span></span><br><span class="line">        <span class="built_in">Object</span>.assign(<span class="keyword">this</span>, defaultOptions, options);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 存放所有弹幕实例，Barrage 是创造每一条弹幕的实例的类</span></span><br><span class="line">        <span class="keyword">this</span>.barrages = <span class="keyword">this</span>.data.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="keyword">new</span> Barrage(item, <span class="keyword">this</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// ********** 以下为新增代码 **********</span></span><br><span class="line">        <span class="comment">// Canvas 画布的内容</span></span><br><span class="line">        <span class="keyword">this</span>.context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 渲染所有的弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.render();</span><br><span class="line">        <span class="comment">// ********** 以上为新增代码 **********</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ********** 以下为新增代码 **********</span></span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="comment">// 渲染整个弹幕</span></span><br><span class="line">        <span class="comment">// 第一次先进行清空操作，执行渲染弹幕，如果没有暂停，继续渲染</span></span><br><span class="line">        <span class="keyword">this</span>.context.clearRect(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">this</span>.canvas.width, <span class="keyword">this</span>.canvas.height);</span><br><span class="line">        <span class="comment">// 渲染弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.renderBarrage();</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.isPaused == <span class="literal">false</span>) &#123;</span><br><span class="line">            <span class="comment">// 递归渲染</span></span><br><span class="line">            requestAnimationFrame(<span class="keyword">this</span>.render.bind(<span class="keyword">this</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ********** 以上为新增代码 **********</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面的 <code>CanvasBarrage</code> 的 <code>render</code> 函数中，清空时由于 Canvas 性能比较好，所以将整个画布清空，所以从坐标 <code>(0, 0)</code> 点，清空的宽高为整个 Canvas 画布的宽高。</p>
+<p>只要视频是在播放状态应该不断的调用 <code>render</code> 方法实现清空画布、渲染弹幕、判断是否暂停，如果非暂停状态继续渲染，所以我们用到了递归调用 <code>render</code> 去不断的实现渲染，但是递归时如果直接调用 <code>render</code>，性能特别差，程序甚至会挂掉，以往这种情况我们会在递归外层加一个 <code>setTimeout</code> 来定义一个短暂的递归时间，但是这个过程类似于动画效果，如果使用 <code>setTimeout</code> 其实是将同步代码转成了异步执行，会增加不确定性导致画面出现卡顿的现象。</p>
+<p>这里我们使用 H5 的新 API <code>requestAnimationFrame</code>，可以在平均 <code>1/60 S</code> 内帮我执行一次该方法传入的回调，我们直接把 <code>render</code> 函数作为回调函数传入 <code>requestAnimationFrame</code>，该方法是按照帧的方式执行，动画流畅，需要注意的是，<code>render</code> 函数内使用了 <code>this</code>，所以应该处理一下 <code>this</code> 指向问题。</p>
+<p>由于我们使用面向对象的方式，所以渲染弹幕的具体细节，我们抽离出一个单独的方法 <code>renderBarrage</code>，接下来看一下 <code>renderBarrage</code> 的实现。</p>
+<h3 id="4、CanvasBarrage-类-render-内部-renderBarrage-的实现"><a href="#4、CanvasBarrage-类-render-内部-renderBarrage-的实现" class="headerlink" title="4、CanvasBarrage 类 render 内部 renderBarrage 的实现"></a>4、CanvasBarrage 类 render 内部 renderBarrage 的实现</h3><figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CanvasBarrage</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(canvas, video, options = &#123;&#125;) &#123;</span><br><span class="line">        <span class="comment">// 如果没有传入 canvas 或者 video 直接跳出</span></span><br><span class="line">        <span class="keyword">if</span> (!canvas || !video) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">this</span>.canvas = canvas; <span class="comment">// 当前的 canvas 元素</span></span><br><span class="line">        <span class="keyword">this</span>.video = video; <span class="comment">// 当前的 video 元素</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置 canvas 与 video 等高</span></span><br><span class="line">        <span class="keyword">this</span>.canvas.width = video.clientWidth;</span><br><span class="line">        <span class="keyword">this</span>.canvas.height = video.clientHeight;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 默认暂停播放，表示不渲染弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.isPaused = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 没传参数的默认值</span></span><br><span class="line">        <span class="keyword">let</span> defaultOptions = &#123;</span><br><span class="line">            fontSize: <span class="number">20</span>,</span><br><span class="line">            color: <span class="string">"gold"</span>,</span><br><span class="line">            speed: <span class="number">2</span>,</span><br><span class="line">            opacity: <span class="number">0.3</span>,</span><br><span class="line">            data: []</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对象的合并，将默认参数对象的属性和传入对象的属性统一放到当前实例上</span></span><br><span class="line">        <span class="built_in">Object</span>.assign(<span class="keyword">this</span>, defaultOptions, options);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 存放所有弹幕实例，Barrage 是创造每一条弹幕的实例的类</span></span><br><span class="line">        <span class="keyword">this</span>.barrages = <span class="keyword">this</span>.data.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="keyword">new</span> Barrage(item, <span class="keyword">this</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Canvas 画布的内容</span></span><br><span class="line">        <span class="keyword">this</span>.context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 渲染所有的弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.render();</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="comment">// 渲染整个弹幕</span></span><br><span class="line">        <span class="comment">// 第一次先进行清空操作，执行渲染弹幕，如果没有暂停，继续渲染</span></span><br><span class="line">        <span class="keyword">this</span>.context.clearRect(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">this</span>.canvas.width, <span class="keyword">this</span>.canvas.height);</span><br><span class="line">        <span class="comment">// 渲染弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.renderBarrage();</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.isPaused == <span class="literal">false</span>) &#123;</span><br><span class="line">            <span class="comment">// 递归渲染</span></span><br><span class="line">            requestAnimationFrame(<span class="keyword">this</span>.render.bind(<span class="keyword">this</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ********** 以下为新增代码 **********</span></span><br><span class="line">    renderBarrage() &#123;</span><br><span class="line">        <span class="comment">// 将数组的弹幕一个一个取出，判断时间和视频的时间是否符合，符合就执行渲染此弹幕</span></span><br><span class="line">        <span class="keyword">let</span> time = <span class="keyword">this</span>.video.currentTime;</span><br><span class="line">        <span class="keyword">this</span>.barrages.forEach(<span class="function"><span class="params">barrage</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 当视频时间大于等于了弹幕设置的时间，那么开始渲染（时间都是以秒为单位）</span></span><br><span class="line">            <span class="keyword">if</span> (time &gt;= barrage.time) &#123;</span><br><span class="line">                <span class="comment">// 初始化弹幕的各个参数，只有在弹幕将要出现的时候再去初始化，节省性能，初始化后再进行绘制</span></span><br><span class="line">                <span class="comment">// 如果没有初始化，先去初始化一下</span></span><br><span class="line">                <span class="keyword">if</span> (!barrage.isInited) &#123;</span><br><span class="line">                    <span class="comment">// 初始化后下次再渲染就不需要再初始化了，所以创建一个标识 isInited</span></span><br><span class="line">                    barrage.init();</span><br><span class="line">                    barrage.isInited = <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ********** 以上为新增代码 **********</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此处的 <code>renderBarrage</code> 方法内部主要对每一条弹幕实例所设置的出现时间和视频的播放时间做对比，如果视频的播放时间大于等于了弹幕出现的时间，说明弹幕需要绘制在 Canvas 画布内。</p>
+<p>之前我们的每一条弹幕实例的属性可能不全，弹幕的其他未传参数并没有初始化，所以为了最大限度的节省性能，我们在弹幕该第一次绘制的时候去初始化参数，等到视频播放的时间变化再去重新绘制时，不再初始化参数，所以初始化参数的方法放在了判断弹幕出现时间的条件里面执行，又设置了代表弹幕实例是不是初始化了的参数 <code>isInited</code>，初始化函数 <code>init</code> 执行过一次后，马上修改 <code>isInited</code> 的值，保证只初始化参数一次。</p>
+<p>在 <code>renderBarrage</code> 方法中我们可以看出来，其实我们是循环了专门存放每一条弹幕实例（<code>Barrage</code> 类的实例）的数组，我们在内部用实例去调用的方法 <code>init</code> 应该是在 <code>Barrage</code> 类的原型上，下面我们去 <code>Barrage</code> 类上实现 <code>init</code> 的逻辑。</p>
+<h3 id="5、Barrage-类-init-的实现"><a href="#5、Barrage-类-init-的实现" class="headerlink" title="5、Barrage 类 init 的实现"></a>5、Barrage 类 init 的实现</h3><figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Barrage</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(item, ctx) &#123;</span><br><span class="line">        <span class="keyword">this</span>.value = item.value; <span class="comment">// 弹幕的内容</span></span><br><span class="line">        <span class="keyword">this</span>.time = item.time; <span class="comment">// 弹幕出现的时间</span></span><br><span class="line">        <span class="keyword">this</span>.item = item; <span class="comment">// 每一个弹幕的数据对象</span></span><br><span class="line">        <span class="keyword">this</span>.ctx = ctx; <span class="comment">// 弹幕功能类的执行上下文</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ********** 以下为新增代码 **********</span></span><br><span class="line">    init() &#123;</span><br><span class="line">        <span class="keyword">this</span>.opacity = <span class="keyword">this</span>.item.opacity || <span class="keyword">this</span>.ctx.opacity;</span><br><span class="line">        <span class="keyword">this</span>.color = <span class="keyword">this</span>.item.color || <span class="keyword">this</span>.ctx.color;</span><br><span class="line">        <span class="keyword">this</span>.fontSize = <span class="keyword">this</span>.item.fontSize || <span class="keyword">this</span>.ctx.fontSize;</span><br><span class="line">        <span class="keyword">this</span>.speed = <span class="keyword">this</span>.item.speed || <span class="keyword">this</span>.ctx.speed;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 求自己的宽度，目的是用来校验当前是否还要继续绘制（边界判断）</span></span><br><span class="line">        <span class="keyword">let</span> span = <span class="built_in">document</span>.createElement(<span class="string">"span"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 能决定宽度的只有弹幕的内容和文字的大小，和字体，字体默认为微软雅黑，我们就不做设置了</span></span><br><span class="line">        span.innerText = <span class="keyword">this</span>.value;</span><br><span class="line">        span.style.font = <span class="keyword">this</span>.fontSize + <span class="string">'px "Microsoft YaHei'</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// span 为行内元素，取不到宽度，所以我们通过定位给转换成块级元素</span></span><br><span class="line">        span.style.position = <span class="string">"absolute"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">document</span>.body.appendChild(span); <span class="comment">// 放入页面</span></span><br><span class="line">        <span class="keyword">this</span>.width = span.clientWidth; <span class="comment">// 记录弹幕的宽度</span></span><br><span class="line">        <span class="built_in">document</span>.body.removeChild(span); <span class="comment">// 从页面移除</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 存储弹幕出现的横纵坐标</span></span><br><span class="line">        <span class="keyword">this</span>.x = <span class="keyword">this</span>.ctx.canvas.width;</span><br><span class="line">        <span class="keyword">this</span>.y = <span class="keyword">this</span>.ctx.canvas.height;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 处理弹幕纵向溢出的边界处理</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.y &lt; <span class="keyword">this</span>.fontSize) &#123;</span><br><span class="line">            <span class="keyword">this</span>.y = <span class="keyword">this</span>.fontSize;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.y &gt; <span class="keyword">this</span>.ctx.canvas.height - <span class="keyword">this</span>.fontSize) &#123;</span><br><span class="line">            <span class="keyword">this</span>.y = <span class="keyword">this</span>.ctx.canvas.height - <span class="keyword">this</span>.fontSize;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ********** 以上为新增代码 **********</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面代码的 <code>init</code> 方法中我们其实可以看出，每条弹幕实例初始化的时候初始的信息除了之前说的弹幕的基本参数外，还获取了每条弹幕的宽度（用于后续做弹幕是否已经完全移出屏幕的边界判断）和每一条弹幕的 <code>x</code> 和 <code>y</code> 轴方向的坐标并为了防止弹幕在 <code>y</code> 轴显示不全做了边界处理。</p>
+<h3 id="6、实现每条弹幕的渲染和弹幕移除屏幕的处理"><a href="#6、实现每条弹幕的渲染和弹幕移除屏幕的处理" class="headerlink" title="6、实现每条弹幕的渲染和弹幕移除屏幕的处理"></a>6、实现每条弹幕的渲染和弹幕移除屏幕的处理</h3><p>我们当时在 <code>CanvasBarrage</code> 类的 <code>render</code> 方法中的渲染每个弹幕的方法 <code>renderBarrage</code>中（原谅这么啰嗦，因为到现在内容已经比较多，说的具体一点方便知道是哪个步骤，哈哈）只做了对每一条弹幕实例的初始化操作，并没有渲染在 Canvas 画布中，这时我们主要做两部操作，实现每条弹幕渲染在画布中和左侧移出屏幕不再渲染的边界处理。</p>
+<figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CanvasBarrage</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(canvas, video, options = &#123;&#125;) &#123;</span><br><span class="line">        <span class="comment">// 如果没有传入 canvas 或者 video 直接跳出</span></span><br><span class="line">        <span class="keyword">if</span> (!canvas || !video) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">this</span>.canvas = canvas; <span class="comment">// 当前的 canvas 元素</span></span><br><span class="line">        <span class="keyword">this</span>.video = video; <span class="comment">// 当前的 video 元素</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置 canvas 与 video 等高</span></span><br><span class="line">        <span class="keyword">this</span>.canvas.width = video.clientWidth;</span><br><span class="line">        <span class="keyword">this</span>.canvas.height = video.clientHeight;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 默认暂停播放，表示不渲染弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.isPaused = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 没传参数的默认值</span></span><br><span class="line">        <span class="keyword">let</span> defaultOptions = &#123;</span><br><span class="line">            fontSize: <span class="number">20</span>,</span><br><span class="line">            color: <span class="string">"gold"</span>,</span><br><span class="line">            speed: <span class="number">2</span>,</span><br><span class="line">            opacity: <span class="number">0.3</span>,</span><br><span class="line">            data: []</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对象的合并，将默认参数对象的属性和传入对象的属性统一放到当前实例上</span></span><br><span class="line">        <span class="built_in">Object</span>.assign(<span class="keyword">this</span>, defaultOptions, options);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 存放所有弹幕实例，Barrage 是创造每一条弹幕的实例的类</span></span><br><span class="line">        <span class="keyword">this</span>.barrages = <span class="keyword">this</span>.data.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="keyword">new</span> Barrage(item, <span class="keyword">this</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Canvas 画布的内容</span></span><br><span class="line">        <span class="keyword">this</span>.context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 渲染所有的弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.render();</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="comment">// 渲染整个弹幕</span></span><br><span class="line">        <span class="comment">// 第一次先进行清空操作，执行渲染弹幕，如果没有暂停，继续渲染</span></span><br><span class="line">        <span class="keyword">this</span>.context.clearRect(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">this</span>.canvas.width, <span class="keyword">this</span>.canvas.height);</span><br><span class="line">        <span class="comment">// 渲染弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.renderBarrage();</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.isPaused == <span class="literal">false</span>) &#123;</span><br><span class="line">            <span class="comment">// 递归渲染</span></span><br><span class="line">            requestAnimationFrame(<span class="keyword">this</span>.render.bind(<span class="keyword">this</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    renderBarrage() &#123;</span><br><span class="line">        <span class="comment">// 将数组的弹幕一个一个取出，判断时间和视频的时间是否符合，符合就执行渲染此弹幕</span></span><br><span class="line">        <span class="keyword">let</span> time = <span class="keyword">this</span>.video.currentTime;</span><br><span class="line">        <span class="keyword">this</span>.barrages.forEach(<span class="function"><span class="params">barrage</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// ********** 以下为改动的代码 **********</span></span><br><span class="line">            <span class="comment">// 当视频时间大于等于了弹幕设置的时间，那么开始渲染（时间都是以秒为单位）</span></span><br><span class="line">            <span class="keyword">if</span> (!barrage.flag &amp;&amp; time &gt;= barrage.time) &#123;</span><br><span class="line">                <span class="comment">// ********** 以上为改动的代码 **********</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">// 初始化弹幕的各个参数，只有在弹幕将要出现的时候再去初始化，节省性能，初始化后再进行绘制</span></span><br><span class="line">                <span class="comment">// 如果没有初始化，先去初始化一下</span></span><br><span class="line">                <span class="keyword">if</span> (!barrage.isInited) &#123;</span><br><span class="line">                    <span class="comment">// 初始化后下次再渲染就不需要再初始化了，所以创建一个标识 isInited</span></span><br><span class="line">                    barrage.init();</span><br><span class="line">                    barrage.isInited = <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// ********** 以下为新增代码 **********</span></span><br><span class="line">                barrage.x -= barrage.speed;</span><br><span class="line">                barrage.render(); <span class="comment">// 渲染该条弹幕</span></span><br><span class="line">                <span class="keyword">if</span> (barrage.x &lt; barrage.width * <span class="number">-1</span>) &#123;</span><br><span class="line">                    barrage.flag = <span class="literal">true</span>; <span class="comment">// 是否出去了，出去了，做停止渲染的操作</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// ********** 以上为新增代码 **********</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>每个弹幕实例都有一个 <code>speed</code> 属性，该属性代表着弹幕移动的速度，换个说法其实就是每次减少的 <code>x</code> 轴的差值，所以我们其实是通过改变 <code>x</code> 轴的值再重新渲染而实现弹幕的左移，我们创建了一个标识 <code>flag</code> 挂在每个弹幕实例下，代表是否已经离开屏幕，如果离开则更改 <code>flag</code> 的值，使外层的 <code>CanvasBarrage</code> 类的 <code>render</code> 函数再次递归时不进入渲染程序。</p>
+<p>每一条弹幕具体是怎么渲染的，通过代码可以看出每个弹幕实例在 <code>x</code> 坐标改变后都调用了实例方法 <code>render</code> 函数，注意此 <code>render</code> 非彼 <code>render</code>，该 <code>render</code> 函数属于 <code>Barrage</code> 类，目的是为了渲染每一条弹幕，而 <code>CanvasBarrage</code> 类下的 <code>render</code>，是为了在视频时间变化时清空并重新渲染整个 Canvas 画布。</p>
+<h3 id="7、Barrage-类下的-render-方法的实现"><a href="#7、Barrage-类下的-render-方法的实现" class="headerlink" title="7、Barrage 类下的 render 方法的实现"></a>7、Barrage 类下的 render 方法的实现</h3><figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Barrage</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(item, ctx) &#123;</span><br><span class="line">        <span class="keyword">this</span>.value = item.value; <span class="comment">// 弹幕的内容</span></span><br><span class="line">        <span class="keyword">this</span>.time = item.time; <span class="comment">// 弹幕出现的时间</span></span><br><span class="line">        <span class="keyword">this</span>.item = item; <span class="comment">// 每一个弹幕的数据对象</span></span><br><span class="line">        <span class="keyword">this</span>.ctx = ctx; <span class="comment">// 弹幕功能类的执行上下文</span></span><br><span class="line">    &#125;</span><br><span class="line">    init() &#123;</span><br><span class="line">        <span class="keyword">this</span>.opacity = <span class="keyword">this</span>.item.opacity || <span class="keyword">this</span>.ctx.opacity;</span><br><span class="line">        <span class="keyword">this</span>.color = <span class="keyword">this</span>.item.color || <span class="keyword">this</span>.ctx.color;</span><br><span class="line">        <span class="keyword">this</span>.fontSize = <span class="keyword">this</span>.item.fontSize || <span class="keyword">this</span>.ctx.fontSize;</span><br><span class="line">        <span class="keyword">this</span>.speed = <span class="keyword">this</span>.item.speed || <span class="keyword">this</span>.ctx.speed;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 求自己的宽度，目的是用来校验当前是否还要继续绘制（边界判断）</span></span><br><span class="line">        <span class="keyword">let</span> span = <span class="built_in">document</span>.createElement(<span class="string">"span"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 能决定宽度的只有弹幕的内容和文字的大小，和字体，字体默认为微软雅黑，我们就不做设置了</span></span><br><span class="line">        span.innerText = <span class="keyword">this</span>.value;</span><br><span class="line">        span.style.font = <span class="keyword">this</span>.fontSize + <span class="string">'px "Microsoft YaHei'</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// span 为行内元素，取不到宽度，所以我们通过定位给转换成块级元素</span></span><br><span class="line">        span.style.position = <span class="string">"absolute"</span>;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">document</span>.body.appendChild(span); <span class="comment">// 放入页面</span></span><br><span class="line">        <span class="keyword">this</span>.width = span.clientWidth; <span class="comment">// 记录弹幕的宽度</span></span><br><span class="line">        <span class="built_in">document</span>.body.removeChild(span); <span class="comment">// 从页面移除</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 存储弹幕出现的横纵坐标</span></span><br><span class="line">        <span class="keyword">this</span>.x = <span class="keyword">this</span>.ctx.canvas.width;</span><br><span class="line">        <span class="keyword">this</span>.y = <span class="keyword">this</span>.ctx.canvas.height;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 处理弹幕纵向溢出的边界处理</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.y &lt; <span class="keyword">this</span>.fontSize) &#123;</span><br><span class="line">            <span class="keyword">this</span>.y = <span class="keyword">this</span>.fontSize;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.y &gt; <span class="keyword">this</span>.ctx.canvas.height - <span class="keyword">this</span>.fontSize) &#123;</span><br><span class="line">            <span class="keyword">this</span>.y = <span class="keyword">this</span>.ctx.canvas.height - <span class="keyword">this</span>.fontSize;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ********** 以下为新增代码 **********</span></span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">this</span>.ctx.context.font = <span class="keyword">this</span>.fontSize + <span class="string">'px "Microsoft YaHei"'</span>;</span><br><span class="line">        <span class="keyword">this</span>.ctx.context.fillStyle = <span class="keyword">this</span>.color;</span><br><span class="line">        <span class="keyword">this</span>.ctx.context.fillText(<span class="keyword">this</span>.value, <span class="keyword">this</span>.x, <span class="keyword">this</span>.y);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ********** 以上为新增代码 **********</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面新增代码我们可以看出，其实 <code>Barrage</code> 类的 <code>render</code> 方法只是将每一条弹幕的字号、颜色、内容、坐标等属性通过 Canvas 的 API 添加到了画布上。</p>
+<h3 id="8、实现播放、暂停事件"><a href="#8、实现播放、暂停事件" class="headerlink" title="8、实现播放、暂停事件"></a>8、实现播放、暂停事件</h3><p>还记得我们的 <code>CanvasBarrage</code> 类里面有一个属性 <code>isPaused</code>，属性值控制了我们是否递归渲染，这个属性与视频暂停的状态是一致的，我们在播放的时候，弹幕不断的清空并重新绘制，当暂停的时候弹幕也应该跟着暂停，说白了就是不在调用 <code>CanvasBarrage</code> 类的 <code>render</code> 方法，其实就是在暂停、播放的过程中不断的改变 <code>isPaused</code> 的值即可。</p>
+<p>还记得我们之前构造的两条假数据 <code>data</code> 吧，接下来我们添加播放、暂停事件，来尝试使用一下我们的弹幕功能。</p>
+<figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 实现一个简易选择器，方便获取元素，后面获取元素直接调用 $</span></span><br><span class="line"><span class="keyword">const</span> $ = <span class="built_in">document</span>.querySelector.bind(<span class="built_in">document</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取 Canvas 元素和 Video 元素</span></span><br><span class="line"><span class="keyword">let</span> canvas = $(<span class="string">"#canvas"</span>);</span><br><span class="line"><span class="keyword">let</span> video = $(<span class="string">"#video"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> canvasBarrage = <span class="keyword">new</span> CanvasBarrage(canvas, video, &#123;</span><br><span class="line">    data</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加播放事件</span></span><br><span class="line">video.addEventListener(<span class="string">"play"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    canvasBarrage.isPaused = <span class="literal">false</span>;</span><br><span class="line">    canvasBarrage.render();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加暂停事件</span></span><br><span class="line">video.addEventListener(<span class="string">"pause"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    canvasBarrage.isPaused = <span class="literal">true</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="9、实现发送弹幕事件"><a href="#9、实现发送弹幕事件" class="headerlink" title="9、实现发送弹幕事件"></a>9、实现发送弹幕事件</h3><figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"#add"</span>).addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> time = video.currentTime; <span class="comment">// 发送弹幕的时间</span></span><br><span class="line">    <span class="keyword">let</span> value = $(<span class="string">"#text"</span>).value; <span class="comment">// 发送弹幕的文字</span></span><br><span class="line">    <span class="keyword">let</span> color = $(<span class="string">"#color"</span>).value; <span class="comment">// 发送弹幕文字的颜色</span></span><br><span class="line">    <span class="keyword">let</span> fontSize = $(<span class="string">"#range"</span>).value; <span class="comment">// 发送弹幕的字体大小</span></span><br><span class="line">    <span class="keyword">let</span> sendObj = &#123; time, value, color, fontSize &#125;; <span class="comment">//发送弹幕的参数集合</span></span><br><span class="line">    canvasBarrage.add(sendObj); <span class="comment">// 发送弹幕的方法</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>其实我们发送弹幕时，就是向 <code>CanvasBarrage</code> 类的 <code>barrages</code> 数组里添加了一条弹幕的实例，我们单独封装了一个 <code>add</code> 的实例方法。</p>
+<figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CanvasBarrage</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(canvas, video, options = &#123;&#125;) &#123;</span><br><span class="line">        <span class="comment">// 如果没有传入 canvas 或者 video 直接跳出</span></span><br><span class="line">        <span class="keyword">if</span> (!canvas || !video) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">this</span>.canvas = canvas; <span class="comment">// 当前的 canvas 元素</span></span><br><span class="line">        <span class="keyword">this</span>.video = video; <span class="comment">// 当前的 video 元素</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置 canvas 与 video 等高</span></span><br><span class="line">        <span class="keyword">this</span>.canvas.width = video.clientWidth;</span><br><span class="line">        <span class="keyword">this</span>.canvas.height = video.clientHeight;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 默认暂停播放，表示不渲染弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.isPaused = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 没传参数的默认值</span></span><br><span class="line">        <span class="keyword">let</span> defaultOptions = &#123;</span><br><span class="line">            fontSize: <span class="number">20</span>,</span><br><span class="line">            color: <span class="string">"gold"</span>,</span><br><span class="line">            speed: <span class="number">2</span>,</span><br><span class="line">            opacity: <span class="number">0.3</span>,</span><br><span class="line">            data: []</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对象的合并，将默认参数对象的属性和传入对象的属性统一放到当前实例上</span></span><br><span class="line">        <span class="built_in">Object</span>.assign(<span class="keyword">this</span>, defaultOptions, options);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 存放所有弹幕实例，Barrage 是创造每一条弹幕的实例的类</span></span><br><span class="line">        <span class="keyword">this</span>.barrages = <span class="keyword">this</span>.data.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="keyword">new</span> Barrage(item, <span class="keyword">this</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Canvas 画布的内容</span></span><br><span class="line">        <span class="keyword">this</span>.context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 渲染所有的弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.render();</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="comment">// 渲染整个弹幕</span></span><br><span class="line">        <span class="comment">// 第一次先进行清空操作，执行渲染弹幕，如果没有暂停，继续渲染</span></span><br><span class="line">        <span class="keyword">this</span>.context.clearRect(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">this</span>.canvas.width, <span class="keyword">this</span>.canvas.height);</span><br><span class="line">        <span class="comment">// 渲染弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.renderBarrage();</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.isPaused == <span class="literal">false</span>) &#123;</span><br><span class="line">            <span class="comment">// 递归渲染</span></span><br><span class="line">            requestAnimationFrame(<span class="keyword">this</span>.render.bind(<span class="keyword">this</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    renderBarrage() &#123;</span><br><span class="line">        <span class="comment">// 将数组的弹幕一个一个取出，判断时间和视频的时间是否符合，符合就执行渲染此弹幕</span></span><br><span class="line">        <span class="keyword">let</span> time = <span class="keyword">this</span>.video.currentTime;</span><br><span class="line">        <span class="keyword">this</span>.barrages.forEach(<span class="function"><span class="params">barrage</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 当视频时间大于等于了弹幕设置的时间，那么开始渲染（时间都是以秒为单位）</span></span><br><span class="line">            <span class="keyword">if</span> (!barrage.flag &amp;&amp; time &gt;= barrage.time) &#123;</span><br><span class="line">                <span class="comment">// 初始化弹幕的各个参数，只有在弹幕将要出现的时候再去初始化，节省性能，初始化后再进行绘制</span></span><br><span class="line">                <span class="comment">// 如果没有初始化，先去初始化一下</span></span><br><span class="line">                <span class="keyword">if</span> (!barrage.isInited) &#123;</span><br><span class="line">                    <span class="comment">// 初始化后下次再渲染就不需要再初始化了，所以创建一个标识 isInited</span></span><br><span class="line">                    barrage.init();</span><br><span class="line">                    barrage.isInited = <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                barrage.x -= barrage.speed;</span><br><span class="line">                barrage.render(); <span class="comment">// 渲染该条弹幕</span></span><br><span class="line">                <span class="keyword">if</span> (barrage.x &lt; barrage.width * <span class="number">-1</span>) &#123;</span><br><span class="line">                    barrage.flag = <span class="literal">true</span>; <span class="comment">// 是否出去了，出去了，做停止渲染的操作</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ********** 以下为新增代码 **********</span></span><br><span class="line">    add(item) &#123;</span><br><span class="line">        <span class="keyword">this</span>.barrages.push(<span class="keyword">new</span> Barrage(item, <span class="keyword">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ********** 以上为新增代码 **********</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="10、拖动进度条实现弹幕的前进和后退"><a href="#10、拖动进度条实现弹幕的前进和后退" class="headerlink" title="10、拖动进度条实现弹幕的前进和后退"></a>10、拖动进度条实现弹幕的前进和后退</h3><p>其实我们发现，弹幕虽然实现了正常的播放、暂停以及发送，但是当我们拖动进度条的时候弹幕应该是跟着视频时间同步播放的，现在的弹幕一旦播放过无论怎样拉动进度条弹幕都不会再出现，我们现在就来解决这个问题。</p>
+<figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 拖动进度条事件</span></span><br><span class="line">video.addEventListener(<span class="string">"seeked"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    canvasBarrage.reset();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>我们在事件内部其实只是调用了一下 <code>CanvasBarrage</code> 类的 <code>reset</code> 方法，这个方法就是在拖动进度条的时候来帮我们初始化弹幕的状态。</p>
+<figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CanvasBarrage</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(canvas, video, options = &#123;&#125;) &#123;</span><br><span class="line">        <span class="comment">// 如果没有传入 canvas 或者 video 直接跳出</span></span><br><span class="line">        <span class="keyword">if</span> (!canvas || !video) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">this</span>.canvas = canvas; <span class="comment">// 当前的 canvas 元素</span></span><br><span class="line">        <span class="keyword">this</span>.video = video; <span class="comment">// 当前的 video 元素</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置 canvas 与 video 等高</span></span><br><span class="line">        <span class="keyword">this</span>.canvas.width = video.clientWidth;</span><br><span class="line">        <span class="keyword">this</span>.canvas.height = video.clientHeight;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 默认暂停播放，表示不渲染弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.isPaused = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 没传参数的默认值</span></span><br><span class="line">        <span class="keyword">let</span> defaultOptions = &#123;</span><br><span class="line">            fontSize: <span class="number">20</span>,</span><br><span class="line">            color: <span class="string">"gold"</span>,</span><br><span class="line">            speed: <span class="number">2</span>,</span><br><span class="line">            opacity: <span class="number">0.3</span>,</span><br><span class="line">            data: []</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对象的合并，将默认参数对象的属性和传入对象的属性统一放到当前实例上</span></span><br><span class="line">        <span class="built_in">Object</span>.assign(<span class="keyword">this</span>, defaultOptions, options);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 存放所有弹幕实例，Barrage 是创造每一条弹幕的实例的类</span></span><br><span class="line">        <span class="keyword">this</span>.barrages = <span class="keyword">this</span>.data.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="keyword">new</span> Barrage(item, <span class="keyword">this</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Canvas 画布的内容</span></span><br><span class="line">        <span class="keyword">this</span>.context = canvas.getContext(<span class="string">"2d"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 渲染所有的弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.render();</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="comment">// 渲染整个弹幕</span></span><br><span class="line">        <span class="comment">// 第一次先进行清空操作，执行渲染弹幕，如果没有暂停，继续渲染</span></span><br><span class="line">        <span class="keyword">this</span>.context.clearRect(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">this</span>.canvas.width, <span class="keyword">this</span>.canvas.height);</span><br><span class="line">        <span class="comment">// 渲染弹幕</span></span><br><span class="line">        <span class="keyword">this</span>.renderBarrage();</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.isPaused == <span class="literal">false</span>) &#123;</span><br><span class="line">            <span class="comment">// 递归渲染</span></span><br><span class="line">            requestAnimationFrame(<span class="keyword">this</span>.render.bind(<span class="keyword">this</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    renderBarrage() &#123;</span><br><span class="line">        <span class="comment">// 将数组的弹幕一个一个取出，判断时间和视频的时间是否符合，符合就执行渲染此弹幕</span></span><br><span class="line">        <span class="keyword">let</span> time = <span class="keyword">this</span>.video.currentTime;</span><br><span class="line">        <span class="keyword">this</span>.barrages.forEach(<span class="function"><span class="params">barrage</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 当视频时间大于等于了弹幕设置的时间，那么开始渲染（时间都是以秒为单位）</span></span><br><span class="line">            <span class="keyword">if</span> (!barrage.flag &amp;&amp; time &gt;= barrage.time) &#123;</span><br><span class="line">                <span class="comment">// 初始化弹幕的各个参数，只有在弹幕将要出现的时候再去初始化，节省性能，初始化后再进行绘制</span></span><br><span class="line">                <span class="comment">// 如果没有初始化，先去初始化一下</span></span><br><span class="line">                <span class="keyword">if</span> (!barrage.isInited) &#123;</span><br><span class="line">                    <span class="comment">// 初始化后下次再渲染就不需要再初始化了，所以创建一个标识 isInited</span></span><br><span class="line">                    barrage.init();</span><br><span class="line">                    barrage.isInited = <span class="literal">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                barrage.x -= barrage.speed;</span><br><span class="line">                barrage.render(); <span class="comment">// 渲染该条弹幕</span></span><br><span class="line">                <span class="keyword">if</span> (barrage.x &lt; barrage.width * <span class="number">-1</span>) &#123;</span><br><span class="line">                    barrage.flag = <span class="literal">true</span>; <span class="comment">// 是否出去了，出去了，做停止渲染的操作</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    add(item) &#123;</span><br><span class="line">        <span class="keyword">this</span>.barrages.push(<span class="keyword">new</span> Barrage(item, <span class="keyword">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ********** 以下为新增代码 **********</span></span><br><span class="line">    reset() &#123;</span><br><span class="line">        <span class="comment">// 先清空 Canvas 画布</span></span><br><span class="line">        <span class="keyword">this</span>.context.clearRect(<span class="number">0</span>, <span class="number">0</span>, <span class="keyword">this</span>.canvas.width, <span class="keyword">this</span>.canvas.height);</span><br><span class="line">        <span class="keyword">let</span> time = <span class="keyword">this</span>.video.currentTime;</span><br><span class="line">        <span class="comment">// 循环每一条弹幕实例</span></span><br><span class="line">        <span class="keyword">this</span>.barrages.forEach(<span class="function"><span class="params">barrage</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 更改已经移出屏幕的弹幕状态</span></span><br><span class="line">            barrage.flag = <span class="literal">false</span>;</span><br><span class="line">            <span class="comment">// 当拖动到的时间小于等于当前弹幕时间是，重新初始化弹幕的数据，实现渲染</span></span><br><span class="line">            <span class="keyword">if</span> (time &lt;= barrage.time) &#123;</span><br><span class="line">                barrage.isInited = <span class="literal">false</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                barrage.flag = <span class="literal">true</span>; <span class="comment">// 否则将弹幕的状态设置为以移出屏幕</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ********** 以上为新增代码 **********</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实 <code>reset</code> 方法中值做了几件事：</p>
+<ul>
+<li>清空 Canvas 画布；</li>
+<li>获取当前进度条拖动位置的时间；</li>
+<li>循环存储弹幕实例的数组；</li>
+<li>将所有弹幕更改为未移出屏幕；</li>
+<li>判断拖动时间和每条弹幕的时间；</li>
+<li>在当前时间以后的弹幕重新初始化数据；</li>
+<li>以前的弹幕更改为已移出屏幕。</li>
+</ul>
+<p>从而实现了拖动进度条弹幕的 “前进” 和 “后退” 功能。</p>
+<hr>
+
+<h2 id="使用-WebSocket-和-Redis-实现前后端通信及数据存储"><a href="#使用-WebSocket-和-Redis-实现前后端通信及数据存储" class="headerlink" title="使用 WebSocket 和 Redis 实现前后端通信及数据存储"></a>使用 WebSocket 和 Redis 实现前后端通信及数据存储</h2><h3 id="1、服务器代码的实现"><a href="#1、服务器代码的实现" class="headerlink" title="1、服务器代码的实现"></a>1、服务器代码的实现</h3><p>要使用 WebSocket 和 Redis 首先需要去安装 <code>ws</code>、<code>redis</code> 依赖，在项目根目录执行下面命令：</p>
+<blockquote>
+<p>npm install ws redis</p>
+</blockquote>
+<p>我们创建一个 <code>server.js</code> 文件，用来写服务端的代码：</p>
+<figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> WebSocket = <span class="built_in">require</span>(<span class="string">"ws"</span>); <span class="comment">// 引入 WebSocket</span></span><br><span class="line"><span class="keyword">const</span> redis = <span class="built_in">require</span>(<span class="string">"redis"</span>); <span class="comment">// 引入 redis</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化 WebSocket 服务器，端口号为 3000</span></span><br><span class="line"><span class="keyword">let</span> wss = <span class="keyword">new</span> WebSocket.Server(&#123;</span><br><span class="line">    port: <span class="number">3000</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 redis 客户端</span></span><br><span class="line"><span class="keyword">let</span> client = redis.createClient(); <span class="comment">// key value</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 原生的 websocket 就两个常用的方法 on('message')、on('send')</span></span><br><span class="line">wss.on(<span class="string">"connection"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">ws</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 监听连接</span></span><br><span class="line">    <span class="comment">// 连接上需要立即把 redis 数据库的数据取出返回给前端</span></span><br><span class="line">    client.lrange(<span class="string">"barrages"</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, applies</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 由于 redis 的数据都是字符串，所以需要把数组中每一项转成对象</span></span><br><span class="line">        applies = applies.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="built_in">JSON</span>.parse(item));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用 websocket 服务器将 redis 数据库的数据发送给前端</span></span><br><span class="line">        <span class="comment">// 构建一个对象，加入 type 属性告诉前端当前返回数据的行为，并将数据转换成字符串</span></span><br><span class="line">        ws.send(</span><br><span class="line">            <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">                type: <span class="string">"INIT"</span>,</span><br><span class="line">                data: applies</span><br><span class="line">            &#125;)</span><br><span class="line">        );</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当服务器收到消息时，将数据存入 redis 数据库</span></span><br><span class="line">    ws.on(<span class="string">"message"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 向数据库存储时存的是字符串，存入并打印数据，用来判断是否成功存入数据库</span></span><br><span class="line">        client.rpush(<span class="string">"barrages"</span>, data, redis.print);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 再将当前这条数据返回给前端，同样添加 type 字段告诉前端当前行为，并将数据转换成字符串</span></span><br><span class="line">        ws.send(</span><br><span class="line">            <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">                type: <span class="string">"ADD"</span>,</span><br><span class="line">                data: <span class="built_in">JSON</span>.parse(data)</span><br><span class="line">            &#125;)</span><br><span class="line">        );</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>服务器的逻辑很清晰，在 WebSocket 连接上时，立即获取 Redis 数据库的所有弹幕数据返回给前端，当前端点击发送弹幕按钮发送数据时，接收数据存入 Redis 数据库中并打印验证数据是否成功存入，再通过 WebSocket 服务把当前这一条数返回给前端，需要注意一下几点：</p>
+<ul>
+<li>从 Redis 数据库中取出全部弹幕数据的数组内部都存储的是字符串，需要使用 <code>JSON.parse</code> 方法进行解析；</li>
+<li>将数据发送前端时，最外层要使用 <code>JSON.stringify</code> 重新转换成字符串发送；</li>
+<li>在初始化阶段 WebSocket 发送所有数据和前端添加新弹幕 WebSocket 将弹幕的单条数据重新返回时，需要添加对应的 <code>type</code> 值告诉前端，当前的操作行为。</li>
+</ul>
+<h3 id="2、前端代码的修改"><a href="#2、前端代码的修改" class="headerlink" title="2、前端代码的修改"></a>2、前端代码的修改</h3><p>在没有实现后端代码之前，前端使用的是 <code>data</code> 的假数据，是在添加弹幕事件中，将获取的新增弹幕信息通过 <code>CanvasBarrage</code> 类的 <code>add</code> 方法直接创建 <code>Barrage</code> 类的实例，并加入到存放弹幕实例的 <code>barrages</code> 数组中。</p>
+<p>现在我们需要更正一下交互逻辑，在发送弹幕事件触发时，我们应该先将获取的单条弹幕数据通过 WebSocket 发送给后端服务器，在服务器重新将消息返还给我们的时候，去将这条数据通过 <code>CanvasBarrage</code> 类的 <code>add</code> 方法加入到存放弹幕实例的 <code>barrages</code> 数组中。</p>
+<p>还有在页面初始化时，我们之前在创建 <code>CanvasBarrage</code> 类实例的时候直接传入了 <code>data</code> 假数据，现在需要通过 WebSocket 的连接事件，在监听到连接 WebSocket 服务时，去创建 <code>CanvasBarrage</code> 类的实例，并直接把服务端返回 Redis 数据库真实的数据作为参数传入，前端代码修改如下：</p>
+<figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ********** 下面代码被删掉了 **********</span></span><br><span class="line"><span class="comment">// let canvasBarrage = new CanvasBarrage(canvas, video, &#123;</span></span><br><span class="line"><span class="comment">//     data</span></span><br><span class="line"><span class="comment">// &#125;);</span></span><br><span class="line"><span class="comment">// ********** 上面代码被删掉了 **********</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ********** 以下为新增代码 **********</span></span><br><span class="line"><span class="keyword">let</span> canvasBarrage;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 WebSocket 连接</span></span><br><span class="line"><span class="keyword">let</span> socket = <span class="keyword">new</span> WebSocket(<span class="string">"ws://localhost:3000"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听连接事件</span></span><br><span class="line">socket.onopen = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 监听消息</span></span><br><span class="line">    socket.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 将收到的消息从字符串转换成对象</span></span><br><span class="line">        <span class="keyword">let</span> message = <span class="built_in">JSON</span>.parse(e.data);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据不同情况判断是初始化还是发送弹幕</span></span><br><span class="line">        <span class="keyword">if</span> (message.type === <span class="string">"INIT"</span>) &#123;</span><br><span class="line">            <span class="comment">// 创建 CanvasBarrage 的实例添加弹幕功能，传入真实的数据</span></span><br><span class="line">            canvasBarrage = <span class="keyword">new</span> CanvasBarrage(canvas, video, &#123;</span><br><span class="line">                data: message.data</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (message.type === <span class="string">"ADD"</span>) &#123;</span><br><span class="line">            <span class="comment">// 如果是添加弹幕直接将 WebSocket 返回的单条弹幕存入 barrages 中</span></span><br><span class="line">            canvasBarrage.add(message.data);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// ********** 以上为新增代码 **********</span></span><br><span class="line"></span><br><span class="line">$(<span class="string">"#add"</span>).addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> time = video.currentTime; <span class="comment">// 发送弹幕的时间</span></span><br><span class="line">    <span class="keyword">let</span> value = $(<span class="string">"#text"</span>).value; <span class="comment">// 发送弹幕的文字</span></span><br><span class="line">    <span class="keyword">let</span> color = $(<span class="string">"#color"</span>).value; <span class="comment">// 发送弹幕文字的颜色</span></span><br><span class="line">    <span class="keyword">let</span> fontSize = $(<span class="string">"#range"</span>).value; <span class="comment">// 发送弹幕的字体大小</span></span><br><span class="line">    <span class="keyword">let</span> sendObj = &#123; time, value, color, fontSize &#125;; <span class="comment">//发送弹幕的参数集合</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// ********** 以下为新增代码 **********</span></span><br><span class="line">    socket.send(<span class="built_in">JSON</span>.stringify(sendObj));</span><br><span class="line">    <span class="comment">// ********** 以上为新增代码 **********</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// ********** 下面代码被删掉了 **********</span></span><br><span class="line">    <span class="comment">// canvasBarrage.add(sendObj); // 发送弹幕的方法</span></span><br><span class="line">    <span class="comment">// ********** 上面代码被删掉了 **********</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>现在我们可以打开 <code>index.html</code> 文件并启动 <code>server.js</code> 服务器，就可以实现真实的视频弹幕操作了，但是我们还是差了最后一步，当前的服务只能同时服务一个人，但真实的场景是同时看视频的有很多人，而且发送的弹幕是共享的。</p>
+<h3 id="3、实现多端通信、弹幕共享"><a href="#3、实现多端通信、弹幕共享" class="headerlink" title="3、实现多端通信、弹幕共享"></a>3、实现多端通信、弹幕共享</h3><p>我们需要处理两件事情：</p>
+<ul>
+<li>第一件事情是实现多端通信共享数据库信息；</li>
+<li>第二件事情是当有人离开的时候清除关闭的 WebSocket 对象。</li>
+</ul>
+<figure class="highlight js"><figcaption><span>文件：server.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> WebSocket = <span class="built_in">require</span>(<span class="string">"ws"</span>); <span class="comment">// 引入 WebSocket</span></span><br><span class="line"><span class="keyword">const</span> redis = <span class="built_in">require</span>(<span class="string">"redis"</span>); <span class="comment">// 引入 redis</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化 WebSocket 服务器，端口号为 3000</span></span><br><span class="line"><span class="keyword">let</span> wss = <span class="keyword">new</span> WebSocket.Server(&#123;</span><br><span class="line">    port: <span class="number">3000</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 redis 客户端</span></span><br><span class="line"><span class="keyword">let</span> client = redis.createClient(); <span class="comment">// key value</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ********** 以下为新增代码 **********</span></span><br><span class="line"><span class="comment">// 存储所有 WebSocket 用户</span></span><br><span class="line"><span class="keyword">let</span> clientsArr = [];</span><br><span class="line"><span class="comment">// ********** 以上为新增代码 **********</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 原生的 websocket 就两个常用的方法 on('message')、on('send')</span></span><br><span class="line">wss.on(<span class="string">"connection"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">ws</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ********** 以下为新增代码 **********</span></span><br><span class="line">    <span class="comment">// 将所有通过 WebSocket 连接的用户存入数组中</span></span><br><span class="line">    clientsArr.push(ws);</span><br><span class="line">    <span class="comment">// ********** 以上为新增代码 **********</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 监听连接</span></span><br><span class="line">    <span class="comment">// 连接上需要立即把 redis 数据库的数据取出返回给前端</span></span><br><span class="line">    client.lrange(<span class="string">"barrages"</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, applies</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 由于 redis 的数据都是字符串，所以需要把数组中每一项转成对象</span></span><br><span class="line">        applies = applies.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="built_in">JSON</span>.parse(item));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 使用 websocket 服务器将 redis 数据库的数据发送给前端</span></span><br><span class="line">        <span class="comment">// 构建一个对象，加入 type 属性告诉前端当前返回数据的行为，并将数据转换成字符串</span></span><br><span class="line">        ws.send(</span><br><span class="line">            <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">                type: <span class="string">"INIT"</span>,</span><br><span class="line">                data: applies</span><br><span class="line">            &#125;)</span><br><span class="line">        );</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当服务器收到消息时，将数据存入 redis 数据库</span></span><br><span class="line">    ws.on(<span class="string">"message"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 向数据库存储时存的是字符串，存入并打印数据，用来判断是否成功存入数据库</span></span><br><span class="line">        client.rpush(<span class="string">"barrages"</span>, data, redis.print);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// ********** 以下为修改后的代码 **********</span></span><br><span class="line">        <span class="comment">// 循环数组，将某一个人新发送的弹幕在存储到 Redis 之后返回给所有用户</span></span><br><span class="line">        clientsArr.forEach(<span class="function"><span class="params">w</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 再将当前这条数据返回给前端，同样添加 type 字段告诉前端当前行为，并将数据转换成字符串</span></span><br><span class="line">            w.send(</span><br><span class="line">                <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">                    type: <span class="string">"ADD"</span>,</span><br><span class="line">                    data: <span class="built_in">JSON</span>.parse(data)</span><br><span class="line">                &#125;)</span><br><span class="line">            );</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">// ********** 以上为修改后的代码 **********</span></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ********** 以下为新增代码 **********</span></span><br><span class="line">    <span class="comment">// 监听关闭连接事件</span></span><br><span class="line">    ws.on(<span class="string">"close"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 当某一个人关闭连接离开时，将这个人从当前存储用户的数组中移除</span></span><br><span class="line">        clientsArr = clientsArr.filter(<span class="function"><span class="params">client</span> =&gt;</span> client != ws);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">// ********** 以上为新增代码 **********</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<div class="note success"><p>上面就是 Canvas + WebSocket + Redis 视频弹幕的实现，实现过程可能有些复杂，但整个过程写的还是比较详细，可能需要一定的耐心慢慢的读完，并最好一步一步跟着写一写，希望这篇文章可以让读到的人解决视频弹幕类似的需求，真正理解整个过程和开放封闭原则，认识到前端面向对象编程思想的美。</p></div>
+<hr>
+
+      
+    </div>
+
+    
+    
+    
+    <div>
+      
+        <div class="read-end">
+    
+        <div style="text-align:center;color: #ccc;">
+          <span class="read-end-max">--------------</span>
+          <span class="read-end-mid">----------</span>
+          <span class="read-end-min">-------</span>
+          本文结束
+          <i class="fa fa-paw"></i>
+          感谢您的阅读
+          <span class="read-end-min">-------</span>
+          <span class="read-end-mid">----------</span>
+          <span class="read-end-max">--------------</span>
+        </div>
+    
+</div>
+
+      
+    </div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div class="reward-comment" style="margin-bottom: 10px;">坚持技术分享，对您有帮助就赏一个吧 ^ ^</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Panda Shen 微信"/>
+        <p>微信</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Panda Shen 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Panda Shen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.pandashen.com/2018/06/21/20180621113025/" title="Canvas + WebSocket + Redis 实现一个视频弹幕">https://www.pandashen.com/2018/06/21/20180621113025/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
+          
+            <a href="/tags/HTML/" rel="tag"><i class="fa fa-tag"></i> HTML</a>
+          
+            <a href="/tags/CSS/" rel="tag"><i class="fa fa-tag"></i> CSS</a>
+          
+            <a href="/tags/Canvas/" rel="tag"><i class="fa fa-tag"></i> Canvas</a>
+          
+            <a href="/tags/WebSocket/" rel="tag"><i class="fa fa-tag"></i> WebSocket</a>
+          
+            <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/15/20180615212040/" rel="next" title="异步发展流程 —— 异步编程的终极大招 async/await">
+                <i class="fa fa-chevron-left"></i> 异步发展流程 —— 异步编程的终极大招 async/await
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/23/20180623084025/" rel="prev" title="高阶函数应用 —— 柯里化与反柯里化">
+                高阶函数应用 —— 柯里化与反柯里化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b4dbb54f6ab0d36" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="gitalk-container"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Panda Shen" />
+            
+              <p class="site-author-name" itemprop="name">Panda Shen</p>
+              <p class="site-description motion-element" itemprop="description">Keep fucking the world</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/rss2.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/shenqiuhui" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:pandashen821@163.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.pandashen.cn" target="_blank" title="WeChat">
+                    
+                      <i class="fa fa-fw fa-weixin"></i>WeChat</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cherryblog.site/" title="Cherry's Blog" target="_blank">Cherry's Blog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://asdfv1929.github.io/" title="asdfv1929 's Home" target="_blank">asdfv1929 's Home</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pineapplexue.vip/" title="菠萝吹雪" target="_blank">菠萝吹雪</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#页面布局"><span class="nav-number">1.</span> <span class="nav-text">页面布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义接口，构造假数据"><span class="nav-number">2.</span> <span class="nav-text">定义接口，构造假数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现前端弹幕的逻辑"><span class="nav-number">3.</span> <span class="nav-text">实现前端弹幕的逻辑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、创建弹幕功能的类及基本参数处理"><span class="nav-number">3.1.</span> <span class="nav-text">1、创建弹幕功能的类及基本参数处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、创建构造每一条弹幕的类"><span class="nav-number">3.2.</span> <span class="nav-text">2、创建构造每一条弹幕的类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、在-CanvasBarrage-类实现渲染所有弹幕的-render-方法"><span class="nav-number">3.3.</span> <span class="nav-text">3、在 CanvasBarrage 类实现渲染所有弹幕的 render 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、CanvasBarrage-类-render-内部-renderBarrage-的实现"><span class="nav-number">3.4.</span> <span class="nav-text">4、CanvasBarrage 类 render 内部 renderBarrage 的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、Barrage-类-init-的实现"><span class="nav-number">3.5.</span> <span class="nav-text">5、Barrage 类 init 的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、实现每条弹幕的渲染和弹幕移除屏幕的处理"><span class="nav-number">3.6.</span> <span class="nav-text">6、实现每条弹幕的渲染和弹幕移除屏幕的处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7、Barrage-类下的-render-方法的实现"><span class="nav-number">3.7.</span> <span class="nav-text">7、Barrage 类下的 render 方法的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8、实现播放、暂停事件"><span class="nav-number">3.8.</span> <span class="nav-text">8、实现播放、暂停事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9、实现发送弹幕事件"><span class="nav-number">3.9.</span> <span class="nav-text">9、实现发送弹幕事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10、拖动进度条实现弹幕的前进和后退"><span class="nav-number">3.10.</span> <span class="nav-text">10、拖动进度条实现弹幕的前进和后退</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-WebSocket-和-Redis-实现前后端通信及数据存储"><span class="nav-number">4.</span> <span class="nav-text">使用 WebSocket 和 Redis 实现前后端通信及数据存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、服务器代码的实现"><span class="nav-number">4.1.</span> <span class="nav-text">1、服务器代码的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、前端代码的修改"><span class="nav-number">4.2.</span> <span class="nav-text">2、前端代码的修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、实现多端通信、弹幕共享"><span class="nav-number">4.3.</span> <span class="nav-text">3、实现多端通信、弹幕共享</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Panda Shen</span>
+
+</div>
+
+
+
+
+
+
+  <span class="footer-custom">Hosted by <a href="https://pages.coding.me" target="_blank">Coding Pages</a></span>
+
+
+
+  <span class="footer-custom-flag post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+  <span class="post-meta-item-icon">
+    <i class="fa fa-bar-chart"></i>
+  </span>
+  
+    <span class="post-meta-item-text">网站文字统计&#58;</span>
+  
+  <span title="网站文字统计">202.6k</span>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" id="busuanzi_container_site_uv" style="display: none;">
+      <i class="fa fa-user"></i> 访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+      
+        <span class="post-meta-divider">|</span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv" id="busuanzi_container_site_pv" style="display: none;">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script src="/js/src/md5.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '708ca5b4fc1f08259651',
+      clientSecret: '347014dfe70a72dea9c207152fd04e8d3ebcc3b4',
+      repo: 'shenqiuhui.github.io',
+      owner: 'shenqiuhui',
+      admin: ['shenqiuhui'],
+      // id: location.pathname,
+      id: md5(location.pathname),
+      distractionFreeMode: 'true'
+    })
+    gitalk.render('gitalk-container')
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').html('<div id="no-result"><i class="fa fa-search fa-5x" /></div>');
+      $('#no-result').html('<i class="fa fa-search fa-5x" />');
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("RqIV72rdY61eUlDassFQDxPG-gzGzoHsz", "Mvo4cTDcS9hw0l03mINzvdNk");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/src/clicklove.js"></script>
+  <!-- 修改代码块编译有标题和无标题的问题 -->
+  <script type="text/javascript" src="/js/src/changehighlight.js"></script>
+</body>
+</html>
