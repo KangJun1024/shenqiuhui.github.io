@@ -249,8 +249,8 @@
       </categories>
       <tags>
         <tag>HTTP</tag>
-        <tag>命令行</tag>
         <tag>NodeJS</tag>
+        <tag>命令行</tag>
         <tag>http-server</tag>
         <tag>npm</tag>
       </tags>
@@ -452,8 +452,8 @@
         <tag>ES6</tag>
         <tag>ES7</tag>
         <tag>async/await</tag>
-        <tag>数据结构</tag>
         <tag>fs</tag>
+        <tag>数据结构</tag>
       </tags>
   </entry>
   <entry>
