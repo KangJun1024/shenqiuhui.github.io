@@ -1,1588 +1,691 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-<meta name="theme-color" content="#222">
-
-
-
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-  <script>
-  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
-  daovoice('init', {
-      app_id: "848cdfe0"
-    });
-  daovoice('update');
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-    
-      
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
     
 
     
-  
-
-  
-    
-      
-    
 
     
-  
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?HIpscSc60YSz75aC"></script>
+<!-- End Baidu Tongji -->
 
-  
-    
-      
-    
 
-    
-  
 
-  
+
+    <meta charset="utf-8">
     
     
-    <link href="//fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="JavaScript,异步,Promise,NodeJS," />
-
-
-
-
-
-  <link rel="alternate" href="/rss2.xml" title="Panda Shen" type="application/atom+xml" />
-
-
-
-
-
-
-<meta name="description" content="浏览器中的事件轮询JavaScript 是一门单线程语言，之所以说是单线程，是因为在浏览器中，如果是多线程，并且两个线程同时操作了同一个 Dom 元素，那最后的结果会出现问题。所以，JavaScript 是单线程的，但是如果完全由上至下的一行一行执行代码，假如一个代码块执行了很长的时间，后面必须要等待当前执行完毕，这样的效率是非常低的，所以有了异步的概念，确切的说，JavaScript 的主线程">
+    
+    
+    <title>浅析 event-loop 事件轮询 | Panda Shen&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="JavaScript,异步,Promise,NodeJS">
+    <meta name="description" content="浏览器中的事件轮询JavaScript 是一门单线程语言，之所以说是单线程，是因为在浏览器中，如果是多线程，并且两个线程同时操作了同一个 Dom 元素，那最后的结果会出现问题。所以，JavaScript 是单线程的，但是如果完全由上至下的一行一行执行代码，假如一个代码块执行了很长的时间，后面必须要等待当前执行完毕，这样的效率是非常低的，所以有了异步的概念，确切的说，JavaScript 的主线">
 <meta name="keywords" content="JavaScript,异步,Promise,NodeJS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅析 event-loop 事件轮询">
 <meta property="og:url" content="https://www.pandashen.com/2018/03/25/20180325170208/index.html">
-<meta property="og:site_name" content="Panda Shen">
-<meta property="og:description" content="浏览器中的事件轮询JavaScript 是一门单线程语言，之所以说是单线程，是因为在浏览器中，如果是多线程，并且两个线程同时操作了同一个 Dom 元素，那最后的结果会出现问题。所以，JavaScript 是单线程的，但是如果完全由上至下的一行一行执行代码，假如一个代码块执行了很长的时间，后面必须要等待当前执行完毕，这样的效率是非常低的，所以有了异步的概念，确切的说，JavaScript 的主线程">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:description" content="浏览器中的事件轮询JavaScript 是一门单线程语言，之所以说是单线程，是因为在浏览器中，如果是多线程，并且两个线程同时操作了同一个 Dom 元素，那最后的结果会出现问题。所以，JavaScript 是单线程的，但是如果完全由上至下的一行一行执行代码，假如一个代码块执行了很长的时间，后面必须要等待当前执行完毕，这样的效率是非常低的，所以有了异步的概念，确切的说，JavaScript 的主线">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.pandashen.com/2018/03/25/20180325170208/libuv.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/03/25/20180325170208/event-loop.png">
-<meta property="og:updated_time" content="2018-11-12T10:21:27.941Z">
+<meta property="og:image" content="https://www.pandashen.com/2018/03/25/20180325170208/event-loop.jpg">
+<meta property="og:updated_time" content="2019-03-04T17:31:31.387Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅析 event-loop 事件轮询">
-<meta name="twitter:description" content="浏览器中的事件轮询JavaScript 是一门单线程语言，之所以说是单线程，是因为在浏览器中，如果是多线程，并且两个线程同时操作了同一个 Dom 元素，那最后的结果会出现问题。所以，JavaScript 是单线程的，但是如果完全由上至下的一行一行执行代码，假如一个代码块执行了很长的时间，后面必须要等待当前执行完毕，这样的效率是非常低的，所以有了异步的概念，确切的说，JavaScript 的主线程">
+<meta name="twitter:description" content="浏览器中的事件轮询JavaScript 是一门单线程语言，之所以说是单线程，是因为在浏览器中，如果是多线程，并且两个线程同时操作了同一个 Dom 元素，那最后的结果会出现问题。所以，JavaScript 是单线程的，但是如果完全由上至下的一行一行执行代码，假如一个代码块执行了很长的时间，后面必须要等待当前执行完毕，这样的效率是非常低的，所以有了异步的概念，确切的说，JavaScript 的主线">
 <meta name="twitter:image" content="https://www.pandashen.com/2018/03/25/20180325170208/libuv.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+    
 
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '5.1.3',
-    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: 'undefined',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: 'SIUJA7EEMV',
-      apiKey: 'bd003fb67269946195a6faa118759b02',
-      indexName: 'search_controller',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"输入关键词进行搜索","hits_empty":"找不到关于 “${query}” 的文章","hits_stats":"共找到 ${hits} 篇文章，花了 ${time} ms"}
-    }
-  };
-</script>
+    
+    
+<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon-next.png">
 
 
 
-  <link rel="canonical" href="https://www.pandashen.com/2018/03/25/20180325170208/"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32-next.png">
 
 
 
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16-next.png">
 
 
-  <title>浅析 event-loop 事件轮询 | Panda Shen</title>
-  
+
+<link rel="mask-icon" href="/img/logo.svg" color>
 
 
 
 
 
 
+    
 
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-  
-  
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Panda Shen</h5>
+          <a href="mailto:pandashen821@163.com" title="pandashen821@163.com" class="mail">pandashen821@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/link">
+                <i class="icon icon-lg icon-link"></i>
+                链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-user"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.pandashen.cn" target="_blank">
+                <i class="icon icon-lg icon-weixin"></i>
+                WeChat
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">浅析 event-loop 事件轮询</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">浅析 event-loop 事件轮询</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-25T09:02:08.000Z" itemprop="datePublished" class="page-time">
+  2018-03-25
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/异步/">异步</a></li></ul>
+
+            
+        </h5>
+    </div>
+
     
-  
 
-  <div class="container sidebar-position-right page-post-detail">
-    <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <!-- <h4>TOC</h4> -->
+            <h4>文章目录</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#浏览器中的事件轮询"><span class="post-toc-number">1.</span> <span class="post-toc-text">浏览器中的事件轮询</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Node-中的事件轮询"><span class="post-toc-number">2.</span> <span class="post-toc-text">Node 中的事件轮询</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-20180325170208" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">浅析 event-loop 事件轮询</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-25 17:02:08" datetime="2018-03-25T09:02:08.000Z" itemprop="datePublished">2018-03-25</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/异步/">异步</a></li></ul>
+
+
+
+            
+
+            
+<span id="/2018/03/25/20180325170208/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="浅析 event-loop 事件轮询">
+    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <img src="/2018/03/25/20180325170208/libuv.png" title="event-loop">
+<p><br></p>
+<h2 id="浏览器中的事件轮询"><a href="#浏览器中的事件轮询" class="headerlink" title="浏览器中的事件轮询"></a>浏览器中的事件轮询</h2><blockquote class="pullquote default"><p>JavaScript 是一门单线程语言，之所以说是单线程，是因为在浏览器中，如果是多线程，并且两个线程同时操作了同一个 Dom 元素，那最后的结果会出现问题。所以，JavaScript 是单线程的，但是如果完全由上至下的一行一行执行代码，假如一个代码块执行了很长的时间，后面必须要等待当前执行完毕，这样的效率是非常低的，所以有了异步的概念，确切的说，JavaScript 的主线程是单线程的，但是也有其他的线程去帮我们实现异步操作，比如定时器线程、事件线程、Ajax 线程。</p>
+</blockquote>
+<p>在浏览器中执行 JavaScript 有两个区域，一个是我们平时所说的同步代码执行，是在栈中执行，原则是先进后出，而在执行异步代码的时候分为两个队列，<code>macro-task</code>（宏任务）和 <code>micro-task</code>（微任务），遵循先进先出的原则。</p>
+<a id="more"></a>
+<figure class="highlight js"><figcaption><span>作用域链</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">one</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">two</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">three</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    three();</span><br><span class="line">  &#125;</span><br><span class="line">  two();</span><br><span class="line">&#125;</span><br><span class="line">one();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<p>上面的代码都是同步的代码，在执行的时候先将全局作用域放入栈中，执行全局作用域中的代码，解析了函数 <code>one</code>，当执行函数调用 <code>one()</code> 的时候将 <code>one</code> 的作用域放入栈中，执行 <code>one</code> 中的代码，打印了 <code>1</code>，解析了 <code>two</code>，执行 <code>two()</code>，将 <code>two</code> 放入栈中，执行 <code>two</code>，打印了 <code>2</code>，解析了 <code>three</code>，执行了 <code>three()</code>，将 <code>three</code> 放入栈中，执行 <code>three</code>，打印了 <code>3</code>。</p>
+<p>在函数执行完释放的过程中，因为全局作用域中有 <code>one</code> 正在执行，<code>one</code> 中有 <code>two</code> 正在执行，<code>two</code> 中有 <code>three</code> 正在执行，所以释放内存时必须由内层向外层释放，<code>three</code> 执行后释放，此时 <code>three</code> 不再占用 <code>two</code> 的执行环境，将 <code>two</code> 释放，<code>two</code> 不再占用 <code>one</code> 的执行环境，将 <code>one</code> 释放，<code>one</code> 不再占用全局作用域的执行环境，最后释放全局作用域，这就是在栈中执行同步代码时的先进后出原则，更像是一个杯子，先放进去的在最下面，需要最后取出。</p>
+<p>而异步队列更像时一个管道，有两个口，从入口进，从出口出，所以是先进先出，在宏任务队列中代表的有 <code>setTimeout</code>、<code>setInterval</code>、<code>setImmediate</code>、<code>MessageChannel</code>，微任务的代表为 Promise 的 <code>then</code> 方法、<code>MutationObserve</code>（已废弃）。</p>
+<p><strong>案例 1</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> messageChannel = <span class="keyword">new</span> MessageChannel();</span><br><span class="line"><span class="keyword">const</span> prot2 = messageChannel.port2;</span><br><span class="line"></span><br><span class="line">messageChannel.port1.postMessage(<span class="string">'I love you'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">prot2.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(e.data);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// I love you</span></span><br></pre></td></tr></table></figure>
+<p>从上面案例中可以看出，<code>MessageChannel</code> 是宏任务，晚于同步代码执行。</p>
+<p><strong>案例 2</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">1</span>), <span class="number">2000</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">2</span>), <span class="number">1000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<p>上面代码可以看出其实 <code>setTimeout</code> 并不是在同步代码执行的时候就放入了异步队列，而是等待时间到达时才会放入异步队列，所以才会有了上面的结果。</p>
+<p><strong>案例 3</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setImmediate'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// setTimeout</span></span><br><span class="line"><span class="comment">// setImmediate</span></span><br></pre></td></tr></table></figure>
+<p>同为宏任务，<code>setImmediate</code> 在 <code>setTimeout</code> 延迟时间为 <code>0</code> 时是晚于 <code>setTimeout</code> 被放入异步队列的，这里需要注意的是 <code>setImmediate</code> 在浏览器端，到目前为止只有 IE 实现了。</p>
+<p>上面的案例都是关于宏任务，下面我们举一个有微任务的案例来看一看微任务和宏任务的执行机制，在浏览器端微任务的代表其实就是 Promise 的 <code>then</code> 方法。</p>
+<p><strong>案例 4</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout1'</span>);</span><br><span class="line">  <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Promise1'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Promise2'</span>);</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setTimeout2'</span>);</span><br><span class="line">  &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Promise2</span></span><br><span class="line"><span class="comment">// setTimeout1</span></span><br><span class="line"><span class="comment">// Promise1</span></span><br><span class="line"><span class="comment">// setTimeout2</span></span><br></pre></td></tr></table></figure>
+<blockquote class="pullquote info"><p>从上面的执行结果其实可以看出，同步代码在栈中执行完毕后会先去执行微任务队列，将微任务队列执行完毕后，会去执行宏任务队列，宏任务队列执行一个宏任务以后，会去看看有没有产生新的微任务，如果有则清空微任务队列后再执行下一个宏任务，依次轮询，直到清空整个异步队列。</p>
+</blockquote>
+<h2 id="Node-中的事件轮询"><a href="#Node-中的事件轮询" class="headerlink" title="Node 中的事件轮询"></a>Node 中的事件轮询</h2><blockquote class="pullquote primary"><p>在 Node 中的事件轮询机制与浏览器相似又不同，相似的是，同样先在栈中执行同步代码，同样是先进后出，不同的是 Node 有自己的多个处理不同问题的阶段和对应的队列，也有自己内部实现的微任务 <code>process.nextTick</code>，Node 的整个事件轮询机制是 Libuv 库实现的。</p>
+</blockquote>
+<p><strong>Node 中事件轮询的流程如下图：</strong></p>
+<p><br></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/03/25/20180325170208/event-loop.jpg" alt="Node 事件环流程图" title>
+                </div>
+                <div class="image-caption">Node 事件环流程图</div>
+            </figure>
+<p><br></p>
+<blockquote class="pullquote info"><p>从图中可以看出，在 Node 中有多个队列，分别执行不同的操作，而每次在队列切换的时候都去执行一次微任务队列，反复的轮询。</p>
+</blockquote>
+<p><strong>案例 1</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">setImmediate(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setInmediate'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>默认情况下 <code>setTimeout</code> 和 <code>setImmediate</code> 是不知道哪一个先执行的，顺序不固定，Node 执行的时候有准备的时间，<code>setTimeout</code> 延迟时间设置为 <code>0</code> 其实是大概 <code>4ms</code>，假设 Node 准备时间在 <code>4ms</code> 之内，开始执行轮询，定时器没到时间，所以轮询到下一队列，此时要等再次循环到 <code>timer</code> 队列后执行定时器，所以会先执行 <code>check</code> 队列的 <code>setImmediate</code>。</p>
+<p>如果 Node 执行的准备时间大于了 <code>4ms</code>，因为执行同步代码后，定时器的回调已经被放入 <code>timer</code> 队列，所以会先执行 <code>timer</code> 队列。</p>
+<p><strong>案例 2</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout1'</span>);</span><br><span class="line">  <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Promise1'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout2'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// setTimeout1</span></span><br><span class="line"><span class="comment">// setTimeout2</span></span><br><span class="line"><span class="comment">// Promise1</span></span><br></pre></td></tr></table></figure>
+<p>Node 事件轮询中，轮询到每一个队列时，都会将当前队列任务清空后，在切换下一队列之前清空一次微任务队列，这是与浏览器端不一样的。</p>
+<p>浏览器端会在宏任务队列当中执行一个任务后插入执行微任务队列，清空微任务队列后，再回到宏任务队列执行下一个宏任务。</p>
+<p>上面案例在 Node 事件轮询中，会将 <code>timer</code> 队列清空后，在轮询下一个队列之前执行微任务队列。</p>
+<p><strong>案例 3</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout1'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout2'</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Promise1'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// Promise1</span></span><br><span class="line"><span class="comment">// setTimeout1</span></span><br><span class="line"><span class="comment">// setTimeout2</span></span><br></pre></td></tr></table></figure>
+<p>上面代码的执行过程是，先执行栈，栈执行时打印 <code>1</code>，<code>Promise.resolve()</code> 产生微任务，栈执行完毕，从栈切换到 <code>timer</code> 队列之前，执行微任务队列，再去执行 <code>timer</code> 队列。</p>
+<p><strong>案例 4</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setImmediate1'</span>);</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setTimeout1'</span>);</span><br><span class="line">  &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout2'</span>);</span><br><span class="line">  setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setImmediate2'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//结果1</span></span><br><span class="line"><span class="comment">// setImmediate1</span></span><br><span class="line"><span class="comment">// setTimeout2</span></span><br><span class="line"><span class="comment">// setTimeout1</span></span><br><span class="line"><span class="comment">// setImmediate2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 结果2</span></span><br><span class="line"><span class="comment">// setTimeout2</span></span><br><span class="line"><span class="comment">// setImmediate1</span></span><br><span class="line"><span class="comment">// setImmediate2</span></span><br><span class="line"><span class="comment">// setTimeout1</span></span><br></pre></td></tr></table></figure>
+<p><code>setImmediate</code> 和 <code>setTimeout</code> 执行顺序不固定，假设 <code>check</code> 队列先执行，会执行 <code>setImmediate</code> 打印 <code>setImmediate1</code>，将遇到的定时器放入 <code>timer</code> 队列，轮询到 <code>timer</code> 队列，因为在栈中执行同步代码已经在 <code>timer</code> 队列放入了一个定时器，所以按先后顺序执行两个 <code>setTimeout</code>，执行第一个定时器打印 <code>setTimeout2</code>，将遇到的 <code>setImmediate</code> 放入 <code>check</code> 队列，执行第二个定时器打印 <code>setTimeout1</code>，再次轮询到 <code>check</code> 队列执行新加入的 <code>setImmediate</code>，打印 <code>setImmediate2</code>，产生结果 <code>1</code>。</p>
+<p>假设 <code>timer</code> 队列先执行，会执行 <code>setTimeout</code> 打印 <code>setTimeout2</code>，将遇到的 <code>setImmediate</code> 放入 <code>check</code> 队列，轮询到 <code>check</code> 队列，因为在栈中执行同步代码已经在 <code>check</code> 队列放入了一个 <code>setImmediate</code>，所以按先后顺序执行两个 <code>setImmediate</code>，执行第一个 <code>setImmediate</code> 打印 <code>setImmediate1</code>，将遇到的 <code>setTimeout</code> 放入 <code>timer</code> 队列，执行第二个 <code>setImmediate</code> 打印 <code>setImmediate2</code>，再次轮询到 <code>timer</code> 队列执行新加入的 <code>setTimeout</code>，打印 <code>setTimeout1</code>，产生结果 <code>2</code>。</p>
+<p><strong>案例 5</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setImmediate1'</span>);</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setTimeout1'</span>);</span><br><span class="line">  &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  process.nextTick(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'nextTick'</span>));</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'setTimeout2'</span>);</span><br><span class="line">  setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setImmediate2'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//结果1</span></span><br><span class="line"><span class="comment">// setImmediate1</span></span><br><span class="line"><span class="comment">// setTimeout2</span></span><br><span class="line"><span class="comment">// setTimeout1</span></span><br><span class="line"><span class="comment">// nextTick</span></span><br><span class="line"><span class="comment">// setImmediate2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 结果2</span></span><br><span class="line"><span class="comment">// setTimeout2</span></span><br><span class="line"><span class="comment">// nextTick</span></span><br><span class="line"><span class="comment">// setImmediate1</span></span><br><span class="line"><span class="comment">// setImmediate2</span></span><br><span class="line"><span class="comment">// setTimeout1</span></span><br></pre></td></tr></table></figure>
+<p>这与上面一个案例类似，不同的是在 <code>setTimeout</code> 执行的时候产生了一个微任务 <code>nextTick</code>，我们只要知道，在 Node 事件轮询中，在切换队列时要先去执行微任务队列，无论是 <code>check</code> 队列先执行，还是 <code>timer</code> 队列先执行，都会很容易分析出上面的两个结果。</p>
+<p><strong>案例 6</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line">fs.readFile(<span class="string">'./.gitignore'</span>, <span class="string">'utf8'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'timeout'</span>);</span><br><span class="line">  &#125;, <span class="number">0</span>);</span><br><span class="line">  setImmediate(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'setImmediate'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// setImmediate</span></span><br><span class="line"><span class="comment">// timeout</span></span><br></pre></td></tr></table></figure>
+<p>上面案例的 <code>setTimeout</code> 和 <code>setImmediate</code> 的执行顺序是固定的，前面都是不固定的，这是为什么？</p>
+<p>因为前面的不固定是在栈中执行同步代码时就遇到了 <code>setTimeout</code> 和 <code>setImmediate</code>，因为无法判断 Node 的准备时间，不确定准备结束定时器是否到时并加入 <code>timer</code> 队列。</p>
+<p>而上面代码明显可以看出 Node 准备结束后会直接执行 <code>poll</code> 队列进行文件的读取，在回调中将 <code>setTimeout</code> 和 <code>setImmediate</code> 分别加入 <code>timer</code> 队列和 <code>check</code> 队列，Node 队列的轮询是有顺序的，在 <code>poll</code> 队列后应该先切换到 <code>check</code> 队列，然后再重新轮询到 <code>timer</code> 队列，所以得到上面的结果。</p>
+<p><strong>案例 7</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'Promise'</span>));</span><br><span class="line">process.nextTick(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">'nextTick'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// nextTick</span></span><br><span class="line"><span class="comment">// Promise</span></span><br></pre></td></tr></table></figure>
+<p>在 Node 中有两个微任务，<code>Promise</code> 的 <code>then</code> 方法和 <code>process.nextTick</code>，从上面案例的结果我们可以看出，在微任务队列中 <code>process.nextTick</code> 是优先执行的。</p>
+<blockquote class="pullquote success"><p>上面内容就是浏览器与 Node 在事件轮询的规则，相信在读完以后应该已经彻底弄清了浏览器的事件轮询机制和 Node 的事件轮询机制，并深刻的体会到了他们之间的相同和不同。</p>
+</blockquote>
+
+        </div>
+
+        
+<div class="read-end">
+    <span class="read-end-lg">--------------------</span>
+    <span class="read-end-md">---------------</span>
+    <span class="read-end-sm">----------</span>
+    本文结束
+    <i class="icon icon-paw"></i>
+    感谢您的阅读
+    <span class="read-end-sm">----------</span>
+    <span class="read-end-md">---------------</span>
+    <span class="read-end-lg">--------------------</span>
+</div>
+
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    更新时间：<time datetime="2019-03-04T17:31:31.387Z" itemprop="dateUpdated">2019-03-05 01:31:31</time>
+</span><br>
+
+
+        
+<span class="permalink">
+    本文链接：<a href="/2018/03/25/20180325170208/" target="_blank" rel="external">https://www.pandashen.com/2018/03/25/20180325170208/</a>
+</span><br>
+
+
+        
+<span class="post-message">
+    版权声明：本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 </a> 许可协议，转载请注明出处！
+</span>
+
+
+    </div>
+    
+    <footer>
+        <a href="https://www.pandashen.com">
+            <img src="/img/avatar.jpg" alt="Panda Shen">
+            Panda Shen
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Promise/">Promise</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/异步/">异步</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
     
 
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Panda Shen</span>
-        <span class="logo-line-after"><i></i></span>
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/03/25/20180325170208/&title=《浅析 event-loop 事件轮询》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/03/25/20180325170208/&title=《浅析 event-loop 事件轮询》 — Panda Shen's Blog&source=
+
+浏览器中的事件轮询JavaScript 是一门单线程语言，之所以说是单线程，是因为在浏览器中，如果是多线程，并且两个线程同时操作了同一个 Dom 元素..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/03/25/20180325170208/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《浅析 event-loop 事件轮询》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/03/25/20180325170208/&via=https://www.pandashen.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/03/25/20180325170208/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/03/28/20180328140039/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">模拟 Vue 手写一个 MVVM</h4>
       </a>
     </div>
-      
-        <h1 class="site-subtitle" itemprop="description">饿厂最菜程序猿的误人子弟之旅，Come on，发车了！</h1>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
   
 
   
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i>
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i>
-            
-            关于
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i>
-            
-            搜索
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="输入关键词进行搜索" spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result">
-    <div id="no-result"><i class="fa fa-search fa-5x"></i></div>
-  </div>
-</div>
-
-
-
+    <div class="waves-block waves-effect next">
+      <a href="/2017/12/14/20171214024101/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Git 命令总结，从零到熟悉</h4>
+      </a>
     </div>
   
 </nav>
 
 
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
 
-  
 
-  
-  
-  
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.pandashen.com/2018/03/25/20180325170208/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Panda Shen">
-      <meta itemprop="description" content="Keep fucking the world">
-      <meta itemprop="image" content="/images/avatar.jpg">
+
+
+
+
+
+
+
+
+<div class="comments vcomment" id="comments"></div>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        感谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechatpay.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechatpay.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
     </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Panda Shen">
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
     </span>
+</p>
 
-    
-      <header class="post-header">
 
-        
-        
-          <h2 class="post-title" itemprop="name headline">浅析 event-loop 事件轮询</h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <p>
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于&#58;</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-25T17:02:08+08:00">
-                2018-03-25
-              </time>
+                <span><a href="/rss2.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
             
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2018-11-12T18:21:27+08:00">
-                2018-11-12
-              </time>
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/25/20180325170208/" class="leancloud_visitors" data-flag-title="浅析 event-loop 事件轮询">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-edit"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2,595 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长&#58;</span>
-                
-                <span title="阅读时长">
-                  10 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p><img src="/2018/03/25/20180325170208/libuv.png" alt="event-loop" style="border: none;"></p>
-<h2 id="浏览器中的事件轮询"><a href="#浏览器中的事件轮询" class="headerlink" title="浏览器中的事件轮询"></a>浏览器中的事件轮询</h2><div class="note default"><p>JavaScript 是一门单线程语言，之所以说是单线程，是因为在浏览器中，如果是多线程，并且两个线程同时操作了同一个 Dom 元素，那最后的结果会出现问题。所以，JavaScript 是单线程的，但是如果完全由上至下的一行一行执行代码，假如一个代码块执行了很长的时间，后面必须要等待当前执行完毕，这样的效率是非常低的，所以有了异步的概念，确切的说，JavaScript 的主线程是单线程的，但是也有其他的线程去帮我们实现异步操作，比如定时器线程、事件线程、Ajax 线程。</p></div>
-<p>在浏览器中执行 JavaScript 有两个区域，一个是我们平时所说的同步代码执行，是在栈中执行，原则是先进后出，而在执行异步代码的时候分为两个队列，<code>macro-task</code>（宏任务）和 <code>micro-task</code>（微任务），遵循先进先出的原则。</p>
-<a id="more"></a>
-<figure class="highlight js"><figcaption><span>作用域链</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">one</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">two</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">three</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        three();</span><br><span class="line">    &#125;</span><br><span class="line">    two();</span><br><span class="line">&#125;</span><br><span class="line">one();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
-<p>上面的代码都是同步的代码，在执行的时候先将全局作用域放入栈中，执行全局作用域中的代码，解析了函数 <code>one</code>，当执行函数调用 <code>one()</code> 的时候将 <code>one</code> 的作用域放入栈中，执行 <code>one</code> 中的代码，打印了 <code>1</code>，解析了 <code>two</code>，执行 <code>two()</code>，将 <code>two</code> 放入栈中，执行 <code>two</code>，打印了 <code>2</code>，解析了 <code>three</code>，执行了 <code>three()</code>，将 <code>three</code> 放入栈中，执行 <code>three</code>，打印了 <code>3</code>。</p>
-<p>在函数执行完释放的过程中，因为全局作用域中有 <code>one</code> 正在执行，<code>one</code> 中有 <code>two</code> 正在执行，<code>two</code> 中有 <code>three</code> 正在执行，所以释放内存时必须由内层向外层释放，<code>three</code> 执行后释放，此时 <code>three</code> 不再占用 <code>two</code> 的执行环境，将 <code>two</code> 释放，<code>two</code> 不再占用 <code>one</code> 的执行环境，将 <code>one</code> 释放，<code>one</code> 不再占用全局作用域的执行环境，最后释放全局作用域，这就是在栈中执行同步代码时的先进后出原则，更像是一个杯子，先放进去的在最下面，需要最后取出。</p>
-<p>而异步队列更像时一个管道，有两个口，从入口进，从出口出，所以是先进先出，在宏任务队列中代表的有 <code>setTimeout</code>、<code>setInterval</code>、<code>setImmediate</code>、<code>MessageChannel</code>，微任务的代表为 Promise 的 <code>then</code> 方法、<code>MutationObserve</code>（已废弃）。</p>
-<p><strong>案例 1</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> messageChannel = <span class="keyword">new</span> MessageChannel();</span><br><span class="line"><span class="keyword">let</span> prot2 = messageChannel.port2;</span><br><span class="line"></span><br><span class="line">messageChannel.port1.postMessage(<span class="string">"I love you"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">prot2.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e.data);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// I love you</span></span><br></pre></td></tr></table></figure>
-<p>从上面案例中可以看出，<code>MessageChannel</code> 是宏任务，晚于同步代码执行。</p>
-<p><strong>案例 2</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">1</span>), <span class="number">2000</span>);</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="number">2</span>), <span class="number">1000</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
-<p>上面代码可以看出其实 <code>setTimeout</code> 并不是在同步代码执行的时候就放入了异步队列，而是等待时间到达时才会放入异步队列，所以才会有了上面的结果。</p>
-<p><strong>案例 3</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"setImmediate"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"setTimeout"</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// setTimeout</span></span><br><span class="line"><span class="comment">// setImmediate</span></span><br></pre></td></tr></table></figure>
-<p>同为宏任务，<code>setImmediate</code> 在 <code>setTimeout</code> 延迟时间为 <code>0</code> 时是晚于 <code>setTimeout</code> 被放入异步队列的，这里需要注意的是 <code>setImmediate</code> 在浏览器端，到目前为止只有 IE 实现了。</p>
-<p>上面的案例都是关于宏任务，下面我们举一个有微任务的案例来看一看微任务和宏任务的执行机制，在浏览器端微任务的代表其实就是 Promise 的 <code>then</code> 方法。</p>
-<p><strong>案例 4</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"setTimeout1"</span>);</span><br><span class="line">    <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Promise1"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Promise2"</span>);</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"setTimeout2"</span>);</span><br><span class="line">    &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Promise2</span></span><br><span class="line"><span class="comment">// setTimeout1</span></span><br><span class="line"><span class="comment">// Promise1</span></span><br><span class="line"><span class="comment">// setTimeout2</span></span><br></pre></td></tr></table></figure>
-<div class="note info"><p>从上面的执行结果其实可以看出，同步代码在栈中执行完毕后会先去执行微任务队列，将微任务队列执行完毕后，会去执行宏任务队列，宏任务队列执行一个宏任务以后，会去看看有没有产生新的微任务，如果有则清空微任务队列后再执行下一个宏任务，依次轮询，直到清空整个异步队列。</p></div>
-<hr>
-
-<h2 id="Node-中的事件轮询"><a href="#Node-中的事件轮询" class="headerlink" title="Node 中的事件轮询"></a>Node 中的事件轮询</h2><div class="note primary"><p>在 Node 中的事件轮询机制与浏览器相似又不同，相似的是，同样先在栈中执行同步代码，同样是先进后出，不同的是 Node 有自己的多个处理不同问题的阶段和对应的队列，也有自己内部实现的微任务 <code>process.nextTick</code>，Node 的整个事件轮询机制是 Libuv 库实现的。</p></div>
-<p><strong>Node 中事件轮询的流程如下图：</strong></p>
-<p><br><img src="/2018/03/25/20180325170208/event-loop.png" alt="Node事件环流程图" style="border: none;"><br></p>
-<div class="note info"><p>从图中可以看出，在 Node 中有多个队列，分别执行不同的操作，而每次在队列切换的时候都去执行一次微任务队列，反复的轮询。</p></div>
-<p><strong>案例 1</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"setTimeout"</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">setImmediate(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"setInmediate"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>默认情况下 <code>setTimeout</code> 和 <code>setImmediate</code> 是不知道哪一个先执行的，顺序不固定，Node 执行的时候有准备的时间，<code>setTimeout</code> 延迟时间设置为 <code>0</code> 其实是大概 <code>4ms</code>，假设 Node 准备时间在 <code>4ms</code> 之内，开始执行轮询，定时器没到时间，所以轮询到下一队列，此时要等再次循环到 <code>timer</code> 队列后执行定时器，所以会先执行 <code>check</code> 队列的 <code>setImmediate</code>。</p>
-<p>如果 Node 执行的准备时间大于了 <code>4ms</code>，因为执行同步代码后，定时器的回调已经被放入 <code>timer</code> 队列，所以会先执行 <code>timer</code> 队列。</p>
-<p><strong>案例 2</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"setTimeout1"</span>);</span><br><span class="line">    <span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Promise1"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"setTimeout2"</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// setTimeout1</span></span><br><span class="line"><span class="comment">// setTimeout2</span></span><br><span class="line"><span class="comment">// Promise1</span></span><br></pre></td></tr></table></figure>
-<p>Node 事件轮询中，轮询到每一个队列时，都会将当前队列任务清空后，在切换下一队列之前清空一次微任务队列，这是与浏览器端不一样的。</p>
-<p>浏览器端会在宏任务队列当中执行一个任务后插入执行微任务队列，清空微任务队列后，再回到宏任务队列执行下一个宏任务。</p>
-<p>上面案例在 Node 事件轮询中，会将 <code>timer</code> 队列清空后，在轮询下一个队列之前执行微任务队列。</p>
-<p><strong>案例 3</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"setTimeout1"</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"setTimeout2"</span>);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Promise1"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// Promise1</span></span><br><span class="line"><span class="comment">// setTimeout1</span></span><br><span class="line"><span class="comment">// setTimeout2</span></span><br></pre></td></tr></table></figure>
-<p>上面代码的执行过程是，先执行栈，栈执行时打印 <code>1</code>，<code>Promise.resolve()</code> 产生微任务，栈执行完毕，从栈切换到 <code>timer</code> 队列之前，执行微任务队列，再去执行 <code>timer</code> 队列。</p>
-<p><strong>案例 4</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"setImmediate1"</span>);</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"setTimeout1"</span>);</span><br><span class="line">    &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"setTimeout2"</span>);</span><br><span class="line">    setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"setImmediate2"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//结果1</span></span><br><span class="line"><span class="comment">// setImmediate1</span></span><br><span class="line"><span class="comment">// setTimeout2</span></span><br><span class="line"><span class="comment">// setTimeout1</span></span><br><span class="line"><span class="comment">// setImmediate2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 结果2</span></span><br><span class="line"><span class="comment">// setTimeout2</span></span><br><span class="line"><span class="comment">// setImmediate1</span></span><br><span class="line"><span class="comment">// setImmediate2</span></span><br><span class="line"><span class="comment">// setTimeout1</span></span><br></pre></td></tr></table></figure>
-<p><code>setImmediate</code> 和 <code>setTimeout</code> 执行顺序不固定，假设 <code>check</code> 队列先执行，会执行 <code>setImmediate</code> 打印 <code>setImmediate1</code>，将遇到的定时器放入 <code>timer</code> 队列，轮询到 <code>timer</code> 队列，因为在栈中执行同步代码已经在 <code>timer</code> 队列放入了一个定时器，所以按先后顺序执行两个 <code>setTimeout</code>，执行第一个定时器打印 <code>setTimeout2</code>，将遇到的 <code>setImmediate</code> 放入 <code>check</code> 队列，执行第二个定时器打印 <code>setTimeout1</code>，再次轮询到 <code>check</code> 队列执行新加入的 <code>setImmediate</code>，打印 <code>setImmediate2</code>，产生结果 <code>1</code>。</p>
-<p>假设 <code>timer</code> 队列先执行，会执行 <code>setTimeout</code> 打印 <code>setTimeout2</code>，将遇到的 <code>setImmediate</code> 放入 <code>check</code> 队列，轮询到 <code>check</code> 队列，因为在栈中执行同步代码已经在 <code>check</code> 队列放入了一个 <code>setImmediate</code>，所以按先后顺序执行两个 <code>setImmediate</code>，执行第一个 <code>setImmediate</code> 打印 <code>setImmediate1</code>，将遇到的 <code>setTimeout</code> 放入 <code>timer</code> 队列，执行第二个 <code>setImmediate</code> 打印 <code>setImmediate2</code>，再次轮询到 <code>timer</code> 队列执行新加入的 <code>setTimeout</code>，打印 <code>setTimeout1</code>，产生结果 <code>2</code>。</p>
-<p><strong>案例 5</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"setImmediate1"</span>);</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"setTimeout1"</span>);</span><br><span class="line">    &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    process.nextTick(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">"nextTick"</span>));</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"setTimeout2"</span>);</span><br><span class="line">    setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"setImmediate2"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//结果1</span></span><br><span class="line"><span class="comment">// setImmediate1</span></span><br><span class="line"><span class="comment">// setTimeout2</span></span><br><span class="line"><span class="comment">// setTimeout1</span></span><br><span class="line"><span class="comment">// nextTick</span></span><br><span class="line"><span class="comment">// setImmediate2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 结果2</span></span><br><span class="line"><span class="comment">// setTimeout2</span></span><br><span class="line"><span class="comment">// nextTick</span></span><br><span class="line"><span class="comment">// setImmediate1</span></span><br><span class="line"><span class="comment">// setImmediate2</span></span><br><span class="line"><span class="comment">// setTimeout1</span></span><br></pre></td></tr></table></figure>
-<p>这与上面一个案例类似，不同的是在 <code>setTimeout</code> 执行的时候产生了一个微任务 <code>nextTick</code>，我们只要知道，在 Node 事件轮询中，在切换队列时要先去执行微任务队列，无论是 <code>check</code> 队列先执行，还是 <code>timer</code> 队列先执行，都会很容易分析出上面的两个结果。</p>
-<p><strong>案例 6</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"></span><br><span class="line">fs.readFile(<span class="string">"./.gitignore"</span>, <span class="string">"utf8"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"timeout"</span>);</span><br><span class="line">    &#125;, <span class="number">0</span>);</span><br><span class="line">    setImmediate(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"setImmediate"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// setImmediate</span></span><br><span class="line"><span class="comment">// timeout</span></span><br></pre></td></tr></table></figure>
-<p>上面案例的 <code>setTimeout</code> 和 <code>setImmediate</code> 的执行顺序是固定的，前面都是不固定的，这是为什么？</p>
-<p>因为前面的不固定是在栈中执行同步代码时就遇到了 <code>setTimeout</code> 和 <code>setImmediate</code>，因为无法判断 Node 的准备时间，不确定准备结束定时器是否到时并加入 <code>timer</code> 队列。</p>
-<p>而上面代码明显可以看出 Node 准备结束后会直接执行 <code>poll</code> 队列进行文件的读取，在回调中将 <code>setTimeout</code> 和 <code>setImmediate</code> 分别加入 <code>timer</code> 队列和 <code>check</code> 队列，Node 队列的轮询是有顺序的，在 <code>poll</code> 队列后应该先切换到 <code>check</code> 队列，然后再重新轮询到 <code>timer</code> 队列，所以得到上面的结果。</p>
-<p><strong>案例 7</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.resolve().then(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">"Promise"</span>));</span><br><span class="line">process.nextTick(<span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">console</span>.log(<span class="string">"nextTick"</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// nextTick</span></span><br><span class="line"><span class="comment">// Promise</span></span><br></pre></td></tr></table></figure>
-<p>在 Node 中有两个微任务，<code>Promise</code> 的 <code>then</code> 方法和 <code>process.nextTick</code>，从上面案例的结果我们可以看出，在微任务队列中 <code>process.nextTick</code> 是优先执行的。</p>
-<div class="note success"><p>上面内容就是浏览器与 Node 在事件轮询的规则，相信在读完以后应该已经彻底弄清了浏览器的事件轮询机制和 Node 的事件轮询机制，并深刻的体会到了他们之间的相同和不同。</p></div>
-<hr>
-
-      
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
     </div>
-
-    
-    
-    
-    <div>
-      
-        <div class="read-end">
-    
-        <div style="text-align:center;color: #ccc;">
-          <span class="read-end-max">--------------</span>
-          <span class="read-end-mid">----------</span>
-          <span class="read-end-min">-------</span>
-          本文结束
-          <i class="fa fa-paw"></i>
-          感谢您的阅读
-          <span class="read-end-min">-------</span>
-          <span class="read-end-mid">----------</span>
-          <span class="read-end-max">--------------</span>
-        </div>
-    
-</div>
-
-      
-    </div>
-
-    
-
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div class="reward-comment" style="margin-bottom: 10px;">坚持技术分享，对您有帮助就赏一个吧 ^ ^</div>
-  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
-  </button>
-  <div id="QR" style="display: none;">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Panda Shen 微信"/>
-        <p>微信</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/alipay.jpg" alt="Panda Shen 支付宝"/>
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
-    
-
-    
-      <div>
-        <ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者：</strong>
-    Panda Shen
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://www.pandashen.com/2018/03/25/20180325170208/" title="浅析 event-loop 事件轮询">https://www.pandashen.com/2018/03/25/20180325170208/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>
-    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-
-      </div>
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
-          
-            <a href="/tags/异步/" rel="tag"><i class="fa fa-tag"></i> 异步</a>
-          
-            <a href="/tags/Promise/" rel="tag"><i class="fa fa-tag"></i> Promise</a>
-          
-            <a href="/tags/NodeJS/" rel="tag"><i class="fa fa-tag"></i> NodeJS</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/12/14/20171214024101/" rel="next" title="Git 命令总结，从零到熟悉（全）">
-                <i class="fa fa-chevron-left"></i> Git 命令总结，从零到熟悉（全）
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/28/20180328140039/" rel="prev" title="模拟 Vue 手写一个 MVVM">
-                模拟 Vue 手写一个 MVVM <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-        <!-- Go to www.addthis.com/dashboard to customize your tools -->
-<div class="addthis_inline_share_toolbox">
-  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b4dbb54f6ab0d36" async = "async" ></script>
-</div>
-
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-    <div class="comments" id="comments">
-      <div id="gitalk-container"></div>
-    </div>
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-      <div id="sidebar-dimmer"></div>
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/images/avatar.jpg"
-                alt="Panda Shen" />
-            
-              <p class="site-author-name" itemprop="name">Panda Shen</p>
-              <p class="site-description motion-element" itemprop="description">Keep fucking the world</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives">
-              
-                  <span class="site-state-item-count">54</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">65</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-            <div class="feed-link motion-element">
-              <a href="/rss2.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          <div class="links-of-author motion-element">
-            
-              
-                <span class="links-of-author-item">
-                  <a href="https://github.com/shenqiuhui" target="_blank" title="GitHub">
-                    
-                      <i class="fa fa-fw fa-github-alt"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="mailto:pandashen821@163.com" target="_blank" title="E-Mail">
-                    
-                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="https://www.pandashen.cn" target="_blank" title="WeChat">
-                    
-                      <i class="fa fa-fw fa-weixin"></i>WeChat</a>
-                </span>
-              
-            
-          </div>
-
-          
-          
-            <div class="cc-license motion-element" itemprop="license">
-              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
-                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
-              </a>
-            </div>
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                友情链接
-              </div>
-              <ul class="links-of-blogroll-list">
+    <div class="bottom">
+        <p><span>Panda Shen &copy; 2017 - 2019</span>
+            <span>
                 
-                  <li class="links-of-blogroll-item">
-                    <a href="https://cherryblog.site/" title="Cherry's Blog" target="_blank">Cherry's Blog</a>
-                  </li>
                 
-                  <li class="links-of-blogroll-item">
-                    <a href="https://asdfv1929.github.io/" title="asdfv1929 's Home" target="_blank">asdfv1929 's Home</a>
-                  </li>
                 
-                  <li class="links-of-blogroll-item">
-                    <a href="https://pineapplexue.vip/" title="菠萝吹雪" target="_blank">菠萝吹雪</a>
-                  </li>
+                    Hosted by <a href="https://pages.coding.me" target="_blank">Coding Pages</a>
                 
-              </ul>
-            </div>
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器中的事件轮询"><span class="nav-number">1.</span> <span class="nav-text">浏览器中的事件轮询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-中的事件轮询"><span class="nav-number">2.</span> <span class="nav-text">Node 中的事件轮询</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
+            </span>
+        </p>
     </div>
-  </aside>
+</footer>
 
-
-        
-      </div>
     </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Panda Shen</span>
 
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/03/25/20180325170208/&title=《浅析 event-loop 事件轮询》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/03/25/20180325170208/&title=《浅析 event-loop 事件轮询》 — Panda Shen's Blog&source=
+
+浏览器中的事件轮询JavaScript 是一门单线程语言，之所以说是单线程，是因为在浏览器中，如果是多线程，并且两个线程同时操作了同一个 Dom 元素..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/03/25/20180325170208/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《浅析 event-loop 事件轮询》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/03/25/20180325170208/&via=https://www.pandashen.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/03/25/20180325170208/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3aSU4EMRAEQP7/6UHihASYzDKLxg6f0Ih2d/hQci0vL/F6vK3kl/e/r5/66v8/PvVjCwMD42kZj+VavyB5Nietqev9MTAwbmCsg+w6FCZBdvaW5CkMDAyMJAjm18f9Q8HAwMBor26zAD17LwYGBkaSxO68JklN/ygXx8DAeEJG2xj4y79/sb+BgYHxJIxHufJ92ovgzsLAwDib0ZbPdoJmgkxCbXHDxcDAOIKRv3g/EO+nr18eKAYGxjWMtmQ/uxq2V8zkIDAwMM5mzAr3s4ZlfmXcCfEYGBinMtYb7bQw25GL2UFgYGCczWjDaDsS0ZKGu2FgYFzAaIv4s2A9vLEuvwcDA+MGxix0tuEy/6Ct/TEwMI5mzIpibek/akbGsxPRsWJgYBzByC9wUd0u/og8KEcBGgMD42hGO1oxa2TOmqP1uBgGBsahjHwMa1Z0awv9LR4DA+M2Rn75W8fvvDGw0+Ds+wYYGBjPyshLbHkIzhPgpDBXp9MYGBjHMdrrWp7ctqMYRc6NgYFxMSMf4frZdLdtnUZJLAYGxkGMtnyWJ6I7jc+dg8DAwDiPMQuss5bAzrDFNztjYGAczchX+3Hti5O0dtZIwMDAOIORJ6g7ZbXZeFkRZDEwMC5gtEEwSVPzRuYsif0k4GJgYFzPmAXKJN1tSRgYGBiz0YfZ+EUO+KZUh4GBcQHjv5LY/dYCBgbGDYxZYyAvnLXltrYUiIGBcTTjFWl8POJpy8U+AAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
 
 
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
 
 
-  <span class="footer-custom">Hosted by <a href="https://pages.coding.me" target="_blank">Coding Pages</a></span>
-
-
-
-  <span class="footer-custom-flag post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a></div>
-
-
-
-  <span class="post-meta-divider">|</span>
-  <span class="post-meta-item-icon">
-    <i class="fa fa-bar-chart"></i>
-  </span>
-  
-    <span class="post-meta-item-text">网站文字统计&#58;</span>
-  
-  <span title="网站文字统计">202.6k</span>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="site-uv" id="busuanzi_container_site_uv" style="display: none;">
-      <i class="fa fa-user"></i> 访客数
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      人
-      
-        <span class="post-meta-divider">|</span>
-      
-    </span>
-  
-
-  
-    <span class="site-pv" id="busuanzi_container_site_pv" style="display: none;">
-      <i class="fa fa-eye"></i> 总访问量
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
 </script>
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/three.min.js"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
-
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-  <script src="/js/src/md5.min.js"></script>
-  <script type="text/javascript">
-    var gitalk = new Gitalk({
-      clientID: '708ca5b4fc1f08259651',
-      clientSecret: '347014dfe70a72dea9c207152fd04e8d3ebcc3b4',
-      repo: 'shenqiuhui.github.io',
-      owner: 'shenqiuhui',
-      admin: ['shenqiuhui'],
-      // id: location.pathname,
-      id: md5(location.pathname),
-      distractionFreeMode: 'true'
-    })
-    gitalk.render('gitalk-container')
-  </script>
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
-    var path = "/" + search_path;
-    // monitor main search box;
+});
 
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').html('<div id="no-result"><i class="fa fa-search fa-5x" /></div>');
-      $('#no-result').html('<i class="fa fa-search fa-5x" />');
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
     }
+});
+</script>
 
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 
 
 
 
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
-  <script>AV.initialize("RqIV72rdY61eUlDassFQDxPG-gzGzoHsz", "Mvo4cTDcS9hw0l03mINzvdNk");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
+    <!-- Valine Comments -->
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var META = ['nick','mail','link'];
+        var meta = 'nick,mail'.split(',').filter(function(item){
+          return META.indexOf(item) > -1
         });
-    }
 
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
+        new Valine({
+            el: '#comments',
+            notify: 'false' === 'true',
+            verify: 'false' === 'true',
+            appId: "RqIV72rdY61eUlDassFQDxPG-gzGzoHsz",
+            appKey: "Mvo4cTDcS9hw0l03mINzvdNk",
+            avatar: "mm",
+            placeholder: "说点什么",
+            visitor: "true" === 'true',
+            highlight: "true" === 'true',
+            meta: meta.length === 0 ? META : meta,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
 
 
 
-  
 
-  
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
 <script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '愿风指引你前进的道路！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '真正重要的，只是当下！';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
 })();
 </script>
 
 
-  
-  
 
-  
-
-  
-  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
-  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
-
-
-  
-
-
-  <!-- 页面点击小红心 -->
-  <script type="text/javascript" src="/js/src/clicklove.js"></script>
-  <!-- 修改代码块编译有标题和无标题的问题 -->
-  <script type="text/javascript" src="/js/src/changehighlight.js"></script>
 </body>
 </html>

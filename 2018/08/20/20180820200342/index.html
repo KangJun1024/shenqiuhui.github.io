@@ -1,1602 +1,684 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-<meta name="theme-color" content="#222">
-
-
-
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-  <script>
-  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
-  daovoice('init', {
-      app_id: "848cdfe0"
-    });
-  daovoice('update');
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-    
-      
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
     
 
     
-  
-
-  
-    
-      
-    
 
     
-  
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?HIpscSc60YSz75aC"></script>
+<!-- End Baidu Tongji -->
 
-  
-    
-      
-    
 
-    
-  
 
-  
+
+    <meta charset="utf-8">
     
     
-    <link href="//fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="NodeJS,async/await,中间件,Koa," />
-
-
-
-
-
-  <link rel="alternate" href="/rss2.xml" title="Panda Shen" type="application/atom+xml" />
-
-
-
-
-
-
-<meta name="description" content="前言Koa 2.x 版本是当下最流行的 NodeJS 框架，Koa 2.0 的源码特别精简，不像 Express 封装的功能那么多，所以大部分的功能都是由 Koa 开发团队（同 Express 是一家出品）和社区贡献者针对 Koa 对 NodeJS 的封装特性实现的中间件来提供的，用法非常简单，就是引入中间件，并调用 Koa 的 use 方法使用在对应的位置，这样就可以通过在内部操作 ctx 实">
-<meta name="keywords" content="NodeJS,async&#x2F;await,中间件,Koa">
+    
+    
+    <title>Koa2 中间件原理解析 —— 看了就会写 | Panda Shen&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="NodeJS,async/await,Koa,中间件">
+    <meta name="description" content="前言Koa 2.x 版本是当下最流行的 NodeJS 框架，Koa 2.0 的源码特别精简，不像 Express 封装的功能那么多，所以大部分的功能都是由 Koa 开发团队（同 Express 是一家出品）和社区贡献者针对 Koa 对 NodeJS 的封装特性实现的中间件来提供的，用法非常简单，就是引入中间件，并调用 Koa 的 use 方法使用在对应的位置，这样就可以通过在内部操作 ctx">
+<meta name="keywords" content="NodeJS,async&#x2F;await,Koa,中间件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Koa2 中间件原理解析 —— 看了就会写">
 <meta property="og:url" content="https://www.pandashen.com/2018/08/20/20180820200342/index.html">
-<meta property="og:site_name" content="Panda Shen">
-<meta property="og:description" content="前言Koa 2.x 版本是当下最流行的 NodeJS 框架，Koa 2.0 的源码特别精简，不像 Express 封装的功能那么多，所以大部分的功能都是由 Koa 开发团队（同 Express 是一家出品）和社区贡献者针对 Koa 对 NodeJS 的封装特性实现的中间件来提供的，用法非常简单，就是引入中间件，并调用 Koa 的 use 方法使用在对应的位置，这样就可以通过在内部操作 ctx 实">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:description" content="前言Koa 2.x 版本是当下最流行的 NodeJS 框架，Koa 2.0 的源码特别精简，不像 Express 封装的功能那么多，所以大部分的功能都是由 Koa 开发团队（同 Express 是一家出品）和社区贡献者针对 Koa 对 NodeJS 的封装特性实现的中间件来提供的，用法非常简单，就是引入中间件，并调用 Koa 的 use 方法使用在对应的位置，这样就可以通过在内部操作 ctx">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.pandashen.com/2018/08/20/20180820200342/koa-middleware.png">
-<meta property="og:updated_time" content="2018-11-12T10:21:27.998Z">
+<meta property="og:updated_time" content="2019-03-04T07:34:23.850Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Koa2 中间件原理解析 —— 看了就会写">
-<meta name="twitter:description" content="前言Koa 2.x 版本是当下最流行的 NodeJS 框架，Koa 2.0 的源码特别精简，不像 Express 封装的功能那么多，所以大部分的功能都是由 Koa 开发团队（同 Express 是一家出品）和社区贡献者针对 Koa 对 NodeJS 的封装特性实现的中间件来提供的，用法非常简单，就是引入中间件，并调用 Koa 的 use 方法使用在对应的位置，这样就可以通过在内部操作 ctx 实">
+<meta name="twitter:description" content="前言Koa 2.x 版本是当下最流行的 NodeJS 框架，Koa 2.0 的源码特别精简，不像 Express 封装的功能那么多，所以大部分的功能都是由 Koa 开发团队（同 Express 是一家出品）和社区贡献者针对 Koa 对 NodeJS 的封装特性实现的中间件来提供的，用法非常简单，就是引入中间件，并调用 Koa 的 use 方法使用在对应的位置，这样就可以通过在内部操作 ctx">
 <meta name="twitter:image" content="https://www.pandashen.com/2018/08/20/20180820200342/koa-middleware.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+    
 
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '5.1.3',
-    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: 'undefined',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: 'SIUJA7EEMV',
-      apiKey: 'bd003fb67269946195a6faa118759b02',
-      indexName: 'search_controller',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"输入关键词进行搜索","hits_empty":"找不到关于 “${query}” 的文章","hits_stats":"共找到 ${hits} 篇文章，花了 ${time} ms"}
-    }
-  };
-</script>
+    
+    
+<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon-next.png">
 
 
 
-  <link rel="canonical" href="https://www.pandashen.com/2018/08/20/20180820200342/"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32-next.png">
 
 
 
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16-next.png">
 
 
-  <title>Koa2 中间件原理解析 —— 看了就会写 | Panda Shen</title>
-  
+
+<link rel="mask-icon" href="/img/logo.svg" color>
 
 
 
 
 
 
+    
 
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-  
-  
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Panda Shen</h5>
+          <a href="mailto:pandashen821@163.com" title="pandashen821@163.com" class="mail">pandashen821@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/link">
+                <i class="icon icon-lg icon-link"></i>
+                链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-user"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.pandashen.cn" target="_blank">
+                <i class="icon icon-lg icon-weixin"></i>
+                WeChat
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Koa2 中间件原理解析 —— 看了就会写</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Koa2 中间件原理解析 —— 看了就会写</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-20T12:03:42.000Z" itemprop="datePublished" class="page-time">
+  2018-08-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/NodeJS/">NodeJS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
     
-  
 
-  <div class="container sidebar-position-right page-post-detail">
-    <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <!-- <h4>TOC</h4> -->
+            <h4>文章目录</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Koa-的洋葱模型介绍"><span class="post-toc-number">2.</span> <span class="post-toc-text">Koa 的洋葱模型介绍</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#koa-bodyparser-中间件模拟"><span class="post-toc-number">3.</span> <span class="post-toc-text">koa-bodyparser 中间件模拟</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#koa-better-body-中间件模拟"><span class="post-toc-number">4.</span> <span class="post-toc-text">koa-better-body 中间件模拟</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#koa-views-中间件模拟"><span class="post-toc-number">5.</span> <span class="post-toc-text">koa-views 中间件模拟</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#koa-static-中间件模拟"><span class="post-toc-number">6.</span> <span class="post-toc-text">koa-static 中间件模拟</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#koa-router-中间件模拟"><span class="post-toc-number">7.</span> <span class="post-toc-text">koa-router 中间件模拟</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">8.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-20180820200342" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Koa2 中间件原理解析 —— 看了就会写</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-20 20:03:42" datetime="2018-08-20T12:03:42.000Z" itemprop="datePublished">2018-08-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/NodeJS/">NodeJS</a></li></ul>
+
+
+
+            
+
+            
+<span id="/2018/08/20/20180820200342/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="Koa2 中间件原理解析 —— 看了就会写">
+    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <img src="/2018/08/20/20180820200342/koa-middleware.png" title="Koa 中间件">
+<p><br></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote class="pullquote default"><p><code>Koa 2.x</code> 版本是当下最流行的 NodeJS 框架，<code>Koa 2.0</code> 的源码特别精简，不像 <code>Express</code> 封装的功能那么多，所以大部分的功能都是由 <code>Koa</code> 开发团队（同 <code>Express</code> 是一家出品）和社区贡献者针对 <code>Koa</code> 对 NodeJS 的封装特性实现的中间件来提供的，用法非常简单，就是引入中间件，并调用 <code>Koa</code> 的 <code>use</code> 方法使用在对应的位置，这样就可以通过在内部操作 <code>ctx</code> 实现一些功能，我们接下来就讨论常用中间件的实现原理以及我们应该如何开发一个 <code>Koa</code> 中间件供自己和别人使用。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Koa-的洋葱模型介绍"><a href="#Koa-的洋葱模型介绍" class="headerlink" title="Koa 的洋葱模型介绍"></a>Koa 的洋葱模型介绍</h2><p>我们本次不对洋葱模型的实现原理进行过多的刨析，主要根据 API 的使用方式及洋葱模型分析中间件是如何工作的。</p>
+<figure class="highlight js"><figcaption><span>洋葱模型特点</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入 Koa</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建服务</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">  <span class="keyword">await</span> next();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">  <span class="keyword">await</span> next();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">5</span>);</span><br><span class="line">  <span class="keyword">await</span> next();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="number">6</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听服务</span></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// 5</span></span><br><span class="line"><span class="comment">// 6</span></span><br><span class="line"><span class="comment">// 4</span></span><br><span class="line"><span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<p>我们知道 <code>Koa</code> 的 <code>use</code> 方法是支持异步的，所以为了保证正常的按照洋葱模型的执行顺序执行代码，需要在调用 <code>next</code> 的时候让代码等待，等待异步结束后再继续向下执行，所以我们在 <code>Koa</code> 中都是建议使用 <code>async/await</code> 的，引入的中间件都是在 <code>use</code> 方法中调用，由此我们可以分析出每一个 <code>Koa</code> 的中间件都是返回一个 <code>async</code> 函数的。</p>
+<h2 id="koa-bodyparser-中间件模拟"><a href="#koa-bodyparser-中间件模拟" class="headerlink" title="koa-bodyparser 中间件模拟"></a>koa-bodyparser 中间件模拟</h2><p>想要分析 <code>koa-bodyparser</code> 的原理首先需要知道用法和作用，<code>koa-bodyparser</code> 中间件是将我们的 <code>post</code> 请求和表单提交的查询字符串转换成对象，并挂在 <code>ctx.request.body</code> 上，方便我们在其他中间件或接口处取值，使用前需提前安装。</p>
+<blockquote>
+<p>npm install koa koa-bodyparser</p>
+</blockquote>
+<p><strong>koa-bodyparser 具体用法如下：</strong></p>
+<figure class="highlight js"><figcaption><span>koa-bodyparser 的用法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">'koa-bodyparser'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用中间件</span></span><br><span class="line">app.use(bodyParser());</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (ctx.path === <span class="string">'/'</span> &amp;&amp; ctx.method === <span class="string">'POST'</span>) &#123;</span><br><span class="line">    <span class="comment">// 使用中间件后 ctx.request.body 属性自动加上了 post 请求的数据</span></span><br><span class="line">    <span class="built_in">console</span>.log(ctx.request.body);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>根据用法我们可以看出 <code>koa-bodyparser</code> 中间件引入的其实是一个函数，我们把它放在了 <code>use</code> 中执行，根据 <code>Koa</code> 的特点，我们推断出 <code>koa-bodyparser</code> 的函数执行后应该给我们返回了一个 <code>async</code> 函数，下面是我们模拟实现的代码。</p>
+<figure class="highlight js"><figcaption><span>文件：my-koa-bodyparser.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> querystring = <span class="built_in">require</span>(<span class="string">'querystring'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> <span class="title">bodyParser</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 存储数据的数组</span></span><br><span class="line">      <span class="keyword">const</span> dataArr = [];</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 接收数据</span></span><br><span class="line">      ctx.req.on(<span class="string">'data'</span>, data =&gt; dataArr.push(data));</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 整合数据并使用 Promise 成功</span></span><br><span class="line">      ctx.req.on(<span class="string">'end'</span>, () =&gt; &#123;</span><br><span class="line">        <span class="comment">// 获取请求数据的类型 json 或表单</span></span><br><span class="line">        <span class="keyword">const</span> contentType = ctx.get(<span class="string">'Content-Type'</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取数据 Buffer 格式</span></span><br><span class="line">        <span class="keyword">const</span> data = Buffer.concat(dataArr).toString();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (contentType === <span class="string">'application/x-www-form-urlencoded'</span>) &#123;</span><br><span class="line">          <span class="comment">// 如果是表单提交，则将查询字符串转换成对象赋值给 ctx.request.body</span></span><br><span class="line">          ctx.request.body = querystring.parse(data);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (contentType === <span class="string">'applaction/json'</span>) &#123;</span><br><span class="line">          <span class="comment">// 如果是 json，则将字符串格式的对象转换成对象赋值给 ctx.request.body</span></span><br><span class="line">          ctx.request.body = <span class="built_in">JSON</span>.parse(data);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 执行成功的回调</span></span><br><span class="line">        resolve();</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 继续向下执行</span></span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面代码中由几点是需要我们注意的，即 <code>next</code> 的调用以及为什么通过流接收数据、处理数据和将数据挂在 <code>ctx.request.body</code> 要在 Promise 中进行。</p>
+<blockquote class="pullquote info"><p><em><strong>首先是 <code>next</code> 的调用，我们知道 <code>Koa</code> 的 <code>next</code> 执行，其实就是在执行下一个中间件的函数，即下一个 <code>use</code> 中的 <code>async</code> 函数，为了保证后面的异步代码执行完毕后再继续执行当前的代码，所以我们需要使用 <code>await</code> 进行等待，其次就是数据从接收到挂在 <code>ctx.request.body</code> 都在 Promise 中执行，是因为在接收数据的操作是异步的，整个处理数据的过程需要等待异步完成后，再把数据挂在 <code>ctx.request.body</code> 上，可以保证我们在下一个 <code>use</code> 的 <code>async</code> 函数中可以在 <code>ctx.request.body</code> 上拿到数据，所以我们使用 <code>await</code> 等待一个 Promise 成功后再执行 <code>next</code>。</strong></em></p>
+</blockquote>
+<h2 id="koa-better-body-中间件模拟"><a href="#koa-better-body-中间件模拟" class="headerlink" title="koa-better-body 中间件模拟"></a>koa-better-body 中间件模拟</h2><p><code>koa-bodyparser</code> 在处理表单提交时还是显得有一点弱，因为不支持文件上传，而 <code>koa-better-body</code> 则弥补了这个不足，但是 <code>koa-better-body</code> 为 <code>Koa 1.x</code> 版本的中间件，<code>Koa 1.x</code> 的中间件都是使用 <code>Generator</code> 函数实现的，我们需要使用 <code>koa-convert</code> 将 <code>koa-better-body</code> 转化成 <code>Koa 2.x</code> 的中间件。</p>
+<blockquote>
+<p>npm install koa koa-better-body koa-convert path uuid</p>
+</blockquote>
+<p><strong>koa-better-body 具体用法如下：</strong></p>
+<figure class="highlight js"><figcaption><span>koa-better-body 的用法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"><span class="keyword">const</span> betterBody = <span class="built_in">require</span>(<span class="string">'koa-better-body'</span>);</span><br><span class="line"><span class="keyword">const</span> convert = <span class="built_in">require</span>(<span class="string">'koa-convert'</span>); <span class="comment">// 将  koa 1.0 中间转化成 koa 2.0 中间件</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> uuid = <span class="built_in">require</span>(<span class="string">'uuid/v1'</span>); <span class="comment">// 生成随机串</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 koa-better-body 中间件从 koa 1.0 转化成 koa 2.0，并使用中间件</span></span><br><span class="line">app.use(convert(betterBody(&#123;</span><br><span class="line">  uploadDir: path.resolve(__dirname, <span class="string">'upload'</span>)</span><br><span class="line">&#125;)));</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (ctx.path === <span class="string">'/'</span> &amp;&amp; ctx.method === <span class="string">'POST'</span>) &#123;</span><br><span class="line">    <span class="comment">// 使用中间件后 ctx.request.fields 属性自动加上了 post 请求的文件数据</span></span><br><span class="line">    <span class="built_in">console</span>.log(ctx.request.fields);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将文件重命名</span></span><br><span class="line">    <span class="keyword">let</span> imgPath = ctx.request.fields.avatar[<span class="number">0</span>].path;</span><br><span class="line">    <span class="keyword">let</span> newPath = path.resolve(__dirname, uuid());</span><br><span class="line">    fs.rename(imgPath, newPath);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>上面代码中 <code>koa-better-body</code> 的主要功能就是将表单上传的文件存入本地指定的文件夹下，并将文件流对象挂在了 <code>ctx.request.fields</code> 属性上，我们接下来就模拟 <code>koa-better-body</code> 的功能实现一版基于 <code>Koa 2.x</code> 处理文件上传的中间件。</p>
+<figure class="highlight js"><figcaption><span>文件：my-koa-better-body.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> uuid = <span class="built_in">require</span>(<span class="string">'uuid/v1'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 给 Buffer 扩展 split 方法预备后面使用</span></span><br><span class="line">Buffer.prototype.split = <span class="function"><span class="keyword">function</span> (<span class="params">sep</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> len = Buffer.from(sep).length; <span class="comment">// 分隔符所占的字节数</span></span><br><span class="line">  <span class="keyword">let</span> result = []; <span class="comment">// 返回的数组</span></span><br><span class="line">  <span class="keyword">let</span> start = <span class="number">0</span>; <span class="comment">// 查找 Buffer 的起始位置</span></span><br><span class="line">  <span class="keyword">let</span> offset = <span class="number">0</span>; <span class="comment">// 偏移量</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 循环查找分隔符</span></span><br><span class="line">  <span class="keyword">while</span> ((offset = <span class="keyword">this</span>.indexOf(sep, start)) !== <span class="number">-1</span>) &#123;</span><br><span class="line">    <span class="comment">// 将分隔符之前的部分截取出来存入</span></span><br><span class="line">    result.push(<span class="keyword">this</span>.slice(start, offset));</span><br><span class="line">    start = offset + len;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理剩下的部分</span></span><br><span class="line">  result.push(<span class="keyword">this</span>.slice(start));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 返回结果</span></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> dataArr = []; <span class="comment">// 存储读取的数据</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// 读取数据</span></span><br><span class="line">      ctx.req.on(<span class="string">'data'</span>, data =&gt; dataArr.push(data));</span><br><span class="line"></span><br><span class="line">      ctx.req.on(<span class="string">'end'</span>, () =&gt; &#123;</span><br><span class="line">        <span class="comment">// 取到请求体每段的分割线字符串</span></span><br><span class="line">        <span class="keyword">let</span> bondery = <span class="string">`--<span class="subst">$&#123;ctx.get(<span class="string">'content-Type'</span>).split(<span class="string">'='</span>)[<span class="number">1</span>]&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取不同系统的换行符</span></span><br><span class="line">        <span class="keyword">let</span> lineBreak = process.platform === <span class="string">'win32'</span> ? <span class="string">'\r\n'</span> : <span class="string">'\n'</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 非文件类型数据的最终返回结果</span></span><br><span class="line">        <span class="keyword">let</span> fields = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 分隔的 buffer 去掉没用的头和尾即开头的 '' 和末尾的 '--'</span></span><br><span class="line">        dataArr = dataArr.split(bondery).slice(<span class="number">1</span>, <span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 循环处理 dataArr 中每一段 Buffer 的内容</span></span><br><span class="line">        dataArr.forEach(<span class="function"><span class="params">lines</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="comment">// 对于普通值，信息由包含键名的行 + 两个换行 + 数据值 + 换行组成</span></span><br><span class="line">          <span class="comment">// 对于文件，信息由包含 filename 的行 + 两个换行 + 文件内容 + 换行组成</span></span><br><span class="line">          <span class="keyword">let</span> [head, tail] = lines.split(<span class="string">`<span class="subst">$&#123;lineBreak&#125;</span><span class="subst">$&#123;lineBreak&#125;</span>`</span>);</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 判断是否是文件，如果是文件则创建文件并写入，如果是普通值则存入 fields 对象中</span></span><br><span class="line">          <span class="keyword">if</span> (head.includes(<span class="string">'filename'</span>)) &#123;</span><br><span class="line">            <span class="comment">// 防止文件内容含有换行而被分割，应重新截取内容并去掉最后的换行</span></span><br><span class="line">            <span class="keyword">let</span> tail = lines.slice(</span><br><span class="line">              head.length + <span class="number">2</span> * lineBreak.length,</span><br><span class="line">              -lineBreak.length</span><br><span class="line">            );</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 创建可写流并指定写入的路径：</span></span><br><span class="line">            <span class="comment">// 绝对路径 + 指定文件夹 + 随机文件名，最后写入文件</span></span><br><span class="line">            fs.createWriteStream(</span><br><span class="line">              path.join(__dirname, options.uploadDir, uuid())</span><br><span class="line">            ).end(tail);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 是普通值取出键名</span></span><br><span class="line">            <span class="keyword">let</span> key = head.match(<span class="regexp">/name='(\w+)'/</span>)[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 将 key 设置给 fields tail 去掉末尾换行后的内容</span></span><br><span class="line">            fields[key] = tail.toString(<span class="string">'utf8'</span>).slice(<span class="number">0</span>, -lineBreak.length);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将处理好的 fields 对象挂在 ctx.request.fields 上，并完成 Promise</span></span><br><span class="line">        ctx.request.fields = fields;</span><br><span class="line">        resolve();</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 向下执行</span></span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的内容逻辑可以通过代码注释来理解，就是模拟 <code>koa-better-body</code> 的功能逻辑，我们主要的关心点在于中间件实现的方式，上面功能实现的异步操作依然是读取数据，为了等待数据处理结束仍然在 Promise 中执行，并使用 <code>await</code> 等待，Promise 执行成功调用 <code>next</code>。</p>
+<h2 id="koa-views-中间件模拟"><a href="#koa-views-中间件模拟" class="headerlink" title="koa-views 中间件模拟"></a>koa-views 中间件模拟</h2><p>Node 模板是我们经常使用的工具用来在服务端帮我们渲染页面，模板的种类繁多，因此出现了 <code>koa-view</code> 中间件，帮我们来兼容这些模板，先安装依赖的模块。</p>
+<blockquote>
+<p>npm install koa koa-views ejs</p>
+</blockquote>
+<p><strong>下面是一个 ejs 的模板文件：</strong></p>
+<figure class="highlight html"><figcaption><span>文件：index.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">'en'</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">'UTF-8'</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>ejs<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">%=</span> <span class="attr">name</span> %&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">%=</span> <span class="attr">age</span> %&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> (<span class="attr">name</span>==<span class="string">'panda'</span>) &#123; %&gt;</span></span><br><span class="line">    panda</span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> &#125; <span class="attr">else</span> &#123; %&gt;</span></span><br><span class="line">    shen</span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> <span class="attr">arr.forEach</span>(<span class="attr">item</span> =&gt;</span> &#123; %&gt;</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">%=item%</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> &#125;) %&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>koa-views 具体用法如下：</strong></p>
+<figure class="highlight js"><figcaption><span>koa-views 的用法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"><span class="keyword">const</span> views = <span class="built_in">require</span>(<span class="string">'koa-views'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用中间件</span></span><br><span class="line">app.use(views(path.resolve(__dirname, <span class="string">'views'</span>), &#123;</span><br><span class="line">  extension: <span class="string">'ejs'</span></span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> ctx.render(<span class="string">'index'</span>, &#123; <span class="attr">name</span>: <span class="string">'panda'</span>, <span class="attr">age</span>: <span class="number">20</span>, <span class="attr">arr</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>可以看出我们使用了 <code>koa-views</code> 中间件后，让 <code>ctx</code> 上多了 <code>render</code> 方法帮助我们实现对模板的渲染和响应页面，就和直接使用 <code>ejs</code> 自带的 <code>render</code> 方法一样，并且从用法可以看出 <code>render</code> 方法是异步执行的，所以需要使用 <code>await</code> 进行等待，接下来我们就来模拟实现一版简单的 <code>koa-views</code> 中间件。</p>
+<figure class="highlight js"><figcaption><span>文件：my-koa-views.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; promisify &#125; = <span class="built_in">require</span>(<span class="string">'util'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将读取文件方法转换成 Promise</span></span><br><span class="line"><span class="keyword">const</span> readFile = promisify(fs.radFile);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 到处中间件</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">dir, options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 动态引入模板依赖模块</span></span><br><span class="line">    <span class="keyword">const</span> view = <span class="built_in">require</span>(options.extension);</span><br><span class="line"></span><br><span class="line">    ctx.render = <span class="keyword">async</span> (filename, data) =&gt; &#123;</span><br><span class="line">      <span class="comment">// 异步读取文件内容</span></span><br><span class="line">      <span class="keyword">let</span> tmpl = <span class="keyword">await</span> readFile(</span><br><span class="line">        path.join(dir, <span class="string">`<span class="subst">$&#123;filename&#125;</span>.<span class="subst">$&#123;options.extension&#125;</span>`</span>),</span><br><span class="line">        <span class="string">'utf8'</span></span><br><span class="line">      );</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 将模板渲染并返回页面字符串</span></span><br><span class="line">      <span class="keyword">let</span> pageStr = view.render(tmpl, data);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 设置响应类型并响应页面</span></span><br><span class="line">      ctx.set(<span class="string">'Content-Type'</span>, <span class="string">'text/html;charset=utf8'</span>);</span><br><span class="line">      ctx.body = pageStr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 继续向下执行</span></span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>挂在 <code>ctx</code> 上的 <code>render</code> 方法之所以是异步执行的是因为内部读取模板文件是异步执行的，需要等待，所以 <code>render</code> 方法为 <code>async</code> 函数，在中间件内部动态引入了我们使的用模板，如 <code>ejs</code>，并在 <code>ctx.render</code> 内部使用对应的 <code>render</code> 方法获取替换数据后的页面字符串，并以 <code>html</code> 的类型响应。</p>
+<h2 id="koa-static-中间件模拟"><a href="#koa-static-中间件模拟" class="headerlink" title="koa-static 中间件模拟"></a>koa-static 中间件模拟</h2><p>下面是 <code>koa-static</code> 中间件的用法，代码使用的依赖如下，使用前需安装。</p>
+<blockquote>
+<p>npm install koa koa-static mime</p>
+</blockquote>
+<p><strong>koa-static 具体用法如下：</strong></p>
+<figure class="highlight js"><figcaption><span>koa-static 的用法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">static</span> = <span class="built_in">require</span>(<span class="string">'koa-static'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">static</span>(path.resolve(__dirname, <span class="string">'public'</span>)));</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">  ctx.body = <span class="string">'hello world'</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>通过使用和分析，我们知道了 <code>koa-static</code> 中间件的作用是在服务器接到请求时，帮我们处理静态文件，如果我们直接访问文件名的时候，会查找这个文件并直接响应，如果没有这个文件路径会当作文件夹，并查找文件夹下的 <code>index.html</code>，如果存在则直接响应，如果不存在则交给其他中间件处理。</p>
+<figure class="highlight js"><figcaption><span>文件：my-koa-static.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> mime = <span class="built_in">require</span>(<span class="string">'mime'</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; promisify &#125; = <span class="built_in">require</span>(<span class="string">'util'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 stat 和 access 转换成 Promise</span></span><br><span class="line"><span class="keyword">const</span> stat = promisify(fs.stat);</span><br><span class="line"><span class="keyword">const</span> access = promisify(fs.access)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">dir</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 将访问的路由处理成绝对路径，这里要使用 join 因为有可能是 /</span></span><br><span class="line">    <span class="keyword">let</span> realPath = path.join(dir, ctx.path);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// 获取 stat 对象</span></span><br><span class="line">      <span class="keyword">let</span> statObj = <span class="keyword">await</span> stat(realPath);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 如果是文件，则设置文件类型并直接响应内容，否则当作文件夹寻找 index.html</span></span><br><span class="line">      <span class="keyword">if</span> (statObj.isFile()) &#123;</span><br><span class="line">        ctx.set(<span class="string">'Content-Type'</span>, <span class="string">`<span class="subst">$&#123;mime.getType()&#125;</span>;charset=utf8`</span>);</span><br><span class="line">        ctx.body = fs.createReadStream(realPath);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> filename = path.join(realPath, <span class="string">'index.html'</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果不存在该文件则执行 catch 中的 next 交给其他中间件处理</span></span><br><span class="line">        <span class="keyword">await</span> access(filename);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 存在设置文件类型并响应内容</span></span><br><span class="line">        ctx.set(<span class="string">'Content-Type'</span>, <span class="string">'text/html;charset=utf8'</span>);</span><br><span class="line">        ctx.body = fs.createReadStream(filename);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">      <span class="keyword">await</span> next();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的逻辑中需要检测路径是否存在，由于我们导出的函数都是 <code>async</code> 函数，所以我们将 <code>stat</code> 和 <code>access</code> 转化成了 Promise，并用 <code>try...catch</code> 进行捕获，在路径不合法时调用 <code>next</code> 交给其他中间件处理。</p>
+<h2 id="koa-router-中间件模拟"><a href="#koa-router-中间件模拟" class="headerlink" title="koa-router 中间件模拟"></a>koa-router 中间件模拟</h2><p>在 <code>Express</code> 框架中，路由是被内置在了框架内部，而 <code>Koa</code> 中没有内置，是使用 <code>koa-router</code> 中间件来实现的，使用前需要安装。</p>
+<blockquote>
+<p>npm install koa koa-router</p>
+</blockquote>
+<p><code>koa-router</code> 功能非常强大，下面我们只是简单的使用，并且根据使用的功能进行模拟。</p>
+<figure class="highlight js"><figcaption><span>koa-router 的简单用法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'Koa'</span>);</span><br><span class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> Router();</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">'/panda'</span>, (ctx, next) =&gt; &#123;</span><br><span class="line">  ctx.body = <span class="string">'panda'</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">'/panda'</span>, (ctx, next) =&gt; &#123;</span><br><span class="line">  ctx.body = <span class="string">'pandashen'</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">'/shen'</span>, (ctx, next) =&gt; &#123;</span><br><span class="line">  ctx.body = <span class="string">'shen'</span>;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用路由中间件</span></span><br><span class="line">app.use(router.routes());</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>从上面看出 <code>koa-router</code> 导出的是一个类，使用时需要创建一个实例，并且调用实例的 <code>routes</code> 方法将该方法返回的 <code>async</code> 函数进行连接，但是在匹配路由的时候，会根据路由 <code>get</code> 方法中的路径进行匹配，并串行执行内部的回调函数，当所有回调函数执行完毕之后会执行整个 <code>Koa</code> 串行的 <code>next</code>，原理同其他中间件，我下面来针对上面使用的功能简易实现。</p>
+<figure class="highlight js"><figcaption><span>文件：my-koa-router.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 控制每一个路由层的类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Layer</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(path, cb) &#123;</span><br><span class="line">    <span class="keyword">this</span>.path = path;</span><br><span class="line">    <span class="keyword">this</span>.cb = cb;</span><br><span class="line">  &#125;</span><br><span class="line">  match(path) &#123;</span><br><span class="line">    <span class="comment">// 地址的路由和当前配置路由相等返回 true，否则返回 false</span></span><br><span class="line">    <span class="keyword">return</span> path === <span class="keyword">this</span>.path;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路由的类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Router</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="comment">// 存放每个路由对象的数组，&#123; path: /xxx, fn: cb &#125;</span></span><br><span class="line">    <span class="keyword">this</span>.layers = [];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">get</span>(path, cb) &#123;</span><br><span class="line">    <span class="comment">// 将路由对象存入数组中</span></span><br><span class="line">    <span class="keyword">this</span>.layers.push(<span class="keyword">new</span> Layer(path, cb));</span><br><span class="line">  &#125;</span><br><span class="line">  compose(ctx, next, handlers) &#123;</span><br><span class="line">    <span class="comment">// 将匹配的路由函数串联执行</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">dispatch</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 如果当前 index 个数大于了存储路由对象的长度，则执行 Koa 的 next 方法</span></span><br><span class="line">      <span class="keyword">if</span> (index &gt;= handlers.length) <span class="keyword">return</span> next();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 否则调用取出的路由对象的回调执行</span></span><br><span class="line">      <span class="comment">// 并传入一个函数，在传入的函数中递归 dispatch(index + 1)</span></span><br><span class="line">      <span class="comment">// 目的是为了执行下一个路由对象上的回调函数</span></span><br><span class="line">      handlers[index].cb(ctx, () =&gt; dispatch(index + <span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第一次执行路由对象的回调函数</span></span><br><span class="line">    dispatch(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  routes() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) &#123;</span><br><span class="line">      <span class="comment">// 当前 next 是 Koa 自己的 next，即 Koa 其他的中间件</span></span><br><span class="line">      <span class="comment">// 筛选出路径相同的路由</span></span><br><span class="line">      <span class="keyword">let</span> handlers = <span class="keyword">this</span>.layers.filter(<span class="function"><span class="params">layer</span> =&gt;</span> layer.match(ctx.path));</span><br><span class="line">      <span class="keyword">this</span>.compose(ctx, next, handlers);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面我们创建了一个 <code>Router</code> 类，定义了 <code>get</code> 方法，当然还有 <code>post</code> 等，我们只实现 <code>get</code> 意思一下，<code>get</code> 内为逻辑为将调用 <code>get</code> 方法的参数函数和路由字符串共同构建成对象存入了数组 <code>layers</code>，所以我们创建了专门构造路由对象的类 <code>Layer</code>，方便扩展，在路由匹配时我们可以根据 <code>ctx.path</code> 拿到路由字符串，并通过该路由过滤调数组中与路由不匹配的路由对象，调用 <code>compose</code> 方法将过滤后的数组作为参数 <code>handlers</code> 传入，串行执行路由对象上的回调函数。</p>
+<blockquote class="pullquote warning"><p><em><strong><code>compose</code> 这个方法的实现思想非常的重要，在 <code>Koa</code> 源码中用于串联中间件，在 <code>React</code> 源码中用于串联 <code>redux</code> 的 <code>promise</code>、<code>thunk</code> 和 <code>logger</code> 等模块，我们的实现是一个简版，并没有兼容异步，主要思想是递归 <code>dispatch</code> 函数，每次取出数组中下一个路由对象的回调函数执行，直到所有匹配的路由的回调函数都执行完，执行 <code>Koa</code> 的下一个中间件 <code>next</code>，注意此处的 <code>next</code> 不同于数组中回调函数的参数 <code>next</code>，数组中路由对象回调函数的 <code>next</code> 代表下一个匹配路由的回调。</strong></em></p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote class="pullquote success"><p>上面我们分析和模拟了一些中间件，其实我们会理解 <code>Koa</code> 和 <code>Express</code> 相比较的优势是没有那么繁重，开发使用方便，需要的功能都可以用对应的中间件来实现，使用中间件可以给我们带来一些好处，比如能将我们处理好的数据和新方法挂载在 <code>ctx</code> 上，方便后面 <code>use</code> 传入的回调函数中使用，也可以帮我们处理一些公共逻辑，不至于在每一个 <code>use</code> 的回调中都去处理，大大减少了冗余代码，由此看来其实给 <code>Koa</code> 使用中间件的过程就是一个典型的 “装饰器” 模式，在通过上面的分析之后相信大家也了解了 <code>Koa</code> 的 “洋葱模型” 和异步特点，知道该如何开发自己的中间件了。</p>
+</blockquote>
+
+        </div>
+
+        
+<div class="read-end">
+    <span class="read-end-lg">--------------------</span>
+    <span class="read-end-md">---------------</span>
+    <span class="read-end-sm">----------</span>
+    本文结束
+    <i class="icon icon-paw"></i>
+    感谢您的阅读
+    <span class="read-end-sm">----------</span>
+    <span class="read-end-md">---------------</span>
+    <span class="read-end-lg">--------------------</span>
+</div>
+
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    更新时间：<time datetime="2019-03-04T07:34:23.850Z" itemprop="dateUpdated">2019-03-04 15:34:23</time>
+</span><br>
+
+
+        
+<span class="permalink">
+    本文链接：<a href="/2018/08/20/20180820200342/" target="_blank" rel="external">https://www.pandashen.com/2018/08/20/20180820200342/</a>
+</span><br>
+
+
+        
+<span class="post-message">
+    版权声明：本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 </a> 许可协议，转载请注明出处！
+</span>
+
+
+    </div>
+    
+    <footer>
+        <a href="https://www.pandashen.com">
+            <img src="/img/avatar.jpg" alt="Panda Shen">
+            Panda Shen
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Koa/">Koa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/async-await/">async/await</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/中间件/">中间件</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
     
 
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Panda Shen</span>
-        <span class="logo-line-after"><i></i></span>
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/08/20/20180820200342/&title=《Koa2 中间件原理解析 —— 看了就会写》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/08/20/20180820200342/&title=《Koa2 中间件原理解析 —— 看了就会写》 — Panda Shen's Blog&source=
+
+前言Koa 2.x 版本是当下最流行的 NodeJS 框架，Koa 2.0 的源码特别精简，不像 Express 封装的功能那么多，所以大部分的功能都..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/08/20/20180820200342/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Koa2 中间件原理解析 —— 看了就会写》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/08/20/20180820200342/&via=https://www.pandashen.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/08/20/20180820200342/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/08/25/20180825162129/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Express 源码分析及简易封装</h4>
       </a>
     </div>
-      
-        <h1 class="site-subtitle" itemprop="description">饿厂最菜程序猿的误人子弟之旅，Come on，发车了！</h1>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
   
 
   
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i>
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i>
-            
-            关于
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i>
-            
-            搜索
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="输入关键词进行搜索" spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result">
-    <div id="no-result"><i class="fa fa-search fa-5x"></i></div>
-  </div>
-</div>
-
-
-
+    <div class="waves-block waves-effect next">
+      <a href="/2018/08/17/20180817153635/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">NodeJS 使用 cookie 和 session</h4>
+      </a>
     </div>
   
 </nav>
 
 
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
 
-  
 
-  
-  
-  
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.pandashen.com/2018/08/20/20180820200342/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Panda Shen">
-      <meta itemprop="description" content="Keep fucking the world">
-      <meta itemprop="image" content="/images/avatar.jpg">
+
+
+
+
+
+
+
+
+<div class="comments vcomment" id="comments"></div>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        感谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechatpay.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechatpay.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
     </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Panda Shen">
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
     </span>
+</p>
 
-    
-      <header class="post-header">
 
-        
-        
-          <h2 class="post-title" itemprop="name headline">Koa2 中间件原理解析 —— 看了就会写</h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <p>
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于&#58;</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-20T20:03:42+08:00">
-                2018-08-20
-              </time>
+                <span><a href="/rss2.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
             
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2018-11-12T18:21:27+08:00">
-                2018-11-12
-              </time>
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/08/20/20180820200342/" class="leancloud_visitors" data-flag-title="Koa2 中间件原理解析 —— 看了就会写">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-edit"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  4,566 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长&#58;</span>
-                
-                <span title="阅读时长">
-                  20 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p><img src="/2018/08/20/20180820200342/koa-middleware.png" alt="Koa 中间件" style="border: none;"></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><div class="note default"><p><code>Koa 2.x</code> 版本是当下最流行的 NodeJS 框架，<code>Koa 2.0</code> 的源码特别精简，不像 <code>Express</code> 封装的功能那么多，所以大部分的功能都是由 <code>Koa</code> 开发团队（同 <code>Express</code> 是一家出品）和社区贡献者针对 <code>Koa</code> 对 NodeJS 的封装特性实现的中间件来提供的，用法非常简单，就是引入中间件，并调用 <code>Koa</code> 的 <code>use</code> 方法使用在对应的位置，这样就可以通过在内部操作 <code>ctx</code> 实现一些功能，我们接下来就讨论常用中间件的实现原理以及我们应该如何开发一个 <code>Koa</code> 中间件供自己和别人使用。</p></div>
-<hr>
-
-<a id="more"></a>
-<h2 id="Koa-的洋葱模型介绍"><a href="#Koa-的洋葱模型介绍" class="headerlink" title="Koa 的洋葱模型介绍"></a>Koa 的洋葱模型介绍</h2><p>我们本次不对洋葱模型的实现原理进行过多的刨析，主要根据 API 的使用方式及洋葱模型分析中间件是如何工作的。</p>
-<figure class="highlight js"><figcaption><span>洋葱模型特点</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入 Koa</span></span><br><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">"koa"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建服务</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">3</span>);</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">4</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">6</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听服务</span></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// 5</span></span><br><span class="line"><span class="comment">// 6</span></span><br><span class="line"><span class="comment">// 4</span></span><br><span class="line"><span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
-<p>我们知道 <code>Koa</code> 的 <code>use</code> 方法是支持异步的，所以为了保证正常的按照洋葱模型的执行顺序执行代码，需要在调用 <code>next</code> 的时候让代码等待，等待异步结束后再继续向下执行，所以我们在 <code>Koa</code> 中都是建议使用 <code>async/await</code> 的，引入的中间件都是在 <code>use</code> 方法中调用，由此我们可以分析出每一个 <code>Koa</code> 的中间件都是返回一个 <code>async</code> 函数的。</p>
-<hr>
-
-<h2 id="koa-bodyparser-中间件模拟"><a href="#koa-bodyparser-中间件模拟" class="headerlink" title="koa-bodyparser 中间件模拟"></a>koa-bodyparser 中间件模拟</h2><p>想要分析 <code>koa-bodyparser</code> 的原理首先需要知道用法和作用，<code>koa-bodyparser</code> 中间件是将我们的 <code>post</code> 请求和表单提交的查询字符串转换成对象，并挂在 <code>ctx.request.body</code> 上，方便我们在其他中间件或接口处取值，使用前需提前安装。</p>
-<blockquote>
-<p>npm install koa koa-bodyparser</p>
-</blockquote>
-<p><strong>koa-bodyparser 具体用法如下：</strong></p>
-<figure class="highlight js"><figcaption><span>koa-bodyparser 的用法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">"koa"</span>);</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">"koa-bodyparser"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用中间件</span></span><br><span class="line">app.use(bodyParser());</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (ctx.path === <span class="string">"/"</span> &amp;&amp; ctx.method === <span class="string">"POST"</span>) &#123;</span><br><span class="line">        <span class="comment">// 使用中间件后 ctx.request.body 属性自动加上了 post 请求的数据</span></span><br><span class="line">        <span class="built_in">console</span>.log(ctx.request.body);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
-<p>根据用法我们可以看出 <code>koa-bodyparser</code> 中间件引入的其实是一个函数，我们把它放在了 <code>use</code> 中执行，根据 <code>Koa</code> 的特点，我们推断出 <code>koa-bodyparser</code> 的函数执行后应该给我们返回了一个 <code>async</code> 函数，下面是我们模拟实现的代码。</p>
-<figure class="highlight js"><figcaption><span>文件：my-koa-bodyparser.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> querystring = <span class="built_in">require</span>(<span class="string">"querystring"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> <span class="title">bodyParser</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">        <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 存储数据的数组</span></span><br><span class="line">            <span class="keyword">let</span> dataArr = [];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 接收数据</span></span><br><span class="line">            ctx.req.on(<span class="string">"data"</span>, data =&gt; dataArr.push(data));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 整合数据并使用 Promise 成功</span></span><br><span class="line">            ctx.req.on(<span class="string">"end"</span>, () =&gt; &#123;</span><br><span class="line">                <span class="comment">// 获取请求数据的类型 json 或表单</span></span><br><span class="line">                <span class="keyword">let</span> contentType = ctx.get(<span class="string">"Content-Type"</span>);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 获取数据 Buffer 格式</span></span><br><span class="line">                <span class="keyword">let</span> data = Buffer.concat(dataArr).toString();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (contentType === <span class="string">"application/x-www-form-urlencoded"</span>) &#123;</span><br><span class="line">                    <span class="comment">// 如果是表单提交，则将查询字符串转换成对象赋值给 ctx.request.body</span></span><br><span class="line">                    ctx.request.body = querystring.parse(data);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (contentType === <span class="string">"applaction/json"</span>) &#123;</span><br><span class="line">                    <span class="comment">// 如果是 json，则将字符串格式的对象转换成对象赋值给 ctx.request.body</span></span><br><span class="line">                    ctx.request.body = <span class="built_in">JSON</span>.parse(data);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 执行成功的回调</span></span><br><span class="line">                resolve();</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 继续向下执行</span></span><br><span class="line">        <span class="keyword">await</span> next();</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>在上面代码中由几点是需要我们注意的，即 <code>next</code> 的调用以及为什么通过流接收数据、处理数据和将数据挂在 <code>ctx.request.body</code> 要在 Promise 中进行。</p>
-<div class="note info"><p><em><strong>首先是 <code>next</code> 的调用，我们知道 <code>Koa</code> 的 <code>next</code> 执行，其实就是在执行下一个中间件的函数，即下一个 <code>use</code> 中的 <code>async</code> 函数，为了保证后面的异步代码执行完毕后再继续执行当前的代码，所以我们需要使用 <code>await</code> 进行等待，其次就是数据从接收到挂在 <code>ctx.request.body</code> 都在 Promise 中执行，是因为在接收数据的操作是异步的，整个处理数据的过程需要等待异步完成后，再把数据挂在 <code>ctx.request.body</code> 上，可以保证我们在下一个 <code>use</code> 的 <code>async</code> 函数中可以在 <code>ctx.request.body</code> 上拿到数据，所以我们使用 <code>await</code> 等待一个 Promise 成功后再执行 <code>next</code>。</strong></em></p></div>
-<hr>
-
-<h2 id="koa-better-body-中间件模拟"><a href="#koa-better-body-中间件模拟" class="headerlink" title="koa-better-body 中间件模拟"></a>koa-better-body 中间件模拟</h2><p><code>koa-bodyparser</code> 在处理表单提交时还是显得有一点弱，因为不支持文件上传，而 <code>koa-better-body</code> 则弥补了这个不足，但是 <code>koa-better-body</code> 为 <code>Koa 1.x</code> 版本的中间件，<code>Koa 1.x</code> 的中间件都是使用 <code>Generator</code> 函数实现的，我们需要使用 <code>koa-convert</code> 将 <code>koa-better-body</code> 转化成 <code>Koa 2.x</code> 的中间件。</p>
-<blockquote>
-<p>npm install koa koa-better-body koa-convert path uuid</p>
-</blockquote>
-<p><strong>koa-better-body 具体用法如下：</strong></p>
-<figure class="highlight js"><figcaption><span>koa-better-body 的用法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">"koa"</span>);</span><br><span class="line"><span class="keyword">const</span> betterBody = <span class="built_in">require</span>(<span class="string">"koa-better-body"</span>);</span><br><span class="line"><span class="keyword">const</span> convert = <span class="built_in">require</span>(<span class="string">"koa-convert"</span>); <span class="comment">// 将  koa 1.0 中间转化成 koa 2.0 中间件</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> uuid = <span class="built_in">require</span>(<span class="string">"uuid/v1"</span>); <span class="comment">// 生成随机串</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 koa-better-body 中间件从 koa 1.0 转化成 koa 2.0，并使用中间件</span></span><br><span class="line">app.use(convert(betterBody(&#123;</span><br><span class="line">    uploadDir: path.resolve(__dirname, <span class="string">"upload"</span>)</span><br><span class="line">&#125;)));</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (ctx.path === <span class="string">"/"</span> &amp;&amp; ctx.method === <span class="string">"POST"</span>) &#123;</span><br><span class="line">        <span class="comment">// 使用中间件后 ctx.request.fields 属性自动加上了 post 请求的文件数据</span></span><br><span class="line">        <span class="built_in">console</span>.log(ctx.request.fields);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将文件重命名</span></span><br><span class="line">        <span class="keyword">let</span> imgPath = ctx.request.fields.avatar[<span class="number">0</span>].path;</span><br><span class="line">        <span class="keyword">let</span> newPath = path.resolve(__dirname, uuid());</span><br><span class="line">        fs.rename(imgPath, newPath);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
-<p>上面代码中 <code>koa-better-body</code> 的主要功能就是将表单上传的文件存入本地指定的文件夹下，并将文件流对象挂在了 <code>ctx.request.fields</code> 属性上，我们接下来就模拟 <code>koa-better-body</code> 的功能实现一版基于 <code>Koa 2.x</code> 处理文件上传的中间件。</p>
-<figure class="highlight js"><figcaption><span>文件：my-koa-better-body.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> uuid = <span class="built_in">require</span>(<span class="string">"uuid/v1"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 给 Buffer 扩展 split 方法预备后面使用</span></span><br><span class="line">Buffer.prototype.split = <span class="function"><span class="keyword">function</span> (<span class="params">sep</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> len = Buffer.from(sep).length; <span class="comment">// 分隔符所占的字节数</span></span><br><span class="line">    <span class="keyword">let</span> result = []; <span class="comment">// 返回的数组</span></span><br><span class="line">    <span class="keyword">let</span> start = <span class="number">0</span>; <span class="comment">// 查找 Buffer 的起始位置</span></span><br><span class="line">    <span class="keyword">let</span> offset = <span class="number">0</span>; <span class="comment">// 偏移量</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 循环查找分隔符</span></span><br><span class="line">    <span class="keyword">while</span> ((offset = <span class="keyword">this</span>.indexOf(sep, start)) !== <span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="comment">// 将分隔符之前的部分截取出来存入</span></span><br><span class="line">        result.push(<span class="keyword">this</span>.slice(start, offset));</span><br><span class="line">        start = offset + len;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理剩下的部分</span></span><br><span class="line">    result.push(<span class="keyword">this</span>.slice(start));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回结果</span></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">        <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> dataArr = []; <span class="comment">// 存储读取的数据</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 读取数据</span></span><br><span class="line">            ctx.req.on(<span class="string">"data"</span>, data =&gt; dataArr.push(data));</span><br><span class="line"></span><br><span class="line">            ctx.req.on(<span class="string">"end"</span>, () =&gt; &#123;</span><br><span class="line">                <span class="comment">// 取到请求体每段的分割线字符串</span></span><br><span class="line">                <span class="keyword">let</span> bondery = <span class="string">`--<span class="subst">$&#123;ctx.get(<span class="string">"content-Type"</span>).split(<span class="string">"="</span>)[<span class="number">1</span>]&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 获取不同系统的换行符</span></span><br><span class="line">                <span class="keyword">let</span> lineBreak = process.platform === <span class="string">"win32"</span> ? <span class="string">"\r\n"</span> : <span class="string">"\n"</span>;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 非文件类型数据的最终返回结果</span></span><br><span class="line">                <span class="keyword">let</span> fields = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 分隔的 buffer 去掉没用的头和尾即开头的 '' 和末尾的 '--'</span></span><br><span class="line">                dataArr = dataArr.split(bondery).slice(<span class="number">1</span>, <span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 循环处理 dataArr 中每一段 Buffer 的内容</span></span><br><span class="line">                dataArr.forEach(<span class="function"><span class="params">lines</span> =&gt;</span> &#123;</span><br><span class="line">                    <span class="comment">// 对于普通值，信息由包含键名的行 + 两个换行 + 数据值 + 换行组成</span></span><br><span class="line">                    <span class="comment">// 对于文件，信息由包含 filename 的行 + 两个换行 + 文件内容 + 换行组成</span></span><br><span class="line">                    <span class="keyword">let</span> [head, tail] = lines.split(<span class="string">`<span class="subst">$&#123;lineBreak&#125;</span><span class="subst">$&#123;lineBreak&#125;</span>`</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 判断是否是文件，如果是文件则创建文件并写入，如果是普通值则存入 fields 对象中</span></span><br><span class="line">                    <span class="keyword">if</span> (head.includes(<span class="string">"filename"</span>)) &#123;</span><br><span class="line">                        <span class="comment">// 防止文件内容含有换行而被分割，应重新截取内容并去掉最后的换行</span></span><br><span class="line">                        <span class="keyword">let</span> tail = lines.slice(head.length + <span class="number">2</span> * lineBreak.length, -lineBreak.length);</span><br><span class="line"></span><br><span class="line">                        <span class="comment">// 创建可写流并指定写入的路径：绝对路径 + 指定文件夹 + 随机文件名，最后写入文件</span></span><br><span class="line">                        fs.createWriteStream(path.join(__dirname, options.uploadDir, uuid())).end(tail);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="comment">// 是普通值取出键名</span></span><br><span class="line">                        <span class="keyword">let</span> key = head.match(<span class="regexp">/name="(\w+)"/</span>)[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">                        <span class="comment">// 将 key 设置给 fields tail 去掉末尾换行后的内容</span></span><br><span class="line">                        fields[key] = tail.toString(<span class="string">"utf8"</span>).slice(<span class="number">0</span>, -lineBreak.length);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 将处理好的 fields 对象挂在 ctx.request.fields 上，并完成 Promise</span></span><br><span class="line">                ctx.request.fields = fields;</span><br><span class="line">                resolve();</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 向下执行</span></span><br><span class="line">        <span class="keyword">await</span> next();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面的内容逻辑可以通过代码注释来理解，就是模拟 <code>koa-better-body</code> 的功能逻辑，我们主要的关心点在于中间件实现的方式，上面功能实现的异步操作依然是读取数据，为了等待数据处理结束仍然在 Promise 中执行，并使用 <code>await</code> 等待，Promise 执行成功调用 <code>next</code>。</p>
-<hr>
-
-<h2 id="koa-views-中间件模拟"><a href="#koa-views-中间件模拟" class="headerlink" title="koa-views 中间件模拟"></a>koa-views 中间件模拟</h2><p>Node 模板是我们经常使用的工具用来在服务端帮我们渲染页面，模板的种类繁多，因此出现了 <code>koa-view</code> 中间件，帮我们来兼容这些模板，先安装依赖的模块。</p>
-<blockquote>
-<p>npm install koa koa-views ejs</p>
-</blockquote>
-<p><strong>下面是一个 ejs 的模板文件：</strong></p>
-<figure class="highlight html"><figcaption><span>文件：index.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>ejs<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%=name%</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%=age%</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">%if</span> (<span class="attr">name</span>==<span class="string">"panda"</span>) &#123;%&gt;</span></span><br><span class="line">        panda</span><br><span class="line">    <span class="tag">&lt;<span class="name">%&#125;</span> <span class="attr">else</span> &#123;%&gt;</span></span><br><span class="line">        shen</span><br><span class="line">    <span class="tag">&lt;<span class="name">%&#125;%</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">%arr.forEach(item</span> =&gt;</span> &#123;%&gt;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">%=item%</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%&#125;)%</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><strong>koa-views 具体用法如下：</strong></p>
-<figure class="highlight js"><figcaption><span>koa-views 的用法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">"koa"</span>);</span><br><span class="line"><span class="keyword">const</span> views = <span class="built_in">require</span>(<span class="string">"koa-views"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用中间件</span></span><br><span class="line">app.use(views(path.resolve(__dirname, <span class="string">"views"</span>), &#123;</span><br><span class="line">    extension: <span class="string">"ejs"</span></span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> ctx.render(<span class="string">"index"</span>, &#123; <span class="attr">name</span>: <span class="string">"panda"</span>, <span class="attr">age</span>: <span class="number">20</span>, <span class="attr">arr</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
-<p>可以看出我们使用了 <code>koa-views</code> 中间件后，让 <code>ctx</code> 上多了 <code>render</code> 方法帮助我们实现对模板的渲染和响应页面，就和直接使用 <code>ejs</code> 自带的 <code>render</code> 方法一样，并且从用法可以看出 <code>render</code> 方法是异步执行的，所以需要使用 <code>await</code> 进行等待，接下来我们就来模拟实现一版简单的 <code>koa-views</code> 中间件。</p>
-<figure class="highlight js"><figcaption><span>文件：my-koa-views.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; promisify &#125; = <span class="built_in">require</span>(<span class="string">"util"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将读取文件方法转换成 Promise</span></span><br><span class="line"><span class="keyword">const</span> readFile = promisify(fs.radFile);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 到处中间件</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">dir, options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">        <span class="comment">// 动态引入模板依赖模块</span></span><br><span class="line">        <span class="keyword">const</span> view = <span class="built_in">require</span>(options.extension);</span><br><span class="line"></span><br><span class="line">        ctx.render = <span class="keyword">async</span> (filename, data) =&gt; &#123;</span><br><span class="line">            <span class="comment">// 异步读取文件内容</span></span><br><span class="line">            <span class="keyword">let</span> tmpl = <span class="keyword">await</span> readFile(path.join(dir, <span class="string">`<span class="subst">$&#123;filename&#125;</span>.<span class="subst">$&#123;options.extension&#125;</span>`</span>), <span class="string">"utf8"</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 将模板渲染并返回页面字符串</span></span><br><span class="line">            <span class="keyword">let</span> pageStr = view.render(tmpl, data);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 设置响应类型并响应页面</span></span><br><span class="line">            ctx.set(<span class="string">"Content-Type"</span>, <span class="string">"text/html;charset=utf8"</span>);</span><br><span class="line">            ctx.body = pageStr;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 继续向下执行</span></span><br><span class="line">        <span class="keyword">await</span> next();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>挂在 <code>ctx</code> 上的 <code>render</code> 方法之所以是异步执行的是因为内部读取模板文件是异步执行的，需要等待，所以 <code>render</code> 方法为 <code>async</code> 函数，在中间件内部动态引入了我们使的用模板，如 <code>ejs</code>，并在 <code>ctx.render</code> 内部使用对应的 <code>render</code> 方法获取替换数据后的页面字符串，并以 <code>html</code> 的类型响应。</p>
-<hr>
-
-<h2 id="koa-static-中间件模拟"><a href="#koa-static-中间件模拟" class="headerlink" title="koa-static 中间件模拟"></a>koa-static 中间件模拟</h2><p>下面是 <code>koa-static</code> 中间件的用法，代码使用的依赖如下，使用前需安装。</p>
-<blockquote>
-<p>npm install koa koa-static mime</p>
-</blockquote>
-<p><strong>koa-static 具体用法如下：</strong></p>
-<figure class="highlight js"><figcaption><span>koa-static 的用法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">"koa"</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">static</span> = <span class="built_in">require</span>(<span class="string">"koa-static"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">static</span>(path.resolve(__dirname, <span class="string">"public"</span>)));</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    ctx.body = <span class="string">"hello world"</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
-<p>通过使用和分析，我们知道了 <code>koa-static</code> 中间件的作用是在服务器接到请求时，帮我们处理静态文件，如果我们直接访问文件名的时候，会查找这个文件并直接响应，如果没有这个文件路径会当作文件夹，并查找文件夹下的 <code>index.html</code>，如果存在则直接响应，如果不存在则交给其他中间件处理。</p>
-<figure class="highlight js"><figcaption><span>文件：my-koa-static.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"><span class="keyword">const</span> mime = <span class="built_in">require</span>(<span class="string">"mime"</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; promisify &#125; = <span class="built_in">require</span>(<span class="string">"util"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 stat 和 access 转换成 Promise</span></span><br><span class="line"><span class="keyword">const</span> stat = promisify(fs.stat);</span><br><span class="line"><span class="keyword">const</span> access = promisify(fs.access)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">dir</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">        <span class="comment">// 将访问的路由处理成绝对路径，这里要使用 join 因为有可能是 /</span></span><br><span class="line">        <span class="keyword">let</span> realPath = path.join(dir, ctx.path);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 获取 stat 对象</span></span><br><span class="line">            <span class="keyword">let</span> statObj = <span class="keyword">await</span> stat(realPath);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 如果是文件，则设置文件类型并直接响应内容，否则当作文件夹寻找 index.html</span></span><br><span class="line">            <span class="keyword">if</span> (statObj.isFile()) &#123;</span><br><span class="line">                ctx.set(<span class="string">"Content-Type"</span>, <span class="string">`<span class="subst">$&#123;mime.getType()&#125;</span>;charset=utf8`</span>);</span><br><span class="line">                ctx.body = fs.createReadStream(realPath);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">let</span> filename = path.join(realPath, <span class="string">"index.html"</span>);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 如果不存在该文件则执行 catch 中的 next 交给其他中间件处理</span></span><br><span class="line">                <span class="keyword">await</span> access(filename);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 存在设置文件类型并响应内容</span></span><br><span class="line">                ctx.set(<span class="string">"Content-Type"</span>, <span class="string">"text/html;charset=utf8"</span>);</span><br><span class="line">                ctx.body = fs.createReadStream(filename);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            <span class="keyword">await</span> next();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面的逻辑中需要检测路径是否存在，由于我们导出的函数都是 <code>async</code> 函数，所以我们将 <code>stat</code> 和 <code>access</code> 转化成了 Promise，并用 <code>try...catch</code> 进行捕获，在路径不合法时调用 <code>next</code> 交给其他中间件处理。</p>
-<hr>
-
-<h2 id="koa-router-中间件模拟"><a href="#koa-router-中间件模拟" class="headerlink" title="koa-router 中间件模拟"></a>koa-router 中间件模拟</h2><p>在 <code>Express</code> 框架中，路由是被内置在了框架内部，而 <code>Koa</code> 中没有内置，是使用 <code>koa-router</code> 中间件来实现的，使用前需要安装。</p>
-<blockquote>
-<p>npm install koa koa-router</p>
-</blockquote>
-<p><code>koa-router</code> 功能非常强大，下面我们只是简单的使用，并且根据使用的功能进行模拟。</p>
-<figure class="highlight js"><figcaption><span>koa-router 的简单用法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">"Koa"</span>);</span><br><span class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">"koa-router"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> Router();</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">"/panda"</span>, (ctx, next) =&gt; &#123;</span><br><span class="line">    ctx.body = <span class="string">"panda"</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">"/panda"</span>, (ctx, next) =&gt; &#123;</span><br><span class="line">    ctx.body = <span class="string">"pandashen"</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">"/shen"</span>, (ctx, next) =&gt; &#123;</span><br><span class="line">    ctx.body = <span class="string">"shen"</span>;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用路由中间件</span></span><br><span class="line">app.use(router.routes());</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
-<p>从上面看出 <code>koa-router</code> 导出的是一个类，使用时需要创建一个实例，并且调用实例的 <code>routes</code> 方法将该方法返回的 <code>async</code> 函数进行连接，但是在匹配路由的时候，会根据路由 <code>get</code> 方法中的路径进行匹配，并串行执行内部的回调函数，当所有回调函数执行完毕之后会执行整个 <code>Koa</code> 串行的 <code>next</code>，原理同其他中间件，我下面来针对上面使用的功能简易实现。</p>
-<figure class="highlight js"><figcaption><span>文件：my-koa-router.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 控制每一个路由层的类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Layer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(path, cb) &#123;</span><br><span class="line">        <span class="keyword">this</span>.path = path;</span><br><span class="line">        <span class="keyword">this</span>.cb = cb;</span><br><span class="line">    &#125;</span><br><span class="line">    match(path) &#123;</span><br><span class="line">        <span class="comment">// 地址的路由和当前配置路由相等返回 true，否则返回 false</span></span><br><span class="line">        <span class="keyword">return</span> path === <span class="keyword">this</span>.path;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 路由的类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Router</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="comment">// 存放每个路由对象的数组，&#123; path: /xxx, fn: cb &#125;</span></span><br><span class="line">        <span class="keyword">this</span>.layers = [];</span><br><span class="line">    &#125;</span><br><span class="line">    get(path, cb) &#123;</span><br><span class="line">        <span class="comment">// 将路由对象存入数组中</span></span><br><span class="line">        <span class="keyword">this</span>.layers.push(<span class="keyword">new</span> Layer(path, cb));</span><br><span class="line">    &#125;</span><br><span class="line">    compose(ctx, next, handlers) &#123;</span><br><span class="line">        <span class="comment">// 将匹配的路由函数串联执行</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dispatch</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">            <span class="comment">// 如果当前 index 个数大于了存储路由对象的长度，则执行 Koa 的 next 方法</span></span><br><span class="line">            <span class="keyword">if</span>(index &gt;= handlers.length) <span class="keyword">return</span> next();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 否则调用取出的路由对象的回调执行，并传入一个函数，在传入的函数中递归 dispatch(index + 1)</span></span><br><span class="line">            <span class="comment">// 目的是为了执行下一个路由对象上的回调函数</span></span><br><span class="line">            handlers[index].cb(ctx, () =&gt; dispatch(index + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 第一次执行路由对象的回调函数</span></span><br><span class="line">        dispatch(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    routes() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) &#123; <span class="comment">// 当前 next 是 Koa 自己的 next，即 Koa 其他的中间件</span></span><br><span class="line">            <span class="comment">// 筛选出路径相同的路由</span></span><br><span class="line">            <span class="keyword">let</span> handlers = <span class="keyword">this</span>.layers.filter(<span class="function"><span class="params">layer</span> =&gt;</span> layer.match(ctx.path));</span><br><span class="line">            <span class="keyword">this</span>.compose(ctx, next, handlers);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在上面我们创建了一个 <code>Router</code> 类，定义了 <code>get</code> 方法，当然还有 <code>post</code> 等，我们只实现 <code>get</code> 意思一下，<code>get</code> 内为逻辑为将调用 <code>get</code> 方法的参数函数和路由字符串共同构建成对象存入了数组 <code>layers</code>，所以我们创建了专门构造路由对象的类 <code>Layer</code>，方便扩展，在路由匹配时我们可以根据 <code>ctx.path</code> 拿到路由字符串，并通过该路由过滤调数组中与路由不匹配的路由对象，调用 <code>compose</code> 方法将过滤后的数组作为参数 <code>handlers</code> 传入，串行执行路由对象上的回调函数。</p>
-<div class="note warning"><p><em><strong><code>compose</code> 这个方法的实现思想非常的重要，在 <code>Koa</code> 源码中用于串联中间件，在 <code>React</code> 源码中用于串联 <code>redux</code> 的 <code>promise</code>、<code>thunk</code> 和 <code>logger</code> 等模块，我们的实现是一个简版，并没有兼容异步，主要思想是递归 <code>dispatch</code> 函数，每次取出数组中下一个路由对象的回调函数执行，直到所有匹配的路由的回调函数都执行完，执行 <code>Koa</code> 的下一个中间件 <code>next</code>，注意此处的 <code>next</code> 不同于数组中回调函数的参数 <code>next</code>，数组中路由对象回调函数的 <code>next</code> 代表下一个匹配路由的回调。</strong></em></p></div>
-<hr>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><div class="note success"><p>上面我们分析和模拟了一些中间件，其实我们会理解 <code>Koa</code> 和 <code>Express</code> 相比较的优势是没有那么繁重，开发使用方便，需要的功能都可以用对应的中间件来实现，使用中间件可以给我们带来一些好处，比如能将我们处理好的数据和新方法挂载在 <code>ctx</code> 上，方便后面 <code>use</code> 传入的回调函数中使用，也可以帮我们处理一些公共逻辑，不至于在每一个 <code>use</code> 的回调中都去处理，大大减少了冗余代码，由此看来其实给 <code>Koa</code> 使用中间件的过程就是一个典型的 “装饰器” 模式，在通过上面的分析之后相信大家也了解了 <code>Koa</code> 的 “洋葱模型” 和异步特点，知道该如何开发自己的中间件了。</p></div>
-<hr>
-
-      
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
     </div>
-
-    
-    
-    
-    <div>
-      
-        <div class="read-end">
-    
-        <div style="text-align:center;color: #ccc;">
-          <span class="read-end-max">--------------</span>
-          <span class="read-end-mid">----------</span>
-          <span class="read-end-min">-------</span>
-          本文结束
-          <i class="fa fa-paw"></i>
-          感谢您的阅读
-          <span class="read-end-min">-------</span>
-          <span class="read-end-mid">----------</span>
-          <span class="read-end-max">--------------</span>
-        </div>
-    
-</div>
-
-      
-    </div>
-
-    
-
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div class="reward-comment" style="margin-bottom: 10px;">坚持技术分享，对您有帮助就赏一个吧 ^ ^</div>
-  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
-  </button>
-  <div id="QR" style="display: none;">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Panda Shen 微信"/>
-        <p>微信</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/alipay.jpg" alt="Panda Shen 支付宝"/>
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
-    
-
-    
-      <div>
-        <ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者：</strong>
-    Panda Shen
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://www.pandashen.com/2018/08/20/20180820200342/" title="Koa2 中间件原理解析 —— 看了就会写">https://www.pandashen.com/2018/08/20/20180820200342/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>
-    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-
-      </div>
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/NodeJS/" rel="tag"><i class="fa fa-tag"></i> NodeJS</a>
-          
-            <a href="/tags/async-await/" rel="tag"><i class="fa fa-tag"></i> async/await</a>
-          
-            <a href="/tags/中间件/" rel="tag"><i class="fa fa-tag"></i> 中间件</a>
-          
-            <a href="/tags/Koa/" rel="tag"><i class="fa fa-tag"></i> Koa</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/08/17/20180817153635/" rel="next" title="NodeJS 使用 cookie 和 session">
-                <i class="fa fa-chevron-left"></i> NodeJS 使用 cookie 和 session
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/25/20180825162129/" rel="prev" title="Express 源码分析及简易封装">
-                Express 源码分析及简易封装 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-        <!-- Go to www.addthis.com/dashboard to customize your tools -->
-<div class="addthis_inline_share_toolbox">
-  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b4dbb54f6ab0d36" async = "async" ></script>
-</div>
-
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-    <div class="comments" id="comments">
-      <div id="gitalk-container"></div>
-    </div>
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-      <div id="sidebar-dimmer"></div>
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/images/avatar.jpg"
-                alt="Panda Shen" />
-            
-              <p class="site-author-name" itemprop="name">Panda Shen</p>
-              <p class="site-description motion-element" itemprop="description">Keep fucking the world</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives">
-              
-                  <span class="site-state-item-count">54</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">65</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-            <div class="feed-link motion-element">
-              <a href="/rss2.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          <div class="links-of-author motion-element">
-            
-              
-                <span class="links-of-author-item">
-                  <a href="https://github.com/shenqiuhui" target="_blank" title="GitHub">
-                    
-                      <i class="fa fa-fw fa-github-alt"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="mailto:pandashen821@163.com" target="_blank" title="E-Mail">
-                    
-                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="https://www.pandashen.cn" target="_blank" title="WeChat">
-                    
-                      <i class="fa fa-fw fa-weixin"></i>WeChat</a>
-                </span>
-              
-            
-          </div>
-
-          
-          
-            <div class="cc-license motion-element" itemprop="license">
-              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
-                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
-              </a>
-            </div>
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                友情链接
-              </div>
-              <ul class="links-of-blogroll-list">
+    <div class="bottom">
+        <p><span>Panda Shen &copy; 2017 - 2019</span>
+            <span>
                 
-                  <li class="links-of-blogroll-item">
-                    <a href="https://cherryblog.site/" title="Cherry's Blog" target="_blank">Cherry's Blog</a>
-                  </li>
                 
-                  <li class="links-of-blogroll-item">
-                    <a href="https://asdfv1929.github.io/" title="asdfv1929 's Home" target="_blank">asdfv1929 's Home</a>
-                  </li>
                 
-                  <li class="links-of-blogroll-item">
-                    <a href="https://pineapplexue.vip/" title="菠萝吹雪" target="_blank">菠萝吹雪</a>
-                  </li>
+                    Hosted by <a href="https://pages.coding.me" target="_blank">Coding Pages</a>
                 
-              </ul>
-            </div>
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Koa-的洋葱模型介绍"><span class="nav-number">2.</span> <span class="nav-text">Koa 的洋葱模型介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#koa-bodyparser-中间件模拟"><span class="nav-number">3.</span> <span class="nav-text">koa-bodyparser 中间件模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#koa-better-body-中间件模拟"><span class="nav-number">4.</span> <span class="nav-text">koa-better-body 中间件模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#koa-views-中间件模拟"><span class="nav-number">5.</span> <span class="nav-text">koa-views 中间件模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#koa-static-中间件模拟"><span class="nav-number">6.</span> <span class="nav-text">koa-static 中间件模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#koa-router-中间件模拟"><span class="nav-number">7.</span> <span class="nav-text">koa-router 中间件模拟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
+            </span>
+        </p>
     </div>
-  </aside>
+</footer>
 
-
-        
-      </div>
     </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Panda Shen</span>
 
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/08/20/20180820200342/&title=《Koa2 中间件原理解析 —— 看了就会写》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/08/20/20180820200342/&title=《Koa2 中间件原理解析 —— 看了就会写》 — Panda Shen's Blog&source=
+
+前言Koa 2.x 版本是当下最流行的 NodeJS 框架，Koa 2.0 的源码特别精简，不像 Express 封装的功能那么多，所以大部分的功能都..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/08/20/20180820200342/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Koa2 中间件原理解析 —— 看了就会写》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/08/20/20180820200342/&via=https://www.pandashen.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/08/20/20180820200342/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3a3U7DMAwG0L3/S5dbJGj5bHdAk5MrNLYlp0jGP3m94nV8WZ9fr74n//6bFwYGxmMZx+W6PsrZxmev9Pa6fj8GBsY+jLMIlgfWPLye8aoBGgMDAyMPske8JqknBgYGRsKobnCdIF6TMDAwMHpFbDXUJingH9TiGBgYD2TkXfff//kt8w0MDIxHMY7i6n2qkN71ToWBgbE0ozfCzENztSSuFr0YGBh7MvKyc9IaS3ZMABgYGDswquVi3hqrvn/ShsPAwNiHMU/Oqg39HFAIuBgYGMsxqse9d/JQfYhRaY2BgbEc4+xjvfA3v1JWTUbL22NgYDyQkX9p3mjLL4fNBw/fdA0xMDCWY1xvNhk95qR8ePDD3wEDA2NRRl5M9nKw3ngyGYhiYGDsw0ha89Xtc/BoAJDfCsHAwHg4o5cg5kPK6lHyi2UYGBi7MfIyslfi9iarzZEqBgbGcozqZdO8lZY/jmoa+s1vMTAwlmYkrfy8iK2OJKv/GQptQQwMjOUY1VbapPWWpJv5uBQDA2NPxqS5nw8YJo+vMMjEwMBYiDG5qTE56L0hGwMDY1XGUVy9hG/+aH4I/RgYGEsz8lUuKYuXNvIRaS9YY2BgPJ3RKzirw8sE0BuOYmBg7MPI21vVJn4SNKulbLn+xsDA2IxxV8KXJ4VREYuBgYERB9z5EUd1NgYGxtKMXhHbG39OBglvabdhYGD8e8a9QbmX/CVp6A1DTQwMjOcxPgDf7Y50pa+a+gAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 
 
 
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
 
 
-  <span class="footer-custom">Hosted by <a href="https://pages.coding.me" target="_blank">Coding Pages</a></span>
-
-
-
-  <span class="footer-custom-flag post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a></div>
-
-
-
-  <span class="post-meta-divider">|</span>
-  <span class="post-meta-item-icon">
-    <i class="fa fa-bar-chart"></i>
-  </span>
-  
-    <span class="post-meta-item-text">网站文字统计&#58;</span>
-  
-  <span title="网站文字统计">202.6k</span>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="site-uv" id="busuanzi_container_site_uv" style="display: none;">
-      <i class="fa fa-user"></i> 访客数
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      人
-      
-        <span class="post-meta-divider">|</span>
-      
-    </span>
-  
-
-  
-    <span class="site-pv" id="busuanzi_container_site_pv" style="display: none;">
-      <i class="fa fa-eye"></i> 总访问量
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
 </script>
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/three.min.js"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
-
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-  <script src="/js/src/md5.min.js"></script>
-  <script type="text/javascript">
-    var gitalk = new Gitalk({
-      clientID: '708ca5b4fc1f08259651',
-      clientSecret: '347014dfe70a72dea9c207152fd04e8d3ebcc3b4',
-      repo: 'shenqiuhui.github.io',
-      owner: 'shenqiuhui',
-      admin: ['shenqiuhui'],
-      // id: location.pathname,
-      id: md5(location.pathname),
-      distractionFreeMode: 'true'
-    })
-    gitalk.render('gitalk-container')
-  </script>
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
-    var path = "/" + search_path;
-    // monitor main search box;
+});
 
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').html('<div id="no-result"><i class="fa fa-search fa-5x" /></div>');
-      $('#no-result').html('<i class="fa fa-search fa-5x" />');
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
     }
+});
+</script>
 
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 
 
 
 
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
-  <script>AV.initialize("RqIV72rdY61eUlDassFQDxPG-gzGzoHsz", "Mvo4cTDcS9hw0l03mINzvdNk");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
+    <!-- Valine Comments -->
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var META = ['nick','mail','link'];
+        var meta = 'nick,mail'.split(',').filter(function(item){
+          return META.indexOf(item) > -1
         });
-    }
 
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
+        new Valine({
+            el: '#comments',
+            notify: 'false' === 'true',
+            verify: 'false' === 'true',
+            appId: "RqIV72rdY61eUlDassFQDxPG-gzGzoHsz",
+            appKey: "Mvo4cTDcS9hw0l03mINzvdNk",
+            avatar: "mm",
+            placeholder: "说点什么",
+            visitor: "true" === 'true',
+            highlight: "true" === 'true',
+            meta: meta.length === 0 ? META : meta,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
 
 
 
-  
 
-  
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
 <script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '愿风指引你前进的道路！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '真正重要的，只是当下！';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
 })();
 </script>
 
 
-  
-  
 
-  
-
-  
-  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
-  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
-
-
-  
-
-
-  <!-- 页面点击小红心 -->
-  <script type="text/javascript" src="/js/src/clicklove.js"></script>
-  <!-- 修改代码块编译有标题和无标题的问题 -->
-  <script type="text/javascript" src="/js/src/changehighlight.js"></script>
 </body>
 </html>

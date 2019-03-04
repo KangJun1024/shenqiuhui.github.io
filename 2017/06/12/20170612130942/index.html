@@ -1,1559 +1,671 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-<meta name="theme-color" content="#222">
-
-
-
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-  <script>
-  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
-  daovoice('init', {
-      app_id: "848cdfe0"
-    });
-  daovoice('update');
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-    
-      
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
     
 
     
-  
-
-  
-    
-      
-    
 
     
-  
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?HIpscSc60YSz75aC"></script>
+<!-- End Baidu Tongji -->
 
-  
-    
-      
-    
 
-    
-  
 
-  
+
+    <meta charset="utf-8">
     
     
-    <link href="//fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="JavaScript,性能优化," />
-
-
-
-
-
-  <link rel="alternate" href="/rss2.xml" title="Panda Shen" type="application/atom+xml" />
-
-
-
-
-
-
-<meta name="description" content="前言在前端开发当中我们经常会绑定一些事件触发的某些程序执行，有时这些事件会连续触发，如浏览器窗口的 scroll、resize，输入框的 keyup、input，以及 click 事件在连续点击时连续发送请求等等，这些情况有些会严重影响前端性能，有些会增加服务器压力，使用户体验大打折扣，而函数节流和防抖就是为了解决这样的问题。">
+    
+    
+    <title>前端优化 —— 函数的节流和防抖 | Panda Shen&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="JavaScript,性能优化">
+    <meta name="description" content="前言在前端开发当中我们经常会绑定一些事件触发的某些程序执行，有时这些事件会连续触发，如浏览器窗口的 scroll、resize，输入框的 keyup、input，以及 click 事件在连续点击时连续发送请求等等，这些情况有些会严重影响前端性能，有些会增加服务器压力，使用户体验大打折扣，而函数节流和防抖就是为了解决这样的问题。">
 <meta name="keywords" content="JavaScript,性能优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端优化 —— 函数的节流和防抖">
 <meta property="og:url" content="https://www.pandashen.com/2017/06/12/20170612130942/index.html">
-<meta property="og:site_name" content="Panda Shen">
+<meta property="og:site_name" content="Panda Shen&#39;s Blog">
 <meta property="og:description" content="前言在前端开发当中我们经常会绑定一些事件触发的某些程序执行，有时这些事件会连续触发，如浏览器窗口的 scroll、resize，输入框的 keyup、input，以及 click 事件在连续点击时连续发送请求等等，这些情况有些会严重影响前端性能，有些会增加服务器压力，使用户体验大打折扣，而函数节流和防抖就是为了解决这样的问题。">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.pandashen.com/2017/06/12/20170612130942/throttle-vs-debounce.png">
 <meta property="og:image" content="https://www.pandashen.com/2017/06/12/20170612130942/fun-throtter.png">
 <meta property="og:image" content="https://www.pandashen.com/2017/06/12/20170612130942/fun-debounce.png">
-<meta property="og:updated_time" content="2018-11-12T10:21:27.937Z">
+<meta property="og:updated_time" content="2019-03-04T18:05:36.311Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端优化 —— 函数的节流和防抖">
 <meta name="twitter:description" content="前言在前端开发当中我们经常会绑定一些事件触发的某些程序执行，有时这些事件会连续触发，如浏览器窗口的 scroll、resize，输入框的 keyup、input，以及 click 事件在连续点击时连续发送请求等等，这些情况有些会严重影响前端性能，有些会增加服务器压力，使用户体验大打折扣，而函数节流和防抖就是为了解决这样的问题。">
 <meta name="twitter:image" content="https://www.pandashen.com/2017/06/12/20170612130942/throttle-vs-debounce.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+    
 
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '5.1.3',
-    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: 'undefined',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: 'SIUJA7EEMV',
-      apiKey: 'bd003fb67269946195a6faa118759b02',
-      indexName: 'search_controller',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"输入关键词进行搜索","hits_empty":"找不到关于 “${query}” 的文章","hits_stats":"共找到 ${hits} 篇文章，花了 ${time} ms"}
-    }
-  };
-</script>
+    
+    
+<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon-next.png">
 
 
 
-  <link rel="canonical" href="https://www.pandashen.com/2017/06/12/20170612130942/"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32-next.png">
 
 
 
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16-next.png">
 
 
-  <title>前端优化 —— 函数的节流和防抖 | Panda Shen</title>
-  
+
+<link rel="mask-icon" href="/img/logo.svg" color>
 
 
 
 
 
 
+    
 
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-  
-  
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Panda Shen</h5>
+          <a href="mailto:pandashen821@163.com" title="pandashen821@163.com" class="mail">pandashen821@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/link">
+                <i class="icon icon-lg icon-link"></i>
+                链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-user"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.pandashen.cn" target="_blank">
+                <i class="icon icon-lg icon-weixin"></i>
+                WeChat
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">前端优化 —— 函数的节流和防抖</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">前端优化 —— 函数的节流和防抖</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-06-12T05:09:42.000Z" itemprop="datePublished" class="page-time">
+  2017-06-12
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+            
+        </h5>
+    </div>
+
     
-  
 
-  <div class="container sidebar-position-right page-post-detail">
-    <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <!-- <h4>TOC</h4> -->
+            <h4>文章目录</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#函数节流-throtter"><span class="post-toc-number">2.</span> <span class="post-toc-text">函数节流 throtter</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#节流函数的时序图"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">节流函数的时序图</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#节流函数的封装"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">节流函数的封装</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#验证节流函数"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">验证节流函数</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#函数防抖-debounce"><span class="post-toc-number">3.</span> <span class="post-toc-text">函数防抖 debounce</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#防抖函数的时序图"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">防抖函数的时序图</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#防抖函数的封装"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">防抖函数的封装</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#验证防抖函数"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">验证防抖函数</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-20170612130942" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">前端优化 —— 函数的节流和防抖</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-06-12 13:09:42" datetime="2017-06-12T05:09:42.000Z" itemprop="datePublished">2017-06-12</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+            
+
+            
+<span id="/2017/06/12/20170612130942/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="前端优化 —— 函数的节流和防抖">
+    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <img src="/2017/06/12/20170612130942/throttle-vs-debounce.png" title="函数节流和防抖">
+<p><br></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote class="pullquote default"><p>在前端开发当中我们经常会绑定一些事件触发的某些程序执行，有时这些事件会连续触发，如浏览器窗口的 <code>scroll</code>、<code>resize</code>，输入框的 <code>keyup</code>、<code>input</code>，以及 <code>click</code> 事件在连续点击时连续发送请求等等，这些情况有些会严重影响前端性能，有些会增加服务器压力，使用户体验大打折扣，而函数节流和防抖就是为了解决这样的问题。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="函数节流-throtter"><a href="#函数节流-throtter" class="headerlink" title="函数节流 throtter"></a>函数节流 throtter</h2><blockquote class="pullquote info"><p><strong>函数节流：当持续发生事件时，保证在一个固定的时间间隔只执行一次真正的事件处理程序，通俗的说就像 “节流” 的名字一样，打开水龙头时要秉承勤俭节约的原则，把阀门关小，最好是达到在固定间隔内水一滴一滴的往下流。</strong></p>
+</blockquote>
+<h3 id="节流函数的时序图"><a href="#节流函数的时序图" class="headerlink" title="节流函数的时序图"></a>节流函数的时序图</h3><p><br></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2017/06/12/20170612130942/fun-throtter.png" alt="函数节流时序图" title>
+                </div>
+                <div class="image-caption">函数节流时序图</div>
+            </figure>
+<p><br></p>
+<p>从图中可以看出，连续触发事件时，真正执行事件处理程序的间隔是固定的，多次触发，也只会在某一个时间间隔内触发一次，由于事件处理函数内部执行逻辑各不相同，我们就封装一版可通用的节流函数。</p>
+<h3 id="节流函数的封装"><a href="#节流函数的封装" class="headerlink" title="节流函数的封装"></a>节流函数的封装</h3><figure class="highlight js"><figcaption><span>文件：throtter.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 节流函数</span></span><br><span class="line"><span class="keyword">const</span> throtter = <span class="function">(<span class="params">func, delay = <span class="number">60</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 锁的标识</span></span><br><span class="line">  <span class="keyword">let</span> lock = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 返回一个事件处理函数</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 如果 lock 为 true 则跳出</span></span><br><span class="line">    <span class="keyword">if</span> (lock) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 执行函数并更改锁的状态</span></span><br><span class="line">    func(...args);</span><br><span class="line">    lock = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加定时器，在到达时间间隔时重置锁的状态</span></span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> lock = <span class="literal">false</span>, delay);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>throtter</code> 函数有两个参数，第一个参数为在事件触发时真正要执行的函数，第二个参数为定义的间隔时间，在函数执行时定义了 <code>lock</code> 的初始值，通过闭包返回一个函数作为事件处理函数，在返回的函数内部判断 <code>lock</code> 状态并确定执行真正的函数 <code>func</code> 还是跳出，每次执行 <code>func</code> 后会更改 <code>lock</code> 状态，通过定时器在规定的时间间隔内重置 <code>lock</code>，这就是函数节流的原理。</p>
+<h3 id="验证节流函数"><a href="#验证节流函数" class="headerlink" title="验证节流函数"></a>验证节流函数</h3><figure class="highlight js"><figcaption><span>文件：throtter-test.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用节流函数</span></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'scroll'</span>, throtter(<span class="built_in">console</span>.log));</span><br></pre></td></tr></table></figure>
+<p>上面我们给 <code>document</code> 对象添加了滚动事件，并不断的打印事件对象，事件处理函数的默认参数为事件对象，从执行效果应该可以看出，平均每 <code>60ms</code> 才会触发一次事件，达到了优化性能的目的，如果想让真正执行的函数 <code>func</code> 传入更多的参数，只需如下处理。</p>
+<figure class="highlight js"><figcaption><span>文件：throtter-test.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a b 为函数要传入的参数</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="number">1</span>, b = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回事件处理函数</span></span><br><span class="line"><span class="keyword">const</span> func = throtter(<span class="built_in">console</span>.log);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加事件监听</span></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'scroll'</span>, e =&gt; func(e, a, b));</span><br></pre></td></tr></table></figure>
+<blockquote class="pullquote warning"><p><strong>节流函数一般用于 <code>scroll</code>、<code>resize</code> 事件的情况较多，因为这些事件的触发是连续性的，需要在一个时间间隔内只触发一次。</strong></p>
+</blockquote>
+<h2 id="函数防抖-debounce"><a href="#函数防抖-debounce" class="headerlink" title="函数防抖 debounce"></a>函数防抖 debounce</h2><blockquote class="pullquote primary"><p><strong>函数防抖：当持续发生事件时，事件只在上一次触发后的一段时间内没再触发事件，才会真正的执行事件处理逻辑，如果每两次触发的间隔小于这个时间，则不执行事件逻辑。</strong></p>
+</blockquote>
+<h3 id="防抖函数的时序图"><a href="#防抖函数的时序图" class="headerlink" title="防抖函数的时序图"></a>防抖函数的时序图</h3><p><br></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2017/06/12/20170612130942/fun-debounce.png" alt="函数防抖时序图" title>
+                </div>
+                <div class="image-caption">函数防抖时序图</div>
+            </figure>
+<p><br></p>
+<p>从图中可以看出，连续触发事件时并没有执行事件处理函数，只有在某一阶段连续触发后的最后一次才执行，也就是上一次触发的时间间隔要大于设定值才执行，同样的，事件处理函数内部执行逻辑各不相同，我们就封装一版可通用的防抖函数。</p>
+<h3 id="防抖函数的封装"><a href="#防抖函数的封装" class="headerlink" title="防抖函数的封装"></a>防抖函数的封装</h3><figure class="highlight js"><figcaption><span>文件：debounce.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 防抖函数</span></span><br><span class="line"><span class="keyword">const</span> dobounce = <span class="function">(<span class="params">func, delay = <span class="number">300</span>, timer = <span class="literal">null</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 清除定时器</span></span><br><span class="line">    clearInterval(timer);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在定时器到时后执行事件处理函数</span></span><br><span class="line">    timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> func(...args), delay);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>dobounce</code> 函数有三个参数，第一个参数为在事件触发时真正要执行的函数，第二个参数为执行事件的延迟时间，第三个参数为定时器 <code>ID</code> 的初始值，执行 <code>dobounce</code> 通过闭包返回了事件处理函数，在处理函数内部先清除定时器，然后定义定时器并将 <code>ID</code> 赋值给 <code>timer</code>，如果事件连续触发，则会不断的清除定时器，直到有一次触发间隔超过了设定延时时间 <code>delay</code>，才会真正执行 <code>func</code>。</p>
+<h3 id="验证防抖函数"><a href="#验证防抖函数" class="headerlink" title="验证防抖函数"></a>验证防抖函数</h3><figure class="highlight html"><figcaption><span>文件：index.html</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>函数防抖<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"ipt"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><figcaption><span>文件：debounce-test.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用防抖函数</span></span><br><span class="line"><span class="keyword">let</span> ipt = <span class="built_in">document</span>.querySelector(<span class="string">'#ipt'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加事件监听</span></span><br><span class="line">ipt.addEventListener(<span class="string">'keyup'</span>, debounce(<span class="built_in">console</span>.log));</span><br></pre></td></tr></table></figure>
+<p>上面的功能跟 <code>throtter</code> 类似，真正执行事件处理函数时打印事件对象，通过验证，连续输入触发 <code>keyup</code> 事件，上一次触发和下一次触发间隔时间必须大于 <code>300ms</code> 才会执行打印事件对象的逻辑，如果想传入多个参数套路相同。</p>
+<figure class="highlight js"><figcaption><span>文件：debounce-test.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取 dom 元素</span></span><br><span class="line"><span class="keyword">let</span> ipt = <span class="built_in">document</span>.querySelector(<span class="string">'#ipt'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// a b 为函数要传入的参数</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="number">1</span>, b = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回事件处理函数</span></span><br><span class="line"><span class="keyword">const</span> func = debounce(<span class="built_in">console</span>.log);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加事件监听</span></span><br><span class="line">ipt.addEventListener(<span class="string">'keyup'</span>, e =&gt; func(e, a, b));</span><br></pre></td></tr></table></figure>
+<blockquote class="pullquote default"><p><strong>防抖函数一般用于输入框事件，常用场景就是搜索或查询，如果不使用防抖会连续发送请求，增加服务器的压力，使用防抖后，会在用户输入要查询的关键词后才发送请求，这也更符合用户的习惯，例如百度搜索，就是这样实现的。</strong></p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote class="pullquote success"><p>“节流” 和 “防抖” 是前端在项目中经常使用的优化手段，代码虽然不多，但是确是前端面试 “出镜率” 非常高的知识点，从而能看出它们的重要性，所以建议前端同学们一定要知道，并能手写，这是 “一箭双雕” 的事，可以用来通过面试，也可以因为工作中遇到直接就写而提高工作效率。</p>
+</blockquote>
+
+        </div>
+
+        
+<div class="read-end">
+    <span class="read-end-lg">--------------------</span>
+    <span class="read-end-md">---------------</span>
+    <span class="read-end-sm">----------</span>
+    本文结束
+    <i class="icon icon-paw"></i>
+    感谢您的阅读
+    <span class="read-end-sm">----------</span>
+    <span class="read-end-md">---------------</span>
+    <span class="read-end-lg">--------------------</span>
+</div>
+
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    更新时间：<time datetime="2019-03-04T18:05:36.311Z" itemprop="dateUpdated">2019-03-05 02:05:36</time>
+</span><br>
+
+
+        
+<span class="permalink">
+    本文链接：<a href="/2017/06/12/20170612130942/" target="_blank" rel="external">https://www.pandashen.com/2017/06/12/20170612130942/</a>
+</span><br>
+
+
+        
+<span class="post-message">
+    版权声明：本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 </a> 许可协议，转载请注明出处！
+</span>
+
+
+    </div>
+    
+    <footer>
+        <a href="https://www.pandashen.com">
+            <img src="/img/avatar.jpg" alt="Panda Shen">
+            Panda Shen
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能优化/">性能优化</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
     
 
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Panda Shen</span>
-        <span class="logo-line-after"><i></i></span>
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2017/06/12/20170612130942/&title=《前端优化 —— 函数的节流和防抖》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2017/06/12/20170612130942/&title=《前端优化 —— 函数的节流和防抖》 — Panda Shen's Blog&source=
+
+前言在前端开发当中我们经常会绑定一些事件触发的某些程序执行，有时这些事件会连续触发，如浏览器窗口的 scroll、resize，输入框的 keyup、..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2017/06/12/20170612130942/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《前端优化 —— 函数的节流和防抖》 — Panda Shen's Blog&url=https://www.pandashen.com/2017/06/12/20170612130942/&via=https://www.pandashen.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2017/06/12/20170612130942/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/06/30/20170630162209/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">简单封装一个靠谱的检测数据类型模块</h4>
       </a>
     </div>
-      
-        <h1 class="site-subtitle" itemprop="description">饿厂最菜程序猿的误人子弟之旅，Come on，发车了！</h1>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
   
 
   
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i>
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i>
-            
-            关于
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i>
-            
-            搜索
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="输入关键词进行搜索" spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result">
-    <div id="no-result"><i class="fa fa-search fa-5x"></i></div>
-  </div>
-</div>
-
-
-
+    <div class="waves-block waves-effect next">
+      <a href="/2017/05/19/20170519135903/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Hexo 中 Markdown 特殊字符的处理方法</h4>
+      </a>
     </div>
   
 </nav>
 
 
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
 
-  
 
-  
-  
-  
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.pandashen.com/2017/06/12/20170612130942/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Panda Shen">
-      <meta itemprop="description" content="Keep fucking the world">
-      <meta itemprop="image" content="/images/avatar.jpg">
+
+
+
+
+
+
+
+
+<div class="comments vcomment" id="comments"></div>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        感谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechatpay.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechatpay.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
     </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Panda Shen">
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
     </span>
+</p>
 
-    
-      <header class="post-header">
 
-        
-        
-          <h2 class="post-title" itemprop="name headline">前端优化 —— 函数的节流和防抖</h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <p>
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于&#58;</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-12T13:09:42+08:00">
-                2017-06-12
-              </time>
+                <span><a href="/rss2.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
             
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2018-11-12T18:21:27+08:00">
-                2018-11-12
-              </time>
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/06/12/20170612130942/" class="leancloud_visitors" data-flag-title="前端优化 —— 函数的节流和防抖">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-edit"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,615 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长&#58;</span>
-                
-                <span title="阅读时长">
-                  6 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p><img src="/2017/06/12/20170612130942/throttle-vs-debounce.png" alt="函数节流和防抖" style="border: none;"></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><div class="note default"><p>在前端开发当中我们经常会绑定一些事件触发的某些程序执行，有时这些事件会连续触发，如浏览器窗口的 <code>scroll</code>、<code>resize</code>，输入框的 <code>keyup</code>、<code>input</code>，以及 <code>click</code> 事件在连续点击时连续发送请求等等，这些情况有些会严重影响前端性能，有些会增加服务器压力，使用户体验大打折扣，而函数节流和防抖就是为了解决这样的问题。</p></div>
-<hr>
-
-<a id="more"></a>
-<h2 id="函数节流-throtter"><a href="#函数节流-throtter" class="headerlink" title="函数节流 throtter"></a>函数节流 throtter</h2><div class="note info"><p><strong>函数节流：当持续发生事件时，保证在一个固定的时间间隔只执行一次真正的事件处理程序，通俗的说就像 “节流” 的名字一样，打开水龙头时要秉承勤俭节约的原则，把阀门关小，最好是达到在固定间隔内水一滴一滴的往下流。</strong></p></div>
-<h3 id="1、节流函数的时序图"><a href="#1、节流函数的时序图" class="headerlink" title="1、节流函数的时序图"></a>1、节流函数的时序图</h3><p><br><img src="/2017/06/12/20170612130942/fun-throtter.png" alt="函数节流时序图"><br></p>
-<p>从图中可以看出，连续触发事件时，真正执行事件处理程序的间隔是固定的，多次触发，也只会在某一个时间间隔内触发一次，由于事件处理函数内部执行逻辑各不相同，我们就封装一版可通用的节流函数。</p>
-<h3 id="2、节流函数的封装"><a href="#2、节流函数的封装" class="headerlink" title="2、节流函数的封装"></a>2、节流函数的封装</h3><figure class="highlight js"><figcaption><span>文件：throtter.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 节流函数</span></span><br><span class="line"><span class="keyword">const</span> throtter = <span class="function">(<span class="params">func, delay = <span class="number">60</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 锁的标识</span></span><br><span class="line">    <span class="keyword">let</span> lock = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回一个事件处理函数</span></span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 如果 lock 为 true 则跳出</span></span><br><span class="line">        <span class="keyword">if</span> (lock) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 执行函数并更改锁的状态</span></span><br><span class="line">        func(...args);</span><br><span class="line">        lock = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 添加定时器，在到达时间间隔时重置锁的状态</span></span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> lock = <span class="literal">false</span>, delay);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>throtter</code> 函数有两个参数，第一个参数为在事件触发时真正要执行的函数，第二个参数为定义的间隔时间，在函数执行时定义了 <code>lock</code> 的初始值，通过闭包返回一个函数作为事件处理函数，在返回的函数内部判断 <code>lock</code> 状态并确定执行真正的函数 <code>func</code> 还是跳出，每次执行 <code>func</code> 后会更改 <code>lock</code> 状态，通过定时器在规定的时间间隔内重置 <code>lock</code>，这就是函数节流的原理。</p>
-<h3 id="3、验证节流函数"><a href="#3、验证节流函数" class="headerlink" title="3、验证节流函数"></a>3、验证节流函数</h3><figure class="highlight js"><figcaption><span>文件：throtter-test.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用节流函数</span></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">"scroll"</span>, throtter(<span class="built_in">console</span>.log));</span><br></pre></td></tr></table></figure>
-<p>上面我们给 <code>document</code> 对象添加了滚动事件，并不断的打印事件对象，事件处理函数的默认参数为事件对象，从执行效果应该可以看出，平均每 <code>60ms</code> 才会触发一次事件，达到了优化性能的目的，如果想让真正执行的函数 <code>func</code> 传入更多的参数，只需如下处理。</p>
-<figure class="highlight js"><figcaption><span>文件：throtter-test.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a b 为函数要传入的参数</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="number">1</span>, b = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回事件处理函数</span></span><br><span class="line"><span class="keyword">const</span> func = throtter(<span class="built_in">console</span>.log);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加事件监听</span></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">"scroll"</span>, e =&gt; func(e, a, b));</span><br></pre></td></tr></table></figure>
-<div class="note warning"><p><strong>节流函数一般用于 <code>scroll</code>、<code>resize</code> 事件的情况较多，因为这些事件的触发是连续性的，需要在一个时间间隔内只触发一次。</strong></p></div>
-<hr>
-
-<h2 id="函数防抖-debounce"><a href="#函数防抖-debounce" class="headerlink" title="函数防抖 debounce"></a>函数防抖 debounce</h2><div class="note primary"><p><strong>函数防抖：当持续发生事件时，事件只在上一次触发后的一段时间内没再触发事件，才会真正的执行事件处理逻辑，如果每两次触发的间隔小于这个时间，则不执行事件逻辑。</strong></p></div>
-<h3 id="1、防抖函数的时序图"><a href="#1、防抖函数的时序图" class="headerlink" title="1、防抖函数的时序图"></a>1、防抖函数的时序图</h3><p><br><img src="/2017/06/12/20170612130942/fun-debounce.png" alt="函数防抖时序图"><br></p>
-<p>从图中可以看出，连续触发事件时并没有执行事件处理函数，只有在某一阶段连续触发后的最后一次才执行，也就是上一次触发的时间间隔要大于设定值才执行，同样的，事件处理函数内部执行逻辑各不相同，我们就封装一版可通用的防抖函数。</p>
-<h3 id="2、防抖函数的封装"><a href="#2、防抖函数的封装" class="headerlink" title="2、防抖函数的封装"></a>2、防抖函数的封装</h3><figure class="highlight js"><figcaption><span>文件：debounce.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 防抖函数</span></span><br><span class="line"><span class="keyword">const</span> dobounce = <span class="function">(<span class="params">func, delay = <span class="number">300</span>, timer = <span class="literal">null</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function">(<span class="params">...args</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 清除定时器</span></span><br><span class="line">        clearInterval(timer);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 在定时器到时后执行事件处理函数</span></span><br><span class="line">        timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> func(...args), delay);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>dobounce</code> 函数有三个参数，第一个参数为在事件触发时真正要执行的函数，第二个参数为执行事件的延迟时间，第三个参数为定时器 <code>ID</code> 的初始值，执行 <code>dobounce</code> 通过闭包返回了事件处理函数，在处理函数内部先清除定时器，然后定义定时器并将 <code>ID</code> 赋值给 <code>timer</code>，如果事件连续触发，则会不断的清除定时器，直到有一次触发间隔超过了设定延时时间 <code>delay</code>，才会真正执行 <code>func</code>。</p>
-<h3 id="3、验证防抖函数"><a href="#3、验证防抖函数" class="headerlink" title="3、验证防抖函数"></a>3、验证防抖函数</h3><figure class="highlight html"><figcaption><span>文件：index.html</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>函数防抖<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"ipt"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><figcaption><span>文件：debounce-test.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用防抖函数</span></span><br><span class="line"><span class="keyword">let</span> ipt = <span class="built_in">document</span>.querySelector(<span class="string">"#ipt"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加事件监听</span></span><br><span class="line">ipt.addEventListener(<span class="string">"keyup"</span>, debounce(<span class="built_in">console</span>.log));</span><br></pre></td></tr></table></figure>
-<p>上面的功能跟 <code>throtter</code> 类似，真正执行事件处理函数时打印事件对象，通过验证，连续输入触发 <code>keyup</code> 事件，上一次触发和下一次触发间隔时间必须大于 <code>300ms</code> 才会执行打印事件对象的逻辑，如果想传入多个参数套路相同。</p>
-<figure class="highlight js"><figcaption><span>文件：debounce-test.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取 dom 元素</span></span><br><span class="line"><span class="keyword">let</span> ipt = <span class="built_in">document</span>.querySelector(<span class="string">"#ipt"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// a b 为函数要传入的参数</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="number">1</span>, b = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回事件处理函数</span></span><br><span class="line"><span class="keyword">const</span> func = debounce(<span class="built_in">console</span>.log);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加事件监听</span></span><br><span class="line">ipt.addEventListener(<span class="string">"keyup"</span>, e =&gt; func(e, a, b));</span><br></pre></td></tr></table></figure>
-<div class="note default"><p><strong>防抖函数一般用于输入框事件，常用场景就是搜索或查询，如果不使用防抖会连续发送请求，增加服务器的压力，使用防抖后，会在用户输入要查询的关键词后才发送请求，这也更符合用户的习惯，例如百度搜索，就是这样实现的。</strong></p></div>
-<hr>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><div class="note success"><p>“节流” 和 “防抖” 是前端在项目中经常使用的优化手段，代码虽然不多，但是确是前端面试 “出镜率” 非常高的知识点，从而能看出它们的重要性，所以建议前端同学们一定要知道，并能手写，这是 “一箭双雕” 的事，可以用来通过面试，也可以因为工作中遇到直接就写而提高工作效率。</p></div>
-<hr>
-
-      
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
     </div>
-
-    
-    
-    
-    <div>
-      
-        <div class="read-end">
-    
-        <div style="text-align:center;color: #ccc;">
-          <span class="read-end-max">--------------</span>
-          <span class="read-end-mid">----------</span>
-          <span class="read-end-min">-------</span>
-          本文结束
-          <i class="fa fa-paw"></i>
-          感谢您的阅读
-          <span class="read-end-min">-------</span>
-          <span class="read-end-mid">----------</span>
-          <span class="read-end-max">--------------</span>
-        </div>
-    
-</div>
-
-      
-    </div>
-
-    
-
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div class="reward-comment" style="margin-bottom: 10px;">坚持技术分享，对您有帮助就赏一个吧 ^ ^</div>
-  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
-  </button>
-  <div id="QR" style="display: none;">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Panda Shen 微信"/>
-        <p>微信</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/alipay.jpg" alt="Panda Shen 支付宝"/>
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
-    
-
-    
-      <div>
-        <ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者：</strong>
-    Panda Shen
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://www.pandashen.com/2017/06/12/20170612130942/" title="前端优化 —— 函数的节流和防抖">https://www.pandashen.com/2017/06/12/20170612130942/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>
-    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-
-      </div>
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
-          
-            <a href="/tags/性能优化/" rel="tag"><i class="fa fa-tag"></i> 性能优化</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/05/19/20170519135903/" rel="next" title="Hexo 中 Markdown 特殊字符的处理方法">
-                <i class="fa fa-chevron-left"></i> Hexo 中 Markdown 特殊字符的处理方法
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/30/20170630162209/" rel="prev" title="简单封装一个靠谱的检测数据类型模块">
-                简单封装一个靠谱的检测数据类型模块 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-        <!-- Go to www.addthis.com/dashboard to customize your tools -->
-<div class="addthis_inline_share_toolbox">
-  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b4dbb54f6ab0d36" async = "async" ></script>
-</div>
-
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-    <div class="comments" id="comments">
-      <div id="gitalk-container"></div>
-    </div>
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-      <div id="sidebar-dimmer"></div>
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/images/avatar.jpg"
-                alt="Panda Shen" />
-            
-              <p class="site-author-name" itemprop="name">Panda Shen</p>
-              <p class="site-description motion-element" itemprop="description">Keep fucking the world</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives">
-              
-                  <span class="site-state-item-count">54</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">65</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-            <div class="feed-link motion-element">
-              <a href="/rss2.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          <div class="links-of-author motion-element">
-            
-              
-                <span class="links-of-author-item">
-                  <a href="https://github.com/shenqiuhui" target="_blank" title="GitHub">
-                    
-                      <i class="fa fa-fw fa-github-alt"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="mailto:pandashen821@163.com" target="_blank" title="E-Mail">
-                    
-                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="https://www.pandashen.cn" target="_blank" title="WeChat">
-                    
-                      <i class="fa fa-fw fa-weixin"></i>WeChat</a>
-                </span>
-              
-            
-          </div>
-
-          
-          
-            <div class="cc-license motion-element" itemprop="license">
-              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
-                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
-              </a>
-            </div>
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                友情链接
-              </div>
-              <ul class="links-of-blogroll-list">
+    <div class="bottom">
+        <p><span>Panda Shen &copy; 2017 - 2019</span>
+            <span>
                 
-                  <li class="links-of-blogroll-item">
-                    <a href="https://cherryblog.site/" title="Cherry's Blog" target="_blank">Cherry's Blog</a>
-                  </li>
                 
-                  <li class="links-of-blogroll-item">
-                    <a href="https://asdfv1929.github.io/" title="asdfv1929 's Home" target="_blank">asdfv1929 's Home</a>
-                  </li>
                 
-                  <li class="links-of-blogroll-item">
-                    <a href="https://pineapplexue.vip/" title="菠萝吹雪" target="_blank">菠萝吹雪</a>
-                  </li>
+                    Hosted by <a href="https://pages.coding.me" target="_blank">Coding Pages</a>
                 
-              </ul>
-            </div>
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数节流-throtter"><span class="nav-number">2.</span> <span class="nav-text">函数节流 throtter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、节流函数的时序图"><span class="nav-number">2.1.</span> <span class="nav-text">1、节流函数的时序图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、节流函数的封装"><span class="nav-number">2.2.</span> <span class="nav-text">2、节流函数的封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、验证节流函数"><span class="nav-number">2.3.</span> <span class="nav-text">3、验证节流函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数防抖-debounce"><span class="nav-number">3.</span> <span class="nav-text">函数防抖 debounce</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、防抖函数的时序图"><span class="nav-number">3.1.</span> <span class="nav-text">1、防抖函数的时序图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、防抖函数的封装"><span class="nav-number">3.2.</span> <span class="nav-text">2、防抖函数的封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、验证防抖函数"><span class="nav-number">3.3.</span> <span class="nav-text">3、验证防抖函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
+            </span>
+        </p>
     </div>
-  </aside>
+</footer>
 
-
-        
-      </div>
     </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Panda Shen</span>
 
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2017/06/12/20170612130942/&title=《前端优化 —— 函数的节流和防抖》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2017/06/12/20170612130942/&title=《前端优化 —— 函数的节流和防抖》 — Panda Shen's Blog&source=
+
+前言在前端开发当中我们经常会绑定一些事件触发的某些程序执行，有时这些事件会连续触发，如浏览器窗口的 scroll、resize，输入框的 keyup、..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2017/06/12/20170612130942/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《前端优化 —— 函数的节流和防抖》 — Panda Shen's Blog&url=https://www.pandashen.com/2017/06/12/20170612130942/&via=https://www.pandashen.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2017/06/12/20170612130942/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aS2rDQBAFwNz/0s42ISh+r0cJzKi0MtjSqDA0/fv4iK/Xl+vq29nvf36+uuuGCwMDY1vG69drxmhPSWBXv8fAwHgOYxYWr0LtjJc/AQMDAyNhtEfmYRQDAwNjnZGkfbPi9l8DLgYGxoaMtrBcKWKT0/+wFsfAwNiQkXfd///zn8w3MDAwtmK8yitPCtuRZFvifnsyBgbG0Yz1AeSs7ExSwDrRxMDAOJQxW3Foy9G2uZYUyZf/AwYGxgMYbUjNw2g+KmjXxTAwMM5mtIsR7WByFnzz4rneNcPAwNiQsdKOb0PnysDyzYgCAwPjaEaSZtWPGwXx2QA1elEMDIzNGW3AXV/eSgrUmoSBgfEYRr76MAvHbfOuCNkYGBiPZyQlaz6GzANukapiYGAczWhfdD01rCcVbSsQAwPjOMZKC2yWArZXdBYGBsbDGHmwm61t5SsUxbABAwPjAYxZAZnf25a19WgBAwPjaEZ7WD4MmAXxdl2j2BzBwMDYnHHX2la+XrYSpi/vwsDAeACjjtBlqXlvWftmHouBgXE0Y6Xp3wbl9glvzsXAwDiUsTJQzF+0Ddk1FQMD42jGSsMrTyXzb5N0cGU1BAMDY19GEihn61+ztLIN9BgYGM9hzFpdv790Dp4VsRgYGBh5WFxp8c8afBgYGBizg2ett9saeRgYGA9g5AnfbNCYr47NSmUMDIyzGbPScWXZq13XuG2oiYGBsR/jE5YDA/HZ2OdDAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
 
 
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
 
 
-  <span class="footer-custom">Hosted by <a href="https://pages.coding.me" target="_blank">Coding Pages</a></span>
-
-
-
-  <span class="footer-custom-flag post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a></div>
-
-
-
-  <span class="post-meta-divider">|</span>
-  <span class="post-meta-item-icon">
-    <i class="fa fa-bar-chart"></i>
-  </span>
-  
-    <span class="post-meta-item-text">网站文字统计&#58;</span>
-  
-  <span title="网站文字统计">202.6k</span>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="site-uv" id="busuanzi_container_site_uv" style="display: none;">
-      <i class="fa fa-user"></i> 访客数
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      人
-      
-        <span class="post-meta-divider">|</span>
-      
-    </span>
-  
-
-  
-    <span class="site-pv" id="busuanzi_container_site_pv" style="display: none;">
-      <i class="fa fa-eye"></i> 总访问量
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
 </script>
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/three.min.js"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
-
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-  <script src="/js/src/md5.min.js"></script>
-  <script type="text/javascript">
-    var gitalk = new Gitalk({
-      clientID: '708ca5b4fc1f08259651',
-      clientSecret: '347014dfe70a72dea9c207152fd04e8d3ebcc3b4',
-      repo: 'shenqiuhui.github.io',
-      owner: 'shenqiuhui',
-      admin: ['shenqiuhui'],
-      // id: location.pathname,
-      id: md5(location.pathname),
-      distractionFreeMode: 'true'
-    })
-    gitalk.render('gitalk-container')
-  </script>
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
-    var path = "/" + search_path;
-    // monitor main search box;
+});
 
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').html('<div id="no-result"><i class="fa fa-search fa-5x" /></div>');
-      $('#no-result').html('<i class="fa fa-search fa-5x" />');
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
     }
+});
+</script>
 
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 
 
 
 
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
-  <script>AV.initialize("RqIV72rdY61eUlDassFQDxPG-gzGzoHsz", "Mvo4cTDcS9hw0l03mINzvdNk");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
+    <!-- Valine Comments -->
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var META = ['nick','mail','link'];
+        var meta = 'nick,mail'.split(',').filter(function(item){
+          return META.indexOf(item) > -1
         });
-    }
 
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
+        new Valine({
+            el: '#comments',
+            notify: 'false' === 'true',
+            verify: 'false' === 'true',
+            appId: "RqIV72rdY61eUlDassFQDxPG-gzGzoHsz",
+            appKey: "Mvo4cTDcS9hw0l03mINzvdNk",
+            avatar: "mm",
+            placeholder: "说点什么",
+            visitor: "true" === 'true',
+            highlight: "true" === 'true',
+            meta: meta.length === 0 ? META : meta,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
 
 
 
-  
 
-  
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
 <script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '愿风指引你前进的道路！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '真正重要的，只是当下！';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
 })();
 </script>
 
 
-  
-  
 
-  
-
-  
-  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
-  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
-
-
-  
-
-
-  <!-- 页面点击小红心 -->
-  <script type="text/javascript" src="/js/src/clicklove.js"></script>
-  <!-- 修改代码块编译有标题和无标题的问题 -->
-  <script type="text/javascript" src="/js/src/changehighlight.js"></script>
 </body>
 </html>

@@ -1,1587 +1,693 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" >
-<meta name="theme-color" content="#222">
-
-
-
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-  <script>
-  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
-  daovoice('init', {
-      app_id: "848cdfe0"
-    });
-  daovoice('update');
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-    
-      
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
     
 
     
-  
-
-  
-    
-      
-    
 
     
-  
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?HIpscSc60YSz75aC"></script>
+<!-- End Baidu Tongji -->
 
-  
-    
-      
-    
 
-    
-  
 
-  
+
+    <meta charset="utf-8">
     
     
-    <link href="//fonts.cat.net/css?family=Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="异步,Promise,NodeJS,ES6,ES7,async/await,数据结构,fs," />
-
-
-
-
-
-  <link rel="alternate" href="/rss2.xml" title="Panda Shen" type="application/atom+xml" />
-
-
-
-
-
-
-<meta name="description" content="树的基本概念树（Tree）是 n 个结点的有限集，n 为 0 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 n 大于 1 时，其余结点可分为 m 个互不相交的有限集 T1、T2、......、Tm，其中每一个集合本身又是一棵树，并且称为 SubTree，即根的子树。 需要强调的是，n&amp;gt;0 时根结点是唯一的，不可能存在多个根结点，m&amp;gt;0 时，子树的个">
+    
+    
+    <title>NodeJS 树结构遍历 —— 深度优先和广度优先 | Panda Shen&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="异步,Promise,NodeJS,ES6,ES7,async/await,数据结构,fs">
+    <meta name="description" content="树的基本概念树（Tree）是 n 个结点的有限集，n 为 0 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 n 大于 1 时，其余结点可分为 m 个互不相交的有限集 T1、T2、......、Tm，其中每一个集合本身又是一棵树，并且称为 SubTree，即根的子树。  需要强调的是，n&amp;gt;0 时根结点是唯一的，不可能存在多个根结点，m&amp;gt;0 时，子树">
 <meta name="keywords" content="异步,Promise,NodeJS,ES6,ES7,async&#x2F;await,数据结构,fs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NodeJS 树结构遍历 —— 深度优先和广度优先">
 <meta property="og:url" content="https://www.pandashen.com/2018/07/02/20180702122923/index.html">
-<meta property="og:site_name" content="Panda Shen">
-<meta property="og:description" content="树的基本概念树（Tree）是 n 个结点的有限集，n 为 0 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 n 大于 1 时，其余结点可分为 m 个互不相交的有限集 T1、T2、......、Tm，其中每一个集合本身又是一棵树，并且称为 SubTree，即根的子树。 需要强调的是，n&amp;gt;0 时根结点是唯一的，不可能存在多个根结点，m&amp;gt;0 时，子树的个">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:description" content="树的基本概念树（Tree）是 n 个结点的有限集，n 为 0 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 n 大于 1 时，其余结点可分为 m 个互不相交的有限集 T1、T2、......、Tm，其中每一个集合本身又是一棵树，并且称为 SubTree，即根的子树。  需要强调的是，n&amp;gt;0 时根结点是唯一的，不可能存在多个根结点，m&amp;gt;0 时，子树">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.pandashen.com/2018/07/02/20180702122923/traversal-tree.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/02/20180702122923/tree-detials.png">
+<meta property="og:image" content="https://www.pandashen.com/2018/07/02/20180702122923/tree-detials.jpg">
 <meta property="og:image" content="https://www.pandashen.com/2018/07/02/20180702122923/depth-first-traversal.png">
 <meta property="og:image" content="https://www.pandashen.com/2018/07/02/20180702122923/breadth-first-traversal.png">
-<meta property="og:updated_time" content="2018-11-12T10:21:27.954Z">
+<meta property="og:updated_time" content="2019-03-04T06:56:47.765Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJS 树结构遍历 —— 深度优先和广度优先">
-<meta name="twitter:description" content="树的基本概念树（Tree）是 n 个结点的有限集，n 为 0 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 n 大于 1 时，其余结点可分为 m 个互不相交的有限集 T1、T2、......、Tm，其中每一个集合本身又是一棵树，并且称为 SubTree，即根的子树。 需要强调的是，n&amp;gt;0 时根结点是唯一的，不可能存在多个根结点，m&amp;gt;0 时，子树的个">
+<meta name="twitter:description" content="树的基本概念树（Tree）是 n 个结点的有限集，n 为 0 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 n 大于 1 时，其余结点可分为 m 个互不相交的有限集 T1、T2、......、Tm，其中每一个集合本身又是一棵树，并且称为 SubTree，即根的子树。  需要强调的是，n&amp;gt;0 时根结点是唯一的，不可能存在多个根结点，m&amp;gt;0 时，子树">
 <meta name="twitter:image" content="https://www.pandashen.com/2018/07/02/20180702122923/traversal-tree.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+    
 
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '5.1.3',
-    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: 'undefined',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: 'SIUJA7EEMV',
-      apiKey: 'bd003fb67269946195a6faa118759b02',
-      indexName: 'search_controller',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"输入关键词进行搜索","hits_empty":"找不到关于 “${query}” 的文章","hits_stats":"共找到 ${hits} 篇文章，花了 ${time} ms"}
-    }
-  };
-</script>
+    
+    
+<link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon-next.png">
 
 
 
-  <link rel="canonical" href="https://www.pandashen.com/2018/07/02/20180702122923/"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32-next.png">
 
 
 
+<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16-next.png">
 
 
-  <title>NodeJS 树结构遍历 —— 深度优先和广度优先 | Panda Shen</title>
-  
+
+<link rel="mask-icon" href="/img/logo.svg" color>
 
 
 
 
 
 
+    
 
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-  
-  
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Panda Shen</h5>
+          <a href="mailto:pandashen821@163.com" title="pandashen821@163.com" class="mail">pandashen821@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/link">
+                <i class="icon icon-lg icon-link"></i>
+                链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-user"></i>
+                关于
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.pandashen.cn" target="_blank">
+                <i class="icon icon-lg icon-weixin"></i>
+                WeChat
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">NodeJS 树结构遍历 —— 深度优先和广度优先</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">NodeJS 树结构遍历 —— 深度优先和广度优先</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-07-02T04:29:23.000Z" itemprop="datePublished" class="page-time">
+  2018-07-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/NodeJS/">NodeJS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
     
-  
 
-  <div class="container sidebar-position-right page-post-detail">
-    <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <!-- <h4>TOC</h4> -->
+            <h4>文章目录</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#树的基本概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">树的基本概念</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#先序深度优先实现递归删除文件目录"><span class="post-toc-number">2.</span> <span class="post-toc-text">先序深度优先实现递归删除文件目录</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#同步的实现"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">同步的实现</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#异步回调的实现"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">异步回调的实现</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#异步-Promise-的实现"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">异步 Promise 的实现</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#异步-async-await-的实现"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">异步 async/await 的实现</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#先序广度优先实现递归删除文件目录"><span class="post-toc-number">3.</span> <span class="post-toc-text">先序广度优先实现递归删除文件目录</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#同步的实现-1"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">同步的实现</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#异步回调的实现-1"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">异步回调的实现</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#异步-async-await-的实现-1"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">异步 async/await 的实现</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-number">4.</span> <span class="post-toc-text">总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-20180702122923" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">NodeJS 树结构遍历 —— 深度优先和广度优先</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-07-02 12:29:23" datetime="2018-07-02T04:29:23.000Z" itemprop="datePublished">2018-07-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/NodeJS/">NodeJS</a></li></ul>
+
+
+
+            
+
+            
+<span id="/2018/07/02/20180702122923/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="NodeJS 树结构遍历 —— 深度优先和广度优先">
+    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <img src="/2018/07/02/20180702122923/traversal-tree.png" title="树结构遍历">
+<p><br></p>
+<h2 id="树的基本概念"><a href="#树的基本概念" class="headerlink" title="树的基本概念"></a>树的基本概念</h2><blockquote class="pullquote info"><p>树（Tree）是 <code>n</code> 个结点的有限集，<code>n</code> 为 <code>0</code> 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 <code>n</code> 大于 <code>1</code> 时，其余结点可分为 <code>m</code> 个互不相交的有限集 <code>T1</code>、<code>T2</code>、<code>......</code>、<code>Tm</code>，其中每一个集合本身又是一棵树，并且称为 <code>SubTree</code>，即根的子树。</p>
+</blockquote>
+<p>需要强调的是，<code>n&gt;0</code> 时根结点是唯一的，不可能存在多个根结点，<code>m&gt;0</code> 时，子树的个数没有限制，但它们一定是互不相交的。</p>
+<p>从根开始定义起，根为第一层，根的孩子为第二层，若某结点在第 <code>l</code> 层，则其子树就在第 <code>l+1</code> 层，其双亲在同一层的结点互为 “堂兄弟”，树中结点的最大层级数称为树的深度（Depth）或高度。</p>
+<a id="more"></a>
+<p><br></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/07/02/20180702122923/tree-detials.jpg" alt="树结构的组成" title>
+                </div>
+                <div class="image-caption">树结构的组成</div>
+            </figure>
+<p><br></p>
+<p>在对树结构进行遍历时，按顺序可分为先序、中序和后续，按遍历的方式可分为深度优先和广度优先，我们这篇文章就通过使用先序深度优先和先序广度优先来实现 NodeJS 中递归删除目录结构，体会对树结构的遍历，文章中会大量用到 NodeJS 核心模块 <code>fs</code> 的方法，可以通过 <a href="https://www.pandashen.com/2018/06/30/20180630172601/" target="_blank">NodeJS 文件操作 —— fs 基本使用</a> 来了解文中用到的 <code>fs</code> 模块的方法及用法。</p>
+<h2 id="先序深度优先实现递归删除文件目录"><a href="#先序深度优先实现递归删除文件目录" class="headerlink" title="先序深度优先实现递归删除文件目录"></a>先序深度优先实现递归删除文件目录</h2><blockquote class="pullquote default"><p>深度优先的意思就是在遍历当前文件目录的时候，如果子文件夹内还有内容，就继续遍历子文件夹，直到遍历到最深层不再有文件夹，则删除其中的文件，再删除这个文件夹，然后继续遍历它的 “兄弟”，直到内层文件目录都被删除，再删除上一级，最后根文件夹为空，删除根文件夹。</p>
+</blockquote>
+<p><br></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/07/02/20180702122923/depth-first-traversal.png" alt="先序深度优先" title>
+                </div>
+                <div class="image-caption">先序深度优先</div>
+            </figure>
+<p><br></p>
+<h3 id="同步的实现"><a href="#同步的实现" class="headerlink" title="同步的实现"></a>同步的实现</h3><p>我们要实现的函数参数为要删除的根文件夹的路径，执行函数后会删除这个根文件夹。</p>
+<figure class="highlight js"><figcaption><span>深度优先 —— 同步</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先序深度优先同步删除文件夹</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rmDirDepSync</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 获取根文件夹的 Stats 对象</span></span><br><span class="line">  <span class="keyword">let</span> statObj = fs.statSync(p);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 检查该文件夹的是否是文件夹</span></span><br><span class="line">  <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">    <span class="comment">// 查看文件夹内部</span></span><br><span class="line">    <span class="keyword">let</span> dirs = fs.readdirSync(p);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将内部的文件和文件夹拼接成正确的路径</span></span><br><span class="line">    dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> path.jion(p, dir));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 循环递归处理 dirs 内的每一个文件或文件夹</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; dirs.length; i++) &#123;</span><br><span class="line">      rmDirDepSync(dirs[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 等待都处理完后删除该文件夹</span></span><br><span class="line">    fs.rmdirSync(p);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 若是文件则直接删除</span></span><br><span class="line">    fs.unlinkSync(p);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">rmDirDepSync(<span class="string">'a'</span>);</span><br></pre></td></tr></table></figure>
+<p>上面代码在调用 <code>rmDirDepSync</code> 时传入 <code>a</code>，先判断 <code>a</code> 是否是文件夹，不是则直接删除文件，是则查看文件目录，使用 <code>map</code> 将根文件路径拼接到每一个成员的名称前，并返回合法的路径集合，循环这个集合并对每一项进行递归，重复执行操作，最终实现删除根文件夹内所有的文件和文件夹，并删除根文件夹。</p>
+<h3 id="异步回调的实现"><a href="#异步回调的实现" class="headerlink" title="异步回调的实现"></a>异步回调的实现</h3><p>同步的实现会阻塞代码的执行，每次执行一个文件操作，必须在执行完毕之后才能执行下一行代码，相对于同步，异步的方式性能会更好一些，我们下面使用异步回调的方式来实现递归删除文件目录的函数。</p>
+<p>函数有两个参数，第一个参数同样为根文件夹的路径，第二个参数为一个回调函数，在文件目录被全部删除后执行。</p>
+<figure class="highlight js"><figcaption><span>深度优先 —— 异步回调</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先序深度优先异步（回调函数）删除文件夹</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rmDirDepCb</span>(<span class="params">p, callback</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 获取传入路径的 Stats 对象</span></span><br><span class="line">  fs.stat(p, (err, statObj) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 判断路径下是否为文件夹</span></span><br><span class="line">    <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">      <span class="comment">// 是文件夹则查看内部成员</span></span><br><span class="line">      fs.readdir(p, (err, dirs) =&gt; &#123;</span><br><span class="line">        <span class="comment">// 将文件夹成员拼接成合法路径的集合</span></span><br><span class="line">        dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> path.join(p, dir));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// next 方法用来检查集合内每一个路径</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">          <span class="comment">// 如果所有成员检查并删除完成则删除上一级目录</span></span><br><span class="line">          <span class="keyword">if</span> (index === dirs.length) <span class="keyword">return</span> fs.rmdir(p, callback);</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 对路径下每一个文件或文件夹执行递归，回调为递归 next 检查路径集合中的下一项</span></span><br><span class="line">          rmDirDepCb(dirs[index], () =&gt; next(index + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        next(<span class="number">0</span>);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 是文件则直接删除</span></span><br><span class="line">      fs.unlink(p, callback);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">rmDirDepCb(<span class="string">'a'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'删除完成'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除完成</span></span><br></pre></td></tr></table></figure>
+<p>上面方法也遵循深度优先，与同步相比较主要思路是相同的，异步回调的实现更为抽象，并不是通过循环去处理的文件夹下的每个成员的路径，而是通过调用 <code>next</code> 函数和在成功删除文件时递归执行 <code>next</code> 函数并维护 <code>index</code> 变量实现的。</p>
+<h3 id="异步-Promise-的实现"><a href="#异步-Promise-的实现" class="headerlink" title="异步 Promise 的实现"></a>异步 Promise 的实现</h3><p>在异步回调函数的实现方式中，回调嵌套层级非常多，这在对代码的可读性和维护性上都造成困扰，在 ES6 规范中，Promise 的出现就是用来解决 “回调地狱” 的问题，所以我们也使用 Promise 来实现。</p>
+<p>函数的参数为要删除的根文件夹的路径，这次之所以不需要传 <code>callback</code> 参数是因为 <code>callback</code> 中的逻辑可以在调用函数之后链式调用 <code>then</code> 方法来执行。</p>
+<figure class="highlight js"><figcaption><span>深度优先 —— 异步 Promise</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先序深度优先异步（Promise）删除文件夹</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rmDirDepPromise</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 获取传入路径的 Stats 对象</span></span><br><span class="line">    fs.stat(p, (err, statObj) =&gt; &#123;</span><br><span class="line">      <span class="comment">// 判断路径下是否为文件夹</span></span><br><span class="line">      <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">        <span class="comment">// 是文件夹则查看内部成员</span></span><br><span class="line">        fs.readdir(p, (err, dirs) =&gt; &#123;</span><br><span class="line">          <span class="comment">// 将文件夹成员拼接成合法路径的集合</span></span><br><span class="line">          dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> path.join(p, dir));</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 将所有的路径都转换成 Promise</span></span><br><span class="line">          dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> rmDirDepPromise(dir));</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 数组中路径下所有的 Promise 都执行了 resolve 时，删除上级目录</span></span><br><span class="line">          <span class="built_in">Promise</span>.all(dirs).then(<span class="function"><span class="params">()</span> =&gt;</span> fs.rmdir(p, resolve));</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 是文件则直接删除</span></span><br><span class="line">        fs.unlink(p, resolve);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">rmDirDepPromise(<span class="string">'a'</span>).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'删除完成'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除完成</span></span><br></pre></td></tr></table></figure>
+<p>与异步回调函数的方式不同的是在调用 <code>rmDirDepPromise</code> 时直接返回了一个 Promise 实例，而在删除文件成功或在删除文件夹成功时直接调用了 <code>resolve</code>，在一个子文件夹下直接将这些成员通过递归 <code>rmDirDepPromise</code> 都转换为 Promise 实例，则可以用 <code>Primise.all</code> 来监听这些成员删除的状态，如果都成功再调用 <code>Primise.all</code> 的 <code>then</code> 直接删除上一级目录。</p>
+<h3 id="异步-async-await-的实现"><a href="#异步-async-await-的实现" class="headerlink" title="异步 async/await 的实现"></a>异步 async/await 的实现</h3><p>Promise 版本相对于异步回调版本从代码的可读性上有所提升，但是实现逻辑还是比较抽象，没有同步代码的可读性好，如果想要 “鱼” 和 “熊掌” 兼得，既要性能又要可读性，可以使用 ES7 标准中的 <code>async/await</code> 来实现。</p>
+<p>由于 <code>async</code> 函数的返回值为一个 Promise 实例，所以参数只需要传被删除的根文件夹的路径即可。</p>
+<figure class="highlight js"><figcaption><span>深度优先 —— 异步 async/await</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; promisify &#125; = <span class="built_in">require</span>(<span class="string">'util'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将用到 fs 模块的异步方法转换成 Primise</span></span><br><span class="line"><span class="keyword">const</span> stat = promisify(fs.stat);</span><br><span class="line"><span class="keyword">const</span> readdir = promisify(fs.readdir);</span><br><span class="line"><span class="keyword">const</span> rmdir = promisify(fs.rmdir);</span><br><span class="line"><span class="keyword">const</span> unlink = promisify(fs.unlink);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先序深度优先异步（async/await）删除文件夹</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">rmDirDepAsync</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 获取传入路径的 Stats 对象</span></span><br><span class="line">  <span class="keyword">let</span> statObj = <span class="keyword">await</span> stat(p);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 判断路径下是否为文件夹</span></span><br><span class="line">  <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">    <span class="comment">// 是文件夹则查看内部成员</span></span><br><span class="line">    <span class="keyword">let</span> dirs = <span class="keyword">await</span> readdir(p);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将文件夹成员拼接成合法路径的集合</span></span><br><span class="line">    dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> path.join(p, dir));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 循环集合递归 rmDirDepAsync 处理所有的成员</span></span><br><span class="line">    dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> rmDirDepAsync(dir));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当所有的成员都成功</span></span><br><span class="line">    <span class="keyword">await</span> <span class="built_in">Promise</span>.all(dirs);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除该文件夹</span></span><br><span class="line">    <span class="keyword">await</span> rmdir(p);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 是文件则直接删除</span></span><br><span class="line">    <span class="keyword">await</span> unlink(p);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">rmDirDepAsync(<span class="string">'a'</span>).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'删除完成'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除完成</span></span><br></pre></td></tr></table></figure>
+<p>在递归 <code>rmDirDepAsync</code> 时，所有子文件夹内部的成员必须都删除成功，才删除这个子文件夹，在使用 <code>unlink</code> 删除文件时，必须等待文件删除结束才能让 Promise 执行完成，所以也需要 <code>await</code>，所有递归之前的异步 Promise 都需要在递归内部的异步 Promise 执行完成后才能执行完成，所以涉及到异步的操作都使用了 <code>await</code> 进行等待。</p>
+<h2 id="先序广度优先实现递归删除文件目录"><a href="#先序广度优先实现递归删除文件目录" class="headerlink" title="先序广度优先实现递归删除文件目录"></a>先序广度优先实现递归删除文件目录</h2><blockquote class="pullquote success"><p>广度优先的意思是遍历文件夹目录的时候，先遍历根文件夹，将内部的成员路径一个一个的存入数组中，再继续遍历下一层，再将下一层的路径都存入数组中，直到遍历到最后一层，此时数组中的路径顺序为第一层的路径，第二层的路径，直到最后一层的路径，由于要删除的文件夹必须为空，所以删除时，倒序遍历这个数组取出路径进行文件目录的删除。</p>
+</blockquote>
+<p><br></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/07/02/20180702122923/breadth-first-traversal.png" alt="先序广度优先" title>
+                </div>
+                <div class="image-caption">先序广度优先</div>
+            </figure>
+<p><br></p>
+<p>在广度优先的实现方式中同样按照同步、异步回调、和 异步 <code>async/await</code> 这几种方式分别来实现，因为在拼接存储路径数组的时候没有异步操作，所以单纯使用 Promise 没有太大的意义。</p>
+<h3 id="同步的实现-1"><a href="#同步的实现-1" class="headerlink" title="同步的实现"></a>同步的实现</h3><p>参数为根文件夹的路径，内部的 <code>fs</code> 方法同样都使用同步方法。</p>
+<figure class="highlight js"><figcaption><span>广度优先 —— 同步</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先序广度优先同步删除文件夹</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rmDirBreSync</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> pathArr = [p]; <span class="comment">// 创建存储路径的数组，默认存入根路径</span></span><br><span class="line">  <span class="keyword">let</span> index = <span class="number">0</span>; <span class="comment">// 用于存储取出数组成员的索引</span></span><br><span class="line">  <span class="keyword">let</span> current; <span class="comment">// 用于存储取出的成员，即路径</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果数组中能找到当前指定索引的项，则执行循环体，并将该项存入 current</span></span><br><span class="line">  <span class="keyword">while</span> ((current = arr[index++])) &#123;</span><br><span class="line">    <span class="comment">// 获取当前从数组中取出的路径的 Stats 对象</span></span><br><span class="line">    <span class="keyword">let</span> statObj = fs.statSync(current);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果是文件夹，则读取内容</span></span><br><span class="line">    <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">      <span class="keyword">let</span> dirs = fs.readdir(current);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 将获取到的成员路径处理为合法路径</span></span><br><span class="line">      dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> path.join(current, dir));</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 将原数组的成员路径和处理后的成员路径重新解构在 pathArr 中</span></span><br><span class="line">      pathArr = [...pathArr, ...dirs];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 逆序循环 pathArr</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = pathArr.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    <span class="keyword">let</span> pathItem = pathArr[i]; <span class="comment">// 当前循环项</span></span><br><span class="line">    <span class="keyword">let</span> statObj = fs.statSync(pathItem); <span class="comment">// 获取 Stats 对象</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果是文件夹则删除文件夹，是文件则删除文件</span></span><br><span class="line">    <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">      fs.rmdirSync(pathItem);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      fs.unlinkSync(pathItem);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">rmDirBreSync(<span class="string">'a'</span>);</span><br></pre></td></tr></table></figure>
+<p>通过 <code>while</code> 循环广度遍历，将所有的路径按层级顺序存入 <code>pathArr</code> 数组中，在通过 <code>for</code> 反向遍历数组，对遍历到的路径进行判断并调用对应的删除方法，<code>pathArr</code> 后面的项存储的都是最后一层的路径，从后向前路径的层级逐渐减小，所以反向遍历不会导致删除非空文件夹的操作。</p>
+<h3 id="异步回调的实现-1"><a href="#异步回调的实现-1" class="headerlink" title="异步回调的实现"></a>异步回调的实现</h3><p>函数有两个参数，第一个参数为根文件夹的路径，第二个为 <code>callback</code>，在删除结束后执行。</p>
+<figure class="highlight js"><figcaption><span>广度优先 —— 异步回调</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先序广度优先异步（回调函数）删除文件夹</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rmDirBreCb</span>(<span class="params">p, callback</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> pathArr = [p]; <span class="comment">// 创建存储路径的数组，默认存入根路径</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 如果已经都处理完，则调用删除的函数</span></span><br><span class="line">    <span class="keyword">if</span> (index === pathArr.length) <span class="keyword">return</span> remove();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 取出数组中的文件路径</span></span><br><span class="line">    <span class="keyword">let</span> current = arr[index];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取取出路径的 Stats 对象</span></span><br><span class="line">    fs.stat(currrent, (err, statObj) =&gt; &#123;</span><br><span class="line">      <span class="comment">// 判断是否是文件夹</span></span><br><span class="line">      <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">        <span class="comment">// 是文件夹读取内部成员</span></span><br><span class="line">        fs.readdir(current, (err, dirs) =&gt; &#123;</span><br><span class="line">          <span class="comment">// 将数组中成员名称修改为合法路径</span></span><br><span class="line">          dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> path.join(current, dir));</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 将原数组的成员路径和处理后的成员路径重新解构在 pathArr 中</span></span><br><span class="line">          pathArr = [...pathArr, ...dirs];</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 递归取出数组的下一项进行检测</span></span><br><span class="line">          next(index + <span class="number">1</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 如果是文件则直接递归获取数组的下一项进行检测</span></span><br><span class="line">        next(index + <span class="number">1</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  next(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 删除的函数</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">remove</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 如果全部删除完成，执行回调函数</span></span><br><span class="line">      <span class="keyword">if</span> (index &lt; <span class="number">0</span>) <span class="keyword">return</span> callback();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 获取数组的最后一项</span></span><br><span class="line">      <span class="keyword">let</span> current = pathArr[index];</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 获取该路径的 Stats 对象</span></span><br><span class="line">      fs.stat(current, (err, statObj) =&gt; &#123;</span><br><span class="line">        <span class="comment">// 不管是文件还是文件夹都直接删除</span></span><br><span class="line">        <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">          fs.rmdir(current, () =&gt; next(index - <span class="number">1</span>));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          fs.unlink(current, () =&gt; next(index - <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    next(arr.length - <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">rmDirBreCb(<span class="string">'a'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'删除完成'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除完成</span></span><br></pre></td></tr></table></figure>
+<p>在调用 <code>rmDirBreCb</code> 时主要执行两个步骤，第一个步骤是构造存储路径的数组，第二个步骤是逆序删除数组中对应的文件或文件夹，为了保证性能，两个过程都是通过递归 <code>next</code> 函数并维护存储索引的变量来实现的，而非循环。</p>
+<p>在构造数组的过程中如果构造数组完成后，调用的删除函数 <code>remove</code>，在 <code>remove</code> 中在删除完成后，调用的 <code>callback</code>，实现思路是相同的，都是在递归时设置判断条件，如果构造数组或删除结束以后不继续递归，而是直接执行对应的函数并跳出。</p>
+<h3 id="异步-async-await-的实现-1"><a href="#异步-async-await-的实现-1" class="headerlink" title="异步 async/await 的实现"></a>异步 async/await 的实现</h3><p>参数为删除根文件夹的路径，因为 <code>async</code> 最后返回的是 Promise 实例，所以不需要 <code>callback</code>，删除后的逻辑可以通过调用返回 Promise 实例的 <code>then</code> 来实现。</p>
+<figure class="highlight js"><figcaption><span>广度优先 —— 异步 async/await</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; promisify &#125; = <span class="built_in">require</span>(<span class="string">'util'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将用到 fs 模块的异步方法转换成 Primise</span></span><br><span class="line"><span class="keyword">const</span> stat = promisify(fs.stat);</span><br><span class="line"><span class="keyword">const</span> readdir = promisify(fs.readdir);</span><br><span class="line"><span class="keyword">const</span> rmdir = promisify(fs.rmdir);</span><br><span class="line"><span class="keyword">const</span> unlink = promisify(fs.unlink);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先序广度优先异步（async/await）删除文件夹</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">rmDirBreAsync</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> pathArr = [p]; <span class="comment">// 创建存储路径的数组，默认存入根路径</span></span><br><span class="line">  <span class="keyword">let</span> index = <span class="number">0</span>; <span class="comment">// 去数组中取出路径的索引</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果存在该项则继续循环</span></span><br><span class="line">  <span class="keyword">while</span> (index !== pathArr.length) &#123;</span><br><span class="line">    <span class="comment">// 取出当前的路径</span></span><br><span class="line">    <span class="keyword">let</span> current = pathArr[index];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取 Stats 对象</span></span><br><span class="line">    <span class="keyword">let</span> statObj = <span class="keyword">await</span> stat(current);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断是否是文件夹</span></span><br><span class="line">    <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">      <span class="comment">// 查看文件夹成员</span></span><br><span class="line">      <span class="keyword">let</span> dirs = <span class="keyword">await</span> readdir(current);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 将路径集合更改为合法路径集合</span></span><br><span class="line">      dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> path.join(current, dir));</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 合并存储路径的数组</span></span><br><span class="line">      pathArr = [...pathArr, ...dirs];</span><br><span class="line">    &#125;</span><br><span class="line">    index++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> current; <span class="comment">// 删除的路径</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 循环取出路径</span></span><br><span class="line">  <span class="keyword">while</span> ((current = pathArr.pop())) &#123;</span><br><span class="line">    <span class="comment">// 获取 Stats 对象</span></span><br><span class="line">    <span class="keyword">let</span> statObj = <span class="keyword">await</span> stat(current);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 不管是文件还是文件夹都直接删除</span></span><br><span class="line">    <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">      <span class="keyword">await</span> rmdir(current);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">await</span> unlink(current);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">rmDirBreAsync(<span class="string">'a'</span>).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'删除完成'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除完成</span></span><br></pre></td></tr></table></figure>
+<p>上面的写法都是使用同步的写法，但对文件的操作都是异步的，并使用 <code>await</code> 进行等待，在创建路径集合的数组和倒序删除的过程都是通过 <code>while</code> 循环实现的。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote class="pullquote success"><p>深度优先和广度优先的两种遍历方式应该是考虑具体场景选择最适合的方式使用，上面这么多实现递归删除文件目录的方法中，重点在于体会深度遍历和广度遍历的不同，其实在类似于递归删除文件目录的这种功能使用深度优先更适合一些。</p>
+</blockquote>
+
+        </div>
+
+        
+<div class="read-end">
+    <span class="read-end-lg">--------------------</span>
+    <span class="read-end-md">---------------</span>
+    <span class="read-end-sm">----------</span>
+    本文结束
+    <i class="icon icon-paw"></i>
+    感谢您的阅读
+    <span class="read-end-sm">----------</span>
+    <span class="read-end-md">---------------</span>
+    <span class="read-end-lg">--------------------</span>
+</div>
+
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    更新时间：<time datetime="2019-03-04T06:56:47.765Z" itemprop="dateUpdated">2019-03-04 14:56:47</time>
+</span><br>
+
+
+        
+<span class="permalink">
+    本文链接：<a href="/2018/07/02/20180702122923/" target="_blank" rel="external">https://www.pandashen.com/2018/07/02/20180702122923/</a>
+</span><br>
+
+
+        
+<span class="post-message">
+    版权声明：本博客所有文章除特别声明外，均采用 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 </a> 许可协议，转载请注明出处！
+</span>
+
+
+    </div>
+    
+    <footer>
+        <a href="https://www.pandashen.com">
+            <img src="/img/avatar.jpg" alt="Panda Shen">
+            Panda Shen
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES6/">ES6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES7/">ES7</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Promise/">Promise</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/async-await/">async/await</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fs/">fs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/异步/">异步</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
     
 
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Panda Shen</span>
-        <span class="logo-line-after"><i></i></span>
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/07/02/20180702122923/&title=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/07/02/20180702122923/&title=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Panda Shen's Blog&source=
+
+树的基本概念树（Tree）是 n 个结点的有限集，n 为 0 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 n 大..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/07/02/20180702122923/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/07/02/20180702122923/&via=https://www.pandashen.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/07/02/20180702122923/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/07/03/20180703231032/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">NodeJS —— Stream 的基本使用</h4>
       </a>
     </div>
-      
-        <h1 class="site-subtitle" itemprop="description">饿厂最菜程序猿的误人子弟之旅，Come on，发车了！</h1>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
   
 
   
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i>
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i>
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i>
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i>
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i>
-            
-            关于
-          </a>
-        </li>
-      
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i>
-            
-            搜索
-          </a>
-        </li>
-      
-    </ul>
-  
-
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="输入关键词进行搜索" spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result">
-    <div id="no-result"><i class="fa fa-search fa-5x"></i></div>
-  </div>
-</div>
-
-
-
+    <div class="waves-block waves-effect next">
+      <a href="/2018/06/30/20180630172601/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">NodeJS 文件操作 —— fs 基本使用</h4>
+      </a>
     </div>
   
 </nav>
 
 
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
 
-  
 
-  
-  
-  
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.pandashen.com/2018/07/02/20180702122923/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Panda Shen">
-      <meta itemprop="description" content="Keep fucking the world">
-      <meta itemprop="image" content="/images/avatar.jpg">
+
+
+
+
+
+
+
+
+<div class="comments vcomment" id="comments"></div>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        感谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechatpay.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechatpay.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
     </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Panda Shen">
+    <span id="busuanzi_container_site_pv" style="display:none">
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
     </span>
+</p>
 
-    
-      <header class="post-header">
 
-        
-        
-          <h2 class="post-title" itemprop="name headline">NodeJS 树结构遍历 —— 深度优先和广度优先</h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <p>
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于&#58;</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-02T12:29:23+08:00">
-                2018-07-02
-              </time>
+                <span><a href="/rss2.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
             
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2018-11-12T18:21:27+08:00">
-                2018-11-12
-              </time>
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/07/02/20180702122923/" class="leancloud_visitors" data-flag-title="NodeJS 树结构遍历 —— 深度优先和广度优先">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-edit"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  4,204 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长&#58;</span>
-                
-                <span title="阅读时长">
-                  17 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p><img src="/2018/07/02/20180702122923/traversal-tree.png" alt="树结构遍历" style="border: none;"></p>
-<h2 id="树的基本概念"><a href="#树的基本概念" class="headerlink" title="树的基本概念"></a>树的基本概念</h2><div class="note info"><p>树（Tree）是 <code>n</code> 个结点的有限集，<code>n</code> 为 <code>0</code> 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 <code>n</code> 大于 <code>1</code> 时，其余结点可分为 <code>m</code> 个互不相交的有限集 <code>T1</code>、<code>T2</code>、<code>......</code>、<code>Tm</code>，其中每一个集合本身又是一棵树，并且称为 <code>SubTree</code>，即根的子树。</p></div>
-<p>需要强调的是，<code>n&gt;0</code> 时根结点是唯一的，不可能存在多个根结点，<code>m&gt;0</code> 时，子树的个数没有限制，但它们一定是互不相交的。</p>
-<p>从根开始定义起，根为第一层，根的孩子为第二层，若某结点在第 <code>l</code> 层，则其子树就在第 <code>l+1</code> 层，其双亲在同一层的结点互为 “堂兄弟”，树中结点的最大层级数称为树的深度（Depth）或高度。</p>
-<a id="more"></a>
-<p><br><img src="/2018/07/02/20180702122923/tree-detials.png" alt="树结构的组成" style="border: none;"><br></p>
-<p>在对树结构进行遍历时，按顺序可分为先序、中序和后续，按遍历的方式可分为深度优先和广度优先，我们这篇文章就通过使用先序深度优先和先序广度优先来实现 NodeJS 中递归删除目录结构，体会对树结构的遍历，文章中会大量用到 NodeJS 核心模块 <code>fs</code> 的方法，可以通过 <a href="https://www.pandashen.com/2018/06/30/20180630172601/" target="_blank">NodeJS 文件操作 —— fs 基本使用</a> 来了解文中用到的 <code>fs</code> 模块的方法及用法。</p>
-<hr>
-
-<h2 id="先序深度优先实现递归删除文件目录"><a href="#先序深度优先实现递归删除文件目录" class="headerlink" title="先序深度优先实现递归删除文件目录"></a>先序深度优先实现递归删除文件目录</h2><div class="note default"><p>深度优先的意思就是在遍历当前文件目录的时候，如果子文件夹内还有内容，就继续遍历子文件夹，直到遍历到最深层不再有文件夹，则删除其中的文件，再删除这个文件夹，然后继续遍历它的 “兄弟”，直到内层文件目录都被删除，再删除上一级，最后根文件夹为空，删除根文件夹。</p></div>
-<p><br><img src="/2018/07/02/20180702122923/depth-first-traversal.png" alt="先序深度优先"><br></p>
-<h3 id="1、同步的实现"><a href="#1、同步的实现" class="headerlink" title="1、同步的实现"></a>1、同步的实现</h3><p>我们要实现的函数参数为要删除的根文件夹的路径，执行函数后会删除这个根文件夹。</p>
-<figure class="highlight js"><figcaption><span>深度优先 —— 同步</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先序深度优先同步删除文件夹</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rmDirDepSync</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 获取根文件夹的 Stats 对象</span></span><br><span class="line">    <span class="keyword">let</span> statObj = fs.statSync(p);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 检查该文件夹的是否是文件夹</span></span><br><span class="line">    <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">        <span class="comment">// 查看文件夹内部</span></span><br><span class="line">        <span class="keyword">let</span> dirs = fs.readdirSync(p);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将内部的文件和文件夹拼接成正确的路径</span></span><br><span class="line">        dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> path.jion(p, dir));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 循环递归处理 dirs 内的每一个文件或文件夹</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; dirs.length; i++) &#123;</span><br><span class="line">            rmDirDepSync(dirs[i]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 等待都处理完后删除该文件夹</span></span><br><span class="line">        fs.rmdirSync(p);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 若是文件则直接删除</span></span><br><span class="line">        fs.unlinkSync(p);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">rmDirDepSync(<span class="string">"a"</span>);</span><br></pre></td></tr></table></figure>
-<p>上面代码在调用 <code>rmDirDepSync</code> 时传入 <code>a</code>，先判断 <code>a</code> 是否是文件夹，不是则直接删除文件，是则查看文件目录，使用 <code>map</code> 将根文件路径拼接到每一个成员的名称前，并返回合法的路径集合，循环这个集合并对每一项进行递归，重复执行操作，最终实现删除根文件夹内所有的文件和文件夹，并删除根文件夹。</p>
-<h3 id="2、异步回调的实现"><a href="#2、异步回调的实现" class="headerlink" title="2、异步回调的实现"></a>2、异步回调的实现</h3><p>同步的实现会阻塞代码的执行，每次执行一个文件操作，必须在执行完毕之后才能执行下一行代码，相对于同步，异步的方式性能会更好一些，我们下面使用异步回调的方式来实现递归删除文件目录的函数。</p>
-<p>函数有两个参数，第一个参数同样为根文件夹的路径，第二个参数为一个回调函数，在文件目录被全部删除后执行。</p>
-<figure class="highlight js"><figcaption><span>深度优先 —— 异步回调</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先序深度优先异步（回调函数）删除文件夹</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rmDirDepCb</span>(<span class="params">p, callback</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 获取传入路径的 Stats 对象</span></span><br><span class="line">    fs.stat(p, (err, statObj) =&gt; &#123;</span><br><span class="line">        <span class="comment">// 判断路径下是否为文件夹</span></span><br><span class="line">        <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">            <span class="comment">// 是文件夹则查看内部成员</span></span><br><span class="line">            fs.readdir(p, (err, dirs) =&gt; &#123;</span><br><span class="line">                <span class="comment">// 将文件夹成员拼接成合法路径的集合</span></span><br><span class="line">                dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> path.join(p, dir));</span><br><span class="line"></span><br><span class="line">                <span class="comment">// next 方法用来检查集合内每一个路径</span></span><br><span class="line">                <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">                    <span class="comment">// 如果所有成员检查并删除完成则删除上一级目录</span></span><br><span class="line">                    <span class="keyword">if</span> (index === dirs.length) <span class="keyword">return</span> fs.rmdir(p, callback);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 对路径下每一个文件或文件夹执行递归，回调为递归 next 检查路径集合中的下一项</span></span><br><span class="line">                    rmDirDepCb(dirs[index], () =&gt; next(index + <span class="number">1</span>));</span><br><span class="line">                &#125;</span><br><span class="line">                next(<span class="number">0</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 是文件则直接删除</span></span><br><span class="line">            fs.unlink(p, callback);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">rmDirDepCb(<span class="string">"a"</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"删除完成"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除完成</span></span><br></pre></td></tr></table></figure>
-<p>上面方法也遵循深度优先，与同步相比较主要思路是相同的，异步回调的实现更为抽象，并不是通过循环去处理的文件夹下的每个成员的路径，而是通过调用 <code>next</code> 函数和在成功删除文件时递归执行 <code>next</code> 函数并维护 <code>index</code> 变量实现的。</p>
-<h3 id="3、异步-Promise-的实现"><a href="#3、异步-Promise-的实现" class="headerlink" title="3、异步 Promise 的实现"></a>3、异步 Promise 的实现</h3><p>在异步回调函数的实现方式中，回调嵌套层级非常多，这在对代码的可读性和维护性上都造成困扰，在 ES6 规范中，Promise 的出现就是用来解决 “回调地狱” 的问题，所以我们也使用 Promise 来实现。</p>
-<p>函数的参数为要删除的根文件夹的路径，这次之所以不需要传 <code>callback</code> 参数是因为 <code>callback</code> 中的逻辑可以在调用函数之后链式调用 <code>then</code> 方法来执行。</p>
-<figure class="highlight js"><figcaption><span>深度优先 —— 异步 Promise</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先序深度优先异步（Promise）删除文件夹</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rmDirDepPromise</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 获取传入路径的 Stats 对象</span></span><br><span class="line">        fs.stat(p, (err, statObj) =&gt; &#123;</span><br><span class="line">            <span class="comment">// 判断路径下是否为文件夹</span></span><br><span class="line">            <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">                <span class="comment">// 是文件夹则查看内部成员</span></span><br><span class="line">                fs.readdir(p, (err, dirs) =&gt; &#123;</span><br><span class="line">                    <span class="comment">// 将文件夹成员拼接成合法路径的集合</span></span><br><span class="line">                    dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> path.join(p, dir));</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 将所有的路径都转换成 Promise</span></span><br><span class="line">                    dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> rmDirDepPromise(dir));</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 数组中路径下所有的 Promise 都执行了 resolve 时，删除上级目录</span></span><br><span class="line">                    <span class="built_in">Promise</span>.all(dirs).then(<span class="function"><span class="params">()</span> =&gt;</span> fs.rmdir(p, resolve));</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 是文件则直接删除</span></span><br><span class="line">                fs.unlink(p, resolve);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">rmDirDepPromise(<span class="string">"a"</span>).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"删除完成"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除完成</span></span><br></pre></td></tr></table></figure>
-<p>与异步回调函数的方式不同的是在调用 <code>rmDirDepPromise</code> 时直接返回了一个 Promise 实例，而在删除文件成功或在删除文件夹成功时直接调用了 <code>resolve</code>，在一个子文件夹下直接将这些成员通过递归 <code>rmDirDepPromise</code> 都转换为 Promise 实例，则可以用 <code>Primise.all</code> 来监听这些成员删除的状态，如果都成功再调用 <code>Primise.all</code> 的 <code>then</code> 直接删除上一级目录。</p>
-<h3 id="4、异步-async-await-的实现"><a href="#4、异步-async-await-的实现" class="headerlink" title="4、异步 async/await 的实现"></a>4、异步 async/await 的实现</h3><p>Promise 版本相对于异步回调版本从代码的可读性上有所提升，但是实现逻辑还是比较抽象，没有同步代码的可读性好，如果想要 “鱼” 和 “熊掌” 兼得，既要性能又要可读性，可以使用 ES7 标准中的 <code>async/await</code> 来实现。</p>
-<p>由于 <code>async</code> 函数的返回值为一个 Promise 实例，所以参数只需要传被删除的根文件夹的路径即可。</p>
-<figure class="highlight js"><figcaption><span>深度优先 —— 异步 async/await</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; promisify &#125; = <span class="built_in">require</span>(<span class="string">"util"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将用到 fs 模块的异步方法转换成 Primise</span></span><br><span class="line"><span class="keyword">const</span> stat = promisify(fs.stat);</span><br><span class="line"><span class="keyword">const</span> readdir = promisify(fs.readdir);</span><br><span class="line"><span class="keyword">const</span> rmdir = promisify(fs.rmdir);</span><br><span class="line"><span class="keyword">const</span> unlink = promisify(fs.unlink);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先序深度优先异步（async/await）删除文件夹</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">rmDirDepAsync</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 获取传入路径的 Stats 对象</span></span><br><span class="line">    <span class="keyword">let</span> statObj = <span class="keyword">await</span> stat(p);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断路径下是否为文件夹</span></span><br><span class="line">    <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">        <span class="comment">// 是文件夹则查看内部成员</span></span><br><span class="line">        <span class="keyword">let</span> dirs = <span class="keyword">await</span> readdir(p);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将文件夹成员拼接成合法路径的集合</span></span><br><span class="line">        dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> path.join(p, dir));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 循环集合递归 rmDirDepAsync 处理所有的成员</span></span><br><span class="line">        dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> rmDirDepAsync(dir));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 当所有的成员都成功</span></span><br><span class="line">        <span class="keyword">await</span> <span class="built_in">Promise</span>.all(dirs);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 删除该文件夹</span></span><br><span class="line">        <span class="keyword">await</span> rmdir(p);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 是文件则直接删除</span></span><br><span class="line">        <span class="keyword">await</span> unlink(p);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">rmDirDepAsync(<span class="string">"a"</span>).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"删除完成"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除完成</span></span><br></pre></td></tr></table></figure>
-<p>在递归 <code>rmDirDepAsync</code> 时，所有子文件夹内部的成员必须都删除成功，才删除这个子文件夹，在使用 <code>unlink</code> 删除文件时，必须等待文件删除结束才能让 Promise 执行完成，所以也需要 <code>await</code>，所有递归之前的异步 Promise 都需要在递归内部的异步 Promise 执行完成后才能执行完成，所以涉及到异步的操作都使用了 <code>await</code> 进行等待。</p>
-<hr>
-
-<h2 id="先序广度优先实现递归删除文件目录"><a href="#先序广度优先实现递归删除文件目录" class="headerlink" title="先序广度优先实现递归删除文件目录"></a>先序广度优先实现递归删除文件目录</h2><div class="note success"><p>广度优先的意思是遍历文件夹目录的时候，先遍历根文件夹，将内部的成员路径一个一个的存入数组中，再继续遍历下一层，再将下一层的路径都存入数组中，直到遍历到最后一层，此时数组中的路径顺序为第一层的路径，第二层的路径，直到最后一层的路径，由于要删除的文件夹必须为空，所以删除时，倒序遍历这个数组取出路径进行文件目录的删除。</p></div>
-<p><br><img src="/2018/07/02/20180702122923/breadth-first-traversal.png" alt="先序广度优先"><br></p>
-<p>在广度优先的实现方式中同样按照同步、异步回调、和 异步 <code>async/await</code> 这几种方式分别来实现，因为在拼接存储路径数组的时候没有异步操作，所以单纯使用 Promise 没有太大的意义。</p>
-<h3 id="1、同步的实现-1"><a href="#1、同步的实现-1" class="headerlink" title="1、同步的实现"></a>1、同步的实现</h3><p>参数为根文件夹的路径，内部的 <code>fs</code> 方法同样都使用同步方法。</p>
-<figure class="highlight js"><figcaption><span>广度优先 —— 同步</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先序广度优先同步删除文件夹</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rmDirBreSync</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> pathArr = [p]; <span class="comment">// 创建存储路径的数组，默认存入根路径</span></span><br><span class="line">    <span class="keyword">let</span> index = <span class="number">0</span>; <span class="comment">// 用于存储取出数组成员的索引</span></span><br><span class="line">    <span class="keyword">let</span> current; <span class="comment">// 用于存储取出的成员，即路径</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果数组中能找到当前指定索引的项，则执行循环体，并将该项存入 current</span></span><br><span class="line">    <span class="keyword">while</span> ((current = arr[index++])) &#123;</span><br><span class="line">        <span class="comment">// 获取当前从数组中取出的路径的 Stats 对象</span></span><br><span class="line">        <span class="keyword">let</span> statObj = fs.statSync(current);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果是文件夹，则读取内容</span></span><br><span class="line">        <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">            <span class="keyword">let</span> dirs = fs.readdir(current);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 将获取到的成员路径处理为合法路径</span></span><br><span class="line">            dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> path.join(current, dir));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 将原数组的成员路径和处理后的成员路径重新解构在 pathArr 中</span></span><br><span class="line">            pathArr = [...pathArr, ...dirs];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 逆序循环 pathArr</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = pathArr.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="keyword">let</span> pathItem = pathArr[i]; <span class="comment">// 当前循环项</span></span><br><span class="line">        <span class="keyword">let</span> statObj = fs.statSync(pathItem); <span class="comment">// 获取 Stats 对象</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果是文件夹则删除文件夹，是文件则删除文件</span></span><br><span class="line">        <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">            fs.rmdirSync(pathItem);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            fs.unlinkSync(pathItem);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">rmDirBreSync(<span class="string">"a"</span>);</span><br></pre></td></tr></table></figure>
-<p>通过 <code>while</code> 循环广度遍历，将所有的路径按层级顺序存入 <code>pathArr</code> 数组中，在通过 <code>for</code> 反向遍历数组，对遍历到的路径进行判断并调用对应的删除方法，<code>pathArr</code> 后面的项存储的都是最后一层的路径，从后向前路径的层级逐渐减小，所以反向遍历不会导致删除非空文件夹的操作。</p>
-<h3 id="2、异步回调的实现-1"><a href="#2、异步回调的实现-1" class="headerlink" title="2、异步回调的实现"></a>2、异步回调的实现</h3><p>函数有两个参数，第一个参数为根文件夹的路径，第二个为 <code>callback</code>，在删除结束后执行。</p>
-<figure class="highlight js"><figcaption><span>广度优先 —— 异步回调</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先序广度优先异步（回调函数）删除文件夹</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">rmDirBreCb</span>(<span class="params">p, callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> pathArr = [p]; <span class="comment">// 创建存储路径的数组，默认存入根路径</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 如果已经都处理完，则调用删除的函数</span></span><br><span class="line">        <span class="keyword">if</span> (index === pathArr.length) <span class="keyword">return</span> remove();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 取出数组中的文件路径</span></span><br><span class="line">        <span class="keyword">let</span> current = arr[index];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取取出路径的 Stats 对象</span></span><br><span class="line">        fs.stat(currrent, (err, statObj) =&gt; &#123;</span><br><span class="line">            <span class="comment">// 判断是否是文件夹</span></span><br><span class="line">            <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">                <span class="comment">// 是文件夹读取内部成员</span></span><br><span class="line">                fs.readdir(current, (err, dirs) =&gt; &#123;</span><br><span class="line">                    <span class="comment">// 将数组中成员名称修改为合法路径</span></span><br><span class="line">                    dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> path.join(current, dir));</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 将原数组的成员路径和处理后的成员路径重新解构在 pathArr 中</span></span><br><span class="line">                    pathArr = [...pathArr, ...dirs];</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 递归取出数组的下一项进行检测</span></span><br><span class="line">                    next(index + <span class="number">1</span>);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 如果是文件则直接递归获取数组的下一项进行检测</span></span><br><span class="line">                next(index + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    next(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除的函数</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">remove</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">index</span>) </span>&#123;</span><br><span class="line">            <span class="comment">// 如果全部删除完成，执行回调函数</span></span><br><span class="line">            <span class="keyword">if</span> (index &lt; <span class="number">0</span>) <span class="keyword">return</span> callback();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 获取数组的最后一项</span></span><br><span class="line">            <span class="keyword">let</span> current = pathArr[index];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 获取该路径的 Stats 对象</span></span><br><span class="line">            fs.stat(current, (err, statObj) =&gt; &#123;</span><br><span class="line">                <span class="comment">// 不管是文件还是文件夹都直接删除</span></span><br><span class="line">                <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">                    fs.rmdir(current, () =&gt; next(index - <span class="number">1</span>));</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    fs.unlink(current, () =&gt; next(index - <span class="number">1</span>));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        next(arr.length - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">rmDirBreCb(<span class="string">"a"</span>, () =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"删除完成"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除完成</span></span><br></pre></td></tr></table></figure>
-<p>在调用 <code>rmDirBreCb</code> 时主要执行两个步骤，第一个步骤是构造存储路径的数组，第二个步骤是逆序删除数组中对应的文件或文件夹，为了保证性能，两个过程都是通过递归 <code>next</code> 函数并维护存储索引的变量来实现的，而非循环。</p>
-<p>在构造数组的过程中如果构造数组完成后，调用的删除函数 <code>remove</code>，在 <code>remove</code> 中在删除完成后，调用的 <code>callback</code>，实现思路是相同的，都是在递归时设置判断条件，如果构造数组或删除结束以后不继续递归，而是直接执行对应的函数并跳出。</p>
-<h3 id="3、异步-async-await-的实现"><a href="#3、异步-async-await-的实现" class="headerlink" title="3、异步 async/await 的实现"></a>3、异步 async/await 的实现</h3><p>参数为删除根文件夹的路径，因为 <code>async</code> 最后返回的是 Promise 实例，所以不需要 <code>callback</code>，删除后的逻辑可以通过调用返回 Promise 实例的 <code>then</code> 来实现。</p>
-<figure class="highlight js"><figcaption><span>广度优先 —— 异步 async/await</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖模块</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; promisify &#125; = <span class="built_in">require</span>(<span class="string">"util"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将用到 fs 模块的异步方法转换成 Primise</span></span><br><span class="line"><span class="keyword">const</span> stat = promisify(fs.stat);</span><br><span class="line"><span class="keyword">const</span> readdir = promisify(fs.readdir);</span><br><span class="line"><span class="keyword">const</span> rmdir = promisify(fs.rmdir);</span><br><span class="line"><span class="keyword">const</span> unlink = promisify(fs.unlink);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先序广度优先异步（async/await）删除文件夹</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">rmDirBreAsync</span>(<span class="params">p</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> pathArr = [p]; <span class="comment">// 创建存储路径的数组，默认存入根路径</span></span><br><span class="line">    <span class="keyword">let</span> index = <span class="number">0</span>; <span class="comment">// 去数组中取出路径的索引</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果存在该项则继续循环</span></span><br><span class="line">    <span class="keyword">while</span> (index !== pathArr.length) &#123;</span><br><span class="line">        <span class="comment">// 取出当前的路径</span></span><br><span class="line">        <span class="keyword">let</span> current = pathArr[index];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取 Stats 对象</span></span><br><span class="line">        <span class="keyword">let</span> statObj = <span class="keyword">await</span> stat(current);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断是否是文件夹</span></span><br><span class="line">        <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">            <span class="comment">// 查看文件夹成员</span></span><br><span class="line">            <span class="keyword">let</span> dirs = <span class="keyword">await</span> readdir(current);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 将路径集合更改为合法路径集合</span></span><br><span class="line">            dirs = dirs.map(<span class="function"><span class="params">dir</span> =&gt;</span> path.join(current, dir));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 合并存储路径的数组</span></span><br><span class="line">            pathArr = [...pathArr, ...dirs];</span><br><span class="line">        &#125;</span><br><span class="line">        index++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> current; <span class="comment">// 删除的路径</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 循环取出路径</span></span><br><span class="line">    <span class="keyword">while</span> ((current = pathArr.pop())) &#123;</span><br><span class="line">        <span class="comment">// 获取 Stats 对象</span></span><br><span class="line">        <span class="keyword">let</span> statObj = <span class="keyword">await</span> stat(current);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 不管是文件还是文件夹都直接删除</span></span><br><span class="line">        <span class="keyword">if</span> (statObj.isDirectory()) &#123;</span><br><span class="line">            <span class="keyword">await</span> rmdir(current);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">await</span> unlink(current);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用</span></span><br><span class="line">rmDirBreAsync(<span class="string">"a"</span>).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"删除完成"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除完成</span></span><br></pre></td></tr></table></figure>
-<p>上面的写法都是使用同步的写法，但对文件的操作都是异步的，并使用 <code>await</code> 进行等待，在创建路径集合的数组和倒序删除的过程都是通过 <code>while</code> 循环实现的。</p>
-<hr>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><div class="note success"><p>深度优先和广度优先的两种遍历方式应该是考虑具体场景选择最适合的方式使用，上面这么多实现递归删除文件目录的方法中，重点在于体会深度遍历和广度遍历的不同，其实在类似于递归删除文件目录的这种功能使用深度优先更适合一些。</p></div>
-<hr>
-
-      
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
     </div>
-
-    
-    
-    
-    <div>
-      
-        <div class="read-end">
-    
-        <div style="text-align:center;color: #ccc;">
-          <span class="read-end-max">--------------</span>
-          <span class="read-end-mid">----------</span>
-          <span class="read-end-min">-------</span>
-          本文结束
-          <i class="fa fa-paw"></i>
-          感谢您的阅读
-          <span class="read-end-min">-------</span>
-          <span class="read-end-mid">----------</span>
-          <span class="read-end-max">--------------</span>
-        </div>
-    
-</div>
-
-      
-    </div>
-
-    
-
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div class="reward-comment" style="margin-bottom: 10px;">坚持技术分享，对您有帮助就赏一个吧 ^ ^</div>
-  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
-  </button>
-  <div id="QR" style="display: none;">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Panda Shen 微信"/>
-        <p>微信</p>
-      </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/alipay.jpg" alt="Panda Shen 支付宝"/>
-        <p>支付宝</p>
-      </div>
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
-    
-
-    
-      <div>
-        <ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者：</strong>
-    Panda Shen
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://www.pandashen.com/2018/07/02/20180702122923/" title="NodeJS 树结构遍历 —— 深度优先和广度优先">https://www.pandashen.com/2018/07/02/20180702122923/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>
-    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-
-      </div>
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/异步/" rel="tag"><i class="fa fa-tag"></i> 异步</a>
-          
-            <a href="/tags/Promise/" rel="tag"><i class="fa fa-tag"></i> Promise</a>
-          
-            <a href="/tags/NodeJS/" rel="tag"><i class="fa fa-tag"></i> NodeJS</a>
-          
-            <a href="/tags/ES6/" rel="tag"><i class="fa fa-tag"></i> ES6</a>
-          
-            <a href="/tags/ES7/" rel="tag"><i class="fa fa-tag"></i> ES7</a>
-          
-            <a href="/tags/async-await/" rel="tag"><i class="fa fa-tag"></i> async/await</a>
-          
-            <a href="/tags/数据结构/" rel="tag"><i class="fa fa-tag"></i> 数据结构</a>
-          
-            <a href="/tags/fs/" rel="tag"><i class="fa fa-tag"></i> fs</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/06/30/20180630172601/" rel="next" title="NodeJS 文件操作 —— fs 基本使用">
-                <i class="fa fa-chevron-left"></i> NodeJS 文件操作 —— fs 基本使用
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/03/20180703231032/" rel="prev" title="NodeJS —— Stream 的基本使用">
-                NodeJS —— Stream 的基本使用 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-        <!-- Go to www.addthis.com/dashboard to customize your tools -->
-<div class="addthis_inline_share_toolbox">
-  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b4dbb54f6ab0d36" async = "async" ></script>
-</div>
-
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-    <div class="comments" id="comments">
-      <div id="gitalk-container"></div>
-    </div>
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-      <div id="sidebar-dimmer"></div>
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/images/avatar.jpg"
-                alt="Panda Shen" />
-            
-              <p class="site-author-name" itemprop="name">Panda Shen</p>
-              <p class="site-description motion-element" itemprop="description">Keep fucking the world</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives">
-              
-                  <span class="site-state-item-count">54</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">65</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-            <div class="feed-link motion-element">
-              <a href="/rss2.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          <div class="links-of-author motion-element">
-            
-              
-                <span class="links-of-author-item">
-                  <a href="https://github.com/shenqiuhui" target="_blank" title="GitHub">
-                    
-                      <i class="fa fa-fw fa-github-alt"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="mailto:pandashen821@163.com" target="_blank" title="E-Mail">
-                    
-                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  <a href="https://www.pandashen.cn" target="_blank" title="WeChat">
-                    
-                      <i class="fa fa-fw fa-weixin"></i>WeChat</a>
-                </span>
-              
-            
-          </div>
-
-          
-          
-            <div class="cc-license motion-element" itemprop="license">
-              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
-                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
-              </a>
-            </div>
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                友情链接
-              </div>
-              <ul class="links-of-blogroll-list">
+    <div class="bottom">
+        <p><span>Panda Shen &copy; 2017 - 2019</span>
+            <span>
                 
-                  <li class="links-of-blogroll-item">
-                    <a href="https://cherryblog.site/" title="Cherry's Blog" target="_blank">Cherry's Blog</a>
-                  </li>
                 
-                  <li class="links-of-blogroll-item">
-                    <a href="https://asdfv1929.github.io/" title="asdfv1929 's Home" target="_blank">asdfv1929 's Home</a>
-                  </li>
                 
-                  <li class="links-of-blogroll-item">
-                    <a href="https://pineapplexue.vip/" title="菠萝吹雪" target="_blank">菠萝吹雪</a>
-                  </li>
+                    Hosted by <a href="https://pages.coding.me" target="_blank">Coding Pages</a>
                 
-              </ul>
-            </div>
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#树的基本概念"><span class="nav-number">1.</span> <span class="nav-text">树的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#先序深度优先实现递归删除文件目录"><span class="nav-number">2.</span> <span class="nav-text">先序深度优先实现递归删除文件目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、同步的实现"><span class="nav-number">2.1.</span> <span class="nav-text">1、同步的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、异步回调的实现"><span class="nav-number">2.2.</span> <span class="nav-text">2、异步回调的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、异步-Promise-的实现"><span class="nav-number">2.3.</span> <span class="nav-text">3、异步 Promise 的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、异步-async-await-的实现"><span class="nav-number">2.4.</span> <span class="nav-text">4、异步 async/await 的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#先序广度优先实现递归删除文件目录"><span class="nav-number">3.</span> <span class="nav-text">先序广度优先实现递归删除文件目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、同步的实现-1"><span class="nav-number">3.1.</span> <span class="nav-text">1、同步的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、异步回调的实现-1"><span class="nav-number">3.2.</span> <span class="nav-text">2、异步回调的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、异步-async-await-的实现"><span class="nav-number">3.3.</span> <span class="nav-text">3、异步 async/await 的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
+            </span>
+        </p>
     </div>
-  </aside>
+</footer>
 
-
-        
-      </div>
     </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Panda Shen</span>
 
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/07/02/20180702122923/&title=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/07/02/20180702122923/&title=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Panda Shen's Blog&source=
+
+树的基本概念树（Tree）是 n 个结点的有限集，n 为 0 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 n 大..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/07/02/20180702122923/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/07/02/20180702122923/&via=https://www.pandashen.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/07/02/20180702122923/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACO0lEQVR42u3aS27DMAxFUe9/0y7QUYBU7n2kU9TU9ShwUltHA1b8HAe+zu/r9fPrndXvV795fxp/cuuSIUPGYxnn5fX+stWd1VL4c1Z/e702GTJk7MNIg+wJrpRHtm95X4YMGTLCQEkAtUAvQ4YMGWSh5JiYLlGGDBkyCIO8srOg2jZ9JBeXIUPGAxm1xsDffP54f0OGDBn/nnGG13XKSspz5AnxqmTIkDGa0WlP1g5wZFP4twfJpGXIkPFwRpqsfiLhTEP5D3dkyJCxASMdHuVBM0VytgwZMnZjBIkiCLu8fEaej7ZbhgwZoxlpEpu+oNYKLW6QDBkyNmN0QmptGKJPkiFDxlQGH3cg3/KjHgHwZqcMGTJ2YHSSyc4BsZPuypAhY08GKYSl1HQ4tXgAlSFDxmhGOvpwb+uRD43xdoIMGTLmMWrhjzP4sEWtJfBDLi5DhoxxDF6y50fDazYJ33wjeONBhgwZz2Wko2C1gn5tI4K/kiFDxmhGLQfkYxlpgO4kwDJkyJjKqB3LgjGIsGHJt+zghUQZMmSMYNw1VJG2HnlC+0tAlyFDxmhGpzLHRyh46a1V/pMhQ8ZQRqehWCvA9RsGMmTI2I3RaWSmS+n/Z+iEaRkyZDydwZfFU0r+ep6yBt0DGTJkDGWkjYHaMe6u9DUYtpAhQ8ZmjNrxkRfdSLt0GYhlyJAhAzcv+XGz31RoBVwZMmQ8kNEpn/Ubn+kYxzLgypAhYyjjrsZA2uAkyW0n6MuQIWME4wv99n+tyHH39AAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 
 
 
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
 
 
-  <span class="footer-custom">Hosted by <a href="https://pages.coding.me" target="_blank">Coding Pages</a></span>
-
-
-
-  <span class="footer-custom-flag post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a></div>
-
-
-
-  <span class="post-meta-divider">|</span>
-  <span class="post-meta-item-icon">
-    <i class="fa fa-bar-chart"></i>
-  </span>
-  
-    <span class="post-meta-item-text">网站文字统计&#58;</span>
-  
-  <span title="网站文字统计">202.6k</span>
-
-
-        
-<div class="busuanzi-count">
-  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="site-uv" id="busuanzi_container_site_uv" style="display: none;">
-      <i class="fa fa-user"></i> 访客数
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      人
-      
-        <span class="post-meta-divider">|</span>
-      
-    </span>
-  
-
-  
-    <span class="site-pv" id="busuanzi_container_site_pv" style="display: none;">
-      <i class="fa fa-eye"></i> 总访问量
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
 </script>
 
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/three.min.js"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
-
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-  <script src="/js/src/md5.min.js"></script>
-  <script type="text/javascript">
-    var gitalk = new Gitalk({
-      clientID: '708ca5b4fc1f08259651',
-      clientSecret: '347014dfe70a72dea9c207152fd04e8d3ebcc3b4',
-      repo: 'shenqiuhui.github.io',
-      owner: 'shenqiuhui',
-      admin: ['shenqiuhui'],
-      // id: location.pathname,
-      id: md5(location.pathname),
-      distractionFreeMode: 'true'
-    })
-    gitalk.render('gitalk-container')
-  </script>
-
-
-
-  
-
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
     }
-    var path = "/" + search_path;
-    // monitor main search box;
+});
 
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').html('<div id="no-result"><i class="fa fa-search fa-5x" /></div>');
-      $('#no-result').html('<i class="fa fa-search fa-5x" />');
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
     }
+});
+</script>
 
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 
 
 
 
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
-  <script>AV.initialize("RqIV72rdY61eUlDassFQDxPG-gzGzoHsz", "Mvo4cTDcS9hw0l03mINzvdNk");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
+    <!-- Valine Comments -->
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var META = ['nick','mail','link'];
+        var meta = 'nick,mail'.split(',').filter(function(item){
+          return META.indexOf(item) > -1
         });
-    }
 
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
+        new Valine({
+            el: '#comments',
+            notify: 'false' === 'true',
+            verify: 'false' === 'true',
+            appId: "RqIV72rdY61eUlDassFQDxPG-gzGzoHsz",
+            appKey: "Mvo4cTDcS9hw0l03mINzvdNk",
+            avatar: "mm",
+            placeholder: "说点什么",
+            visitor: "true" === 'true',
+            highlight: "true" === 'true',
+            meta: meta.length === 0 ? META : meta,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
 
 
 
-  
 
-  
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
 <script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '愿风指引你前进的道路！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '真正重要的，只是当下！';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
 })();
 </script>
 
 
-  
-  
 
-  
-
-  
-  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
-  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
-
-
-  
-
-
-  <!-- 页面点击小红心 -->
-  <script type="text/javascript" src="/js/src/clicklove.js"></script>
-  <!-- 修改代码块编译有标题和无标题的问题 -->
-  <script type="text/javascript" src="/js/src/changehighlight.js"></script>
 </body>
 </html>
