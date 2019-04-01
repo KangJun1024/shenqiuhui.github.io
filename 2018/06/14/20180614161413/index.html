@@ -35,7 +35,7 @@
 <meta property="og:description" content="Generators 简介Generator 函数是 ES6 提供的一种异步编程解决方案，是一个生成器，用于生成一个遍历器的函数，语法行为与传统函数完全不同。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.pandashen.com/2018/06/14/20180614161413/generators.png">
-<meta property="og:updated_time" content="2019-03-04T17:44:19.383Z">
+<meta property="og:updated_time" content="2019-03-28T06:54:44.413Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="异步发展流程 —— Generators + co 让异步更优雅">
 <meta name="twitter:description" content="Generators 简介Generator 函数是 ES6 提供的一种异步编程解决方案，是一个生成器，用于生成一个遍历器的函数，语法行为与传统函数完全不同。">
@@ -150,6 +150,13 @@
               <a href="https://www.pandashen.cn" target="_blank">
                 <i class="icon icon-lg icon-weixin"></i>
                 WeChat
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://twitter.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-twitter"></i>
+                Twitter
               </a>
             </li>
         
@@ -287,9 +294,7 @@
 <h2 id="co-库的使用"><a href="#co-库的使用" class="headerlink" title="co 库的使用"></a>co 库的使用</h2><blockquote class="pullquote info"><p>co 库的作者是著名的 NodeJS 大神 TJ，是基于 Generator 和 Promise 的，这个库能帮我们实现自动调用 Generator 函数返回遍历器的 <code>next</code> 方法，并执行 <code>yield</code> 后面 Promise 实例的 <code>then</code> 方法，所以每次 <code>yield</code> 后面的异步操作返回的必须是一个 Promise 实例，代码看起来像同步，执行其实是异步，不用自己手动进行下一次遍历，这更是我们想要的。</p>
 </blockquote>
 <p>由于 co 是一个第三方的模块，所以在使用时需要我们提前下载：</p>
-<blockquote>
-<p>npm install co</p>
-</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install co</span><br></pre></td></tr></table></figure>
 <p>我们使用 <code>co</code> 来实现之前异步连续读文件的案例：</p>
 <figure class="highlight js"><figcaption><span>连续读取文件 —— Generator + co</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>);</span><br><span class="line"><span class="keyword">const</span> co = <span class="built_in">require</span>(<span class="string">'co'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 readFile 方法转换成 Promise</span></span><br><span class="line"><span class="keyword">const</span> read = util.promisify(fs.readFile);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成器函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">gen</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> aData = <span class="keyword">yield</span> read(<span class="string">'1.txt'</span>, <span class="string">'utf8'</span>);</span><br><span class="line">  <span class="keyword">let</span> bData = <span class="keyword">yield</span> read(aData, <span class="string">'utf8'</span>);</span><br><span class="line">  <span class="keyword">return</span> bData;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 co 库代替手动调用 next</span></span><br><span class="line">co(gen()).then(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(data); <span class="comment">// Hello world</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>从上面代码可以看出，<code>co</code> 库的 <code>co</code> 函数参数是一个遍历器，即 Generator 函数执行后的返回结果，在 <code>co</code> 内部操作遍历器并遍历完成后返回了一个 Promise 实例，遍历器最终的返回结果的 <code>value</code> 值作为 <code>then</code> 方法回调的参数，所以我们可以使用 <code>then</code> 对结果进行后续的处理。</p>
@@ -323,7 +328,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-04T17:44:19.383Z" itemprop="dateUpdated">2019-03-05 01:44:19</time>
+    更新时间：<time datetime="2019-03-28T06:54:44.413Z" itemprop="dateUpdated">2019-03-28 14:54:44</time>
 </span><br>
 
 

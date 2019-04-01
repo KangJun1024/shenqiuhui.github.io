@@ -26,19 +26,19 @@
     
     
     <meta name="keywords" content="Hexo">
-    <meta name="description" content="问题描述在 Hexo 搭建的博客中对文章进行编写，经常会用到一些特殊字符需要转译，比如 -、.、空格、制表符等等，在正常情况下可以使用 \ 进行转译，但是有一些字符无法转译，使用后在执行 hexo server 命令的时候会报错。  报错信息：  Unhandled rejection Template render error: (unknown path) [Line 7, Column">
+    <meta name="description" content="问题描述在 Hexo 搭建的博客中对文章进行编写，经常会用到一些特殊字符需要转译，比如 -、.、空格、制表符等等，在正常情况下可以使用 \ 进行转译，但是有一些字符无法转译，使用后在执行 hexo server 命令的时候会报错。  报错信息： 12Unhandled rejection Template render error: (unknown path) [Line 7, Column">
 <meta name="keywords" content="Hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo 中 Markdown 特殊字符的处理方法">
 <meta property="og:url" content="https://www.pandashen.com/2017/05/19/20170519135903/index.html">
 <meta property="og:site_name" content="Panda Shen&#39;s Blog">
-<meta property="og:description" content="问题描述在 Hexo 搭建的博客中对文章进行编写，经常会用到一些特殊字符需要转译，比如 -、.、空格、制表符等等，在正常情况下可以使用 \ 进行转译，但是有一些字符无法转译，使用后在执行 hexo server 命令的时候会报错。  报错信息：  Unhandled rejection Template render error: (unknown path) [Line 7, Column">
+<meta property="og:description" content="问题描述在 Hexo 搭建的博客中对文章进行编写，经常会用到一些特殊字符需要转译，比如 -、.、空格、制表符等等，在正常情况下可以使用 \ 进行转译，但是有一些字符无法转译，使用后在执行 hexo server 命令的时候会报错。  报错信息： 12Unhandled rejection Template render error: (unknown path) [Line 7, Column">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.pandashen.com/2017/05/19/20170519135903/hexo-markdown.png">
-<meta property="og:updated_time" content="2019-03-04T18:07:49.151Z">
+<meta property="og:updated_time" content="2019-03-28T06:51:35.299Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 中 Markdown 特殊字符的处理方法">
-<meta name="twitter:description" content="问题描述在 Hexo 搭建的博客中对文章进行编写，经常会用到一些特殊字符需要转译，比如 -、.、空格、制表符等等，在正常情况下可以使用 \ 进行转译，但是有一些字符无法转译，使用后在执行 hexo server 命令的时候会报错。  报错信息：  Unhandled rejection Template render error: (unknown path) [Line 7, Column">
+<meta name="twitter:description" content="问题描述在 Hexo 搭建的博客中对文章进行编写，经常会用到一些特殊字符需要转译，比如 -、.、空格、制表符等等，在正常情况下可以使用 \ 进行转译，但是有一些字符无法转译，使用后在执行 hexo server 命令的时候会报错。  报错信息： 12Unhandled rejection Template render error: (unknown path) [Line 7, Column">
 <meta name="twitter:image" content="https://www.pandashen.com/2017/05/19/20170519135903/hexo-markdown.png">
     
         <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
@@ -153,6 +153,13 @@
               </a>
             </li>
         
+            <li class="waves-block waves-effect">
+              <a href="https://twitter.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-twitter"></i>
+                Twitter
+              </a>
+            </li>
+        
       </ul>
     </div>
   </div>
@@ -244,9 +251,7 @@
 <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><blockquote class="pullquote default"><p>在 Hexo 搭建的博客中对文章进行编写，经常会用到一些特殊字符需要转译，比如 <code>-</code>、<code>.</code>、空格、制表符等等，在正常情况下可以使用 <code>\</code> 进行转译，但是有一些字符无法转译，使用后在执行 <code>hexo server</code> 命令的时候会报错。</p>
 </blockquote>
 <p><strong>报错信息：</strong></p>
-<blockquote>
-<p>Unhandled rejection Template render error: (unknown path) [Line 7, Column 23]<br>  Error: Unable to call `worldcount`, which is undefined or falsey......</p>
-</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Unhandled rejection Template render error: (unknown path) [Line 7, Column 23]</span><br><span class="line">  Error: Unable to call `worldcount`, <span class="built_in">which</span> is undefined or falsey......</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>报错的原因是，Hexo 编译时发生错误，可能是文章中存在特殊字符，如：&#123; &#91; &#40; &#41; &#93; &#125; 等等。如下面这段代码：</p>
 <p><strong>在页面中：</strong></p>
@@ -564,7 +569,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-04T18:07:49.151Z" itemprop="dateUpdated">2019-03-05 02:07:49</time>
+    更新时间：<time datetime="2019-03-28T06:51:35.299Z" itemprop="dateUpdated">2019-03-28 14:51:35</time>
 </span><br>
 
 

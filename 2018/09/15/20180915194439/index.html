@@ -36,7 +36,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.pandashen.com/2018/09/15/20180915194439/react-life-cycle.png">
 <meta property="og:image" content="https://www.pandashen.com/2018/09/15/20180915194439/react-lifecycle-raw.png">
-<meta property="og:updated_time" content="2019-03-02T15:05:59.535Z">
+<meta property="og:updated_time" content="2019-03-28T06:59:35.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React 基础篇 —— 生命周期详解">
 <meta name="twitter:description" content="前言本篇文章主要内容针对 React 类组件的生命周期展开，会详细介绍生命周期 “钩子” 的执行和用法，如果一点也不了解 React 的同学建议先学习一下 React 比较基础的内容，当然也可以看我的文章 React 基础篇 —— 带你走进 React 世界。">
@@ -154,6 +154,13 @@
               </a>
             </li>
         
+            <li class="waves-block waves-effect">
+              <a href="https://twitter.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-twitter"></i>
+                Twitter
+              </a>
+            </li>
+        
       </ul>
     </div>
   </div>
@@ -246,12 +253,7 @@
 </blockquote>
 <a id="more"></a>
 <h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>首先使用 <code>create-react-app</code> 脚手架创建一个 <code>React</code> 项目，脚手架工具的安装和项目创建命令如下。</p>
-<blockquote>
-<p>npm install -g create-react-app</p>
-</blockquote>
-<blockquote>
-<p>create-react-app life-cycle</p>
-</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装脚手架</span></span><br><span class="line">npm install -g create-react-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建项目</span></span><br><span class="line">create-react-app life-cycle</span><br></pre></td></tr></table></figure>
 <p>创建项目后删除 <code>src</code> 目录中的无用文件，只留下 <code>index.js</code> 入口文件即可。</p>
 <h2 id="类组件的生命周期"><a href="#类组件的生命周期" class="headerlink" title="类组件的生命周期"></a>类组件的生命周期</h2><h3 id="静态属性-defaultProps"><a href="#静态属性-defaultProps" class="headerlink" title="静态属性 defaultProps"></a>静态属性 defaultProps</h3><p><code>defaultProps</code> 是用来给 <code>React</code> 类组件设置参数初始值的，也是最早执行的，算不算生命周期说法不一，但是觉得有必要说一下，因为在 <code>React 15.x</code> 版本的时候可以用 <code>React.createClass</code> 创建类组件，组件中有与 <code>defaultProps</code> 静态属性作用相同的生命周期 “钩子” <code>getDefaultProps</code>，随着 <code>React 16.x</code> 版本废弃了 <code>React.createClass</code>，也就使用 <code>defaultProps</code> 属性替代了 <code>getDefaultProps</code>。</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> defaultProps = &#123;</span><br><span class="line">    num: <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;this.props.num&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">Counter</span>&gt;</span><span class="tag">&lt;/<span class="name">Counter</span>&gt;</span></span>, <span class="built_in">window</span>.root);</span><br></pre></td></tr></table></figure>
@@ -352,7 +354,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-02T15:05:59.535Z" itemprop="dateUpdated">2019-03-02 23:05:59</time>
+    更新时间：<time datetime="2019-03-28T06:59:35.810Z" itemprop="dateUpdated">2019-03-28 14:59:35</time>
 </span><br>
 
 

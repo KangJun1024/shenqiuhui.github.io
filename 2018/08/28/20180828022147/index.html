@@ -35,7 +35,7 @@
 <meta property="og:description" content="前言Express 是基于 NodeJS 平台的 Web 框架，应用广泛，在 Express 社区中有着大量的开发者通过 Express 中间件的特性，开发了各种功能的中间件，用来处理某些响应以及给请求对象 req、响应对象 res 添加属性或方法，我们接下来就通过分析常用的 body-parser 中间件的原理来了解如何开发 Express 中间件，如果想了解更多 Express 内部封装原">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.pandashen.com/2018/08/28/20180828022147/express-middleware.png">
-<meta property="og:updated_time" content="2019-03-04T17:40:37.538Z">
+<meta property="og:updated_time" content="2019-03-28T06:59:01.283Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Express 中间件 body-parser 原理分析">
 <meta name="twitter:description" content="前言Express 是基于 NodeJS 平台的 Web 框架，应用广泛，在 Express 社区中有着大量的开发者通过 Express 中间件的特性，开发了各种功能的中间件，用来处理某些响应以及给请求对象 req、响应对象 res 添加属性或方法，我们接下来就通过分析常用的 body-parser 中间件的原理来了解如何开发 Express 中间件，如果想了解更多 Express 内部封装原">
@@ -153,6 +153,13 @@
               </a>
             </li>
         
+            <li class="waves-block waves-effect">
+              <a href="https://twitter.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-twitter"></i>
+                Twitter
+              </a>
+            </li>
+        
       </ul>
     </div>
   </div>
@@ -245,9 +252,7 @@
 </blockquote>
 <a id="more"></a>
 <h2 id="body-parser-的基本使用"><a href="#body-parser-的基本使用" class="headerlink" title="body-parser 的基本使用"></a>body-parser 的基本使用</h2><p>想刨析一个中间件的原理，首先应该从使用入手，在足够了解用法的基础上去分析，现在搭建一个简易的 <code>Express</code> 服务，并使用 <code>body-parser</code> 中间件，使用前需安装。</p>
-<blockquote>
-<p>npm install express body-parser</p>
-</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install express body-parser</span><br></pre></td></tr></table></figure>
 <p><strong>使用 body-parser 代码如下：</strong></p>
 <figure class="highlight js"><figcaption><span>使用 body-parser 中间件</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">'body-parser'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建服务</span></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 body-parser 中间</span></span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;));</span><br><span class="line">app.use(bodyParser.json());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建路由</span></span><br><span class="line">app.post(<span class="string">'/login'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(req.body);</span><br><span class="line">  res.send(req.body);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听服务</span></span><br><span class="line">app.listen(<span class="number">3000</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'server start 3000'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>启动上面的服务器，通过 <code>postman</code> 工具分别通过表单提交和 <code>json</code> 的格式访问 <a href="javascript:;" target="_blank" rel="noopener">http://localhost:3000/login</a>，查看服务器控制后台的打印结果和 <code>postman</code> 的返回结果。</p>
@@ -261,9 +266,7 @@
 <p>当解析失败时都需要做错误处理，当不是 <code>POST</code> 请求时都需要向下执行其他中间件，而最核心的事就是把请求体中的数据转换成对象挂在 <code>req.body</code> 上。</p>
 <p>使用的转换数据的方法不同是唯一的区别，能区分两者的就是请求头 <code>Content-Type</code> 的值，因此我们可以把所有的公共逻辑抽取出来用一个 <code>acceptPost</code> 函数来执行。</p>
 <h3 id="模块的创建"><a href="#模块的创建" class="headerlink" title="模块的创建"></a>模块的创建</h3><p>我们下面创建自己的 <code>body-parser</code> 模块，防止命名冲突，我们的模块命名为 <code>my-body-parser</code>，处理参数需要使用 <code>querystring</code> 和 <code>qs</code> 两个模块，其中 <code>qs</code> 是第三方模块，使用前需安装。</p>
-<blockquote>
-<p>npm install qs</p>
-</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install qs</span><br></pre></td></tr></table></figure>
 <p><code>qs</code> 和 <code>querystring</code> 作用基本相同，就是处理查询字符串格式的参数，但是也有一点小小的区别，<code>querystring</code> 只能处理一级，而 <code>qs</code> 可以处理多级。</p>
 <figure class="highlight js"><figcaption><span>文件：my-body-parser.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> querystring = <span class="built_in">require</span>(<span class="string">'querystring'</span>);</span><br><span class="line"><span class="keyword">const</span> qs = <span class="built_in">require</span>(<span class="string">'qs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// urlencoded 和 json 公共逻辑</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">acceptPost</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理表单提交的方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">urlencoded</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理请求体 json 的方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">json</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出对象</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123; urlencoded, json &#125;;</span><br></pre></td></tr></table></figure>
 <p>在把基本模块搭建好后，我们下面就实现 <code>body-parser</code> 模块内的公共逻辑函数 <code>acceptPost</code>。</p>
@@ -295,7 +298,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-04T17:40:37.538Z" itemprop="dateUpdated">2019-03-05 01:40:37</time>
+    更新时间：<time datetime="2019-03-28T06:59:01.283Z" itemprop="dateUpdated">2019-03-28 14:59:01</time>
 </span><br>
 
 

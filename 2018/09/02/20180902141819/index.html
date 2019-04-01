@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://www.pandashen.com/2018/09/02/20180902141819/koa-dir.png">
 <meta property="og:image" content="https://www.pandashen.com/2018/09/02/20180902141819/onion-model.png">
 <meta property="og:image" content="https://www.pandashen.com/2018/09/02/20180902141819/koa-flow-chart.png">
-<meta property="og:updated_time" content="2019-03-02T16:56:30.679Z">
+<meta property="og:updated_time" content="2019-03-28T06:58:59.565Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJS 进阶 —— Koa 源码分析">
 <meta name="twitter:description" content="前言Koa 2.x 版本是当下最流行的 NodeJS 框架，同时社区涌现出一大批围绕 Koa 2.x 的中间件以及基于 Koa 2.x 封装的企业级框架，如 egg.js，然而 Koa 本身的代码却非常精简，精简到所有文件的代码去掉注释后还不足 2000 行，本篇就围绕着这 2000 行不到的代码抽出核心逻辑进行分析，并压缩成一版只有 200 行不到的简易版 Koa。">
@@ -153,6 +153,13 @@
               <a href="https://www.pandashen.cn" target="_blank">
                 <i class="icon icon-lg icon-weixin"></i>
                 WeChat
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://twitter.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-twitter"></i>
+                Twitter
               </a>
             </li>
         
@@ -284,7 +291,7 @@
 <p>我们需要给 <code>ctx</code> 对象做一个代理，让 <code>ctx</code> 可以访问到 <code>request</code> 和 <code>response</code> 上的属性，这个场景何曾相识，不正是 <code>Vue</code> 创建实例时，将传入参数对象 <code>options</code> 的 <code>data</code> 属性代理给实例本身的场景吗，既然如此，我们也通过相似的方式实现，还记得上面引入的 <code>context</code> 模块作为实例的 <code>context</code> 属性所继承的对象，而剩下的最后一个核心文件 <code>context.js</code> 正是用来做这件事的，代码如下。</p>
 <figure class="highlight js"><figcaption><span>文件路径：&#126koa/context.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> proto = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将传入对象属性代理给 ctx</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">defineGetter</span>(<span class="params">property, key</span>) </span>&#123;</span><br><span class="line">  proto.__defineGetter__(key, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>[property][key];</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置 ctx 值时直接操作传入对象的属性</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">defineSetter</span>(<span class="params">property, key</span>) </span>&#123;</span><br><span class="line">  proto.__defineSetter__(key, <span class="function"><span class="keyword">function</span> (<span class="params">val</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>[property][key] = val;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 request 的 url 和 path 代理给 ctx</span></span><br><span class="line">defineGetter(<span class="string">'request'</span>, <span class="string">'url'</span>);</span><br><span class="line">defineGetter(<span class="string">'request'</span>, <span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 response 的 body 和 status 代理给 ctx</span></span><br><span class="line">defineGetter(<span class="string">'response'</span>, <span class="string">'body'</span>);</span><br><span class="line">defineSetter(<span class="string">'response'</span>, <span class="string">'body'</span>);</span><br><span class="line">defineGetter(<span class="string">'response'</span>, <span class="string">'status'</span>);</span><br><span class="line">defineSetter(<span class="string">'response'</span>, <span class="string">'status'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = proto;</span><br></pre></td></tr></table></figure>
 <p>在 <code>Vue</code> 中是使用 <code>Object.defineProperty</code> 来时实现的代理，而在 <code>Koa</code> 源码中借助了 <code>delegate</code> 第三方模块来实现的，并在添加代理时链式调用了 <code>delegate</code> 封装的方法，我们并没有直接使用 <code>delegate</code> 模块，而是将 <code>delegate</code> 内部的核心逻辑抽取出来在 <code>context.js</code> 中直接编写，这样方便大家理解原理，也可以清楚的知道是如何实现代理的。</p>
-<p>我们封装了两个方法 <code>defineGetter</code> 和 <code>defineSetter</code> 分别来实现取值和设置值时，将传入的属性（第二个参数）代理给传入的对象（第一个参数），函数内是通过 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/__defineGetter__" target="_blank"><code>Object.prototype.__defineGetter__</code></a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/__defineSetter__" target="_blank"><code>Object.prototype.__defineSetter__</code></a> 实现的，点击方法名可查看官方 API。</p>
+<p>我们封装了两个方法 <code>defineGetter</code> 和 <code>defineSetter</code> 分别来实现取值和设置值时，将传入的属性（第二个参数）代理给传入的对象（第一个参数），函数内是通过 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/__defineGetter__" target="_blank">Object.prototype.__defineGetter__</a> 和 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/__defineSetter__" target="_blank">Object.prototype.__defineSetter__</a> 实现的，点击方法名可查看官方 API。</p>
 <h2 id="洋葱模型-——-实现中间件的串行"><a href="#洋葱模型-——-实现中间件的串行" class="headerlink" title="洋葱模型 —— 实现中间件的串行"></a>洋葱模型 —— 实现中间件的串行</h2><blockquote class="pullquote info"><p>现在已经实现了 <code>ctx</code> 上下文对象的创建，但是会发现我们封装 <code>ctx</code> 之前所写的案例 <code>use</code> 回调中的代码并不能执行，也不会报错，根本原因是 <code>use</code> 方法内传入的函数没有调用，在使用 <code>Koa</code> 的过程中会发现，我们往往使用多个 <code>use</code>，并且传入 <code>use</code> 的回调函数除了 <code>ctx</code> 还有第二个参数 <code>next</code>，而这个 <code>next</code> 也是一个函数，调用 <code>next</code> 则执行下一个 <code>use</code> 中的回调函数，否则就会 “卡住”，这种执行机制被取名为 “洋葱模型”，而这些被执行的函数被称为 “中间件”，下面我们就来分析这个 “洋葱模型” 并实现中间件的串行。</p>
 </blockquote>
 <p><br></p>
@@ -361,7 +368,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-02T16:56:30.679Z" itemprop="dateUpdated">2019-03-03 00:56:30</time>
+    更新时间：<time datetime="2019-03-28T06:58:59.565Z" itemprop="dateUpdated">2019-03-28 14:58:59</time>
 </span><br>
 
 

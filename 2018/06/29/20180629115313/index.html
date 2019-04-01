@@ -35,7 +35,7 @@
 <meta property="og:description" content="Buffer 概述在 ES6 引入 TypedArray 之前，JavaScript 语言没有读取或操作二进制数据流的机制。 Buffer 类被引入作为 NodeJS API 的一部分，使其可以在 TCP 流或文件系统操作等场景中处理二进制数据流。Buffer 属于 Global 对象，使用时不需引入，且 Buffer 的大小在创建时确定，无法调整。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.pandashen.com/2018/06/29/20180629115313/buffer.png">
-<meta property="og:updated_time" content="2019-03-04T17:43:48.621Z">
+<meta property="og:updated_time" content="2019-03-28T06:55:09.512Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJS —— Buffer 解读">
 <meta name="twitter:description" content="Buffer 概述在 ES6 引入 TypedArray 之前，JavaScript 语言没有读取或操作二进制数据流的机制。 Buffer 类被引入作为 NodeJS API 的一部分，使其可以在 TCP 流或文件系统操作等场景中处理二进制数据流。Buffer 属于 Global 对象，使用时不需引入，且 Buffer 的大小在创建时确定，无法调整。">
@@ -150,6 +150,13 @@
               <a href="https://www.pandashen.cn" target="_blank">
                 <i class="icon icon-lg icon-weixin"></i>
                 WeChat
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://twitter.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-twitter"></i>
+                Twitter
               </a>
             </li>
         
@@ -323,9 +330,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> buf = Buffer.from(<span class="string">'你好'</span>, <span class="string">'utf8'</span>);</span><br><span class="line"><span class="keyword">let</span> result = fs.readFileSync(path.resolve(__dirname, <span class="string">'a.txt'</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(buf); <span class="comment">// &lt;Buffer e4 bd a0 e5 a5 bd&gt;</span></span><br><span class="line"><span class="built_in">console</span>.log(buf.toString()); <span class="comment">// 你好</span></span><br><span class="line"><span class="built_in">console</span>.log(result); <span class="comment">// &lt;Buffer c4 e3 ba c3&gt;</span></span><br><span class="line"><span class="built_in">console</span>.log(result.toString()); <span class="comment">// ���</span></span><br></pre></td></tr></table></figure>
 <p>如果一定要在 NodeJS 中来正确解析这样的内容，这样的问题还是有办法解决的，我们需要借助 <code>iconv-lite</code> 模块，这个模块可以将一个 Buffer 按照指定的编码格式进行编码或解码。</p>
 <p>由于 <code>iconv-lite</code> 是第三方提供的模块，在使用前需要安装，安装命令如下：</p>
-<blockquote>
-<p>npm install iconv-lite</p>
-</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install iconv-lite</span><br></pre></td></tr></table></figure>
 <p>如果想正确的读出其他编码格式文件的内容，上面代码应该更改为：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入依赖</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> iconvLite = <span class="built_in">require</span>(<span class="string">'iconv-lite'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> result = fs.readFileSync(path.resolve(__dirname, <span class="string">'a.txt'</span>));</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(iconvLite.decode(result, <span class="string">'gb2312'</span>)); <span class="comment">// 你好</span></span><br></pre></td></tr></table></figure>
 <h2 id="去掉-BOM-头"><a href="#去掉-BOM-头" class="headerlink" title="去掉 BOM 头"></a>去掉 BOM 头</h2><p>上面读取 <code>GB2312</code> 编码的 <code>txt</code> 文件也可以通过打开文件重新保存为 <code>UTF-8</code> 或用编辑器直接将编码手动修改为 <code>UTF-8</code>，此时读取的文件不需要进行编码转换，但是会产生新的问题。</p>
@@ -364,7 +369,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-04T17:43:48.621Z" itemprop="dateUpdated">2019-03-05 01:43:48</time>
+    更新时间：<time datetime="2019-03-28T06:55:09.512Z" itemprop="dateUpdated">2019-03-28 14:55:09</time>
 </span><br>
 
 

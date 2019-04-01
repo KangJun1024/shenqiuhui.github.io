@@ -45,7 +45,7 @@
 <meta property="og:image" content="https://www.pandashen.com/2018/07/20/20180720110647/network-mandatory-response-cache.png">
 <meta property="og:image" content="https://www.pandashen.com/2018/07/20/20180720110647/network-compared-before-cache.png">
 <meta property="og:image" content="https://www.pandashen.com/2018/07/20/20180720110647/network-compared-cache.png">
-<meta property="og:updated_time" content="2019-03-04T17:42:27.416Z">
+<meta property="og:updated_time" content="2019-03-28T06:56:02.311Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP 缓存的那些事儿">
 <meta name="twitter:description" content="前言HTTP 缓存机制作为 Web 应用性能优化的重要手段，对于从事 Web 开发的同学们来说，应该是知识体系的基础环节，也是想要成为前端架构的必备技能。">
@@ -160,6 +160,13 @@
               <a href="https://www.pandashen.cn" target="_blank">
                 <i class="icon icon-lg icon-weixin"></i>
                 WeChat
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://twitter.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-twitter"></i>
+                Twitter
               </a>
             </li>
         
@@ -322,9 +329,7 @@
 </blockquote>
 <h3 id="NodeJS-服务器实现强制缓存"><a href="#NodeJS-服务器实现强制缓存" class="headerlink" title="NodeJS 服务器实现强制缓存"></a>NodeJS 服务器实现强制缓存</h3><figure class="highlight js"><figcaption><span>强制缓存</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</span><br><span class="line"><span class="keyword">const</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> mime = <span class="built_in">require</span>(<span class="string">'mime'</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = http.createServer(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> &#123; pathname &#125; = url.parse(req.url, <span class="literal">true</span>);</span><br><span class="line">  pathname = pathname !== <span class="string">'/'</span> ? pathname : <span class="string">'/index.html'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取读取文件的绝对路径</span></span><br><span class="line">  <span class="keyword">let</span> p = path.join(__dirname, pathname);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 查看路径是否合法</span></span><br><span class="line">  fs.access(p, err =&gt; &#123;</span><br><span class="line">    <span class="comment">// 路径不合法则直接中断连接</span></span><br><span class="line">    <span class="keyword">if</span> (err) <span class="keyword">return</span> res.end(<span class="string">'Not Found'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置强制缓存</span></span><br><span class="line">    res.setHeader(<span class="string">'Expires'</span>, <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">Date</span>.now() + <span class="number">30000</span>).toGMTString());</span><br><span class="line">    res.setHeader(<span class="string">'Cache-Control'</span>, <span class="string">'max-age=30'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置文件类型并响应给浏览器</span></span><br><span class="line">    res.setHeader(<span class="string">'Content-Type'</span>, <span class="string">`<span class="subst">$&#123;mime.getType(p)&#125;</span>;charset=utf8`</span>);</span><br><span class="line">    fs.createReadStream(p).pipe(res);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">3000</span>, () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'server start 3000'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>上面 <code>mime</code> 模块的 <code>getType</code> 方法可以成功返回传入路径下文件对应的文件类型，如 <code>text/html</code> 和 <code>application/javascript</code> 等，是第三方模块，使用之前需要安装。</p>
-<blockquote>
-<p>npm install mime</p>
-</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install mime</span><br></pre></td></tr></table></figure>
 <h2 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h2><h3 id="协商缓存流程"><a href="#协商缓存流程" class="headerlink" title="协商缓存流程"></a>协商缓存流程</h3><p>协商缓存又叫对比缓存，设置协商缓存后，第一次访问服务器获取数据时，服务器会将数据和缓存标识一起返回给浏览器，客户端会将数据和标识存入缓存数据库中，下一次请求时，会先去缓存中取出缓存标识发送给服务器进行询问，当服务器数据更改时会更新标识，所以服务器拿到浏览器发来的标识进行对比，相同代表数据未更改，响应浏览器通知数据未更改，浏览器会去缓存中获取数据，如果标识不同，代表服务器更改过数据，所以会将新的数据和新的标识返回浏览器，浏览器会将新的数据和标识存入缓存中，协商缓存的流程如下。</p>
 <p><br></p>
 <figure class="image-bubble">
@@ -423,7 +428,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-04T17:42:27.416Z" itemprop="dateUpdated">2019-03-05 01:42:27</time>
+    更新时间：<time datetime="2019-03-28T06:56:02.311Z" itemprop="dateUpdated">2019-03-28 14:56:02</time>
 </span><br>
 
 

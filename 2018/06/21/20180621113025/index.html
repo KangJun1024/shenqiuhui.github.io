@@ -36,7 +36,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.pandashen.com/2018/06/21/20180621113025/barrage.png">
 <meta property="og:image" content="https://www.pandashen.com/2018/06/21/20180621113025/barrage-html.png">
-<meta property="og:updated_time" content="2019-03-04T17:44:08.431Z">
+<meta property="og:updated_time" content="2019-03-28T06:54:48.815Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Canvas + WebSocket + Redis 实现一个视频弹幕">
 <meta name="twitter:description" content="页面布局首先，我们需要实现页面布局，在根目录创建 index.html 布局中我们需要有一个 video 多媒体标签引入我们的本地视频，添加输入弹幕的输入框、确认发送的按钮、颜色选择器、字体大小滑动条，创建一个 style.css 来调整页面布局的样式，这里我们顺便创建一个 index.js 文件用于后续实现我们的核心逻辑，先引入到页面当中。">
@@ -151,6 +151,13 @@
               <a href="https://www.pandashen.cn" target="_blank">
                 <i class="icon icon-lg icon-weixin"></i>
                 WeChat
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://twitter.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-twitter"></i>
+                Twitter
               </a>
             </li>
         
@@ -322,9 +329,7 @@
 </ul>
 <p>从而实现了拖动进度条弹幕的 “前进” 和 “后退” 功能。</p>
 <h2 id="使用-WebSocket-和-Redis-实现前后端通信及数据存储"><a href="#使用-WebSocket-和-Redis-实现前后端通信及数据存储" class="headerlink" title="使用 WebSocket 和 Redis 实现前后端通信及数据存储"></a>使用 WebSocket 和 Redis 实现前后端通信及数据存储</h2><h3 id="服务器代码的实现"><a href="#服务器代码的实现" class="headerlink" title="服务器代码的实现"></a>服务器代码的实现</h3><p>要使用 WebSocket 和 Redis 首先需要去安装 <code>ws</code>、<code>redis</code> 依赖，在项目根目录执行下面命令：</p>
-<blockquote>
-<p>npm install ws redis</p>
-</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install ws redis</span><br></pre></td></tr></table></figure>
 <p>我们创建一个 <code>server.js</code> 文件，用来写服务端的代码：</p>
 <figure class="highlight js"><figcaption><span>文件：index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> WebSocket = <span class="built_in">require</span>(<span class="string">'ws'</span>); <span class="comment">// 引入 WebSocket</span></span><br><span class="line"><span class="keyword">const</span> redis = <span class="built_in">require</span>(<span class="string">'redis'</span>); <span class="comment">// 引入 redis</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化 WebSocket 服务器，端口号为 3000</span></span><br><span class="line"><span class="keyword">const</span> wss = <span class="keyword">new</span> WebSocket.Server(&#123;</span><br><span class="line">  port: <span class="number">3000</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 redis 客户端</span></span><br><span class="line"><span class="keyword">const</span> client = redis.createClient(); <span class="comment">// key value</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 原生的 websocket 就两个常用的方法 on('message')、on('send')</span></span><br><span class="line">wss.on(<span class="string">'connection'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">ws</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 监听连接</span></span><br><span class="line">  <span class="comment">// 连接上需要立即把 redis 数据库的数据取出返回给前端</span></span><br><span class="line">  client.lrange(<span class="string">'barrages'</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, applies</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 由于 redis 的数据都是字符串，所以需要把数组中每一项转成对象</span></span><br><span class="line">    applies = applies.map(<span class="function"><span class="params">item</span> =&gt;</span> <span class="built_in">JSON</span>.parse(item));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 websocket 服务器将 redis 数据库的数据发送给前端</span></span><br><span class="line">    <span class="comment">// 构建一个对象，加入 type 属性告诉前端当前返回数据的行为，并将数据转换成字符串</span></span><br><span class="line">    ws.send(<span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">      type: <span class="string">'INIT'</span>,</span><br><span class="line">      data: applies</span><br><span class="line">    &#125;));</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 当服务器收到消息时，将数据存入 redis 数据库</span></span><br><span class="line">  ws.on(<span class="string">'message'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 向数据库存储时存的是字符串，存入并打印数据，用来判断是否成功存入数据库</span></span><br><span class="line">    client.rpush(<span class="string">'barrages'</span>, data, redis.print);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 再将当前这条数据返回给前端</span></span><br><span class="line">    <span class="comment">// 同样添加 type 字段告诉前端当前行为，并将数据转换成字符串</span></span><br><span class="line">    ws.send(<span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">      type: <span class="string">'ADD'</span>,</span><br><span class="line">      data: <span class="built_in">JSON</span>.parse(data)</span><br><span class="line">    &#125;));</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>服务器的逻辑很清晰，在 WebSocket 连接上时，立即获取 Redis 数据库的所有弹幕数据返回给前端，当前端点击发送弹幕按钮发送数据时，接收数据存入 Redis 数据库中并打印验证数据是否成功存入，再通过 WebSocket 服务把当前这一条数返回给前端，需要注意一下几点：</p>
@@ -368,7 +373,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-04T17:44:08.431Z" itemprop="dateUpdated">2019-03-05 01:44:08</time>
+    更新时间：<time datetime="2019-03-28T06:54:48.815Z" itemprop="dateUpdated">2019-03-28 14:54:48</time>
 </span><br>
 
 

@@ -35,7 +35,7 @@
 <meta property="og:description" content="单向数据流每一个可以组件化开发的前端框架如 React、Vue，组件间的参数传递都是一定会谈论的话题，而 React 中数据传递是单向的，也被称为单向数据流，即数据只能从父组件传递到子组件，而子组件只需要通过 props 属性渲染即可，如果顶层组件的某个属性的值改变了，React 将由外向内遍历整个组件树，将使用了该属性的组件重新渲染。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.pandashen.com/2018/09/19/20180919002629/react-props-transmit.png">
-<meta property="og:updated_time" content="2019-03-02T14:29:06.609Z">
+<meta property="og:updated_time" content="2019-03-28T06:59:43.014Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React 基础篇 —— 组件间的参数传递">
 <meta name="twitter:description" content="单向数据流每一个可以组件化开发的前端框架如 React、Vue，组件间的参数传递都是一定会谈论的话题，而 React 中数据传递是单向的，也被称为单向数据流，即数据只能从父组件传递到子组件，而子组件只需要通过 props 属性渲染即可，如果顶层组件的某个属性的值改变了，React 将由外向内遍历整个组件树，将使用了该属性的组件重新渲染。">
@@ -153,6 +153,13 @@
               </a>
             </li>
         
+            <li class="waves-block waves-effect">
+              <a href="https://twitter.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-twitter"></i>
+                Twitter
+              </a>
+            </li>
+        
       </ul>
     </div>
   </div>
@@ -245,12 +252,7 @@
 </blockquote>
 <a id="more"></a>
 <h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>首先使用 <code>create-react-app</code> 脚手架创建 <code>React</code> 项目，项目生成后删除 <code>src</code> 文件目录下的多余文件，留下 <code>index.js</code>，命令如下。</p>
-<blockquote>
-<p>npm install -g create-react-app</p>
-</blockquote>
-<blockquote>
-<p>create-react-app transfer-props</p>
-</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装脚手架</span></span><br><span class="line">npm install -g create-react-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建项目</span></span><br><span class="line">create-react-app transfer-props</span><br></pre></td></tr></table></figure>
 <p><strong>该项目最后的目录结构如下：</strong></p>
 <p><pre>transfer-props<br>  |- public<br>  | |- favicon.ico<br>  | |- index.html<br>  | |- manifest.json<br>  |- src<br>  | |- components<br>  | | |- App.js<br>  | | |- Child.js<br>  | | |- Parent.js<br>  | |- context.js<br>  | |- index.js<br>  |- .gitignore<br>  |- package.json<br>  |- README.md<br>  |- yarn.lock</pre></p>
 <h2 id="父组件传参给子组件"><a href="#父组件传参给子组件" class="headerlink" title="父组件传参给子组件"></a>父组件传参给子组件</h2><p>创建一个最外层组件 <code>App</code>，并在 <code>index.js</code> 中进行渲染。</p>
@@ -315,7 +317,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-02T14:29:06.609Z" itemprop="dateUpdated">2019-03-02 22:29:06</time>
+    更新时间：<time datetime="2019-03-28T06:59:43.014Z" itemprop="dateUpdated">2019-03-28 14:59:43</time>
 </span><br>
 
 

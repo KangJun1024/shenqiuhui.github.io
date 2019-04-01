@@ -35,7 +35,7 @@
 <meta property="og:description" content="fs 概述在 NodeJS 中，所有与文件操作都是通过 fs 核心模块来实现的，包括文件目录的创建、删除、查询以及文件的读取和写入，在 fs 模块中，所有的方法都分为同步和异步两种实现，具有 sync 后缀的方法为同步方法，不具有 sync 后缀的方法为异步方法，在了解文件操作的方法之前有一些关于系统和文件的前置知识，如文件的权限位 mode、标识位 flag、文件描述符 fd 等，所以在了解">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.pandashen.com/2018/06/30/20180630172601/fs.jpg">
-<meta property="og:updated_time" content="2019-03-04T17:43:42.029Z">
+<meta property="og:updated_time" content="2019-03-28T06:55:19.513Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJS 文件操作 —— fs 基本使用">
 <meta name="twitter:description" content="fs 概述在 NodeJS 中，所有与文件操作都是通过 fs 核心模块来实现的，包括文件目录的创建、删除、查询以及文件的读取和写入，在 fs 模块中，所有的方法都分为同步和异步两种实现，具有 sync 后缀的方法为同步方法，不具有 sync 后缀的方法为异步方法，在了解文件操作的方法之前有一些关于系统和文件的前置知识，如文件的权限位 mode、标识位 flag、文件描述符 fd 等，所以在了解">
@@ -153,6 +153,13 @@
               </a>
             </li>
         
+            <li class="waves-block waves-effect">
+              <a href="https://twitter.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-twitter"></i>
+                Twitter
+              </a>
+            </li>
+        
       </ul>
     </div>
   </div>
@@ -249,13 +256,8 @@
 <table><thead><tr><th style="text-align:center;">权限分配</th><th style="text-align:center;" colspan="3">文件所有者</th><th style="text-align:center;" colspan="3">文件所属组</th><th style="text-align:center;" colspan="3">其他用户</th></tr></thead><tbody><tr><td style="text-align:center;">权限项</td><td style="text-align:center;">读</td><td style="text-align:center;">写</td><td style="text-align:center;">执行</td><td style="text-align:center;">读</td><td style="text-align:center;">写</td><td style="text-align:center;">执行</td><td style="text-align:center;">读</td><td style="text-align:center;">写</td><td style="text-align:center;">执行</td></tr><tr><td style="text-align:center;">字符表示<br></td><td style="text-align:center;">r</td><td style="text-align:center;">w</td><td style="text-align:center;">x</td><td style="text-align:center;">r</td><td style="text-align:center;">w</td><td style="text-align:center;">x</td><td style="text-align:center;">r</td><td style="text-align:center;">w</td><td style="text-align:center;">x</td></tr><tr><td style="text-align:center;">数字表示</td><td style="text-align:center;">4</td><td style="text-align:center;">2</td><td style="text-align:center;">1</td><td style="text-align:center;">4</td><td style="text-align:center;">2</td><td style="text-align:center;">1</td><td style="text-align:center;">4</td><td style="text-align:center;">2</td><td style="text-align:center;">1</td></tr></tbody></table>
 
 <p>在上面表格中，我们可以看出系统中针对三种类型进行权限分配，即文件所有者（自己）、文件所属组（家人）和其他用户（陌生人），文件操作权限又分为三种，读、写和执行，数字表示为八进制数，具备权限的八进制数分别为 <code>4</code> 、<code>2</code>、<code>1</code>，不具备权限为 <code>0</code>。</p>
-<p>为了更容易理解，我们可以随便在一个目录中打开 <code>Git</code>，使用 Linux 命令 <code>ls -al</code> 来查目录中文件和文件夹的权限位，如果对 <code>Git</code> 和 <code>Linux</code> 命令不熟悉，可以看 <a href="https://www.pandashen.com/2017/12/14/20171214024101/" target="_blank">Git 命令总结，从零到熟悉（全）</a>。</p>
-<blockquote>
-<p>drwxr-xr-x 1 PandaShen 197121 0 Jun 28 14:41 core</p>
-</blockquote>
-<blockquote>
-<p>-rw-r--r-- 1 PandaShen 197121 293 Jun 23 17:44 index.md</p>
-</blockquote>
+<p>为了更容易理解，我们可以随便在一个目录中打开 <code>Git</code>，使用 Linux 命令 <code>ls -al</code> 来查目录中文件和文件夹的权限位，如果对 <code>Git</code> 和 <code>Linux</code> 命令不熟悉，可以看 <a href="https://www.pandashen.com/2017/12/14/20171214024101/" target="_blank">Git 命令总结，从零到熟悉</a>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">drwxr-xr-x 1 PandaShen 197121 0 Jun 28 14:41 core</span><br><span class="line">-rw-r--r-- 1 PandaShen 197121 293 Jun 23 17:44 index.md</span><br></pre></td></tr></table></figure>
 <p>在上面的目录信息当中，很容易看出用户名、创建时间和文件名等信息，但最重要的是开头第一项（十位的字符）。</p>
 <p>第一位代表是文件还是文件夹，<code>d</code> 开头代表文件夹，<code>-</code> 开头的代表文件，而后面九位就代表当前用户、用户所属组和其他用户的权限位，按每三位划分，分别代表读（r）、写（w）和执行（x），<code>-</code> 代表没有当前位对应的权限。</p>
 <blockquote class="pullquote warning"><p>权限参数 <code>mode</code> 主要针对 Linux 和 Unix 操作系统，Window 的权限默认是可读、可写、不可执行，所以权限位数字表示为 <code>0o666</code>，转换十进制表示为 <code>438</code>。</p>
@@ -437,7 +439,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-04T17:43:42.029Z" itemprop="dateUpdated">2019-03-05 01:43:42</time>
+    更新时间：<time datetime="2019-03-28T06:55:19.513Z" itemprop="dateUpdated">2019-03-28 14:55:19</time>
 </span><br>
 
 

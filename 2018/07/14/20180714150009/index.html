@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://www.pandashen.com/2018/07/14/20180714150009/embezzle.png">
 <meta property="og:image" content="https://www.pandashen.com/2018/07/14/20180714150009/success.png">
 <meta property="og:image" content="https://www.pandashen.com/2018/07/14/20180714150009/error.png">
-<meta property="og:updated_time" content="2019-03-04T17:42:47.803Z">
+<meta property="og:updated_time" content="2019-03-28T06:55:48.117Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJS 服务器实现资源防盗链">
 <meta name="twitter:description" content="什么是 “盗链”？“盗链” 说白了就是利用别人网站的资源链接放在自己的站点，在未经允许的情况下去获取别人网站里面的图片或者视频等资源，导致资源所有者的网站的流量费用增加或收入减少，为了防止资源链接随意被人盗用的手段被称为 “防盗链”。">
@@ -156,6 +156,13 @@
               </a>
             </li>
         
+            <li class="waves-block waves-effect">
+              <a href="https://twitter.com/shenqiuhui" target="_blank">
+                <i class="icon icon-lg icon-twitter"></i>
+                Twitter
+              </a>
+            </li>
+        
       </ul>
     </div>
   </div>
@@ -250,9 +257,7 @@
 <h2 id="模拟-“盗链”-场景"><a href="#模拟-“盗链”-场景" class="headerlink" title="模拟 “盗链” 场景"></a>模拟 “盗链” 场景</h2><p>我们先来模拟一下 “盗链” 场景，在本地启动服务运行 <code>hotlinking.html</code> 文件，并在文件中盗用百度视频的图片资源，看看效果。</p>
 <figure class="highlight html"><figcaption><span>文件：hotlinking.html</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>盗链<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"http://c.hiphotos.baidu.com/c9f1faaf51f2de66ad.jpg"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>我们通过 <code>http-server</code> 来启动服务器访问 <code>hotlinking.html</code>，使用 <code>http-server</code> 需全局安装。</p>
-<blockquote>
-<p>http-server install -g</p>
-</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http-server install -g</span><br></pre></td></tr></table></figure>
 <p>在服务中打开 <code>hotlinking.html</code> 后我们发现图片并不是我们盗用链接的资源，而是变成了下面这张图片。</p>
 <p><br></p>
 <figure class="image-bubble">
@@ -267,9 +272,7 @@
 <blockquote class="pullquote warning"><p><em><strong>注意：具备防盗链处理的网站的资源链接可以直接通过浏览器地址栏访问，也可以在文件域（file 协议）访问，限制的是在未经允许的情况下其他服务器的访问。</strong></em></p>
 </blockquote>
 <h2 id="NodeJS-服务器实现防盗链"><a href="#NodeJS-服务器实现防盗链" class="headerlink" title="NodeJS 服务器实现防盗链"></a>NodeJS 服务器实现防盗链</h2><h3 id="模拟两个域名"><a href="#模拟两个域名" class="headerlink" title="模拟两个域名"></a>模拟两个域名</h3><p><strong>在本地的 hosts 文件中加入两个域名：</strong></p>
-<blockquote>
-<p>127.0.0.1 <a href="javascript:;" target="_blank" rel="noopener">panda.com</a><br>127.0.0.1 <a href="javascript:;" target="_blank" rel="noopener">shen.com</a></p>
-</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1   panda.com</span><br><span class="line">127.0.0.1   shen.com</span><br></pre></td></tr></table></figure>
 <h3 id="准备图片资源"><a href="#准备图片资源" class="headerlink" title="准备图片资源"></a>准备图片资源</h3><p>在根目录创建文件夹 <code>public</code> 并存入两张图片，<code>success.png</code> 是正常请求的图片资源，<code>error.png</code> 是经过防盗链处理后返回的图片资源，两张图片如下。</p>
 <p><strong>正常返回的图片资源 success.png：</strong></p>
 <p><br></p>
@@ -332,7 +335,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-04T17:42:47.803Z" itemprop="dateUpdated">2019-03-05 01:42:47</time>
+    更新时间：<time datetime="2019-03-28T06:55:48.117Z" itemprop="dateUpdated">2019-03-28 14:55:48</time>
 </span><br>
 
 
