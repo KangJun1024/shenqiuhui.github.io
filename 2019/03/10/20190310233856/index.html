@@ -36,7 +36,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.pandashen.com/2019/03/10/20190310233856/git.jpg">
 <meta property="og:image" content="https://www.pandashen.com/2019/03/10/20190310233856/git-objects.png">
-<meta property="og:updated_time" content="2019-03-28T07:15:05.756Z">
+<meta property="og:updated_time" content="2019-04-08T07:57:03.680Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git 系列之 .git 内部刨析">
 <meta name="twitter:description" content="HEAD 文件文件内容1ref: refs/heads/master ref 代表引用，refs/heads/master 代表当前引用所指向的分支，即当前工作区所在的分支，当执行切换分支时，HEAD 文件中的 ref 值会随着切换的分支变化。">
@@ -220,7 +220,7 @@
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <!-- <h4>TOC</h4> -->
             <h4>文章目录</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HEAD-文件"><span class="post-toc-number">1.</span> <span class="post-toc-text">HEAD 文件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#config-文件"><span class="post-toc-number">2.</span> <span class="post-toc-text">config 文件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#refs-文件夹"><span class="post-toc-number">3.</span> <span class="post-toc-text">refs 文件夹</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分支-heads"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">分支 heads</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#标签-tags"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">标签 tags</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#objects-文件夹"><span class="post-toc-number">4.</span> <span class="post-toc-text">objects 文件夹</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#查看-objects-内部"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">查看 objects 内部</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#tree、commit、blob-对象的关系"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">tree、commit、blob 对象的关系</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HEAD-文件"><span class="post-toc-number">1.</span> <span class="post-toc-text">HEAD 文件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#config-文件"><span class="post-toc-number">2.</span> <span class="post-toc-text">config 文件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#refs-文件夹"><span class="post-toc-number">3.</span> <span class="post-toc-text">refs 文件夹</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分支-heads"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">分支 heads</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#标签-tags"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">标签 tags</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#objects-文件夹"><span class="post-toc-number">4.</span> <span class="post-toc-text">objects 文件夹</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#查看-objects-内部"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">查看 objects 内部</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#tree、commit、blob-对象的关系"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">tree、commit、blob 对象的关系</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#hooks-文件夹"><span class="post-toc-number">5.</span> <span class="post-toc-text">hooks 文件夹</span></a></li></ol>
         </nav>
     </aside>
 
@@ -288,6 +288,10 @@
 <p><code>commit</code> 对象中，<code>tree</code> 代表提交时所在的树，一个 <code>commit</code> 对象只会对应一棵树，<code>tree</code> 对象存储的只是当前 <code>commit</code> 时，所有文件目录的一个 “快照”，<code>tree</code> 对象中的 <code>tree</code> 对象代表该文件夹中还有文件夹，<code>tree</code> 中的 <code>blob</code> 对象代表文件，<code>blob</code> 对象中存储的是文件内容，<code>Git</code> 在这里存储时忽略文件名，只要文件内容一样就只会存储一份，大大的节约了存储空间。</p>
 <blockquote class="pullquote info"><p><code>blob</code> 对象是在将文件增加到暂存区后创建的，<code>commit</code> 和 <code>tree</code> 对象在进行提交操作后创建。</p>
 </blockquote>
+<h2 id="hooks-文件夹"><a href="#hooks-文件夹" class="headerlink" title="hooks 文件夹"></a>hooks 文件夹</h2><p><code>hooks</code> 文件夹，默认存储了一系列的 <code>hook</code> 文件，用于在执行某些特定的 <code>Git</code> 命令时，在某个声明周期执行，内部可以编写 <code>shell</code> 脚本，也可以通过 <code>hasky</code> 等 <code>npm</code> 包来介入。</p>
+<figure class="highlight bash"><figcaption><span>例如下面文件</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ...</span></span><br><span class="line">pre-commit.sample <span class="comment"># 提交前执行</span></span><br><span class="line">pre-push.sample <span class="comment"># 推送前执行</span></span><br><span class="line">pre-rebase.sample <span class="comment"># 变基前执行</span></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<blockquote class="pullquote danger"><p><em><strong>上面的文件默认扩展名为 <code>sample</code>，即默认不生效，要想在某个 <code>Git</code> 操作时可以执行对应的 <code>hook</code> 文件，只需要去掉对应 <code>hook</code> 文件的扩展名即可。</strong></em></p>
+</blockquote>
 
         </div>
 
@@ -310,7 +314,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-28T07:15:05.756Z" itemprop="dateUpdated">2019-03-28 15:15:05</time>
+    更新时间：<time datetime="2019-04-08T07:57:03.680Z" itemprop="dateUpdated">2019-04-08 15:57:03</time>
 </span><br>
 
 
