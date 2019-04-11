@@ -35,7 +35,7 @@
 <meta property="og:description" content="构造函数和实例化在 JavaScript 可以通过构造函数批量创建对象，这个创建的过程通过 new 关键字实现，也被称作实例化，对象被创建时会有默认的属性和原型方法。 12345678910111213function Person(name, age) &amp;#123;  this.name = name;  this.age = age;&amp;#125;Person.prototype.sayHi">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.pandashen.com/2017/05/22/20170522115959/new.jpg">
-<meta property="og:updated_time" content="2019-04-10T19:34:47.854Z">
+<meta property="og:updated_time" content="2019-04-11T08:08:52.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript 基础 —— new 的实现原理">
 <meta name="twitter:description" content="构造函数和实例化在 JavaScript 可以通过构造函数批量创建对象，这个创建的过程通过 new 关键字实现，也被称作实例化，对象被创建时会有默认的属性和原型方法。 12345678910111213function Person(name, age) &amp;#123;  this.name = name;  this.age = age;&amp;#125;Person.prototype.sayHi">
@@ -219,7 +219,7 @@
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <!-- <h4>TOC</h4> -->
             <h4>文章目录</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#构造函数和实例化"><span class="post-toc-number">1.</span> <span class="post-toc-text">构造函数和实例化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#new-的过程都做了什么"><span class="post-toc-number">2.</span> <span class="post-toc-text">new 的过程都做了什么</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#模拟构造函数的-new"><span class="post-toc-number">3.</span> <span class="post-toc-text">模拟构造函数的 new</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#构造函数和实例化"><span class="post-toc-number">1.</span> <span class="post-toc-text">构造函数和实例化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#new-的过程都做了什么"><span class="post-toc-number">2.</span> <span class="post-toc-text">new 的过程都做了什么</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#模拟-new-关键字"><span class="post-toc-number">3.</span> <span class="post-toc-text">模拟 new 关键字</span></a></li></ol>
         </nav>
     </aside>
 
@@ -257,7 +257,7 @@
 <li>执行构造函数，并将默认属性挂载到这个空对象上；</li>
 <li>判断构造函数的返回值，如果是对象则返回这个对象，否则返回新创建的对象。</li>
 </ul>
-<h2 id="模拟构造函数的-new"><a href="#模拟构造函数的-new" class="headerlink" title="模拟构造函数的 new"></a>模拟构造函数的 new</h2><p>清楚了构造函数实例化的过程，我们就来手动实现一个 <code>New</code> 函数，来替代关键字 <code>new</code>。</p>
+<h2 id="模拟-new-关键字"><a href="#模拟-new-关键字" class="headerlink" title="模拟 new 关键字"></a>模拟 new 关键字</h2><p>清楚了构造函数实例化的过程，我们就来手动实现一个 <code>New</code> 函数，来替代关键字 <code>new</code>。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// New 函数的第一个参数为构造函数，剩余的参数为实例化传入的参数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">New</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> Constructor = <span class="built_in">Array</span>.prototype.shift.call(<span class="built_in">arguments</span>);</span><br><span class="line">  <span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">  obj.__proto__ = Constructor.prototype;</span><br><span class="line">  <span class="keyword">var</span> result = Constructor.apply(obj, <span class="built_in">arguments</span>);</span><br><span class="line">  <span class="keyword">return</span> result <span class="keyword">instanceof</span> <span class="built_in">Object</span> ? result : obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight js"><figcaption><span>使用 New 创建实例</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> panda = New(Person, <span class="string">'panda'</span>, <span class="number">25</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(panda); <span class="comment">// Person &#123;name: "panda", age: 25&#125;</span></span><br><span class="line">panda.sayHi(); <span class="comment">// My name is panda, I'm 25 years old.</span></span><br></pre></td></tr></table></figure>
 <p>上面的方法已经实现了 <code>new</code> 关键字的功能，但是美中不足的是，不能将构造函数和实例化的参数区分清晰，下面稍微优化一下。</p>
@@ -286,7 +286,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-04-10T19:34:47.854Z" itemprop="dateUpdated">2019-04-11 03:34:47</time>
+    更新时间：<time datetime="2019-04-11T08:08:52.200Z" itemprop="dateUpdated">2019-04-11 16:08:52</time>
 </span><br>
 
 
@@ -379,9 +379,9 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2017/06/12/20170612130942/" id="post-prev" class="post-nav-link">
+      <a href="/2017/05/24/20170524162030/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">前端优化 —— 函数的节流和防抖</h4>
+        <h4 class="title">JavaScript 基础 —— call、apply 和 bind 的原理</h4>
       </a>
     </div>
   
