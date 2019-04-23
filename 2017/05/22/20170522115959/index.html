@@ -19,7 +19,7 @@
     
     
     
-    <title>JavaScript 基础 —— new 的实现原理 | Panda Shen&#39;s Blog</title>
+    <title>JavaScript 基础 —— new 的实现原理 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="JavaScript,面向对象">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript 基础 —— new 的实现原理">
-<meta property="og:url" content="https://www.pandashen.com/2017/05/22/20170522115959/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2017/05/22/20170522115959/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="构造函数和实例化在 JavaScript 可以通过构造函数批量创建对象，这个创建的过程通过 new 关键字实现，也被称作实例化，对象被创建时会有默认的属性和原型方法。 12345678910111213function Person(name, age) &amp;#123;  this.name = name;  this.age = age;&amp;#125;Person.prototype.sayHi">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2017/05/22/20170522115959/new.jpg">
+<meta property="og:image" content="https://www.overtaking.top/2017/05/22/20170522115959/new.jpg">
 <meta property="og:updated_time" content="2019-04-11T08:08:52.200Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript 基础 —— new 的实现原理">
 <meta name="twitter:description" content="构造函数和实例化在 JavaScript 可以通过构造函数批量创建对象，这个创建的过程通过 new 关键字实现，也被称作实例化，对象被创建时会有默认的属性和原型方法。 12345678910111213function Person(name, age) &amp;#123;  this.name = name;  this.age = age;&amp;#125;Person.prototype.sayHi">
-<meta name="twitter:image" content="https://www.pandashen.com/2017/05/22/20170522115959/new.jpg">
+<meta name="twitter:image" content="https://www.overtaking.top/2017/05/22/20170522115959/new.jpg">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -292,7 +292,7 @@
 
         
 <span class="permalink">
-    本文链接：<a href="/2017/05/22/20170522115959/" target="_blank" rel="external">https://www.pandashen.com/2017/05/22/20170522115959/</a>
+    本文链接：<a href="/2017/05/22/20170522115959/" target="_blank" rel="external">https://www.overtaking.top/2017/05/22/20170522115959/</a>
 </span><br>
 
 
@@ -305,7 +305,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -331,7 +331,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2017/05/22/20170522115959/&title=《JavaScript 基础 —— new 的实现原理》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2017/05/22/20170522115959/&title=《JavaScript 基础 —— new 的实现原理》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -341,22 +341,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2017/05/22/20170522115959/&title=《JavaScript 基础 —— new 的实现原理》 — Panda Shen's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2017/05/22/20170522115959/&title=《JavaScript 基础 —— new 的实现原理》 — Shen's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2017/05/22/20170522115959/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2017/05/22/20170522115959/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 基础 —— new 的实现原理》 — Panda Shen's Blog&url=https://www.pandashen.com/2017/05/22/20170522115959/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 基础 —— new 的实现原理》 — Shen's Blog&url=https://www.overtaking.top/2017/05/22/20170522115959/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2017/05/22/20170522115959/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2017/05/22/20170522115959/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -489,7 +489,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2017/05/22/20170522115959/&title=《JavaScript 基础 —— new 的实现原理》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2017/05/22/20170522115959/&title=《JavaScript 基础 —— new 的实现原理》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -499,22 +499,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2017/05/22/20170522115959/&title=《JavaScript 基础 —— new 的实现原理》 — Panda Shen's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2017/05/22/20170522115959/&title=《JavaScript 基础 —— new 的实现原理》 — Shen's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2017/05/22/20170522115959/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2017/05/22/20170522115959/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 基础 —— new 的实现原理》 — Panda Shen's Blog&url=https://www.pandashen.com/2017/05/22/20170522115959/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 基础 —— new 的实现原理》 — Shen's Blog&url=https://www.overtaking.top/2017/05/22/20170522115959/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2017/05/22/20170522115959/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2017/05/22/20170522115959/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -525,7 +525,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3ay27CMBAFUP7/p1OpKyRKuDNTELGPVyghxKeL6Tx8u8Xr+F2Pn++v3K/zbz4+9ezKPy8MDIzLMo7Tlbzg/NlnpHNMvjcMDIx9GEmQTbZ4Ho7zmJnvDQMDAyNJ8vIrefjGwMDAmDCSlDEJshgYGBhVRlLE9npceWn6oVocAwPjgozJYODdnz8038DAwPhixlFc+TCymghOFgYGxtqM6lGJfGxZLWsnwwMMDIy1GeeHKvL2fXUk2Stfn+4BAwNjA0ZvrNh7ZS+Iv3gXBgbG0oxJI76aSuYpY164YmBg7MPo9d7zzeVtuFEtjoGBsQ0j32K19dZrqDV/DQMDY1FGUqb2Usnkei/IYmBg7MyoYqovbuan1YCLgYGxBCMPgnlI7RWf+R/rj7sYGBhbMuZDzV652/sOBgbG2oxJ0lZNEyehudxuw8DAWI5Rbb73yt1qWlk+AoKBgbEoo9c+q4bCdww4R7EfAwPjUozzG5Mmfh5G88MWL0I/BgbGoow82M1DbaHRHwdiDAyM3RiTwUA1EOd3o1QSAwNjaUav3X/EawLoHdrAwMBYj3EU17yU7R22ePHPAAMDY2nGJKWbDDKrTyVIDAyMtRlJkK0eksgL4LxMjQpXDAyMpRnzgrYaZHtJ3ouAi4GBsT0jGUn2EsfqKAIDAwNjksBVefOwi4GBsQ+jV8RW56XzYvgt7TYMDIyvZ1QHA/mwM0/+qr/fG6liYGBckPEDI/0d8zZpFEQAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMUlEQVR42u3aS46jQBAFQN//0p51q2X6vazySBTBygsMDiwl+Xu94uP96/h0zu/zZ3d5fePAwMC4LeN9eeQ3+PSt5C7Jff94lBgYGA9gJAE0we8N08m3MDAwMJLPbZjOz8fAwMBYCbjRpS+DdXIdDAwMjLaIvQ6LbfC9vsIXa3EMDIwbMvKu+////JX5BgYGxq0Ys2Z92yZbaf1HvwoDA+NoRlugtsncyrCzXsvAwMA4mrG+bbVym3yQsHmvDQMD4yaMWRtr10/Mk8U/roaBgXE0o22ozQJ0mxTmI0wMDIwnMK5D5/Xl8gSuJeUPAgMD4wmMldb85qWuOMXcNsjEwMC4CWOlP7e39J2Bf7w3MDAwDmXMhpF5+74tSvPwHaWGGBgYRzBm7a18XSyfM7YP5eP/gIGBcRyjbeXvbZx9vRbHwMA4iJGEvLpNXw4Y2lAeTWIxMDCOYCTp2sraxHoCOtzvwMDAOIixHlhnqWQ+Oi3SRAwMjAcw8vFA227LA+5KLMXAwHgaI1+YaJt0eUuuLokxMDAewChCW1mmzs6s1zswMDAewGgbZG35OmvADd8bGBgYBzHe5ZEH05UFi/a+GBgYZzNml84XtvJyN3kz5GkrBgbGeYw2yM7Swfwpbt4cwcDAOIiRV72zAWQ7Ch3W4hgYGBhB2teOIWfDhg0BFwMD42hGO2hcqp7j5BUDA+MJjHaNNfmhyahgtiiGgYHxNMasdJylfW1jbm85jYGBcUPGPxMyS6kiZKQuAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

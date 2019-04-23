@@ -19,7 +19,7 @@
     
     
     
-    <title>HTTP 缓存的那些事儿 | Panda Shen&#39;s Blog</title>
+    <title>HTTP 缓存的那些事儿 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,28 +30,28 @@
 <meta name="keywords" content="性能优化,HTTP,NodeJS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTP 缓存的那些事儿">
-<meta property="og:url" content="https://www.pandashen.com/2018/07/20/20180720110647/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/07/20/20180720110647/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="前言HTTP 缓存机制作为 Web 应用性能优化的重要手段，对于从事 Web 开发的同学们来说，应该是知识体系的基础环节，也是想要成为前端架构的必备技能。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/20/20180720110647/caching.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/20/20180720110647/cache-rule.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/20/20180720110647/mandatory-cache.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/20/20180720110647/network-mandatory-response.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/20/20180720110647/network-mandatory-cache.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/20/20180720110647/compared-cache.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/20/20180720110647/cache-flow-chart.jpg">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/20/20180720110647/network-mandatory-request.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/20/20180720110647/network-mandatory-response-cache.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/20/20180720110647/network-compared-before-cache.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/20/20180720110647/network-compared-cache.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/20/20180720110647/caching.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/20/20180720110647/cache-rule.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/20/20180720110647/mandatory-cache.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/20/20180720110647/network-mandatory-response.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/20/20180720110647/network-mandatory-cache.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/20/20180720110647/compared-cache.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/20/20180720110647/cache-flow-chart.jpg">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/20/20180720110647/network-mandatory-request.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/20/20180720110647/network-mandatory-response-cache.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/20/20180720110647/network-compared-before-cache.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/20/20180720110647/network-compared-cache.png">
 <meta property="og:updated_time" content="2019-03-28T06:56:02.311Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP 缓存的那些事儿">
 <meta name="twitter:description" content="前言HTTP 缓存机制作为 Web 应用性能优化的重要手段，对于从事 Web 开发的同学们来说，应该是知识体系的基础环节，也是想要成为前端架构的必备技能。">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/07/20/20180720110647/caching.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/07/20/20180720110647/caching.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -434,7 +434,7 @@
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/07/20/20180720110647/" target="_blank" rel="external">https://www.pandashen.com/2018/07/20/20180720110647/</a>
+    本文链接：<a href="/2018/07/20/20180720110647/" target="_blank" rel="external">https://www.overtaking.top/2018/07/20/20180720110647/</a>
 </span><br>
 
 
@@ -447,7 +447,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -473,7 +473,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/07/20/20180720110647/&title=《HTTP 缓存的那些事儿》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/07/20/20180720110647/&title=《HTTP 缓存的那些事儿》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -483,24 +483,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/07/20/20180720110647/&title=《HTTP 缓存的那些事儿》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/07/20/20180720110647/&title=《HTTP 缓存的那些事儿》 — Shen's Blog&source=
 
 前言HTTP 缓存机制作为 Web 应用性能优化的重要手段，对于从事 Web 开发的同学们来说，应该是知识体系的基础环节，也是想要成为前端架构的必备技..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/07/20/20180720110647/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/07/20/20180720110647/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《HTTP 缓存的那些事儿》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/07/20/20180720110647/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《HTTP 缓存的那些事儿》 — Shen's Blog&url=https://www.overtaking.top/2018/07/20/20180720110647/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/07/20/20180720110647/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/07/20/20180720110647/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -633,7 +633,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/07/20/20180720110647/&title=《HTTP 缓存的那些事儿》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/07/20/20180720110647/&title=《HTTP 缓存的那些事儿》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -643,24 +643,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/07/20/20180720110647/&title=《HTTP 缓存的那些事儿》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/07/20/20180720110647/&title=《HTTP 缓存的那些事儿》 — Shen's Blog&source=
 
 前言HTTP 缓存机制作为 Web 应用性能优化的重要手段，对于从事 Web 开发的同学们来说，应该是知识体系的基础环节，也是想要成为前端架构的必备技..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/07/20/20180720110647/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/07/20/20180720110647/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《HTTP 缓存的那些事儿》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/07/20/20180720110647/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《HTTP 缓存的那些事儿》 — Shen's Blog&url=https://www.overtaking.top/2018/07/20/20180720110647/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/07/20/20180720110647/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/07/20/20180720110647/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -671,7 +671,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIklEQVR42u3aQW7DMAwEwPz/0+61gGt3SSYtLI1ORuBEGh0YktLrFY/j2zh/fn7n/Pn5+er3r955w8DAwHgs47gdyXLvecks1bl+oGJgYGzAuIpg+Tv5t+5DeW9eDAwMjKsg2AupeWqIgYGBUWXcLz0JlzkJAwMDo1fEVgvOBPwPtTgGBsYDGXnX/e+fP3K+gYGB8SjGURyTIjZK73qrwsDAWJrRO8LMDwbykjhPKC/nwsDA2IaRl53zY848ZEfX1DAwMDZgVEvZXhj9RBsOAwNjbUa+iMmFjDzdbLb+MTAwlmZUA2W1xJ1s4ugkFgMDYyFGMn011OahfBJFoyViYGAswUia78niqpfD8oBb2D4MDIxFGb2rFXno7F3XKM+LgYGxNKMX+ObHlnnrrZABYmBgbMkodOyKS6luWVT0YmBgLMr4YPgb98EKbUEMDIyNGdUrpAm+2oyLZsfAwNiMkV/zSkrTyUWK/FsYGBhrM+ZhsdqGy1PGfFsxMDD2YeQ/WujkDbamepiKgYGxA6PaAuuljNVSuVDiYmBgLM3oJWr5FYpqcdsL2RgYGKsyjuLoJXzzrfkl9GNgYCzN6JWg1RZb75gzeS7DMDAwHsuYFJz5hYnqAUOy3xgYGLsx8vbW5P1Juy3KczEwMDCKF8Wqbf1qEomBgYHx3gCaJ3mjOhsDA2NpRrWI7RWlSaOt9weAgYGxNuO9QbmX/E3SUAwMjKUZX1qjjnT7VyoLAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIUlEQVR42u3aQW7EIAwF0Ln/pVOpq24y/d+klQYeq5FKIC8L19i8XvG4vkc+5/ox2l3ap14YGBgHMK63446RzM/XST7H3ZoYGBjnMGYBNH/2/e/k2V/2xcDAwIgDbo5P5mNgYGDMAm6bDs5SQAwMDIxnQ2dbmHtfYvvzszgGBsYHMtrGwH/+/sP+BgYGxocwrnLkR9PZvsO3wsDA2JrRpnd5GteG1/UCHAYGxq6MpwptKxe8VhqlGBgYJzDa4nteyl//a/2BMDAwtmasH02TQNy+blvsw8DA2JUxW2iWmyUfKElAb6uGGBgYWzOSqUX1rnyhlnQbcDEwMDZl5FvmmyXJX9GYfHucxsDAOI0xC4Kz5G+lRYGBgXEyI0nd8hJbUed76NoHBgbGroz1K1zrZf32Elj9HwMDA+PDGSsPz46gs9LeMDXEwMDYgpE3JvO24iseK+G+vmyBgYHxsYz2wtastZm3HGaHZAwMjBMYz6Z6eeNzJTRjYGCcw5iFzvwV8xVWgjUGBsYJjKeSv5XPNJtzexbHwMDYiDELo22Uy8t2K0U6DAyMXRlXOdYDbp5QJk0IDAyMExizMJdfwlhZs25hYmBgbM1og2ye5M2uZeQrY2BgnMbIG4dJEGwD9GONTAwMjOMZycb54TOZWYR4DAwMjPh3W3rLQ23dwsTAwNiO0TYg25RxdsEiD+gYGBh7M1YaA23alxfv6nIbBgbGnowvOxsZBuFT+TwAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 

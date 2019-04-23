@@ -19,7 +19,7 @@
     
     
     
-    <title>Canvas + WebSocket + Redis 实现一个视频弹幕 | Panda Shen&#39;s Blog</title>
+    <title>Canvas + WebSocket + Redis 实现一个视频弹幕 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,19 +30,19 @@
 <meta name="keywords" content="JavaScript,HTML,CSS,Canvas,WebSocket,Redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Canvas + WebSocket + Redis 实现一个视频弹幕">
-<meta property="og:url" content="https://www.pandashen.com/2018/06/21/20180621113025/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/06/21/20180621113025/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="页面布局首先，我们需要实现页面布局，在根目录创建 index.html 布局中我们需要有一个 video 多媒体标签引入我们的本地视频，添加输入弹幕的输入框、确认发送的按钮、颜色选择器、字体大小滑动条，创建一个 style.css 来调整页面布局的样式，这里我们顺便创建一个 index.js 文件用于后续实现我们的核心逻辑，先引入到页面当中。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/06/21/20180621113025/barrage.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/06/21/20180621113025/barrage-html.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/06/21/20180621113025/barrage.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/06/21/20180621113025/barrage-html.png">
 <meta property="og:updated_time" content="2019-03-28T06:54:48.815Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Canvas + WebSocket + Redis 实现一个视频弹幕">
 <meta name="twitter:description" content="页面布局首先，我们需要实现页面布局，在根目录创建 index.html 布局中我们需要有一个 video 多媒体标签引入我们的本地视频，添加输入弹幕的输入框、确认发送的按钮、颜色选择器、字体大小滑动条，创建一个 style.css 来调整页面布局的样式，这里我们顺便创建一个 index.js 文件用于后续实现我们的核心逻辑，先引入到页面当中。">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/06/21/20180621113025/barrage.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/06/21/20180621113025/barrage.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -379,7 +379,7 @@
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/06/21/20180621113025/" target="_blank" rel="external">https://www.pandashen.com/2018/06/21/20180621113025/</a>
+    本文链接：<a href="/2018/06/21/20180621113025/" target="_blank" rel="external">https://www.overtaking.top/2018/06/21/20180621113025/</a>
 </span><br>
 
 
@@ -392,7 +392,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -418,7 +418,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/06/21/20180621113025/&title=《Canvas + WebSocket + Redis 实现一个视频弹幕》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/06/21/20180621113025/&title=《Canvas + WebSocket + Redis 实现一个视频弹幕》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -428,24 +428,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/06/21/20180621113025/&title=《Canvas + WebSocket + Redis 实现一个视频弹幕》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/06/21/20180621113025/&title=《Canvas + WebSocket + Redis 实现一个视频弹幕》 — Shen's Blog&source=
 
 页面布局首先，我们需要实现页面布局，在根目录创建 index.html 布局中我们需要有一个 video 多媒体标签引入我们的本地视频，添加输入弹幕的..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/06/21/20180621113025/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/06/21/20180621113025/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Canvas + WebSocket + Redis 实现一个视频弹幕》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/06/21/20180621113025/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Canvas + WebSocket + Redis 实现一个视频弹幕》 — Shen's Blog&url=https://www.overtaking.top/2018/06/21/20180621113025/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/06/21/20180621113025/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/06/21/20180621113025/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -578,7 +578,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/06/21/20180621113025/&title=《Canvas + WebSocket + Redis 实现一个视频弹幕》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/06/21/20180621113025/&title=《Canvas + WebSocket + Redis 实现一个视频弹幕》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -588,24 +588,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/06/21/20180621113025/&title=《Canvas + WebSocket + Redis 实现一个视频弹幕》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/06/21/20180621113025/&title=《Canvas + WebSocket + Redis 实现一个视频弹幕》 — Shen's Blog&source=
 
 页面布局首先，我们需要实现页面布局，在根目录创建 index.html 布局中我们需要有一个 video 多媒体标签引入我们的本地视频，添加输入弹幕的..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/06/21/20180621113025/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/06/21/20180621113025/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Canvas + WebSocket + Redis 实现一个视频弹幕》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/06/21/20180621113025/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Canvas + WebSocket + Redis 实现一个视频弹幕》 — Shen's Blog&url=https://www.overtaking.top/2018/06/21/20180621113025/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/06/21/20180621113025/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/06/21/20180621113025/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -616,7 +616,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3aS47CMBBFUfa/6bTECKkTc1/Z0J3y9QihEHIYFPV7PPA5nuf19es7V+9fXTO+/venlh0ZMmTclnEMz9U1/LNj0hjP7y9DhowdGDzIkjA6DsRpCB5/SoYMGTJ4uCRBtgaTIUOGjPR2/PW4HJUhQ4aMlEGKWNJESxttf1CLy5Ah44aM2mDgO68/Pt+QIUPGv2cc4eF3SBPBmSNDhozeDD5KnAm+vMVGQm2Q4cqQIaMRo9b65w21VeVrsXcoQ4aMRoxa7Eq/krNnvkuGDBn9GDzw1dI+/tOkZS2K7jJkyGjBSB+dL4SlKxeLi1gZMmS0YKQP9J2cNL6bDBkytmSMSTyx46UvH3OePI8MGTJaM2rt+1pLjo9F03AsQ4aMHRjpChcvffmDpksbCC9Dhox2DL5OMdM+q7XqgtJahgwZTRkzaR8vdGsrF8G6mAwZMpoyeJtsfjmDN9340FSGDBn7MFYlf3zoOD/gzOcGMmTIuCuDt/Jrw85az684UpUhQ0ZTRroYMTNu5GklD8QyZMiQkSZzKS9t8L1pt8mQIaMpI23fH+GpFcZpEJchQ0ZvRu2x0lSPt97S9PTkf0OGDBntGPyk6xE1cG2xTIYMGTswZgpXXnymPL6WIUOGjH0YfKmC7znUAjEvYk8CrgwZMrZn8HEjb/GvCtMyZMiQkY4tx++nAPRjyZAhYwMGL2Lnk8K1owUZMmTswEgHAyS9q61/1VqBMmTIaM34AcfbesBODs8lAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNElEQVR42u3aS27DMAxF0ex/0+k0g0C5j5QLiLoeFa1r66QAy9/rha/3x7W+h99fe0vrkiFDxrGM9/Ja37M+BHlC7b1fqDJkyLiAQQIoiXL8pyRMk9+SIUOGjPQekiCS8CpDhgwZuxjpc8jTZMiQIaNTxO4qR9fHfbwWlyFDxoEM3nX//68fmW/IkCHjKEYtdJJRwTpokjI4OJUMGTJGM9IClRyOjAF4mhisZciQIWM0o79t1XkNHyRs22uTIUPGgQwSBPkYoHZEHsp//N+QIUPGOEZxWAi+zw9NSD/ulCFDxmgGb42RdC14JQ61fKVMhgwZsxm1Bn064OzU1nFbTYYMGYMY/HFx4CuljGkZ/CXDlSFDxjjG3kYYL1k7DNQ1lCFDxiBGrb1FWmbpEzgV/R1kyJAxlEGCKT96upyxoYiVIUPGaAYvF0lSyJtx/KMsLlvIkCFjECNdj+BrW/0ENIjHMmTIGMpIh5qklZYmlDzg1safMmTImMRIly3SxhkJuOnZZMiQcQ8jXblIh5fpB1FLQGXIkHEDo5/8dQra9UeJljZkyJBxASNN5tKx5a6hZvB/Q4YMGSMY/TL1uYMWk0IZMmSMY9QezXtcvNzlW148oZQhQ8YkRq3dn5aytZKVvFeGDBn3MNJlizTs8vWyWuiXIUOGDPIanjjyNwZnkCFDhgyc8AXJXKMBtyE1lCFDxoEMPoDkSdve0cK2dpsMGTIOZNRWHNJRQa0xl4Z+GTJkjGP8AZdJS6mM/lojAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

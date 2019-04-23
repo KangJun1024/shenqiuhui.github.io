@@ -19,7 +19,7 @@
     
     
     
-    <title>NodeJS —— 流的原理分析与简易实现 | Panda Shen&#39;s Blog</title>
+    <title>NodeJS —— 流的原理分析与简易实现 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="NodeJS,源码分析,Stream">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NodeJS —— 流的原理分析与简易实现">
-<meta property="og:url" content="https://www.pandashen.com/2018/07/04/20180704175217/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/07/04/20180704175217/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="前言在之前的博客中已经了解了流的基本用法，这篇的重点在于根据可读流的用法对可读流的原理进行分析，实现简易版的 ReadStream，流的基本用法请看这里 NodeJS —— Stream 的基本使用。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/04/20180704175217/stream.png">
-<meta property="og:updated_time" content="2019-03-04T17:43:20.002Z">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/04/20180704175217/stream.png">
+<meta property="og:updated_time" content="2019-04-23T03:13:59.836Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJS —— 流的原理分析与简易实现">
 <meta name="twitter:description" content="前言在之前的博客中已经了解了流的基本用法，这篇的重点在于根据可读流的用法对可读流的原理进行分析，实现简易版的 ReadStream，流的基本用法请看这里 NodeJS —— Stream 的基本使用。">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/07/04/20180704175217/stream.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/07/04/20180704175217/stream.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -248,7 +248,7 @@
         <div class="post-content" id="post-content" itemprop="postContent">
             <img src="/2018/07/04/20180704175217/stream.png" title="流的实现原理">
 <p><br></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote class="pullquote warning"><p>在之前的博客中已经了解了流的基本用法，这篇的重点在于根据可读流的用法对可读流的原理进行分析，实现简易版的 <code>ReadStream</code>，流的基本用法请看这里 <a href="http://www.pandashen.com/2018/07/03/20180703231032/" target="_blank">NodeJS —— Stream 的基本使用</a>。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote class="pullquote warning"><p>在之前的博客中已经了解了流的基本用法，这篇的重点在于根据可读流的用法对可读流的原理进行分析，实现简易版的 <code>ReadStream</code>，流的基本用法请看这里 <a href="http://www.overtaking.top/2018/07/03/20180703231032/" target="_blank">NodeJS —— Stream 的基本使用</a>。</p>
 </blockquote>
 <a id="more"></a>
 <h2 id="可读流的实现（流动模式）"><a href="#可读流的实现（流动模式）" class="headerlink" title="可读流的实现（流动模式）"></a>可读流的实现（流动模式）</h2><h3 id="ReadStream-类创建"><a href="#ReadStream-类创建" class="headerlink" title="ReadStream 类创建"></a>ReadStream 类创建</h3><p>在使用 <code>fs</code> 的 <code>createReadStream</code> 创建可读流时，返回了 <code>ReadStream</code> 对象，上面存在着一些事件和方法，其实我们在创建这个可读流的时候创建了某一个类的实例，这个实例可以调用类原型上的方法，我们这里将这个类命名为 <code>ReadStream</code>。</p>
@@ -379,13 +379,13 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-04T17:43:20.002Z" itemprop="dateUpdated">2019-03-05 01:43:20</time>
+    更新时间：<time datetime="2019-04-23T03:13:59.836Z" itemprop="dateUpdated">2019-04-23 11:13:59</time>
 </span><br>
 
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/07/04/20180704175217/" target="_blank" rel="external">https://www.pandashen.com/2018/07/04/20180704175217/</a>
+    本文链接：<a href="/2018/07/04/20180704175217/" target="_blank" rel="external">https://www.overtaking.top/2018/07/04/20180704175217/</a>
 </span><br>
 
 
@@ -398,7 +398,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -424,7 +424,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/07/04/20180704175217/&title=《NodeJS —— 流的原理分析与简易实现》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/07/04/20180704175217/&title=《NodeJS —— 流的原理分析与简易实现》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -434,24 +434,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/07/04/20180704175217/&title=《NodeJS —— 流的原理分析与简易实现》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/07/04/20180704175217/&title=《NodeJS —— 流的原理分析与简易实现》 — Shen's Blog&source=
 
 前言在之前的博客中已经了解了流的基本用法，这篇的重点在于根据可读流的用法对可读流的原理进行分析，实现简易版的 ReadStream，流的基本用法请看这..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/07/04/20180704175217/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/07/04/20180704175217/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS —— 流的原理分析与简易实现》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/07/04/20180704175217/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS —— 流的原理分析与简易实现》 — Shen's Blog&url=https://www.overtaking.top/2018/07/04/20180704175217/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/07/04/20180704175217/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/07/04/20180704175217/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -584,7 +584,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/07/04/20180704175217/&title=《NodeJS —— 流的原理分析与简易实现》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/07/04/20180704175217/&title=《NodeJS —— 流的原理分析与简易实现》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -594,24 +594,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/07/04/20180704175217/&title=《NodeJS —— 流的原理分析与简易实现》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/07/04/20180704175217/&title=《NodeJS —— 流的原理分析与简易实现》 — Shen's Blog&source=
 
 前言在之前的博客中已经了解了流的基本用法，这篇的重点在于根据可读流的用法对可读流的原理进行分析，实现简易版的 ReadStream，流的基本用法请看这..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/07/04/20180704175217/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/07/04/20180704175217/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS —— 流的原理分析与简易实现》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/07/04/20180704175217/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS —— 流的原理分析与简易实现》 — Shen's Blog&url=https://www.overtaking.top/2018/07/04/20180704175217/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/07/04/20180704175217/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/07/04/20180704175217/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -622,7 +622,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACHklEQVR42u3aS07DQBAFQO5/6bBFQjHv9QwIj8urKCL2lJFa/fv4iK/Xt+vr9+3f5PfffGFgYNyW8bq8kuN+f/C7b1pqcjYMDIznMN5FsPxzHl7f8doAjYGBgZEEwTxwX5OSQIyBgYGRMNoQfE29JmFgYGDMithZu+36RcwKZgwMjKcx8q7733/+lfkGBgbGrRiv8pr9aqVIju6MgYFxNGM2wkxGlbOSuC16MTAwnslo2/Qr1HYh44c7YGBgHM2I2u7xeCAfJ+xqw2FgYDyH0SZn6w39JOAO+4IYGBgHMfJI3IbRXU8vGm0YGBhHM5Ilifa4u9jRbzEwMI5m7D1ckt4t1dbXrxUDA+NQxkqDLE8o24FlXiRHHTsMDIybM2aBrw2LSRraLm1gYGBgtKsP7VHaVxYlrxgYGIcy1gvO2TpF20rDwMDAaNcsVpLI9sVFT8fAwHgAIw+js+JztkhRDB4wMDCOZrTLDfkj85ZcHtCLtiAGBsZxjNmSVt6Gyw/dlrgYGBgYyYrDSmievYhhwMXAwLg5Y2/7LCl96ynrSvmKgYFxc8YsIO46aNtQi/4DGBgYxzHyKxk6tuljm4wWXUMMDIzjGHmQXVkIWxltRqkqBgbGAxhte6tdnmjTyryQxsDAwJilhkmCuJ5EYmBgYMzaajm4Hk9iYGA8nrFSxLYDgJVBwi+22zAwMP4xY29QniV/ScG8YaiJgYFxP8Ynow7WLDUeLgMAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJElEQVR42u3aS3LCQAwFQO5/abLNIsCTNKTKcntFUWY87YXQZx6P+Hr+ut7fk9/fe8rowsDAuCzj+fZ6dU+yiWSF6nNf7gEDA+MGjCSA5pur4pMX8WHPGBgYGINN5DwMDAyMs4woXXv727wYxsDAwMiL2FPl6HxNDAyMuzHyrvv/f/7KfAMDA+NSjGfx6rXJeu22wq4wMDBWM/IAlw818zHnJOBiYGDch1H9Qf6wvNTMBwnREhgYGKsZ1ZbWqS1WW28fAi4GBsZSRi9RqyZ/vXI3eQoGBsZuxmQAkCdwVVL+IjAwMO7GmB+SmAfrSRqKgYGxlZEvlw8Geg24/Ps/XhMGBsZqxjdSusmd1VQVAwPjDox8GNA7LpaskATWDyEeAwNjNaPays9Dc3UgeqAWx8DAWM1I2mRJM66a3k1C+Yewi4GBsY5RPR4xL1x7BzWO/W9gYGBcitFrnCUtsHlhXBghYGBgrGYkiVd1o3kI7hWx5XNtGBgYKxiTpC0P0NXwmhw1ezmJxcDAWMqoNvfzMrXZ/4sLbAwMjLsxoiyyNbY8NdSMAi4GBsYixiR1y9ttvY0WgjgGBsZqxmTpvNHWG2Qmnw9MazEwMC7CqG4xGSHkQ4LekQsMDIx7MgpVb/xNtZ3XOwOGgYGBMWnuJyvPU0kMDAyMU/XxqQbcsdQQAwPjgox8AFkNkdXjX73jHRgYGLsZvSMOvbRvMlQ4MMjEwMC4HuMHgCOyUHOc6uMAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 

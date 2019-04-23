@@ -19,7 +19,7 @@
     
     
     
-    <title>Webpack —— tree-staking 解析 | Panda Shen&#39;s Blog</title>
+    <title>Webpack —— tree-staking 解析 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,20 +30,20 @@
 <meta name="keywords" content="NodeJS,源码分析,Babel,Webpack,AST,tree-staking">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Webpack —— tree-staking 解析">
-<meta property="og:url" content="https://www.pandashen.com/2018/07/26/20180726122146/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/07/26/20180726122146/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="tree-shaking 简介tree-shaking 是 Webpack 2 后续版本的优化功能，顾名思义，就是将多余的代码给 “摇晃” 掉，在开发中我们经常使用一些第三方库，而这些第三方库只使用了这个库的一部门功能或代码，未使用的代码也要被打包进来，这样出口文件会非常大，tree-shaking 帮我们解决了这个问题，它可以将各个模块中没有使用的方法过滤掉，只对有效代码进行打包。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/26/20180726122146/ast-tree-shaking.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/26/20180726122146/before-babel-plugin.jpg">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/26/20180726122146/after-babel-plugin.jpg">
-<meta property="og:updated_time" content="2019-03-28T06:57:55.200Z">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/26/20180726122146/ast-tree-shaking.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/26/20180726122146/before-babel-plugin.jpg">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/26/20180726122146/after-babel-plugin.jpg">
+<meta property="og:updated_time" content="2019-04-23T03:20:30.178Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Webpack —— tree-staking 解析">
 <meta name="twitter:description" content="tree-shaking 简介tree-shaking 是 Webpack 2 后续版本的优化功能，顾名思义，就是将多余的代码给 “摇晃” 掉，在开发中我们经常使用一些第三方库，而这些第三方库只使用了这个库的一部门功能或代码，未使用的代码也要被打包进来，这样出口文件会非常大，tree-shaking 帮我们解决了这个问题，它可以将各个模块中没有使用的方法过滤掉，只对有效代码进行打包。">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/07/26/20180726122146/ast-tree-shaking.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/07/26/20180726122146/ast-tree-shaking.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -258,7 +258,7 @@
 <p>这样引用资源， Webpack 在打包的时候会找到 <code>element-ui</code> 并把里面所有的代码全部打包到出口文件，我们只使用了两个组件，全部打包不是我们所希望的，<code>tree-shaking</code> 是通过在 Webpack 中配置 <code>babel-plugin-import</code> 插件来实现的，它可以将解构的代码转换成下面的形式。</p>
 <figure class="highlight js"><figcaption><span>优化后</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Button <span class="keyword">from</span> <span class="string">'element-ui/lib/button'</span>;</span><br><span class="line"><span class="keyword">import</span> Alert <span class="keyword">from</span> <span class="string">'element-ui/lib/Alert'</span>;</span><br></pre></td></tr></table></figure>
 <p>转化后会去 <code>node_modules</code> 中的 <code>element-ui</code> 模块找到 <code>Button</code> 和 <code>Alert</code> 两个组件对应的文件，并打包到出口文件中。</p>
-<p>通过上面的转换可以看出，其实 <code>tree-shaking</code> 的实现原理是通过改变 AST 语法树的结构来实现的，如果不了解抽象语法树可以参考 <a href="https://www.pandashen.com/2018/07/25/20180725130233/" target="_blank">AST 抽象语法树</a>，我们可以通过在线转换网站 <a href="http://esprima.org/demo/parse.html" target="_blank">http://esprima.org/demo/parse.html</a> 将 JS 代码装换成 AST 语法树。</p>
+<p>通过上面的转换可以看出，其实 <code>tree-shaking</code> 的实现原理是通过改变 AST 语法树的结构来实现的，如果不了解抽象语法树可以参考 <a href="https://www.overtaking.top/2018/07/25/20180725130233/" target="_blank">AST 抽象语法树</a>，我们可以通过在线转换网站 <a href="http://esprima.org/demo/parse.html" target="_blank">http://esprima.org/demo/parse.html</a> 将 JS 代码装换成 AST 语法树。</p>
 <figure class="highlight json"><figcaption><span>优化前的 AST 语法树</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"type"</span>: <span class="string">"Program"</span>,</span><br><span class="line">  <span class="attr">"body"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"ImportDeclaration"</span>,</span><br><span class="line">      <span class="attr">"specifiers"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">"type"</span>: <span class="string">"ImportSpecifier"</span>,</span><br><span class="line">          <span class="attr">"local"</span>: &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"Identifier"</span>,</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"Button"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">"imported"</span>: &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"Identifier"</span>,</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"Button"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">"type"</span>: <span class="string">"ImportSpecifier"</span>,</span><br><span class="line">          <span class="attr">"local"</span>: &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"Identifier"</span>,</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"Alert"</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">"imported"</span>: &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"Identifier"</span>,</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"Alert"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"source"</span>: &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"Literal"</span>,</span><br><span class="line">        <span class="attr">"value"</span>: <span class="string">"element-ui"</span>,</span><br><span class="line">        <span class="attr">"raw"</span>: <span class="string">"\"element-ui\""</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"sourceType"</span>: <span class="string">"module"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight json"><figcaption><span>优化后的 AST 语法树</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"type"</span>: <span class="string">"Program"</span>,</span><br><span class="line">  <span class="attr">"body"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"ImportDeclaration"</span>,</span><br><span class="line">      <span class="attr">"specifiers"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">"type"</span>: <span class="string">"ImportDefaultSpecifier"</span>,</span><br><span class="line">          <span class="attr">"local"</span>: &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"Identifier"</span>,</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"Button"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"source"</span>: &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"Literal"</span>,</span><br><span class="line">        <span class="attr">"value"</span>: <span class="string">"element-ui/lib/button"</span>,</span><br><span class="line">        <span class="attr">"raw"</span>: <span class="string">"\"element-ui/lib/button\""</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"ImportDeclaration"</span>,</span><br><span class="line">      <span class="attr">"specifiers"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">"type"</span>: <span class="string">"ImportDefaultSpecifier"</span>,</span><br><span class="line">          <span class="attr">"local"</span>: &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"Identifier"</span>,</span><br><span class="line">            <span class="attr">"name"</span>: <span class="string">"Alert"</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"source"</span>: &#123;</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"Literal"</span>,</span><br><span class="line">        <span class="attr">"value"</span>: <span class="string">"element-ui/lib/Alert"</span>,</span><br><span class="line">        <span class="attr">"raw"</span>: <span class="string">"\"element-ui/lib/Alert\""</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"sourceType"</span>: <span class="string">"module"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>从上面的语法树对比，可以看出在优化前 <code>body</code> 里面只有一个对象，使用的组件信息存在 <code>specifiers</code> 里，<code>source</code> 指向了 <code>element-ui</code>，而在优化后，将两个组件分别拆成了两个对象存在 <code>body</code> 中，每个对象的的 <code>specifiers</code> 只存储一个组件，并在 <code>source</code> 里面指向了当前组件对应的路径。</p>
@@ -325,13 +325,13 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-28T06:57:55.200Z" itemprop="dateUpdated">2019-03-28 14:57:55</time>
+    更新时间：<time datetime="2019-04-23T03:20:30.178Z" itemprop="dateUpdated">2019-04-23 11:20:30</time>
 </span><br>
 
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/07/26/20180726122146/" target="_blank" rel="external">https://www.pandashen.com/2018/07/26/20180726122146/</a>
+    本文链接：<a href="/2018/07/26/20180726122146/" target="_blank" rel="external">https://www.overtaking.top/2018/07/26/20180726122146/</a>
 </span><br>
 
 
@@ -344,7 +344,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -370,7 +370,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/07/26/20180726122146/&title=《Webpack —— tree-staking 解析》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/07/26/20180726122146/&title=《Webpack —— tree-staking 解析》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -380,24 +380,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/07/26/20180726122146/&title=《Webpack —— tree-staking 解析》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/07/26/20180726122146/&title=《Webpack —— tree-staking 解析》 — Shen's Blog&source=
 
 tree-shaking 简介tree-shaking 是 Webpack 2 后续版本的优化功能，顾名思义，就是将多余的代码给 “摇晃” 掉，在开发..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/07/26/20180726122146/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/07/26/20180726122146/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Webpack —— tree-staking 解析》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/07/26/20180726122146/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Webpack —— tree-staking 解析》 — Shen's Blog&url=https://www.overtaking.top/2018/07/26/20180726122146/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/07/26/20180726122146/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/07/26/20180726122146/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -530,7 +530,7 @@ tree-shaking 简介tree-shaking 是 Webpack 2 后续版本的优化功能，顾�
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/07/26/20180726122146/&title=《Webpack —— tree-staking 解析》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/07/26/20180726122146/&title=《Webpack —— tree-staking 解析》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -540,24 +540,24 @@ tree-shaking 简介tree-shaking 是 Webpack 2 后续版本的优化功能，顾�
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/07/26/20180726122146/&title=《Webpack —— tree-staking 解析》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/07/26/20180726122146/&title=《Webpack —— tree-staking 解析》 — Shen's Blog&source=
 
 tree-shaking 简介tree-shaking 是 Webpack 2 后续版本的优化功能，顾名思义，就是将多余的代码给 “摇晃” 掉，在开发..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/07/26/20180726122146/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/07/26/20180726122146/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Webpack —— tree-staking 解析》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/07/26/20180726122146/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Webpack —— tree-staking 解析》 — Shen's Blog&url=https://www.overtaking.top/2018/07/26/20180726122146/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/07/26/20180726122146/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/07/26/20180726122146/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -568,7 +568,7 @@ tree-shaking 简介tree-shaking 是 Webpack 2 后续版本的优化功能，顾�
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACHUlEQVR42u3aQXLDIAwF0Nz/0ukFGvyF4sxYPFaZ1jY8Fhoh8XrF4/1hJM9/+u+n3+svtwYGBsZjGe/lWE+QT5x8fw272EQMDIwDGHlYXL+bvLXeiL15MTAwMDY/vVxoHugxMDAwOgG3+lZ+AMbAwMDYO8R2ynD5Mfj2szgGBsYDGZ0wevfvW/obGBgYj2K8i2MNy9sJX14VBgbGaEanfJ+E5oS93ojCejAwMIYy8gNkv9yfJ53r4P7PXzAwMEYzquX7PEFMtqkafC/AGBgYBzCqgbXasMyD72YDAAMDYzRjD9YJuEl5Li/zYWBgzGZUL2DtBcR+w+BinRgYGKMZnYsOedCsvrVJwsDAGMpIQucdCeJe0P/4TQwMjNGMatuyejkjL6VFTcr1CjEwMI5h9Mv6nVSv8wwGBsZURjUp7KeP1RFtEwYGxmhGpwTWaUDuXd24iLEYGBhDGXnyl0+cLL0agi9aCxgYGKMZ1YBbjeXVVLL1ZQwMjCMZ/QJcPkueRF7cGcHAwDiS0Sm67R1r9650YGBgnMDoB99qwM2TzgSGgYExldFpKOYH4OolszIVAwNjNKNT8Ko2Br71fJJQYmBgzGMkQbZ/bSK/VLFXzsPAwDiB0Sp1bW1Hp8GAgYGBkado+fGyegnjRwEXAwNjNKOa3uUt0r3kFQMD4wRGktJ1jqnVNsON5TYMDIwHMn5fy9oL6F9oamJgYDyP8Qe1tSy618wJkwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3awY7CMAxF0f7/TwdpViwg3OeUkbBvVmhoG04XHsf2deG1/ha/Zj2tdJf0rkuGDBkDGGu73jHI9fw55HW8e6YMGTLmMGoBlN+7/0zu/bCvDBkyZGwDLv8LCccyZMiQcR5w99fz0FxLJWXIkDGZwQ+l/MfVCnNfP4vLkCHjBxlpY+A/P3+xvyFDhowfYaxw8btq+xZ/lQwZMloz0vSOH2LT8HpegJMhQ0ZvRq3Qtn9cGnxrjVIZMmTMYZD2ZMpLy3YcH4yFyZAhowWDj0rwR58MmRWLfTJkyBjAqBXITg63/MWhkTIZMmQMYJwER74ZTzTTERAZMmT0ZvDGAHlQDZ+C0VFWhgwZAxjpZmnyR6r68WuSIUPGAAZJ3c6/JWW74tiHDBkymjLSUJgmcGnQJAEatTBlyJAxjJGOVnAGL6t9eAUyZMhozeCJHS+08cXLdigcy5AhozWDF79qzYA0KJ+koTJkyOjKqDUAamllLUCj5qgMGTKaMoKhK1z8SotlJ+0HGTJkzGHcXPYKi3Rp+vjiShkyZLRmBG1CnPDxtPLeIp0MGTK6Mla4Toa3eImfhPsX/zdkyJDRlFELcyQ014LpzS1MGTJkNGKkQTa9Mm0SpAdaGTJkzGGk9XY+znVXOxM1MmXIkDGewTcmYZQcU4NSnQwZMmTcmszVxsLiFqYMGTLaMdIGZFoaS9sGvHUqQ4aMCYyTxkCa9vHiXVxukyFDRk/GAzFhslC5ahxBAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

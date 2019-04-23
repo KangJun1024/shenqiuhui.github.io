@@ -19,7 +19,7 @@
     
     
     
-    <title>JavaScript 基础 —— call、apply 和 bind 的原理 | Panda Shen&#39;s Blog</title>
+    <title>JavaScript 基础 —— call、apply 和 bind 的原理 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript 基础 —— call、apply 和 bind 的原理">
-<meta property="og:url" content="https://www.pandashen.com/2017/05/24/20170524162030/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2017/05/24/20170524162030/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="call 和 applycall 和 apply 是 Function 构造函数原型对象上的方法，所有的函数都可以调用 call 和 apply，作用是可以改变调用 call 和 apply 函数内部的 this 指向，并执行函数。 call 的使用方法不指定 this12345678function fn() &amp;#123;  console.log(this, arguments);&amp;#12">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2017/05/24/20170524162030/call-apply-bind.jpg">
-<meta property="og:updated_time" content="2019-04-11T12:48:53.735Z">
+<meta property="og:image" content="https://www.overtaking.top/2017/05/24/20170524162030/call-apply-bind.jpg">
+<meta property="og:updated_time" content="2019-04-12T02:51:47.536Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript 基础 —— call、apply 和 bind 的原理">
 <meta name="twitter:description" content="call 和 applycall 和 apply 是 Function 构造函数原型对象上的方法，所有的函数都可以调用 call 和 apply，作用是可以改变调用 call 和 apply 函数内部的 this 指向，并执行函数。 call 的使用方法不指定 this12345678function fn() &amp;#123;  console.log(this, arguments);&amp;#12">
-<meta name="twitter:image" content="https://www.pandashen.com/2017/05/24/20170524162030/call-apply-bind.jpg">
+<meta name="twitter:image" content="https://www.overtaking.top/2017/05/24/20170524162030/call-apply-bind.jpg">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -300,13 +300,13 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-04-11T12:48:53.735Z" itemprop="dateUpdated">2019-04-11 20:48:53</time>
+    更新时间：<time datetime="2019-04-12T02:51:47.536Z" itemprop="dateUpdated">2019-04-12 10:51:47</time>
 </span><br>
 
 
         
 <span class="permalink">
-    本文链接：<a href="/2017/05/24/20170524162030/" target="_blank" rel="external">https://www.pandashen.com/2017/05/24/20170524162030/</a>
+    本文链接：<a href="/2017/05/24/20170524162030/" target="_blank" rel="external">https://www.overtaking.top/2017/05/24/20170524162030/</a>
 </span><br>
 
 
@@ -319,7 +319,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -345,7 +345,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2017/05/24/20170524162030/&title=《JavaScript 基础 —— call、apply 和 bind 的原理》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2017/05/24/20170524162030/&title=《JavaScript 基础 —— call、apply 和 bind 的原理》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -355,22 +355,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2017/05/24/20170524162030/&title=《JavaScript 基础 —— call、apply 和 bind 的原理》 — Panda Shen's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2017/05/24/20170524162030/&title=《JavaScript 基础 —— call、apply 和 bind 的原理》 — Shen's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2017/05/24/20170524162030/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2017/05/24/20170524162030/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 基础 —— call、apply 和 bind 的原理》 — Panda Shen's Blog&url=https://www.pandashen.com/2017/05/24/20170524162030/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 基础 —— call、apply 和 bind 的原理》 — Shen's Blog&url=https://www.overtaking.top/2017/05/24/20170524162030/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2017/05/24/20170524162030/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2017/05/24/20170524162030/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -503,7 +503,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2017/05/24/20170524162030/&title=《JavaScript 基础 —— call、apply 和 bind 的原理》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2017/05/24/20170524162030/&title=《JavaScript 基础 —— call、apply 和 bind 的原理》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -513,22 +513,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2017/05/24/20170524162030/&title=《JavaScript 基础 —— call、apply 和 bind 的原理》 — Panda Shen's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2017/05/24/20170524162030/&title=《JavaScript 基础 —— call、apply 和 bind 的原理》 — Shen's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2017/05/24/20170524162030/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2017/05/24/20170524162030/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 基础 —— call、apply 和 bind 的原理》 — Panda Shen's Blog&url=https://www.pandashen.com/2017/05/24/20170524162030/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JavaScript 基础 —— call、apply 和 bind 的原理》 — Shen's Blog&url=https://www.overtaking.top/2017/05/24/20170524162030/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2017/05/24/20170524162030/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2017/05/24/20170524162030/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -539,7 +539,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3a24rDMAxF0fz/T2deB2bi7CM1hcjbT4W2sVcLwrocB17nxfr97t/X5JlXuxxPLBkyZLyWcS4X3/Jq+6vvrk/CzyZDhox9GOvt1xuQo/OfoPbTyJAhQ0YajmtXTBkyZMjoMwivE8RlyJAhY80gIXW9ceea+NVcXIYMGS9kpEX8b75+pL8hQ4aMVzHO0uIhNS3PFc8jQ4aM0Yxaslobm+gA0DNlyJAxlJEG0066W0uASQotQ4aMHRhpIYw0AzqNhDh8y5AhYzQjHdjqFP15OS9tEsiQIWM2o3Nd6zcPyI+IniBDhoxtGLVHpK3HTw1z/HPDlSFDxmhGetw+owO7KbfJkCFjHIOX1WqHSC+RaVi/CbsyZMgYweCBlSeZJAbyhBkFYhkyZGzA6DcjSe0r/XzwGRkyZIxm1FLWdJisxm5l5DJkyBjH4EfnSWY6QFa7RKL/RIYMGeMY6ZgFD5S1sh2/ksqQIWMqI73kPRF8a4z4H5AhQ8ZrGWlxLb388W/xhoQMGTJ2Y3QO2hmbSBPamx1lyJAxmkEAvOjP01o+bMEr/zJkyJjKOMOVlvU75f6ALUOGjNEMvvrJKj9EmlTLkCFjB0atfEZGNPjoRhqyZciQsSfjsw2DdOKjlsRelttkyJCxMSMtzPWpjwRcGTJkjGaQRHRdIOP5NCnzyZAhYzdGp0xWO2KtjXpzNZQhQ8ZQRit1DB/9qdbmUVsyZMh4H+MHJn71GwreIZkAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACHklEQVR42u3aQY7DIAwF0N7/0p3tjEaNvm1SKfCyqioSeCwsG/N6xc/713M9Jh/fm2X0YGBgPJbxvnyqjP9vJbMk834ag4GBcQ4jCaDJ4q43qBqmk7cwMDAweqHzOkzn4zEwMDB6jKSIvf6/WgxjYGBg5KHzjnI0D8HLanEMDIwHMvJT9+//vqW/gYGB8ShGL3TmAbQXasurwsDA2JpRLVCryVwSGycFMwYGxjmM+W2ryTR5I2HZvTYMDIzHMkbtw8ES8wsc0dcwMDAOYMwPv/LSN1lckmJiYGCcw+gF32rhWi2M8ytlGBgYezN6R/x5AJ0kl4XxGBgYmzLyIrM3vhqUq4A/nVgMDIxNGUn5mjcpk+TvemSycVEnFgMDYyPGpDHZC51JAppsSqF8xcDAeDgjn6C69OoGfakWx8DAeCAjD3nv+OnNkrcEPqaGGBgYmzJ6S+z9rl6hKAdoDAyMTRl5Ipgni9VAPAnfGBgYJzAmITgvOKuXzJa1TjEwMDZizD86STdXJaAYGBjnMJIjtvx4rlrQVtuWGBgYZzLyZK5avlY3pRzuMTAwNmXckbTNL1hU58XAwNibsfbTaxuZ1a9hYGDszagG2eskct4kWHDlAgMDY1NGtQEwPzLrLbfc38DAwDiY0UscqzMWClcMDAyMRWlir4aOLqhhYGAcwMgbkNUQuaq1sOy4DQMD44GMXunYS/vuuGSGgYGxNeMHaeXbGTUGhlYAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 

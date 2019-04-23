@@ -19,7 +19,7 @@
     
     
     
-    <title>前端优化 —— 函数的节流和防抖 | Panda Shen&#39;s Blog</title>
+    <title>前端优化 —— 函数的节流和防抖 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,20 +30,20 @@
 <meta name="keywords" content="JavaScript,性能优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端优化 —— 函数的节流和防抖">
-<meta property="og:url" content="https://www.pandashen.com/2017/06/12/20170612130942/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2017/06/12/20170612130942/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="前言在前端开发当中我们经常会绑定一些事件触发的某些程序执行，有时这些事件会连续触发，如浏览器窗口的 scroll、resize，输入框的 keyup、input，以及 click 事件在连续点击时连续发送请求等等，这些情况有些会严重影响前端性能，有些会增加服务器压力，使用户体验大打折扣，而函数节流和防抖就是为了解决这样的问题。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2017/06/12/20170612130942/throttle-vs-debounce.png">
-<meta property="og:image" content="https://www.pandashen.com/2017/06/12/20170612130942/fun-throtter.png">
-<meta property="og:image" content="https://www.pandashen.com/2017/06/12/20170612130942/fun-debounce.png">
+<meta property="og:image" content="https://www.overtaking.top/2017/06/12/20170612130942/throttle-vs-debounce.png">
+<meta property="og:image" content="https://www.overtaking.top/2017/06/12/20170612130942/fun-throtter.png">
+<meta property="og:image" content="https://www.overtaking.top/2017/06/12/20170612130942/fun-debounce.png">
 <meta property="og:updated_time" content="2019-03-04T18:05:36.311Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端优化 —— 函数的节流和防抖">
 <meta name="twitter:description" content="前言在前端开发当中我们经常会绑定一些事件触发的某些程序执行，有时这些事件会连续触发，如浏览器窗口的 scroll、resize，输入框的 keyup、input，以及 click 事件在连续点击时连续发送请求等等，这些情况有些会严重影响前端性能，有些会增加服务器压力，使用户体验大打折扣，而函数节流和防抖就是为了解决这样的问题。">
-<meta name="twitter:image" content="https://www.pandashen.com/2017/06/12/20170612130942/throttle-vs-debounce.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2017/06/12/20170612130942/throttle-vs-debounce.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -322,7 +322,7 @@
 
         
 <span class="permalink">
-    本文链接：<a href="/2017/06/12/20170612130942/" target="_blank" rel="external">https://www.pandashen.com/2017/06/12/20170612130942/</a>
+    本文链接：<a href="/2017/06/12/20170612130942/" target="_blank" rel="external">https://www.overtaking.top/2017/06/12/20170612130942/</a>
 </span><br>
 
 
@@ -335,7 +335,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -361,7 +361,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2017/06/12/20170612130942/&title=《前端优化 —— 函数的节流和防抖》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2017/06/12/20170612130942/&title=《前端优化 —— 函数的节流和防抖》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -371,24 +371,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2017/06/12/20170612130942/&title=《前端优化 —— 函数的节流和防抖》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2017/06/12/20170612130942/&title=《前端优化 —— 函数的节流和防抖》 — Shen's Blog&source=
 
 前言在前端开发当中我们经常会绑定一些事件触发的某些程序执行，有时这些事件会连续触发，如浏览器窗口的 scroll、resize，输入框的 keyup、..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2017/06/12/20170612130942/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2017/06/12/20170612130942/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《前端优化 —— 函数的节流和防抖》 — Panda Shen's Blog&url=https://www.pandashen.com/2017/06/12/20170612130942/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《前端优化 —— 函数的节流和防抖》 — Shen's Blog&url=https://www.overtaking.top/2017/06/12/20170612130942/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2017/06/12/20170612130942/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2017/06/12/20170612130942/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -521,7 +521,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2017/06/12/20170612130942/&title=《前端优化 —— 函数的节流和防抖》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2017/06/12/20170612130942/&title=《前端优化 —— 函数的节流和防抖》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -531,24 +531,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2017/06/12/20170612130942/&title=《前端优化 —— 函数的节流和防抖》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2017/06/12/20170612130942/&title=《前端优化 —— 函数的节流和防抖》 — Shen's Blog&source=
 
 前言在前端开发当中我们经常会绑定一些事件触发的某些程序执行，有时这些事件会连续触发，如浏览器窗口的 scroll、resize，输入框的 keyup、..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2017/06/12/20170612130942/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2017/06/12/20170612130942/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《前端优化 —— 函数的节流和防抖》 — Panda Shen's Blog&url=https://www.pandashen.com/2017/06/12/20170612130942/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《前端优化 —— 函数的节流和防抖》 — Shen's Blog&url=https://www.overtaking.top/2017/06/12/20170612130942/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2017/06/12/20170612130942/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2017/06/12/20170612130942/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -559,7 +559,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aS2rDQBAFwNz/0s42ISh+r0cJzKi0MtjSqDA0/fv4iK/Xl+vq29nvf36+uuuGCwMDY1vG69drxmhPSWBXv8fAwHgOYxYWr0LtjJc/AQMDAyNhtEfmYRQDAwNjnZGkfbPi9l8DLgYGxoaMtrBcKWKT0/+wFsfAwNiQkXfd///zn8w3MDAwtmK8yitPCtuRZFvifnsyBgbG0Yz1AeSs7ExSwDrRxMDAOJQxW3Foy9G2uZYUyZf/AwYGxgMYbUjNw2g+KmjXxTAwMM5mtIsR7WByFnzz4rneNcPAwNiQsdKOb0PnysDyzYgCAwPjaEaSZtWPGwXx2QA1elEMDIzNGW3AXV/eSgrUmoSBgfEYRr76MAvHbfOuCNkYGBiPZyQlaz6GzANukapiYGAczWhfdD01rCcVbSsQAwPjOMZKC2yWArZXdBYGBsbDGHmwm61t5SsUxbABAwPjAYxZAZnf25a19WgBAwPjaEZ7WD4MmAXxdl2j2BzBwMDYnHHX2la+XrYSpi/vwsDAeACjjtBlqXlvWftmHouBgXE0Y6Xp3wbl9glvzsXAwDiUsTJQzF+0Ddk1FQMD42jGSsMrTyXzb5N0cGU1BAMDY19GEihn61+ztLIN9BgYGM9hzFpdv790Dp4VsRgYGBh5WFxp8c8afBgYGBizg2ett9saeRgYGA9g5AnfbNCYr47NSmUMDIyzGbPScWXZq13XuG2oiYGBsR/jE5YDA/HZ2OdDAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3a266bMBAF0Pz/T6dSX1vM3p6k6jGLJ5QQ8CLSaC5+veLj/fv483x9zdWV66e0v3phYGA8gPFeHldLT65f3+dq0ev7XFIxMDAewGgD6Do4rpfeMtb3x8DAwJgsa73Q5HoMDAyMvYC7l7q1KSAGBgbGXhG7Dp3rB7dl6hdrcQwMjB/ImAwGvn3+j+YbGBgY/zHjXR5tCdo+fXNVGBgYRzOS8jLfDJEMLCep4U04xsDAOJSRF5xtsZoH33aoGf0PGBgYBzHaRewljnkATfBFAoqBgXEcY1KsJi37ebkbNeYwMDAOZXxqVNmWvm2wvnllGBgYhzKSorHd7NUuqCX95VViYGAczdgLuG27f293RB6aMTAwnsaYpG57CWX+OQYGBkaSus2/TZr+m4UxBgbG0Yw25O0VtG3hmgdxDAyMsxmTIWVSfOahedSew8DAeAyjbYrlC51soYjCMQYGxgMYeUm5Nwxog3KdhmJgYBzNaBdX37QcD+ShGQMD4zmMtvhsh5SToWaRdGJgYDyAkQfZm5gdlMF7r+8m9GNgYBzNyEeJecKXbBqbJIuXv8LAwDiU8S6PyeatnJEUzDeTWAwMjIMY84bXXgNuMtqctO0wMDB+LqMNsu2VeYNvFFIxMDAewGgHA3stuU+VrxgYGBjf2H6Rg9tGHgYGBkZ73rbe9kLt5QgTAwPjaEZSmu59nrftkhTwJuBiYGAcypgXkHul7GeLYQwMjEMZvwDE1mC+JxR1twAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

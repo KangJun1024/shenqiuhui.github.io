@@ -19,7 +19,7 @@
     
     
     
-    <title>MySQL —— 简单聊一聊数据库设计 | Panda Shen&#39;s Blog</title>
+    <title>MySQL —— 简单聊一聊数据库设计 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,25 +30,25 @@
 <meta name="keywords" content="MySQL,数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL —— 简单聊一聊数据库设计">
-<meta property="og:url" content="https://www.pandashen.com/2018/08/14/20180814131241/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/08/14/20180814131241/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="前言这是关于 MySQL 系列文章的第三篇，在前两篇文章 《MySQL —— 数据库基础》 和 《MySQL —— SQL 语句总结》 中，主要介绍了一些数据库的基础概念、创建表的方式以及 SQL 语句的使用，本篇在使用的基础上做一个小小的升华，来简单聊一聊数据库的设计，还有一句话不得不再次赘述，数据库博大精深，本系列文章内容较浅，适合于前端的同学们对 MySQL 的入门，这也是我的学习笔记，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/08/14/20180814131241/mysql-table-design.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/08/14/20180814131241/onetoone.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/08/14/20180814131241/onetomany.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/08/14/20180814131241/manytomany.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/08/14/20180814131241/firstpattern.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/08/14/20180814131241/secondpattern.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/08/14/20180814131241/thirdpattern.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/08/14/20180814131241/RBAC.png">
-<meta property="og:updated_time" content="2019-03-04T17:41:08.917Z">
+<meta property="og:image" content="https://www.overtaking.top/2018/08/14/20180814131241/mysql-table-design.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/08/14/20180814131241/onetoone.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/08/14/20180814131241/onetomany.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/08/14/20180814131241/manytomany.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/08/14/20180814131241/firstpattern.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/08/14/20180814131241/secondpattern.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/08/14/20180814131241/thirdpattern.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/08/14/20180814131241/RBAC.png">
+<meta property="og:updated_time" content="2019-04-23T03:20:50.167Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL —— 简单聊一聊数据库设计">
 <meta name="twitter:description" content="前言这是关于 MySQL 系列文章的第三篇，在前两篇文章 《MySQL —— 数据库基础》 和 《MySQL —— SQL 语句总结》 中，主要介绍了一些数据库的基础概念、创建表的方式以及 SQL 语句的使用，本篇在使用的基础上做一个小小的升华，来简单聊一聊数据库的设计，还有一句话不得不再次赘述，数据库博大精深，本系列文章内容较浅，适合于前端的同学们对 MySQL 的入门，这也是我的学习笔记，">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/08/14/20180814131241/mysql-table-design.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/08/14/20180814131241/mysql-table-design.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -255,7 +255,7 @@
         <div class="post-content" id="post-content" itemprop="postContent">
             <img src="/2018/08/14/20180814131241/mysql-table-design.png" title="MySQL 数据库设计">
 <p><br></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote class="pullquote default"><p>这是关于 MySQL 系列文章的第三篇，在前两篇文章 <a href="https://www.pandashen.com/2018/08/08/20180808012303/" target="_blank">《MySQL —— 数据库基础》</a> 和 <a href="https://www.pandashen.com/2018/08/09/20180809115245/" target="_blank">《MySQL —— SQL 语句总结》</a> 中，主要介绍了一些数据库的基础概念、创建表的方式以及 SQL 语句的使用，本篇在使用的基础上做一个小小的升华，来简单聊一聊数据库的设计，还有一句话不得不再次赘述，数据库博大精深，本系列文章内容较浅，适合于前端的同学们对 MySQL 的入门，这也是我的学习笔记，希望可以帮助大家。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote class="pullquote default"><p>这是关于 MySQL 系列文章的第三篇，在前两篇文章 <a href="https://www.overtaking.top/2018/08/08/20180808012303/" target="_blank">《MySQL —— 数据库基础》</a> 和 <a href="https://www.overtaking.top/2018/08/09/20180809115245/" target="_blank">《MySQL —— SQL 语句总结》</a> 中，主要介绍了一些数据库的基础概念、创建表的方式以及 SQL 语句的使用，本篇在使用的基础上做一个小小的升华，来简单聊一聊数据库的设计，还有一句话不得不再次赘述，数据库博大精深，本系列文章内容较浅，适合于前端的同学们对 MySQL 的入门，这也是我的学习笔记，希望可以帮助大家。</p>
 </blockquote>
 <a id="more"></a>
 <h2 id="为什么设计数据库"><a href="#为什么设计数据库" class="headerlink" title="为什么设计数据库"></a>为什么设计数据库</h2><p>说到为什么要设计数据库，就要说到数据的完整性，我们要在设计数据库时保证域的完整性和实体的完整性，同时从性能出发，我们要保证最大限度的节省存储空间，比如一张成绩表，上面没必要存储学生的姓名、年龄等信息，只需要存储成绩，如果一个数据库设计的合理，最后的结果就是方便我们对数据库的开发和扩展。</p>
@@ -397,13 +397,13 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-04T17:41:08.917Z" itemprop="dateUpdated">2019-03-05 01:41:08</time>
+    更新时间：<time datetime="2019-04-23T03:20:50.167Z" itemprop="dateUpdated">2019-04-23 11:20:50</time>
 </span><br>
 
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/08/14/20180814131241/" target="_blank" rel="external">https://www.pandashen.com/2018/08/14/20180814131241/</a>
+    本文链接：<a href="/2018/08/14/20180814131241/" target="_blank" rel="external">https://www.overtaking.top/2018/08/14/20180814131241/</a>
 </span><br>
 
 
@@ -416,7 +416,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -442,7 +442,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/08/14/20180814131241/&title=《MySQL —— 简单聊一聊数据库设计》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/08/14/20180814131241/&title=《MySQL —— 简单聊一聊数据库设计》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -452,24 +452,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/08/14/20180814131241/&title=《MySQL —— 简单聊一聊数据库设计》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/08/14/20180814131241/&title=《MySQL —— 简单聊一聊数据库设计》 — Shen's Blog&source=
 
 前言这是关于 MySQL 系列文章的第三篇，在前两篇文章 《MySQL —— 数据库基础》 和 《MySQL —— SQL 语句总结》 中，主要介绍了..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/08/14/20180814131241/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/08/14/20180814131241/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MySQL —— 简单聊一聊数据库设计》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/08/14/20180814131241/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MySQL —— 简单聊一聊数据库设计》 — Shen's Blog&url=https://www.overtaking.top/2018/08/14/20180814131241/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/08/14/20180814131241/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/08/14/20180814131241/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -602,7 +602,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/08/14/20180814131241/&title=《MySQL —— 简单聊一聊数据库设计》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/08/14/20180814131241/&title=《MySQL —— 简单聊一聊数据库设计》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -612,24 +612,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/08/14/20180814131241/&title=《MySQL —— 简单聊一聊数据库设计》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/08/14/20180814131241/&title=《MySQL —— 简单聊一聊数据库设计》 — Shen's Blog&source=
 
 前言这是关于 MySQL 系列文章的第三篇，在前两篇文章 《MySQL —— 数据库基础》 和 《MySQL —— SQL 语句总结》 中，主要介绍了..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/08/14/20180814131241/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/08/14/20180814131241/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MySQL —— 简单聊一聊数据库设计》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/08/14/20180814131241/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MySQL —— 简单聊一聊数据库设计》 — Shen's Blog&url=https://www.overtaking.top/2018/08/14/20180814131241/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/08/14/20180814131241/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/08/14/20180814131241/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -640,7 +640,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACN0lEQVR42u3ay1LDMAwFUP7/p8uWmTbplZQCsY9XnTSJe1gIPfz1Fa/Hj/V8/fme5+vPn4/ef3TPBQsDA+O2jMfpSn7uOS95qrrXCyoGBsYGjKMIlgfWPLyeh/I8QGNgYGDM07s84UsCMQYGBkbCyJO5JEE8J2FgYGD0itjk+nnKWH32I7U4BgbGDRl51/33P39kvoGBgXErxqO4knFmHhx7w4AXb8bAwFia0RthJqPKXklcLXoxMDD2ZOTDxUlrrBqyo2NqGBgYizKqYS5h5OOEvA33Zi8MDIylGfkxr8k2ebrZO5yBgYGxNqN3SCIvXKvDhmqyiIGBsRsjis2tRljevEt2OTwtgoGBsShj3jJLksLqoY3esQ8MDIxVGb3NeuEyKXrzUFuYbGBgYNycUR0c5sFxMp5MQj8GBsY+jKTpn29cBTfnGHmli4GBsRyjV3A2T6IFhXEhxGNgYCzN6JWLeYk7GYVecA4XAwNjCcYk4I5OosVpaPSHwMDAWJpRDal5Ape35PL/DG/CMQYGxjaM5KWT1lu1oC0MDzAwMLZhTMJoPmDIW3WFEhcDA2NpRjPABYE4L0fnIRsDA2NVxqO4eglfb7SZjBkwMDB2YPRK0GriWG3eVQ95YGBg7MDoFZxXHa2oPvWm3YaBgbE0o9neittt+T150y36AgMDA2OQRPYSzbIPAwNjS0Y1ZZyMPzEwMDA+XcQe/azJIOEP2m0YGBj/gDEqHS9K/s6fvWyoiYGBcT/GNwSFb4WSPZIgAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACN0lEQVR42u3aQW7DMAwF0dz/0u62RRt7PqkUEDVeFY1h6ykAQ4p8vfB1fbvu7+H3197SumTIkLEt47q93r3g98vu7yFP5p/+QZUhQ8YBDBJA+eLIpyTgkrXJkCFDBgmvPEzz4CtDhgwZfQZ69O0W8GJYhgwZMnjoXFWOdlLPBbW4DBkyNmTwU/f///sj/Q0ZMmRsxbjCiyd8/UAcrEqGDBmjGWmBmiaIJDbyYvhhLEOGDBmjGXzAiydwaduSNBIW5LMyZMjYlpEeZq1dYm3j3v5uyJAhYyiDjFNwBh8UI4sjb5EhQ8YJDH6URgbF+M6lTdCHbZIhQ8YBjNq1bKgrrE8XNDJlyJCxCaN2oP+JpdQ25UcnVoYMGUMZaUqXti3TopQzgk6sDBkyNmd0GpO10MkbosXyVYYMGaMZ/Hir9sri3AdJQ2XIkHEYI11WGjrTJ6NTNRkyZIxm1EpW8uj+CEUxQMuQIWMcg5SsfLnpgvotUhkyZJzASJM5kg522gN8Q9F3IkOGjNGMdOihFkzTkvVhJTJkyDiAwUco0pZk8eAMpJgyZMg4jXGfzPGakWxK51ww+N2QIUPGCEYtdUtbkp0WRTEplCFDxiBG59G14pMkhbx8jTEyZMjYltEZ9krbjTzp5MWtDBkyzmGkzQA+fsHL2jT0oxamDBkyZIT/Sd8YFK4yZMiQAR4XJ3OlZsCy1FCGDBkbMngDkidttTZDeqcMGTJOYNRGHNCoVjiKUWsPyJAhYzTjCzE4S6llG+w5AAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

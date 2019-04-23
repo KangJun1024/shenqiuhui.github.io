@@ -19,7 +19,7 @@
     
     
     
-    <title>Git 系列之实战技及巧注意事项总结 | Panda Shen&#39;s Blog</title>
+    <title>Git 系列之实战技及巧注意事项总结 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="Git,代码管理&#x2F;版本控制,命令行">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git 系列之实战技及巧注意事项总结">
-<meta property="og:url" content="https://www.pandashen.com/2019/03/15/20190315115008/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2019/03/15/20190315115008/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="前言Git 作为当前应用最广泛的代码管理和版本控制工具，在实际开发时有很多的注意事项，本篇的目的就是在已经会使用 Git 的基础上来详细总结一下这些注意事项。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2019/03/15/20190315115008/git.png">
-<meta property="og:updated_time" content="2019-04-10T18:01:54.152Z">
+<meta property="og:image" content="https://www.overtaking.top/2019/03/15/20190315115008/git.png">
+<meta property="og:updated_time" content="2019-04-23T03:21:20.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git 系列之实战技及巧注意事项总结">
 <meta name="twitter:description" content="前言Git 作为当前应用最广泛的代码管理和版本控制工具，在实际开发时有很多的注意事项，本篇的目的就是在已经会使用 Git 的基础上来详细总结一下这些注意事项。">
-<meta name="twitter:image" content="https://www.pandashen.com/2019/03/15/20190315115008/git.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2019/03/15/20190315115008/git.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -335,12 +335,12 @@
 <figure class="highlight bash"><figcaption><span>撤销合并</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge --abort</span><br></pre></td></tr></table></figure>
 <h3 id="不同的人同时变更文件名的处理方式"><a href="#不同的人同时变更文件名的处理方式" class="headerlink" title="不同的人同时变更文件名的处理方式"></a>不同的人同时变更文件名的处理方式</h3><p>在不同人同时修改同一个文件名时，<code>Git</code> 时无法处理的，当然会变成 <code>non-fast-forwards</code> 状态，在通过常规的处理后，本地会出现两个文件，分别为两人所更改的文件名，这时需要两个人进行协商，保留协商后的文件名，删除多余的文件并推送到远端让其他人进行同步。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git rm oldfilename</span><br><span class="line">git add newfilename</span><br><span class="line">git commit -m <span class="string">'merge message'</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
-<blockquote class="pullquote success"><p>在一个人修改文件名，其他人修改内容的情况下，<code>Git</code> 的文件内容都是通过 <a href="https://www.pandashen.com/2019/03/10/20190310233856/#tree%E3%80%81commit%E3%80%81blob-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%85%B3%E7%B3%BB" target="_blank">blob</a> 对象进行存储，而非文件的形式，所以当多人协同某个人对文件名进行变更时 <code>Git</code> 可以非常智能的检测并同步。</p>
+<blockquote class="pullquote success"><p>在一个人修改文件名，其他人修改内容的情况下，<code>Git</code> 的文件内容都是通过 <a href="https://www.overtaking.top/2019/03/10/20190310233856/#tree%E3%80%81commit%E3%80%81blob-%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%85%B3%E7%B3%BB" target="_blank">blob</a> 对象进行存储，而非文件的形式，所以当多人协同某个人对文件名进行变更时 <code>Git</code> 可以非常智能的检测并同步。</p>
 </blockquote>
 <h3 id="禁止在已共享的集成分支使用强推"><a href="#禁止在已共享的集成分支使用强推" class="headerlink" title="禁止在已共享的集成分支使用强推"></a>禁止在已共享的集成分支使用强推</h3><p>“强推” 是指使用 <code>git push -f</code> 将本地分支推送到远端，之前在多人写作中远程分支拒绝推送的原因都是因为 <code>non-fast-forwards</code> 状态，我们可以理解为这是 <code>Git</code> 防止代码被推送到远端而产生冲突的一种保护机制，而 “强推” 就是忽略了 <code>non-fast-forwards</code> 状态强行将代码推送到远端。</p>
 <blockquote class="pullquote danger"><p>在大部分团队中都是禁止在集成分支使用这条命令的，可能会在远端产生冲突只是原因之一，操作不正确也可能导致远端集成分支整个团队的提交历史丢失的严重后果，比如当前本地分支版本远远落后于远端，此时直接推送会进入 <code>non-fast-forwards</code> 状态，远端拒绝推送，而向远端 “强推”，远端在这个本地版本库 <code>HEAD</code> 指向的 <code>commit</code> 之后所有的提交历史都将丢失。</p>
 </blockquote>
-<h3 id="禁止在已共享的集成分支上做变基操作"><a href="#禁止在已共享的集成分支上做变基操作" class="headerlink" title="禁止在已共享的集成分支上做变基操作"></a>禁止在已共享的集成分支上做变基操作</h3><p>还记得前面 <a href="https://www.pandashen.com/2019/03/15/20190315115008/#修改本地-commit">修改本地 commit</a> 一节中强调 <code>rebase</code> 操作只适用于修改本地还未同步到远端的 <code>commit</code>，这是因为如果对已经同步到远端的进行了变基操作会导致 <code>commit</code> 的版本号发生变化，如果推送到远端，此时协同开发的人是基于远端旧的 <code>commit</code> 之上在做新的开发，会导致无法将本地代码推送到远端。</p>
+<h3 id="禁止在已共享的集成分支上做变基操作"><a href="#禁止在已共享的集成分支上做变基操作" class="headerlink" title="禁止在已共享的集成分支上做变基操作"></a>禁止在已共享的集成分支上做变基操作</h3><p>还记得前面 <a href="https://www.overtaking.top/2019/03/15/20190315115008/#修改本地-commit">修改本地 commit</a> 一节中强调 <code>rebase</code> 操作只适用于修改本地还未同步到远端的 <code>commit</code>，这是因为如果对已经同步到远端的进行了变基操作会导致 <code>commit</code> 的版本号发生变化，如果推送到远端，此时协同开发的人是基于远端旧的 <code>commit</code> 之上在做新的开发，会导致无法将本地代码推送到远端。</p>
 <blockquote class="pullquote warning"><p>有些团队严令禁止对集成分支做变基操作，被称作 “<code>rebase</code> 黄金定律”，如果一定要对集成分支做变基操作的，一定要在当前远端最后的 <code>commit</code> 之后做变基操作。</p>
 </blockquote>
 <p>如果不幸真的有同事这样去做了，我们虽然会很恼火，但也还是有办法去解决这样的问题，可以直接执行下面命令。</p>
@@ -371,13 +371,13 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-04-10T18:01:54.152Z" itemprop="dateUpdated">2019-04-11 02:01:54</time>
+    更新时间：<time datetime="2019-04-23T03:21:20.730Z" itemprop="dateUpdated">2019-04-23 11:21:20</time>
 </span><br>
 
 
         
 <span class="permalink">
-    本文链接：<a href="/2019/03/15/20190315115008/" target="_blank" rel="external">https://www.pandashen.com/2019/03/15/20190315115008/</a>
+    本文链接：<a href="/2019/03/15/20190315115008/" target="_blank" rel="external">https://www.overtaking.top/2019/03/15/20190315115008/</a>
 </span><br>
 
 
@@ -390,7 +390,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -416,7 +416,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2019/03/15/20190315115008/&title=《Git 系列之实战技及巧注意事项总结》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2019/03/15/20190315115008/&title=《Git 系列之实战技及巧注意事项总结》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -426,24 +426,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2019/03/15/20190315115008/&title=《Git 系列之实战技及巧注意事项总结》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2019/03/15/20190315115008/&title=《Git 系列之实战技及巧注意事项总结》 — Shen's Blog&source=
 
 前言Git 作为当前应用最广泛的代码管理和版本控制工具，在实际开发时有很多的注意事项，本篇的目的就是在已经会使用 Git 的基础上来详细总结一下这些注..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2019/03/15/20190315115008/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2019/03/15/20190315115008/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Git 系列之实战技及巧注意事项总结》 — Panda Shen's Blog&url=https://www.pandashen.com/2019/03/15/20190315115008/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Git 系列之实战技及巧注意事项总结》 — Shen's Blog&url=https://www.overtaking.top/2019/03/15/20190315115008/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2019/03/15/20190315115008/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2019/03/15/20190315115008/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -576,7 +576,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2019/03/15/20190315115008/&title=《Git 系列之实战技及巧注意事项总结》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2019/03/15/20190315115008/&title=《Git 系列之实战技及巧注意事项总结》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -586,24 +586,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2019/03/15/20190315115008/&title=《Git 系列之实战技及巧注意事项总结》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2019/03/15/20190315115008/&title=《Git 系列之实战技及巧注意事项总结》 — Shen's Blog&source=
 
 前言Git 作为当前应用最广泛的代码管理和版本控制工具，在实际开发时有很多的注意事项，本篇的目的就是在已经会使用 Git 的基础上来详细总结一下这些注..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2019/03/15/20190315115008/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2019/03/15/20190315115008/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Git 系列之实战技及巧注意事项总结》 — Panda Shen's Blog&url=https://www.pandashen.com/2019/03/15/20190315115008/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Git 系列之实战技及巧注意事项总结》 — Shen's Blog&url=https://www.overtaking.top/2019/03/15/20190315115008/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2019/03/15/20190315115008/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2019/03/15/20190315115008/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -614,7 +614,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMklEQVR42u3aQW6EMAwF0Ln/pem2lQp8O6AW87JCMxDyWFixnc8nHtvO+P7v3v17s+1d7z11wcDAwHgsYzsc1WXlb6nCjmfAwMB4A6MaFnt3HiPzGTAwMDDypZ8EwZ1gvQUDAwMD468CbpKmYmBgYKwkscfpaDXs5oW8i3NxDAyMBzKuSjLvuL6lv4GBgfEoxlYcObXakqymuD9mxsDAGM3oNSCTpecLTRqc0XowMDCGMpLCWW/q/NkkDT75BQMDYzSjmkDm7ONfqg3OCIyBgTGUsX5UIk9i8+BbbgBgYGC8htEr0OcNyJWG5cmnx8DAGM3I41UeZFdCdrWBWg67GBgYj2X0DlVUU9MkQe01OzEwMGYz1jd/K4cnLgvZGBgYoxnV5SYlueTZPGTnxz4wMDDewEgOTPTKanloXrkHAwNjKmO9bZnMk6evzZCNgYExmlE9q5CX2JJy20oDAAMD4z2MvARW/jatJsEFZ0YwMDDGMfKXJdvBvOhfza0L7QQMDIyhjF547ZXM8o+VFOx+2eFiYGCMZtzRAOjNmaS1J7k4BgbGCxh5ca2X6PYOh52sCgMDYyjjjqMVScks3xSW828MDIxxjF7Bq/qa6lLyBurFp94wMDD+MaO6xPVEt7qJvOVLY2BgPJBRDZTVElvyOVZWi4GBgbG+7evNdnvAxcDAeDGjWryrrnA3icXAwBjNWG8GVNsGx9vKG8ttGBgYD2T09l291LR3mOOypiYGBsbzGF9cA7wqseoYMgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3aO3LDMAxFUe9/00qbJtR9AJ0ZgleVC5nScQHj9/ng6/l1re/h99ee0rpkyJBxLONZXut71i+xPoGcTN5NhgwZ9zBIAE2PfnkwCLjk3WTIkCEj/UwSRBJeZciQIaPD4Mni+ru8GJYhQ4YMXsSSwLqrWP1iLS5DhowDGbzr/v+fvzLfkCFDxlGMJ7zSMQAPta23kiFDxmgGD3C1l+6fFqxlyJAhYygj/QJ/WDq2JIMEdIQMGTLGMdIWf1pk8kDMW28v/xsyZMi4gLE+iL9Q/7tkhClDhowbGOskbFcimDbs+A8hQ4aMGxiddjxP8jrJZVoSy5AhYx6jVmT2W/m8oYaeK0OGjNEM0t7ihWia/KWMuGsoQ4aMEYxae6sTOtPlMBSyZciQMZqRtvLThj4fi/JRaCv3lCFDxoGMWuufDzvJU2qh/M/5hgwZMi5g9McApHCtLWoEAVeGDBmDGLXFCB580wWy9IeTIUPGbQy+EMYDaO3+zjaFDBkypjJ4KlYbXtZWzcgI4WXKIUOGjHGM2tAxfRhfv+BDCxkyZNzJ4MsQKazfUAsCrgwZMkYwOkkbHy10uvpxbitDhoxxjM5MMB1VpgVwmmLKkCFjNmNXkK0NFTorFzJkyLiNEVS9YaKWtv5rwwkZMmTI6AwPXgIlXqoIFsJkyJBxPaNWH+8aBrwUsTJkyBjN4APIXQsZ6WhhW7tNhgwZBzJqKw61tI8nkWm4lyFDxlDGDyLO+ghPMpxOAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

@@ -19,7 +19,7 @@
     
     
     
-    <title>Git 系列之 .git 内部刨析 | Panda Shen&#39;s Blog</title>
+    <title>Git 系列之 .git 内部刨析 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,19 +30,19 @@
 <meta name="keywords" content="Git,代码管理&#x2F;版本控制,命令行">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git 系列之 .git 内部刨析">
-<meta property="og:url" content="https://www.pandashen.com/2019/03/10/20190310233856/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2019/03/10/20190310233856/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="HEAD 文件文件内容1ref: refs/heads/master ref 代表引用，refs/heads/master 代表当前引用所指向的分支，即当前工作区所在的分支，当执行切换分支时，HEAD 文件中的 ref 值会随着切换的分支变化。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2019/03/10/20190310233856/git.jpg">
-<meta property="og:image" content="https://www.pandashen.com/2019/03/10/20190310233856/git-objects.png">
+<meta property="og:image" content="https://www.overtaking.top/2019/03/10/20190310233856/git.jpg">
+<meta property="og:image" content="https://www.overtaking.top/2019/03/10/20190310233856/git-objects.png">
 <meta property="og:updated_time" content="2019-04-10T18:02:01.032Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git 系列之 .git 内部刨析">
 <meta name="twitter:description" content="HEAD 文件文件内容1ref: refs/heads/master ref 代表引用，refs/heads/master 代表当前引用所指向的分支，即当前工作区所在的分支，当执行切换分支时，HEAD 文件中的 ref 值会随着切换的分支变化。">
-<meta name="twitter:image" content="https://www.pandashen.com/2019/03/10/20190310233856/git.jpg">
+<meta name="twitter:image" content="https://www.overtaking.top/2019/03/10/20190310233856/git.jpg">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -320,7 +320,7 @@
 
         
 <span class="permalink">
-    本文链接：<a href="/2019/03/10/20190310233856/" target="_blank" rel="external">https://www.pandashen.com/2019/03/10/20190310233856/</a>
+    本文链接：<a href="/2019/03/10/20190310233856/" target="_blank" rel="external">https://www.overtaking.top/2019/03/10/20190310233856/</a>
 </span><br>
 
 
@@ -333,7 +333,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -359,7 +359,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2019/03/10/20190310233856/&title=《Git 系列之 .git 内部刨析》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2019/03/10/20190310233856/&title=《Git 系列之 .git 内部刨析》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -369,7 +369,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2019/03/10/20190310233856/&title=《Git 系列之 .git 内部刨析》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2019/03/10/20190310233856/&title=《Git 系列之 .git 内部刨析》 — Shen's Blog&source=
 
 HEAD 文件文件内容1ref: refs/heads/master
 ref 代表引用，refs/heads/master 代表当前引用所指向的分支，..." data-title=" QQ">
@@ -377,17 +377,17 @@ ref 代表引用，refs/heads/master 代表当前引用所指向的分支，..."
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2019/03/10/20190310233856/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2019/03/10/20190310233856/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Git 系列之 .git 内部刨析》 — Panda Shen's Blog&url=https://www.pandashen.com/2019/03/10/20190310233856/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Git 系列之 .git 内部刨析》 — Shen's Blog&url=https://www.overtaking.top/2019/03/10/20190310233856/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2019/03/10/20190310233856/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2019/03/10/20190310233856/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -520,7 +520,7 @@ ref 代表引用，refs/heads/master 代表当前引用所指向的分支，..."
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2019/03/10/20190310233856/&title=《Git 系列之 .git 内部刨析》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2019/03/10/20190310233856/&title=《Git 系列之 .git 内部刨析》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -530,7 +530,7 @@ ref 代表引用，refs/heads/master 代表当前引用所指向的分支，..."
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2019/03/10/20190310233856/&title=《Git 系列之 .git 内部刨析》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2019/03/10/20190310233856/&title=《Git 系列之 .git 内部刨析》 — Shen's Blog&source=
 
 HEAD 文件文件内容1ref: refs/heads/master
 ref 代表引用，refs/heads/master 代表当前引用所指向的分支，..." data-title=" QQ">
@@ -538,17 +538,17 @@ ref 代表引用，refs/heads/master 代表当前引用所指向的分支，..."
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2019/03/10/20190310233856/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2019/03/10/20190310233856/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Git 系列之 .git 内部刨析》 — Panda Shen's Blog&url=https://www.pandashen.com/2019/03/10/20190310233856/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Git 系列之 .git 内部刨析》 — Shen's Blog&url=https://www.overtaking.top/2019/03/10/20190310233856/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2019/03/10/20190310233856/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2019/03/10/20190310233856/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -559,7 +559,7 @@ ref 代表引用，refs/heads/master 代表当前引用所指向的分支，..."
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3aS24CMRAFQO5/aSJlFSlieK8NUbDLKzQC7JpFy/253eJ1/14/Pz968vv57H9u71gYGBgfy7hfrmSD699ek67xydkwMDDOYbRBNgmpbRhNQvbD5xgYGBjBhS8h5eEbAwMDY4WRU6+DLAYGBkbLSJLY5BBtoS1Pnl+Wi2NgYHwgY9YY+JvPb+9vYGBg/HvGvVyz0tisqFecCgMDY2tGOyqxEjTzJmjbPMDAwNibkaeO7WbXQXk2ZvHwhWJgYBzAyIvy61vmQbl4xRgYGAcwZpe2WbH+ValsdLfFwMDYgpGT2stivnHbEsDAwDiTcX2slcGIlpQnug+LbhgYGNsx8vL9evNgeNULToWBgbE348WRe9SSXGlhYmBgnMOYDUbMtm9T2aJ1gYGBcQBjdk1sL47J1bD9DgYGxt6MNgi2T94xlhGV2zAwMDZitJu1bYA2JZ4V7DAwMPZmrAxJrJTn1hucTx5hYGBsxGiHJNpwWRTLgpfypIWJgYGxKSO5/K03A2aF/vwlYmBgnMN4cU683MgsmhAYGBhbM9othz3SEWB9gAwDA2MPxr1cs+ZlXnqbtSUwMDD2ZuRrJRHNRyjyvTAwME5jrDQA2otjO3BWnAEDA+MARh5kk3L/bORrNtiBgYGBMWsJ5AltXhF8gsfAwMBYGJvIQ3A7wIGBgXEaYyWJzYch8jZDPWyBgYGxNWPWGMhbmLO0dnYlxcDA2I7xBeyHo4mNR1dXAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aQW7DQAgF0Nz/0um2XcT5QFLJzPMqSq3xPFciwPB4xNfz13V9T35/7ymjCwMD47aM5+V1fc/1Jq5XSFZO9oaBgXEOIwmg1aXfPDgIuMneMDAwMJJ7knCZ8DAwMDA+y0i+qd5ZfX0YGBinMZLQWQ2jk2L1i7U4BgbGDRl51/3/P3/lfAMDA+NWjGfxyhO+/DgzD9wvd4WBgbGakQe4JFnMN52vVhjLwMDAWM2YT1tNHpOXxx/IbTEwMG7L6G2xV/rmw2Tllh8GBsZSRu+wsJf85SlmdcgDAwNjNyP/c+9Qcx5q85EyDAyM3Yze2ET1gHNSW0clMQYGxlJGtRz9Xiu/mpj++YyBgbGa0TuMvE7pcnyVEXUNMTAw1jF67a1J6Oylm1H5ioGBcQBj0qXrNc6qRexozAIDA+O2jDzVy5HVZlw+dlaYGcHAwFjE6BWieZCttuqaARoDA+MYRhU5GQ7rBdyXe8bAwFjNyJebFKh5U2/yw4CBgXECIw/BvSZ+72XlnzEwMM5k9BK76pq9kI2BgXEyI0/mqiljdet5moiBgbGb8dmkbdTcD1Z483/AwMBYyugt/e2jhV6KiYGBsZtRDbLVQ8rkdfRCNgYGxmmMvOpNGnB5qlf9BYiOMDEwMI5nTL6pPrFQuGJgYGCM6+NPHQa8KWIxMDBWM/Kh1Txpm4xilA9BMTAwVjN6Iw7Vo4JeO69XTmNgYCxi/ABjmQPxV1IuiwAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

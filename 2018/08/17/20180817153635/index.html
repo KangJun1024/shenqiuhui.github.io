@@ -19,7 +19,7 @@
     
     
     
-    <title>NodeJS 使用 cookie 和 session | Panda Shen&#39;s Blog</title>
+    <title>NodeJS 使用 cookie 和 session | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="cookie&#x2F;session,NodeJS,Koa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NodeJS 使用 cookie 和 session">
-<meta property="og:url" content="https://www.pandashen.com/2018/08/17/20180817153635/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/08/17/20180817153635/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="前言由于浏览器无状态的特性，cookie 技术应运而生，cookie 是一个会话级的存储，大小 4KB 左右，用于浏览器将服务器设置的信息重新带给服务器进行验证，不支持跨域，在浏览器清空缓存或超过有效期后失效，不能存放敏感信息，session 是专门用于存储最初设置给浏览器 cookie 数据的地方，我们本篇就来讨论一下 cookie 和 session 在 NodeJS 中的使用方式。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/08/17/20180817153635/cookie-session.png">
-<meta property="og:updated_time" content="2019-03-04T17:40:49.666Z">
+<meta property="og:image" content="https://www.overtaking.top/2018/08/17/20180817153635/cookie-session.png">
+<meta property="og:updated_time" content="2019-04-23T03:20:55.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJS 使用 cookie 和 session">
 <meta name="twitter:description" content="前言由于浏览器无状态的特性，cookie 技术应运而生，cookie 是一个会话级的存储，大小 4KB 左右，用于浏览器将服务器设置的信息重新带给服务器进行验证，不支持跨域，在浏览器清空缓存或超过有效期后失效，不能存放敏感信息，session 是专门用于存储最初设置给浏览器 cookie 数据的地方，我们本篇就来讨论一下 cookie 和 session 在 NodeJS 中的使用方式。">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/08/17/20180817153635/cookie-session.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/08/17/20180817153635/cookie-session.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -278,7 +278,7 @@
 <h3 id="Koa-中使用-session"><a href="#Koa-中使用-session" class="headerlink" title="Koa 中使用 session"></a>Koa 中使用 session</h3><p>我们接下来使用 <code>Koa</code> 实现和上面一摸一样的场景，在 <code>Koa</code> 的社区中提供了专门操作 <code>session</code> 的中间件 <code>koa-session</code>，使用前需安装。</p>
 <figure class="highlight js"><figcaption><span>Koa 中使用 session</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"><span class="keyword">const</span> Router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>);</span><br><span class="line"><span class="keyword">const</span> session = requier(<span class="string">'koa-session'</span>);</span><br><span class="line"><span class="keyword">const</span> uuid = <span class="built_in">require</span>(<span class="string">'uuid/v1'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建服务和路由</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> Router();</span><br><span class="line"></span><br><span class="line"><span class="comment">// cookie 的签名</span></span><br><span class="line">app.keys = [<span class="string">'panda'</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 koa-session 中间件</span></span><br><span class="line">app.use(session(&#123;</span><br><span class="line">  key: <span class="string">'shen'</span>,</span><br><span class="line">  maxAge: <span class="number">10</span> * <span class="number">1000</span></span><br><span class="line">&#125;, app));</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">'/user'</span>, (ctx, next) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 取出 cookie 存储的用户 ID</span></span><br><span class="line">  <span class="keyword">let</span> userId = ctx.cookie(<span class="string">'study'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (ctx.session.userId) &#123;</span><br><span class="line">    <span class="keyword">if</span> (ctx.session[userId].studyCount === <span class="number">0</span>) res.end(<span class="string">'您的学习次数已用完'</span>);</span><br><span class="line">    ctx.session[userId].studyCount--;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 生成 userId</span></span><br><span class="line">    userId = uuid();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将用户信息存入 session</span></span><br><span class="line">    ctx.session[userId] = &#123; <span class="attr">studyCount</span>: <span class="number">30</span> &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置 cookie</span></span><br><span class="line">    ctx.cookies.set(<span class="string">'study'</span>, userId);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 响应信息</span></span><br><span class="line">  ctx.body = <span class="string">`</span></span><br><span class="line"><span class="string">    您的用户 ID 为 <span class="subst">$&#123;userId&#125;</span>，</span></span><br><span class="line"><span class="string">    剩余学习次数为：<span class="subst">$&#123;session[userId].studyCount&#125;</span></span></span><br><span class="line"><span class="string">  `</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用路由</span></span><br><span class="line">app.use(router.routes());</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
 <p>使用 <code>Koa</code> 的 <code>koa-session</code> 以后，不再需要我们创建 <code>session</code> 对象进行存储，并且 <code>cookie-session</code> 中间件帮我们封装了 API 可以直接操作 <code>mongo</code> 和 <code>MySQL</code> 数据库，上面代码中与用原生相比还增加了 <code>cookie</code> 和 <code>session</code> 的签名和过期时间，比原生写起来要方便很多。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote class="pullquote success"><p>本篇内容更偏向于 <code>cookie</code> 和 <code>session</code> 在 NodeJS 中的使用，没有过多的叙述理论性的内容，<code>cookie</code> 和 <code>session</code> 是相互依存的，也就是说共同使用的，现在已经有 JWT 的方案来替代，因为相比较下有很多优点，但某些项目和特殊场景还在使用 <code>cookie</code> 和 <code>session</code>，所以还是写了这一篇，如果对 JWT 感兴趣可以看 <a href="https://www.pandashen.com/2018/08/16/20180816141146/" target="_blank">通过一个案例理解 JWT</a>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote class="pullquote success"><p>本篇内容更偏向于 <code>cookie</code> 和 <code>session</code> 在 NodeJS 中的使用，没有过多的叙述理论性的内容，<code>cookie</code> 和 <code>session</code> 是相互依存的，也就是说共同使用的，现在已经有 JWT 的方案来替代，因为相比较下有很多优点，但某些项目和特殊场景还在使用 <code>cookie</code> 和 <code>session</code>，所以还是写了这一篇，如果对 JWT 感兴趣可以看 <a href="https://www.overtaking.top/2018/08/16/20180816141146/" target="_blank">通过一个案例理解 JWT</a>。</p>
 </blockquote>
 
         </div>
@@ -302,13 +302,13 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-04T17:40:49.666Z" itemprop="dateUpdated">2019-03-05 01:40:49</time>
+    更新时间：<time datetime="2019-04-23T03:20:55.970Z" itemprop="dateUpdated">2019-04-23 11:20:55</time>
 </span><br>
 
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/08/17/20180817153635/" target="_blank" rel="external">https://www.pandashen.com/2018/08/17/20180817153635/</a>
+    本文链接：<a href="/2018/08/17/20180817153635/" target="_blank" rel="external">https://www.overtaking.top/2018/08/17/20180817153635/</a>
 </span><br>
 
 
@@ -321,7 +321,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -347,7 +347,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/08/17/20180817153635/&title=《NodeJS 使用 cookie 和 session》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/08/17/20180817153635/&title=《NodeJS 使用 cookie 和 session》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -357,24 +357,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/08/17/20180817153635/&title=《NodeJS 使用 cookie 和 session》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/08/17/20180817153635/&title=《NodeJS 使用 cookie 和 session》 — Shen's Blog&source=
 
 前言由于浏览器无状态的特性，cookie 技术应运而生，cookie 是一个会话级的存储，大小 4KB 左右，用于浏览器将服务器设置的信息重新带给服务..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/08/17/20180817153635/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/08/17/20180817153635/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 使用 cookie 和 session》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/08/17/20180817153635/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 使用 cookie 和 session》 — Shen's Blog&url=https://www.overtaking.top/2018/08/17/20180817153635/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/08/17/20180817153635/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/08/17/20180817153635/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -507,7 +507,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/08/17/20180817153635/&title=《NodeJS 使用 cookie 和 session》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/08/17/20180817153635/&title=《NodeJS 使用 cookie 和 session》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -517,24 +517,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/08/17/20180817153635/&title=《NodeJS 使用 cookie 和 session》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/08/17/20180817153635/&title=《NodeJS 使用 cookie 和 session》 — Shen's Blog&source=
 
 前言由于浏览器无状态的特性，cookie 技术应运而生，cookie 是一个会话级的存储，大小 4KB 左右，用于浏览器将服务器设置的信息重新带给服务..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/08/17/20180817153635/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/08/17/20180817153635/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 使用 cookie 和 session》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/08/17/20180817153635/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 使用 cookie 和 session》 — Shen's Blog&url=https://www.overtaking.top/2018/08/17/20180817153635/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/08/17/20180817153635/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/08/17/20180817153635/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -545,7 +545,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMElEQVR42u3aQW7DMAwEwPz/0+k1QGFlV0wOkcenoLUtjQ8ESfHxiK/ny/X6l/z+//+9+r1+8+jCwMD4WcZzea0XyBdO3r+GXT2LgYFxH8ZeWLyCJUE5X2t9PwYGBsbVPXlKtw7feSDGwMDAmDPyp5ICGAMDA2OviE2WzMNuXtx+uBbHwMD4Qcanisxv/P7K+QYGBsZPMZ7ltU7O8uOEPHBHu8LAwDiakQe4vQ3lSWSb9mFgYNyHkQw9fKrd34baJLi/2QoGBsZBjDZo5qNjSdsuD76Xb8bAwLgNow277Rbz4Jvcj4GBcR/GXoO+HepK0sec8eYkFgMD4zhGHtTyjbbl7uQAFQMD4w6MNsiukUmLfz5gcfkUBgbGoYy2cd8yctgoZGNgYBzNaEvHdjhj3norxj4wMDBuwGjL172xiXy77T0YGBinMtqglpS4yVHoXjjenBnBwMA4iDEPsvmHaD9HPTOCgYFxNGPd3poPZ7RDG9GBBAYGxtGMdplJMlfX1sHBwObXwsDAOIgxaesXDf2g5RclphgYGDdgzNv97ejYpKy9TA0xMDCOZqxDaps4tiF7NMCKgYFxNONZXvnB5ORooaZiYGAczZg3vJIWW5sUtqMbGBgYd2DMU8N2yba1V39pDAyMQxlF1VuG4zat3NstBgYGxjy7zAfINlfBwMDAKBfYa961x6jRSSwGBsZBjGSx9evmAXpSGGNgYJzNGJWOZWI3ac994FATAwPj9xh/a450cqjhDNgAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMklEQVR42u3aQXLjMAwEQP//0851D2tpBnRSJbJ1SlVsSc3DmAD4esXX+5/r+jP552dPWbowMDAey3hfXp8+k7xEcof2uR/fAQMD4wBGEqBJyuX/bRfi5p0xMDAwyui83uq1d8DAwMBYCdyk+PzEyIthDAwMjLyIbWM0D9M83L9Qi2NgYDyQkXfd//7vX5lvYGBgPIrxLq98w5cPFdphwH/uhoGBsTUjD7h8qJmPOYsCNSmbMTAwNmW0X/hWA+46ptv2HAYGxt6M2YvmReZKu61u+WFgYGzKuH7pvOzMN3/5d5OlxMDAOI2xEpfFI0eNtptlwsDA2JqRRG1+CCMfRrZDyuiYBQYGxqaM9ojDyvGI2TAgWjIMDIytGbNhZBu+7UGNfOEwMDBOYCRFY7JlbEvZWUl8U75iYGAczMgPcrWNs7aIfa2vLgYGxgMZbdM/b+63hWgb5Texi4GBsRGjLVln7bPZEYoioDEwMI5h5DGabAHbDWX7LQwMjHMYeTjmc4bZ9nH9hwEDA+MERjsYaMecbbzmpSwGBsY5jHzb18ZuuzR5imJgYJzJSG7dtvi/O9SMAhcDA2Mjxmzr1o4kZy9aPBcDA2NrxuzW32rMtb8Ms7thYGDswWhDdiUW26ZePmTFwMA4gTELvvboxnVZO4t+DAwMjLxovGncj55YvAMGBgbGcn38rWHAr2wNMTAwHsLIB5Czlly7EHXzDgMDY2vG7IjDeimbNOZm5TQGBsZGjB93CXRyi+PUpgAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

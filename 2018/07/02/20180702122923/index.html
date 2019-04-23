@@ -19,7 +19,7 @@
     
     
     
-    <title>NodeJS 树结构遍历 —— 深度优先和广度优先 | Panda Shen&#39;s Blog</title>
+    <title>NodeJS 树结构遍历 —— 深度优先和广度优先 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,21 +30,21 @@
 <meta name="keywords" content="异步,Promise,NodeJS,ES6,ES7,async&#x2F;await,fs,数据结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NodeJS 树结构遍历 —— 深度优先和广度优先">
-<meta property="og:url" content="https://www.pandashen.com/2018/07/02/20180702122923/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/07/02/20180702122923/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="树的基本概念树（Tree）是 n 个结点的有限集，n 为 0 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 n 大于 1 时，其余结点可分为 m 个互不相交的有限集 T1、T2、......、Tm，其中每一个集合本身又是一棵树，并且称为 SubTree，即根的子树。  需要强调的是，n&amp;gt;0 时根结点是唯一的，不可能存在多个根结点，m&amp;gt;0 时，子树">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/02/20180702122923/traversal-tree.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/02/20180702122923/tree-detials.jpg">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/02/20180702122923/depth-first-traversal.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/02/20180702122923/breadth-first-traversal.png">
-<meta property="og:updated_time" content="2019-04-12T03:13:21.122Z">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/02/20180702122923/traversal-tree.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/02/20180702122923/tree-detials.jpg">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/02/20180702122923/depth-first-traversal.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/02/20180702122923/breadth-first-traversal.png">
+<meta property="og:updated_time" content="2019-04-23T03:13:55.022Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJS 树结构遍历 —— 深度优先和广度优先">
 <meta name="twitter:description" content="树的基本概念树（Tree）是 n 个结点的有限集，n 为 0 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 n 大于 1 时，其余结点可分为 m 个互不相交的有限集 T1、T2、......、Tm，其中每一个集合本身又是一棵树，并且称为 SubTree，即根的子树。  需要强调的是，n&amp;gt;0 时根结点是唯一的，不可能存在多个根结点，m&amp;gt;0 时，子树">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/07/02/20180702122923/traversal-tree.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/07/02/20180702122923/traversal-tree.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -265,7 +265,7 @@
                 <div class="image-caption">树结构的组成</div>
             </figure>
 <p><br></p>
-<p>在对树结构进行遍历时，按顺序可分为先序、中序和后续，按遍历的方式可分为深度优先和广度优先，我们这篇文章就通过使用先序深度优先和先序广度优先来实现 NodeJS 中递归删除目录结构，体会对树结构的遍历，文章中会大量用到 NodeJS 核心模块 <code>fs</code> 的方法，可以通过 <a href="https://www.pandashen.com/2018/06/30/20180630172601/" target="_blank">NodeJS 文件操作 —— fs 基本使用</a> 来了解文中用到的 <code>fs</code> 模块的方法及用法。</p>
+<p>在对树结构进行遍历时，按顺序可分为先序、中序和后续，按遍历的方式可分为深度优先和广度优先，我们这篇文章就通过使用先序深度优先和先序广度优先来实现 NodeJS 中递归删除目录结构，体会对树结构的遍历，文章中会大量用到 NodeJS 核心模块 <code>fs</code> 的方法，可以通过 <a href="https://www.overtaking.top/2018/06/30/20180630172601/" target="_blank">NodeJS 文件操作 —— fs 基本使用</a> 来了解文中用到的 <code>fs</code> 模块的方法及用法。</p>
 <h2 id="先序深度优先实现递归删除文件目录"><a href="#先序深度优先实现递归删除文件目录" class="headerlink" title="先序深度优先实现递归删除文件目录"></a>先序深度优先实现递归删除文件目录</h2><blockquote class="pullquote default"><p>深度优先的意思就是在遍历当前文件目录的时候，如果子文件夹内还有内容，就继续遍历子文件夹，直到遍历到最深层不再有文件夹，则删除其中的文件，再删除这个文件夹，然后继续遍历它的 “兄弟”，直到内层文件目录都被删除，再删除上一级，最后根文件夹为空，删除根文件夹。</p>
 </blockquote>
 <p><br></p>
@@ -338,13 +338,13 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-04-12T03:13:21.122Z" itemprop="dateUpdated">2019-04-12 11:13:21</time>
+    更新时间：<time datetime="2019-04-23T03:13:55.022Z" itemprop="dateUpdated">2019-04-23 11:13:55</time>
 </span><br>
 
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/07/02/20180702122923/" target="_blank" rel="external">https://www.pandashen.com/2018/07/02/20180702122923/</a>
+    本文链接：<a href="/2018/07/02/20180702122923/" target="_blank" rel="external">https://www.overtaking.top/2018/07/02/20180702122923/</a>
 </span><br>
 
 
@@ -357,7 +357,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -383,7 +383,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/07/02/20180702122923/&title=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/07/02/20180702122923/&title=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -393,24 +393,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/07/02/20180702122923/&title=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/07/02/20180702122923/&title=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Shen's Blog&source=
 
 树的基本概念树（Tree）是 n 个结点的有限集，n 为 0 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 n 大..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/07/02/20180702122923/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/07/02/20180702122923/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/07/02/20180702122923/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Shen's Blog&url=https://www.overtaking.top/2018/07/02/20180702122923/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/07/02/20180702122923/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/07/02/20180702122923/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -543,7 +543,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/07/02/20180702122923/&title=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/07/02/20180702122923/&title=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -553,24 +553,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/07/02/20180702122923/&title=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/07/02/20180702122923/&title=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Shen's Blog&source=
 
 树的基本概念树（Tree）是 n 个结点的有限集，n 为 0 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 n 大..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/07/02/20180702122923/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/07/02/20180702122923/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/07/02/20180702122923/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 树结构遍历 —— 深度优先和广度优先》 — Shen's Blog&url=https://www.overtaking.top/2018/07/02/20180702122923/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/07/02/20180702122923/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/07/02/20180702122923/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -581,7 +581,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACO0lEQVR42u3aS27DMAxFUe9/0y7QUYBU7n2kU9TU9ShwUltHA1b8HAe+zu/r9fPrndXvV795fxp/cuuSIUPGYxnn5fX+stWd1VL4c1Z/e702GTJk7MNIg+wJrpRHtm95X4YMGTLCQEkAtUAvQ4YMGWSh5JiYLlGGDBkyCIO8srOg2jZ9JBeXIUPGAxm1xsDffP54f0OGDBn/nnGG13XKSspz5AnxqmTIkDGa0WlP1g5wZFP4twfJpGXIkPFwRpqsfiLhTEP5D3dkyJCxASMdHuVBM0VytgwZMnZjBIkiCLu8fEaej7ZbhgwZoxlpEpu+oNYKLW6QDBkyNmN0QmptGKJPkiFDxlQGH3cg3/KjHgHwZqcMGTJ2YHSSyc4BsZPuypAhY08GKYSl1HQ4tXgAlSFDxmhGOvpwb+uRD43xdoIMGTLmMWrhjzP4sEWtJfBDLi5DhoxxDF6y50fDazYJ33wjeONBhgwZz2Wko2C1gn5tI4K/kiFDxmhGLQfkYxlpgO4kwDJkyJjKqB3LgjGIsGHJt+zghUQZMmSMYNw1VJG2HnlC+0tAlyFDxmhGpzLHRyh46a1V/pMhQ8ZQRqehWCvA9RsGMmTI2I3RaWSmS+n/Z+iEaRkyZDydwZfFU0r+ep6yBt0DGTJkDGWkjYHaMe6u9DUYtpAhQ8ZmjNrxkRfdSLt0GYhlyJAhAzcv+XGz31RoBVwZMmQ8kNEpn/Ubn+kYxzLgypAhYyjjrsZA2uAkyW0n6MuQIWME4wv99n+tyHH39AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJUlEQVR42u3awY6DMAxF0f7/T9NtpYr0Phsq4dysRlMafFi42PHrhdfxsdbX8Otrd2ktGTJkPJZxLFfK+P7W2V3Wd+exyZAhYx8GSaAky/FPSZom35IhQ4aMWupcp+l0BxkyZMioJVzyn/TKNNHLkCFjNwYpJklirSXTv9biMmTIeCCDd93///ct5xsyZMh4FOMIV3oM0LkyiEqGDBmjGTzBdYLmjbZOPDJkyJjNSN+7eMuMB0QOEi6ba5MhQ8ajGLzFdlXpW2ux/dhNhgwZmzH4AWR/UCwtd0/3kSFDxgaMNHWm16Qk/iBkyJCxA6NWD66LzOJQV/shypAhYyqj059LW/MkjaYRnv5uyJAhYxAjbXul7TkeNGH8SP0yZMgYyiBFIy8veSnLHwFK2TJkyBjNSAtX3lDj7MtqcRkyZGzD4P9JW/k8jfJ9Tn89ZMiQMYiRlqxpWJ0RiiBBy5AhYxsGb3Xd8ULZKpJlyJAxmnEHgFeXtSI2SMcyZMgYxOgE1ClN++MX6CRWhgwZgxi8rE0HtmqNvPjxyZAhYxtGunVtnKJzqIkSrgwZMgYxjnDVMLVAgwMJGTJkjGZ0tk6TcjrAkb5iypAhYzajNmCRDnLxQ4L0+FOGDBn7MGoHmbzFXxvI4K03GTJkyCC34UMV/I5BDDJkyJCBgyOf1sbCUBErQ4aM0Qw+wpUeW/IWf+sQVIYMGaMZtRGH2mvfHUNmMmTIGM14A8dVA/EP0YYlAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

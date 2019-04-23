@@ -19,7 +19,7 @@
     
     
     
-    <title>Koa2 中间件原理解析 —— 看了就会写 | Panda Shen&#39;s Blog</title>
+    <title>Koa2 中间件原理解析 —— 看了就会写 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="NodeJS,async&#x2F;await,Koa,中间件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Koa2 中间件原理解析 —— 看了就会写">
-<meta property="og:url" content="https://www.pandashen.com/2018/08/20/20180820200342/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/08/20/20180820200342/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="前言Koa 2.x 版本是当下最流行的 NodeJS 框架，Koa 2.0 的源码特别精简，不像 Express 封装的功能那么多，所以大部分的功能都是由 Koa 开发团队（同 Express 是一家出品）和社区贡献者针对 Koa 对 NodeJS 的封装特性实现的中间件来提供的，用法非常简单，就是引入中间件，并调用 Koa 的 use 方法使用在对应的位置，这样就可以通过在内部操作 ctx">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/08/20/20180820200342/koa-middleware.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/08/20/20180820200342/koa-middleware.png">
 <meta property="og:updated_time" content="2019-04-09T03:22:07.761Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Koa2 中间件原理解析 —— 看了就会写">
 <meta name="twitter:description" content="前言Koa 2.x 版本是当下最流行的 NodeJS 框架，Koa 2.0 的源码特别精简，不像 Express 封装的功能那么多，所以大部分的功能都是由 Koa 开发团队（同 Express 是一家出品）和社区贡献者针对 Koa 对 NodeJS 的封装特性实现的中间件来提供的，用法非常简单，就是引入中间件，并调用 Koa 的 use 方法使用在对应的位置，这样就可以通过在内部操作 ctx">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/08/20/20180820200342/koa-middleware.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/08/20/20180820200342/koa-middleware.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -325,7 +325,7 @@
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/08/20/20180820200342/" target="_blank" rel="external">https://www.pandashen.com/2018/08/20/20180820200342/</a>
+    本文链接：<a href="/2018/08/20/20180820200342/" target="_blank" rel="external">https://www.overtaking.top/2018/08/20/20180820200342/</a>
 </span><br>
 
 
@@ -338,7 +338,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -364,7 +364,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/08/20/20180820200342/&title=《Koa2 中间件原理解析 —— 看了就会写》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/08/20/20180820200342/&title=《Koa2 中间件原理解析 —— 看了就会写》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -374,24 +374,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/08/20/20180820200342/&title=《Koa2 中间件原理解析 —— 看了就会写》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/08/20/20180820200342/&title=《Koa2 中间件原理解析 —— 看了就会写》 — Shen's Blog&source=
 
 前言Koa 2.x 版本是当下最流行的 NodeJS 框架，Koa 2.0 的源码特别精简，不像 Express 封装的功能那么多，所以大部分的功能都..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/08/20/20180820200342/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/08/20/20180820200342/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Koa2 中间件原理解析 —— 看了就会写》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/08/20/20180820200342/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Koa2 中间件原理解析 —— 看了就会写》 — Shen's Blog&url=https://www.overtaking.top/2018/08/20/20180820200342/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/08/20/20180820200342/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/08/20/20180820200342/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -524,7 +524,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/08/20/20180820200342/&title=《Koa2 中间件原理解析 —— 看了就会写》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/08/20/20180820200342/&title=《Koa2 中间件原理解析 —— 看了就会写》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -534,24 +534,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/08/20/20180820200342/&title=《Koa2 中间件原理解析 —— 看了就会写》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/08/20/20180820200342/&title=《Koa2 中间件原理解析 —— 看了就会写》 — Shen's Blog&source=
 
 前言Koa 2.x 版本是当下最流行的 NodeJS 框架，Koa 2.0 的源码特别精简，不像 Express 封装的功能那么多，所以大部分的功能都..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/08/20/20180820200342/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/08/20/20180820200342/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Koa2 中间件原理解析 —— 看了就会写》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/08/20/20180820200342/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Koa2 中间件原理解析 —— 看了就会写》 — Shen's Blog&url=https://www.overtaking.top/2018/08/20/20180820200342/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/08/20/20180820200342/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/08/20/20180820200342/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -562,7 +562,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3a3U7DMAwG0L3/S5dbJGj5bHdAk5MrNLYlp0jGP3m94nV8WZ9fr74n//6bFwYGxmMZx+W6PsrZxmev9Pa6fj8GBsY+jLMIlgfWPLye8aoBGgMDAyMPske8JqknBgYGRsKobnCdIF6TMDAwMHpFbDXUJingH9TiGBgYD2TkXfff//kt8w0MDIxHMY7i6n2qkN71ToWBgbE0ozfCzENztSSuFr0YGBh7MvKyc9IaS3ZMABgYGDswquVi3hqrvn/ShsPAwNiHMU/Oqg39HFAIuBgYGMsxqse9d/JQfYhRaY2BgbEc4+xjvfA3v1JWTUbL22NgYDyQkX9p3mjLL4fNBw/fdA0xMDCWY1xvNhk95qR8ePDD3wEDA2NRRl5M9nKw3ngyGYhiYGDsw0ha89Xtc/BoAJDfCsHAwHg4o5cg5kPK6lHyi2UYGBi7MfIyslfi9iarzZEqBgbGcozqZdO8lZY/jmoa+s1vMTAwlmYkrfy8iK2OJKv/GQptQQwMjOUY1VbapPWWpJv5uBQDA2NPxqS5nw8YJo+vMMjEwMBYiDG5qTE56L0hGwMDY1XGUVy9hG/+aH4I/RgYGEsz8lUuKYuXNvIRaS9YY2BgPJ3RKzirw8sE0BuOYmBg7MPI21vVJn4SNKulbLn+xsDA2IxxV8KXJ4VREYuBgYERB9z5EUd1NgYGxtKMXhHbG39OBglvabdhYGD8e8a9QbmX/CVp6A1DTQwMjOcxPgDf7Y50pa+a+gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACNElEQVR42u3aQZKDMAwF0dz/0pkDEKC/ZKbKolmlagD7zUJIlj4ffH0P19k9x/trq3yeuGTIkLEt43t5pYzjU2QVvu7pHmTIkPECBgmgaSDuh2nylAwZMmSkv0mCSMKrDBkyZKwKuOl7yNtkyJAho1PEksCalqM8iC+rxWXIkLEhg5+6///vR/obMmTI2IpRO6znbYC0YVDclQwZMkYz0gKVNDV5mzMoUMlYhgwZMoYy0rYiLyN5qckbCa1zPhkyZGzLqG2UF5lpO5OE8pvvhgwZMoYy0sMvHmprpW86jiZDhozZjCdKU/7XtM15ukMZMmSMZqRBky8TD3WF9WnrMRkyZGzFSEccOiMRHM9X/NEYkCFDxjhGmrqRlI6XrB3GzamhDBkyBjH4Mv1Rieu0koTgm4EwGTJkDGWkR/l86+lwBk9JW7mnDBkyNmSkrcRa8kdWqR3k3dTiMmTIGMFI2wBprOMDFq0+hgwZMkYzeCK4dmCiFnBP00QZMmSMZvCX8nuu39xpf17/Q2XIkDGb0Xnp2rhXSzplyJDxNgaP0GlpWvwOgMRUhgwZ72HwA7Ja23JVU/Mm4MqQIWMc4xtePJj2NxqsK0OGjNGMp1/NWwv9tqgMGTJmM2pBttZu5ElnWkLLkCHjDQxe9fIQyQc4+BcgbmHKkCHjlYzOkVy6YlC4ypAhQ8bSZK423nGTksqQIeMFDN6ATEPkqvJ42XGbDBkyNmTURhz4QX+6xbQ9IEOGjNGMPw56IuBMeHPcAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

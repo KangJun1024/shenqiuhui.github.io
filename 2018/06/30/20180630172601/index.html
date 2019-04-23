@@ -19,7 +19,7 @@
     
     
     
-    <title>NodeJS 文件操作 —— fs 基本使用 | Panda Shen&#39;s Blog</title>
+    <title>NodeJS 文件操作 —— fs 基本使用 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="NodeJS,fs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NodeJS 文件操作 —— fs 基本使用">
-<meta property="og:url" content="https://www.pandashen.com/2018/06/30/20180630172601/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/06/30/20180630172601/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="fs 概述在 NodeJS 中，所有与文件操作都是通过 fs 核心模块来实现的，包括文件目录的创建、删除、查询以及文件的读取和写入，在 fs 模块中，所有的方法都分为同步和异步两种实现，具有 sync 后缀的方法为同步方法，不具有 sync 后缀的方法为异步方法，在了解文件操作的方法之前有一些关于系统和文件的前置知识，如文件的权限位 mode、标识位 flag、文件描述符 fd 等，所以在了解">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/06/30/20180630172601/fs.jpg">
-<meta property="og:updated_time" content="2019-03-28T06:55:19.513Z">
+<meta property="og:image" content="https://www.overtaking.top/2018/06/30/20180630172601/fs.jpg">
+<meta property="og:updated_time" content="2019-04-23T03:13:46.955Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJS 文件操作 —— fs 基本使用">
 <meta name="twitter:description" content="fs 概述在 NodeJS 中，所有与文件操作都是通过 fs 核心模块来实现的，包括文件目录的创建、删除、查询以及文件的读取和写入，在 fs 模块中，所有的方法都分为同步和异步两种实现，具有 sync 后缀的方法为同步方法，不具有 sync 后缀的方法为异步方法，在了解文件操作的方法之前有一些关于系统和文件的前置知识，如文件的权限位 mode、标识位 flag、文件描述符 fd 等，所以在了解">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/06/30/20180630172601/fs.jpg">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/06/30/20180630172601/fs.jpg">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -256,7 +256,7 @@
 <table><thead><tr><th style="text-align:center;">权限分配</th><th style="text-align:center;" colspan="3">文件所有者</th><th style="text-align:center;" colspan="3">文件所属组</th><th style="text-align:center;" colspan="3">其他用户</th></tr></thead><tbody><tr><td style="text-align:center;">权限项</td><td style="text-align:center;">读</td><td style="text-align:center;">写</td><td style="text-align:center;">执行</td><td style="text-align:center;">读</td><td style="text-align:center;">写</td><td style="text-align:center;">执行</td><td style="text-align:center;">读</td><td style="text-align:center;">写</td><td style="text-align:center;">执行</td></tr><tr><td style="text-align:center;">字符表示<br></td><td style="text-align:center;">r</td><td style="text-align:center;">w</td><td style="text-align:center;">x</td><td style="text-align:center;">r</td><td style="text-align:center;">w</td><td style="text-align:center;">x</td><td style="text-align:center;">r</td><td style="text-align:center;">w</td><td style="text-align:center;">x</td></tr><tr><td style="text-align:center;">数字表示</td><td style="text-align:center;">4</td><td style="text-align:center;">2</td><td style="text-align:center;">1</td><td style="text-align:center;">4</td><td style="text-align:center;">2</td><td style="text-align:center;">1</td><td style="text-align:center;">4</td><td style="text-align:center;">2</td><td style="text-align:center;">1</td></tr></tbody></table>
 
 <p>在上面表格中，我们可以看出系统中针对三种类型进行权限分配，即文件所有者（自己）、文件所属组（家人）和其他用户（陌生人），文件操作权限又分为三种，读、写和执行，数字表示为八进制数，具备权限的八进制数分别为 <code>4</code> 、<code>2</code>、<code>1</code>，不具备权限为 <code>0</code>。</p>
-<p>为了更容易理解，我们可以随便在一个目录中打开 <code>Git</code>，使用 Linux 命令 <code>ls -al</code> 来查目录中文件和文件夹的权限位，如果对 <code>Git</code> 和 <code>Linux</code> 命令不熟悉，可以看 <a href="https://www.pandashen.com/2017/12/14/20171214024101/" target="_blank">Git 命令总结，从零到熟悉</a>。</p>
+<p>为了更容易理解，我们可以随便在一个目录中打开 <code>Git</code>，使用 Linux 命令 <code>ls -al</code> 来查目录中文件和文件夹的权限位，如果对 <code>Git</code> 和 <code>Linux</code> 命令不熟悉，可以看 <a href="https://www.overtaking.top/2017/12/14/20171214024101/" target="_blank">Git 命令总结，从零到熟悉</a>。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">drwxr-xr-x 1 PandaShen 197121 0 Jun 28 14:41 core</span><br><span class="line">-rw-r--r-- 1 PandaShen 197121 293 Jun 23 17:44 index.md</span><br></pre></td></tr></table></figure>
 <p>在上面的目录信息当中，很容易看出用户名、创建时间和文件名等信息，但最重要的是开头第一项（十位的字符）。</p>
 <p>第一位代表是文件还是文件夹，<code>d</code> 开头代表文件夹，<code>-</code> 开头的代表文件，而后面九位就代表当前用户、用户所属组和其他用户的权限位，按每三位划分，分别代表读（r）、写（w）和执行（x），<code>-</code> 代表没有当前位对应的权限。</p>
@@ -330,7 +330,7 @@
 <figure class="highlight js"><figcaption><span>异步打开文件</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line">fs.open(<span class="string">'4.txt'</span>, <span class="string">'r'</span>, (err, fd) =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(fd);</span><br><span class="line">  fs.open(<span class="string">'5.txt'</span>, <span class="string">'r'</span>, (err, fd) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(fd);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
 <h3 id="关闭文件-close"><a href="#关闭文件-close" class="headerlink" title="关闭文件 close"></a>关闭文件 close</h3><p><code>close</code> 方法有两个参数，第一个参数为关闭文件的文件描述符 <code>fd</code>，第二参数为回调函数，回调函数有一个参数 <code>err</code>（错误），关闭文件后执行。</p>
 <figure class="highlight js"><figcaption><span>异步关闭文件</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"></span><br><span class="line">fs.open(<span class="string">'4.txt'</span>, <span class="string">'r'</span>, (err, fd) =&gt; &#123;</span><br><span class="line">  fs.close(fd, err =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'关闭成功'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭成功</span></span><br></pre></td></tr></table></figure>
-<h3 id="读取文件-read"><a href="#读取文件-read" class="headerlink" title="读取文件 read"></a>读取文件 read</h3><blockquote class="pullquote danger"><p><code>read</code> 方法与 <code>readFile</code> 不同，一般针对于文件太大，无法一次性读取全部内容到缓存中或文件大小未知的情况，都是多次读取到 Buffer 中。<br>想了解 Buffer 可以看 <a href="https://www.pandashen.com/2018/06/29/20180629115313/" target="_blank">NodeJS —— Buffer 解读</a>。</p>
+<h3 id="读取文件-read"><a href="#读取文件-read" class="headerlink" title="读取文件 read"></a>读取文件 read</h3><blockquote class="pullquote danger"><p><code>read</code> 方法与 <code>readFile</code> 不同，一般针对于文件太大，无法一次性读取全部内容到缓存中或文件大小未知的情况，都是多次读取到 Buffer 中。<br>想了解 Buffer 可以看 <a href="https://www.overtaking.top/2018/06/29/20180629115313/" target="_blank">NodeJS —— Buffer 解读</a>。</p>
 </blockquote>
 <p><code>read</code> 方法中有六个参数：</p>
 <ul>
@@ -409,7 +409,7 @@
 <p>同步代码就是利用 <code>accessSync</code> 方法检查文件路径是否存在，利用 <code>try...catch...</code> 进行错误捕获，如果路径不存在，则会报错，会进入 <code>catch</code> 完成文件夹的创建。</p>
 <h3 id="异步回调的实现"><a href="#异步回调的实现" class="headerlink" title="异步回调的实现"></a>异步回调的实现</h3><figure class="highlight js"><figcaption><span>递归删除文件目录 —— 异步回调</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mkPathAsync</span>(<span class="params">dirPath, callback</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 转变成数组，如 ['a', 'b', 'c']</span></span><br><span class="line">  <span class="keyword">let</span> parts = dirPath.split(path.sep);</span><br><span class="line">  <span class="keyword">let</span> index = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建文件夹方法</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 重新拼接成 a a/b a/b/c</span></span><br><span class="line">    <span class="keyword">let</span> current = parts.slice(<span class="number">0</span>, index).join(path.sep);</span><br><span class="line">    index++;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果路径检查成功说明已经有该文件目录，则继续创建下一级</span></span><br><span class="line">    <span class="comment">// 失败则创建目录，成功后递归 next 创建下一级</span></span><br><span class="line">    fs.access(current, err =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        fs.mkdir(current, next);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        next();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  next();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建文件目录</span></span><br><span class="line">mkPathAsync(path.join(<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>), () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'创建文件目录完成'</span>)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建文件目录完成</span></span><br></pre></td></tr></table></figure>
 <p>上面方法中没有通过循环实现每次目录的拼接，而是通过递归内部函数 <code>next</code> 的方式并维护 <code>index</code> 变量来实现的，在使用 <code>access</code> 的时候成功说明文件目录已经存在，就继续递归创建下一级，如果存在 <code>err</code> 说明不存在，则创建文件夹。</p>
-<h3 id="异步-async-await-的实现"><a href="#异步-async-await-的实现" class="headerlink" title="异步 async/await 的实现"></a>异步 async/await 的实现</h3><p>上面两种方式，同步阻塞代码，性能不好，异步回调函数嵌套性能好，但是维护性差，我们想要具备性能好，代码可读性又好可以使用现在 NodeJS 中正流行的 <code>async/await</code> 的方式进行异步编程，想了解 <code>async/await</code> 可以看 <a href="https://www.pandashen.com/2018/06/15/20180615212040/" target="_blank">异步发展流程 —— 异步编程的终极大招 async/await</a> 这篇文章。</p>
+<h3 id="异步-async-await-的实现"><a href="#异步-async-await-的实现" class="headerlink" title="异步 async/await 的实现"></a>异步 async/await 的实现</h3><p>上面两种方式，同步阻塞代码，性能不好，异步回调函数嵌套性能好，但是维护性差，我们想要具备性能好，代码可读性又好可以使用现在 NodeJS 中正流行的 <code>async/await</code> 的方式进行异步编程，想了解 <code>async/await</code> 可以看 <a href="https://www.overtaking.top/2018/06/15/20180615212040/" target="_blank">异步发展流程 —— 异步编程的终极大招 async/await</a> 这篇文章。</p>
 <p>使用 <code>async</code> 函数中 <code>await</code> 等待的异步操作必须转换成 Promise，以前我们都使用 <code>util</code> 模块下的 <code>promisify</code> 方法进行转换，其实 <code>promisify</code> 方法的原理很简单，我们在实现递归创建文件目录之前先实现 <code>promisify</code> 方法。</p>
 <figure class="highlight js"><figcaption><span>promisify 原理</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将一个异步方法转换成 Promise</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">promisify</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      fn.call(<span class="literal">null</span>, ...args, err =&gt; err ? reject() : resolve());</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>其实 <code>promisify</code> 方法就是利用闭包来实现的，调用时传入一个需要转换成 Promise 的函数 <code>fn</code>，返回一个闭包函数，在闭包函数中返回一个 Promise 实例，并同步执行了 <code>fn</code>，通过 <code>call</code> 将闭包函数中的参数和回调函数作为参数传入了 <code>fn</code> 中，该回调在存在错误的时候调用了 Promise 实例的 <code>reject</code>，否则调用 <code>resolve</code>；</p>
@@ -439,13 +439,13 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-28T06:55:19.513Z" itemprop="dateUpdated">2019-03-28 14:55:19</time>
+    更新时间：<time datetime="2019-04-23T03:13:46.955Z" itemprop="dateUpdated">2019-04-23 11:13:46</time>
 </span><br>
 
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/06/30/20180630172601/" target="_blank" rel="external">https://www.pandashen.com/2018/06/30/20180630172601/</a>
+    本文链接：<a href="/2018/06/30/20180630172601/" target="_blank" rel="external">https://www.overtaking.top/2018/06/30/20180630172601/</a>
 </span><br>
 
 
@@ -458,7 +458,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -484,7 +484,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/06/30/20180630172601/&title=《NodeJS 文件操作 —— fs 基本使用》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/06/30/20180630172601/&title=《NodeJS 文件操作 —— fs 基本使用》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -494,24 +494,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/06/30/20180630172601/&title=《NodeJS 文件操作 —— fs 基本使用》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/06/30/20180630172601/&title=《NodeJS 文件操作 —— fs 基本使用》 — Shen's Blog&source=
 
 fs 概述在 NodeJS 中，所有与文件操作都是通过 fs 核心模块来实现的，包括文件目录的创建、删除、查询以及文件的读取和写入，在 fs 模块中，..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/06/30/20180630172601/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/06/30/20180630172601/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 文件操作 —— fs 基本使用》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/06/30/20180630172601/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 文件操作 —— fs 基本使用》 — Shen's Blog&url=https://www.overtaking.top/2018/06/30/20180630172601/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/06/30/20180630172601/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/06/30/20180630172601/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -644,7 +644,7 @@ fs 概述在 NodeJS 中，所有与文件操作都是通过 fs 核心模块来�
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/06/30/20180630172601/&title=《NodeJS 文件操作 —— fs 基本使用》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/06/30/20180630172601/&title=《NodeJS 文件操作 —— fs 基本使用》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -654,24 +654,24 @@ fs 概述在 NodeJS 中，所有与文件操作都是通过 fs 核心模块来�
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/06/30/20180630172601/&title=《NodeJS 文件操作 —— fs 基本使用》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/06/30/20180630172601/&title=《NodeJS 文件操作 —— fs 基本使用》 — Shen's Blog&source=
 
 fs 概述在 NodeJS 中，所有与文件操作都是通过 fs 核心模块来实现的，包括文件目录的创建、删除、查询以及文件的读取和写入，在 fs 模块中，..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/06/30/20180630172601/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/06/30/20180630172601/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 文件操作 —— fs 基本使用》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/06/30/20180630172601/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 文件操作 —— fs 基本使用》 — Shen's Blog&url=https://www.overtaking.top/2018/06/30/20180630172601/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/06/30/20180630172601/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/06/30/20180630172601/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -682,7 +682,7 @@ fs 概述在 NodeJS 中，所有与文件操作都是通过 fs 核心模块来�
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3aa66CQAwGUPe/ae4KBr92xptQDr+MKHIwafr6fOLjWhzJ51dnV6/vr7x1YGBgPJZx3R6rH8hJ959fvZPfGwYGxnsY1bC4+u792SQ0J1fAwMDAqCZwSSKYh1EMDAyMfcb9d5NwnBTAGBgYGL0itprkJWfz4vlYLY6BgfFARt51///XP5lvYGBgPIpxFY97WLW4PXZXGBgYoxn7aV/yTrVh17wfDAyMoYy8aKyuTVQXyLYeFgYGxmjGfinbe6c64MzBGBgY8xi9wNobWObBt/q7GBgYsxm9gFtd6spTz16bDwMDYzbjbOqWt+qq+emXfwADA2M0Y2cw0Eso9xcslt/CwMAYysgD7s6CRZIOJuPPqN2GgYExjrHTFMvDYhVTJWFgYMxm5OndqbWJUw8l+oMwMDBGM/LBQBIcfzcSWGa4GBgYQxnV9v1Ou623urG8DgYGxmhGtcjMm2v7CWhzWQ0DA2MoIw+s+0206sAyf1gYGBhvYFRXHE4VwL0wvbUzgoGB8XBGcrk8jCYJX6+sXaaGGBgYr2FUS9M8ZFeTyEJLDgMDYyjjKh6nxgPVMP2FioGBMZqx0/C6v4lmehd8PkkoMTAw5jHyUjNficjHnPtJJwYGxnsYhao3KH3zx9EbMGBgYGD0gmyz29cK0xgYGBh5AZkvk+000aLBJwYGxgsY1ZWIXgrYu93D7TYMDIwHMn7Ryzrb9D821MTAwHge4w8YLpNhQAEM9gAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aMXLDMAwEQP//00mTLrF8B9qZEbmqXEgiVwUMAng84uvr1/Xsnt/3z1Z5fOLCwMC4LePr8rq+53oTyRtm6/5BxcDAOICRBNA2ECdhOv8QL/aMgYGBETOSBDG/HwMDA+PTAffZs9fBFwMDA2PlEJuHyzaYzo6+GBgY5zDyqvv///5IfwMDA+NWjFmxPmlYtoF4tp+fZzEwMLZm5AGuTezaQ28bcDEwMM5h5IW2vGTfDnjljYToFRgYGNsxVgYd3rvF9sNFtUMMDIwtGNebnpXg80Gx9jAcpYYYGBibMoZn3zLRnIXaaKQMAwNja0ZeCMtLY8OhrjjFHMZ7DAyM2zLagn4R+EYpY7vDpxkuBgbGRoz1lK49Bq8z6k4sBgbGzRkrjcnZhtpPEIVsDAyMYxh5eJ0t2R5c60MsBgbGMYw22LUNgxycFPL+SA0xMDAOYOSNgVljsk0fhz0NDAyM7RizKl0+KtEea9sWBQYGxt6MlXGKPCC2Rb3hNAUGBsYBjNmoxEowbY+sLz4xBgbGAYy2lDZbOB/pyMc+MDAwTmOsvDov2600NaOAi4GBsRFjlrrNmp3tRot1MTAwtmbMXv3e1kL+z9D+JWBgYOzEWAmyn2gqtO1PDAyMcxht4EuCb17OW2mIYmBgYCQp4Erylw9VvKBiYGBglAMWs4Qvbwa8LTXEwMC4FSNvQK40NfOkM3kKAwPjHMZKyGsztGSLbXsAAwNja8Y33p5LqUb8SdAAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 

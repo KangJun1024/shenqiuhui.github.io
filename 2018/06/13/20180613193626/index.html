@@ -19,7 +19,7 @@
     
     
     
-    <title>异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise | Panda Shen&#39;s Blog</title>
+    <title>异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="JavaScript,异步,Promise,源码分析,ES6">
 <meta property="og:type" content="article">
 <meta property="og:title" content="异步发展流程 —— 手写一个符合 Promise&#x2F;A+ 规范的 Promise">
-<meta property="og:url" content="https://www.pandashen.com/2018/06/13/20180613193626/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/06/13/20180613193626/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="概述Promise 是 js 异步编程的一种解决方案，避免了 “回调地狱” 给编程带来的麻烦，在 ES6 中成为了标准，这篇文章重点不是叙述 Promise 的基本用法，而是从零开始，手写一版符合 Promise/A+ 规范的 Promise，如果想了解更多 Promise 的基本用法，可以看 异步发展流程 —— Promise 的基本使用 这篇文章。  Promise 构造函数的实现我们在使">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/06/13/20180613193626/promise-A+.png">
-<meta property="og:updated_time" content="2019-04-15T10:47:53.794Z">
+<meta property="og:image" content="https://www.overtaking.top/2018/06/13/20180613193626/promise-A+.png">
+<meta property="og:updated_time" content="2019-04-23T03:13:28.498Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="异步发展流程 —— 手写一个符合 Promise&#x2F;A+ 规范的 Promise">
 <meta name="twitter:description" content="概述Promise 是 js 异步编程的一种解决方案，避免了 “回调地狱” 给编程带来的麻烦，在 ES6 中成为了标准，这篇文章重点不是叙述 Promise 的基本用法，而是从零开始，手写一版符合 Promise/A+ 规范的 Promise，如果想了解更多 Promise 的基本用法，可以看 异步发展流程 —— Promise 的基本使用 这篇文章。  Promise 构造函数的实现我们在使">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/06/13/20180613193626/promise-A+.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/06/13/20180613193626/promise-A+.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -248,7 +248,7 @@
         <div class="post-content" id="post-content" itemprop="postContent">
             <img src="/2018/06/13/20180613193626/promise-A+.png" title="Promise 原理">
 <p><br></p>
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><blockquote class="pullquote default"><p>Promise 是 js 异步编程的一种解决方案，避免了 “回调地狱” 给编程带来的麻烦，在 ES6 中成为了标准，这篇文章重点不是叙述 Promise 的基本用法，而是从零开始，手写一版符合 Promise/A+ 规范的 Promise，如果想了解更多 Promise 的基本用法，可以看 <a href="https://www.pandashen.com/2018/06/12/20180612045005/" target="_blank">异步发展流程 —— Promise 的基本使用</a> 这篇文章。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><blockquote class="pullquote default"><p>Promise 是 js 异步编程的一种解决方案，避免了 “回调地狱” 给编程带来的麻烦，在 ES6 中成为了标准，这篇文章重点不是叙述 Promise 的基本用法，而是从零开始，手写一版符合 Promise/A+ 规范的 Promise，如果想了解更多 Promise 的基本用法，可以看 <a href="https://www.overtaking.top/2018/06/12/20180612045005/" target="_blank">异步发展流程 —— Promise 的基本使用</a> 这篇文章。</p>
 </blockquote>
 <h2 id="Promise-构造函数的实现"><a href="#Promise-构造函数的实现" class="headerlink" title="Promise 构造函数的实现"></a>Promise 构造函数的实现</h2><p>我们在使用 Promise 的时候其实是使用 <code>new</code> 关键字创建了一个 Promise 的实例，其实 Promise 是一个类，即构造函数，下面来实现 Promise 构造函数。</p>
 <a id="more"></a>
@@ -281,7 +281,7 @@
 <li>Promise 实例的 <code>then</code> 方法中的回调为 <code>micro-tasks</code>（微任务），回调内的代码应晚于同步代码执行，在浏览器内部调用微任务接口，我们这里模拟使用宏任务代替。</li>
 </ul>
 <p><strong>针对上面的 Promise/A+ 规范，then 方法代码实现如下：</strong></p>
-<figure class="highlight js"><figcaption><span>promise.js -- then 方法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.prototype.then = <span class="function"><span class="keyword">function</span>(<span class="params">onFulfilled, onRejected</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 实现值的穿透</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> onFulfilled !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    onFulfilled = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> onRejected !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    onRejected = <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">throw</span> err;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 返回新的 Promise，规范中规定这个 Promise 实例叫 promise2</span></span><br><span class="line">  <span class="keyword">var</span> promise2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.status === <span class="string">'fulfilled'</span>) &#123;</span><br><span class="line">      <span class="comment">// 用宏任务替代模拟微任务，目的是使 `then` 的回调晚于同步代码执行</span></span><br><span class="line">      <span class="comment">// 并保证执行 resolvePromise 时可以获取到 promise2 作为参数</span></span><br><span class="line">      setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;  <span class="comment">// 捕获异步的异常</span></span><br><span class="line">          <span class="comment">// onFulfilled 执行完返回值的处理，x 为成功回调的返回值</span></span><br><span class="line">          <span class="keyword">var</span> x = onFulfilled(<span class="keyword">this</span>.value);</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 处理返回值单独封装一个方法</span></span><br><span class="line">          resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">          reject(e);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;.bind(<span class="keyword">this</span>), <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.status === <span class="string">'rejected'</span>) &#123;</span><br><span class="line">      setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          <span class="comment">// onRejected 执行完返回值的处理，x 为失败回调的返回值</span></span><br><span class="line">          <span class="keyword">var</span> x = onRejected(<span class="keyword">this</span>.reason);</span><br><span class="line">          resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">          reject(e);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;.bind(<span class="keyword">this</span>), <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果在 Promise 执行 resolve 或 renject 为异步</span></span><br><span class="line">    <span class="comment">// 将 then 的执行程序存储在实例对应的</span></span><br><span class="line">    <span class="comment">// onFulfilledCallbacks 或 onRejectedCallbacks 中</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.status === <span class="string">'pending'</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.onFulfilledCallbacks.push(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> x = onFulfilled(<span class="keyword">this</span>.value);</span><br><span class="line">            resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">          &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            reject(e);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;.bind(<span class="keyword">this</span>), <span class="number">0</span>);</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">this</span>.onRejectedCallbacks.push(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> x = onRejected(<span class="keyword">this</span>.reason);</span><br><span class="line">            resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">          &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            reject(e);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;.bind(<span class="keyword">this</span>), <span class="number">0</span>);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> promise2;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><figcaption><span>promise.js -- then 方法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.prototype.then = <span class="function"><span class="keyword">function</span>(<span class="params">onFulfilled, onRejected</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 实现值的穿透</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> onFulfilled !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    onFulfilled = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> onRejected !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    onRejected = <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">throw</span> err;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 返回新的 Promise，规范中规定这个 Promise 实例叫 promise2</span></span><br><span class="line">  <span class="keyword">var</span> promise2 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (self.status === <span class="string">'fulfilled'</span>) &#123;</span><br><span class="line">      <span class="comment">// 用宏任务替代模拟微任务，目的是使 `then` 的回调晚于同步代码执行</span></span><br><span class="line">      <span class="comment">// 并保证执行 resolvePromise 时可以获取到 promise2 作为参数</span></span><br><span class="line">      setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;  <span class="comment">// 捕获异步的异常</span></span><br><span class="line">          <span class="comment">// onFulfilled 执行完返回值的处理，x 为成功回调的返回值</span></span><br><span class="line">          <span class="keyword">var</span> x = onFulfilled(self.value);</span><br><span class="line"></span><br><span class="line">          <span class="comment">// 处理返回值单独封装一个方法</span></span><br><span class="line">          resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">          reject(e);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (self.status === <span class="string">'rejected'</span>) &#123;</span><br><span class="line">      setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          <span class="comment">// onRejected 执行完返回值的处理，x 为失败回调的返回值</span></span><br><span class="line">          <span class="keyword">var</span> x = onRejected(self.reason);</span><br><span class="line">          resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">          reject(e);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果在 Promise 执行 resolve 或 renject 为异步</span></span><br><span class="line">    <span class="comment">// 将 then 的执行程序存储在实例对应的</span></span><br><span class="line">    <span class="comment">// onFulfilledCallbacks 或 onRejectedCallbacks 中</span></span><br><span class="line">    <span class="keyword">if</span> (self.status === <span class="string">'pending'</span>) &#123;</span><br><span class="line">      self.onFulfilledCallbacks.push(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> x = onFulfilled(self.value);</span><br><span class="line">            resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">          &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            reject(e);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;, <span class="number">0</span>);</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      self.onRejectedCallbacks.push(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">          <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> x = onRejected(self.reason);</span><br><span class="line">            resolvePromise(promise2, x, resolve, reject);</span><br><span class="line">          &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">            reject(e);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;, <span class="number">0</span>);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> promise2;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <blockquote class="pullquote warning"><p>在处理 <code>then</code> 回调的返回值时，其实就是在处理该返回值与 <code>then</code> 方法在执行后返回的新 Promise 实例（即 promise2）之间的关系，因为无论 Promise 的执行器在执行 <code>resolve</code> 还是 <code>reject</code> 是同步或是异步，都需要进行处理，所以我们单独封装一个函数 <code>resolvePromise</code> 来处理。</p>
 </blockquote>
 <p><strong>resolvePromise 函数有四个参数：</strong></p>
@@ -387,13 +387,13 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-04-15T10:47:53.794Z" itemprop="dateUpdated">2019-04-15 18:47:53</time>
+    更新时间：<time datetime="2019-04-23T03:13:28.498Z" itemprop="dateUpdated">2019-04-23 11:13:28</time>
 </span><br>
 
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/06/13/20180613193626/" target="_blank" rel="external">https://www.pandashen.com/2018/06/13/20180613193626/</a>
+    本文链接：<a href="/2018/06/13/20180613193626/" target="_blank" rel="external">https://www.overtaking.top/2018/06/13/20180613193626/</a>
 </span><br>
 
 
@@ -406,7 +406,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -432,7 +432,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/06/13/20180613193626/&title=《异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/06/13/20180613193626/&title=《异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -442,24 +442,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/06/13/20180613193626/&title=《异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/06/13/20180613193626/&title=《异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise》 — Shen's Blog&source=
 
 概述Promise 是 js 异步编程的一种解决方案，避免了 “回调地狱” 给编程带来的麻烦，在 ES6 中成为了标准，这篇文章重点不是叙述 Prom..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/06/13/20180613193626/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/06/13/20180613193626/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/06/13/20180613193626/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise》 — Shen's Blog&url=https://www.overtaking.top/2018/06/13/20180613193626/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/06/13/20180613193626/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/06/13/20180613193626/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -592,7 +592,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/06/13/20180613193626/&title=《异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/06/13/20180613193626/&title=《异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -602,24 +602,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/06/13/20180613193626/&title=《异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/06/13/20180613193626/&title=《异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise》 — Shen's Blog&source=
 
 概述Promise 是 js 异步编程的一种解决方案，避免了 “回调地狱” 给编程带来的麻烦，在 ES6 中成为了标准，这篇文章重点不是叙述 Prom..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/06/13/20180613193626/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/06/13/20180613193626/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/06/13/20180613193626/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise》 — Shen's Blog&url=https://www.overtaking.top/2018/06/13/20180613193626/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/06/13/20180613193626/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/06/13/20180613193626/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -630,7 +630,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACHklEQVR42u3asbKDMAwEwPz/T/PqV0DuLFJgliozAZul0EiyPp/4Ok6u5P6zf89+X688ujAwMB7LOC6vsw1yUrJLAvuyIwYGxgsYeVi8fjZ5qg3Byb4YGBgY10sniWAeRjEwMDDuDbjtU3kBjIGBgbFWxOZlav5vXjzfVotjYGA8kHFXkfmL3z8538DAwHgU4yivvDRtjyTbEvffyhgYGFsz7kr71kriuw5EMTAw9mbkgw7zdn8bavODUgwMjDcw1lpjbRjNjwracTEMDIy9GW0ZORnCyINvcv/pOhgYGJsy2mIyOW5s08eccfrhMDAwNmXk5WL+6m25Ox81w8DA2JvRvkobdtunRiQMDIxNGZOMctJ0a4PplzUxMDC2ZkyaYvloRdvCWzuXxMDA2JWRJ3Bts36tuG1HzTAwMN7MaENtmzKuDZNFGS4GBsZ2jDz4ti2zfLCsPgDAwMDAKNO+djijTUDzj4iBgbE3Iw+Oa+G1Lkrjg4H6a2FgYGzHSBZtW2ZrCWjUhsPAwHgxY21sYl7u1iEeAwPjNYx7Ry4mwxb1vhgYGJsyjvKatNLyQYqaioGBsTVjreHVbjNp0q0llBgYGPsx1l5xcmyQD1IU3xsDA+MFjEmZmoxiJHdO3hYDAwNjHkzX7imKWAwMDIwyUObNu/xQ4cvuGBgYL2Akm81TwLyc/mG7DQMD44GMUekYJ3bzdPOGQ00MDIznMf4AVfZLqVYzYUMAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3aS47DMAwE0dz/0p4DBHaqSXkAUeVVFomk5wAEP/p88HN9PXff+f5+bZfPG48MGTK2ZVyPD9/g7lfPL4Lv++NVypAh4wAGCaAEn4Zp/iJ+nFmGDBky8GcSpnlYlyFDhoxOwEVLPwZrso4MGTJkpEXsG+UoD+LLanEZMmRsyOBd9////Mp8Q4YMGVsxrvBJxwBkqMDD6+2pZMiQMZqRFqirDs1XC65lyJAhYygj/QHfLB1bkkFC3OeTIUPGCEZn4/4ReWMuCOsyZMgYx+gkamnylyaOfBcZMmScwKgNAHgClzbs+IuQIUPGCYxaI4xsUwvWnWJbhgwZUxm1QSMKfKWUsVYGy5AhYzaDp4DkugMvWTsMNImVIUPGIEatvZWGZrICp97+DzJkyDiAwdtbtS3TwjUuYmXIkDGUwb9abNODBhxJOuM7IzJkyBjESC9ppQPIfgIaB1kZMmQMZaRH5I1+fgmsVSTLkCFjNIPELh6C0zVrRSzaXYYMGeMYnasSnWDKQzYqiWXIkHEAI03vnkk8vJLwjQYSMmTIOIyx6jIEuWTWGWfKkCHjBEYtdXv+zA+ajgfQ/yBDhoxxjDTM8bDL22TpCrWWnwwZMnZnpEG2VsrWSla+rwwZMk5gBFXv0lSvPxCVIUOGjNqokq/ML1WgeyIyZMiQgUcCtVElP+GC1FCGDBkbMvgAsp/81UYLy9ptMmTI2JBRu+LAG/21JLJ/4UyGDBkjGH8DagPxhiecvgAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

@@ -19,7 +19,7 @@
     
     
     
-    <title>Koa2 洋葱模型 —— compose 串联中间件的四种实现 | Panda Shen&#39;s Blog</title>
+    <title>Koa2 洋葱模型 —— compose 串联中间件的四种实现 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="NodeJS,源码分析,async&#x2F;await,Koa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Koa2 洋葱模型 —— compose 串联中间件的四种实现">
-<meta property="og:url" content="https://www.pandashen.com/2018/09/06/20180906170854/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/09/06/20180906170854/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="前言Koa 是当下主流 NodeJS 框架，以轻量见长，而它中间件机制与相对传统的 Express 支持了异步，所以编码时经常使用 async/await，提高了可读性，使代码变得更优雅，上一篇文章 NodeJS 进阶 —— Koa 源码分析，也对 “洋葱模型” 和实现它的 compose 进行分析，由于个人觉得 compose 的编程思想比较重要，应用广泛，所以本篇借着 “洋葱模型” 的话题">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/09/06/20180906170854/compose-logo.png">
-<meta property="og:updated_time" content="2019-03-02T16:32:51.585Z">
+<meta property="og:image" content="https://www.overtaking.top/2018/09/06/20180906170854/compose-logo.png">
+<meta property="og:updated_time" content="2019-04-23T03:21:05.460Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Koa2 洋葱模型 —— compose 串联中间件的四种实现">
 <meta name="twitter:description" content="前言Koa 是当下主流 NodeJS 框架，以轻量见长，而它中间件机制与相对传统的 Express 支持了异步，所以编码时经常使用 async/await，提高了可读性，使代码变得更优雅，上一篇文章 NodeJS 进阶 —— Koa 源码分析，也对 “洋葱模型” 和实现它的 compose 进行分析，由于个人觉得 compose 的编程思想比较重要，应用广泛，所以本篇借着 “洋葱模型” 的话题">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/09/06/20180906170854/compose-logo.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/09/06/20180906170854/compose-logo.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -248,7 +248,7 @@
         <div class="post-content" id="post-content" itemprop="postContent">
             <img src="/2018/09/06/20180906170854/compose-logo.png" title="Koa 洋葱模型">
 <p><br></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote class="pullquote info"><p><code>Koa</code> 是当下主流 NodeJS 框架，以轻量见长，而它中间件机制与相对传统的 <code>Express</code> 支持了异步，所以编码时经常使用 <code>async/await</code>，提高了可读性，使代码变得更优雅，上一篇文章 <a href="https://www.pandashen.com/2018/09/02/20180902141819/" target="_blank">NodeJS 进阶 —— Koa 源码分析</a>，也对 “洋葱模型” 和实现它的 <code>compose</code> 进行分析，由于个人觉得 <code>compose</code> 的编程思想比较重要，应用广泛，所以本篇借着 “洋葱模型” 的话题，打算用四种方式来实现 <code>compose</code>。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote class="pullquote info"><p><code>Koa</code> 是当下主流 NodeJS 框架，以轻量见长，而它中间件机制与相对传统的 <code>Express</code> 支持了异步，所以编码时经常使用 <code>async/await</code>，提高了可读性，使代码变得更优雅，上一篇文章 <a href="https://www.overtaking.top/2018/09/02/20180902141819/" target="_blank">NodeJS 进阶 —— Koa 源码分析</a>，也对 “洋葱模型” 和实现它的 <code>compose</code> 进行分析，由于个人觉得 <code>compose</code> 的编程思想比较重要，应用广泛，所以本篇借着 “洋葱模型” 的话题，打算用四种方式来实现 <code>compose</code>。</p>
 </blockquote>
 <a id="more"></a>
 <h2 id="洋葱模型案例"><a href="#洋葱模型案例" class="headerlink" title="洋葱模型案例"></a>洋葱模型案例</h2><p>如果你已经使用 <code>Koa</code> 对 “洋葱模型” 这个词一定不陌生，它就是 <code>Koa</code> 中间件的一种串行机制，并且是支持异步的，下面是一个表达 “洋葱模型” 的经典案例。</p>
@@ -313,13 +313,13 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-02T16:32:51.585Z" itemprop="dateUpdated">2019-03-03 00:32:51</time>
+    更新时间：<time datetime="2019-04-23T03:21:05.460Z" itemprop="dateUpdated">2019-04-23 11:21:05</time>
 </span><br>
 
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/09/06/20180906170854/" target="_blank" rel="external">https://www.pandashen.com/2018/09/06/20180906170854/</a>
+    本文链接：<a href="/2018/09/06/20180906170854/" target="_blank" rel="external">https://www.overtaking.top/2018/09/06/20180906170854/</a>
 </span><br>
 
 
@@ -332,7 +332,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -358,7 +358,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/09/06/20180906170854/&title=《Koa2 洋葱模型 —— compose 串联中间件的四种实现》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/09/06/20180906170854/&title=《Koa2 洋葱模型 —— compose 串联中间件的四种实现》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -368,24 +368,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/09/06/20180906170854/&title=《Koa2 洋葱模型 —— compose 串联中间件的四种实现》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/09/06/20180906170854/&title=《Koa2 洋葱模型 —— compose 串联中间件的四种实现》 — Shen's Blog&source=
 
 前言Koa 是当下主流 NodeJS 框架，以轻量见长，而它中间件机制与相对传统的 Express 支持了异步，所以编码时经常使用 async/awa..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/09/06/20180906170854/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/09/06/20180906170854/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Koa2 洋葱模型 —— compose 串联中间件的四种实现》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/09/06/20180906170854/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Koa2 洋葱模型 —— compose 串联中间件的四种实现》 — Shen's Blog&url=https://www.overtaking.top/2018/09/06/20180906170854/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/09/06/20180906170854/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/09/06/20180906170854/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -518,7 +518,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/09/06/20180906170854/&title=《Koa2 洋葱模型 —— compose 串联中间件的四种实现》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/09/06/20180906170854/&title=《Koa2 洋葱模型 —— compose 串联中间件的四种实现》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -528,24 +528,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/09/06/20180906170854/&title=《Koa2 洋葱模型 —— compose 串联中间件的四种实现》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/09/06/20180906170854/&title=《Koa2 洋葱模型 —— compose 串联中间件的四种实现》 — Shen's Blog&source=
 
 前言Koa 是当下主流 NodeJS 框架，以轻量见长，而它中间件机制与相对传统的 Express 支持了异步，所以编码时经常使用 async/awa..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/09/06/20180906170854/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/09/06/20180906170854/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Koa2 洋葱模型 —— compose 串联中间件的四种实现》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/09/06/20180906170854/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Koa2 洋葱模型 —— compose 串联中间件的四种实现》 — Shen's Blog&url=https://www.overtaking.top/2018/09/06/20180906170854/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/09/06/20180906170854/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/09/06/20180906170854/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -556,7 +556,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKUlEQVR42u3aS3LDMAwE0dz/0soJSPUAVFKCmitX7FB8XsD48OcHr2uxyOdX765e73duLRkyZLyWcW3X6gGcRL4IArt5ogwZMj7A4GFxHxz3/0VCM9lBhgwZMkgQTBNBHkZlyJAh41TAfQL8D78bMmTIeBWjFvg6YZenhodrcRkyZLyQwbvuf//6kfmGDBkyXsW4wrVPzsg4gX9NwalkyJAxmnEq7auVxKcGojJkyJjN4AXkPhPrFJz8icu/yJAhYzQjLRpTNmnb8eB7A5YhQ8ZoBknp+lfHePCtBWsZMmRMZcRW0NBPi1X+bvEXQ4YMGSMYaUhNr2J0BgZowClDhozRjP6gkaR3aauueAYZMmQMZdQuVaQHilO9NGTLkCFjNCNouJfC7uGOIB8JyJAhYxCDJ3C1srNzjSz4jAwZMj7JOBXLnxgJ3GS4MmTIGM3gLbC06Xbq6sZyHxkyZIxmkJZW51idBDQdLciQIWM2gxydAPglDJ6MBjvLkCHjMwyyUa0Nx5NCfvRlwJUhQ8ZQRvqAU2PLWlkbDDJlyJAxiLFPB+OaGIfsNFlc/pcMGTKGMq5w1dpw6fWvmCpDhozRjH7DiySOQSEK0kE+kJAhQ8YkRi3I8oKW71ZLOmXIkPEdRqfVVUvvase9yXNlyJAho1FM9sP0IwFXhgwZoxnpNdNOEw1d8pAhQ8YHGORhHJOy03JXhgwZX2O0SsdGYpcWyQeGmjJkyHgf4xeZLZ07OQwetgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aQVIDMQwEQP7/6XDlQJIZeUOxdvtEFYvt5qCSLH19xevxY73+Jv9+dsrSwsDAuC3j8XI9+ya5RLJDe+7TO2BgYBzASAJoEuXy3yZhOvkrDAwMjFnofJ3qtTtgYGBgrATcdp9kNwwMDIyVIrYNoyvF6gdrcQwMjBsy8lf3v//5I/0NDAyMWzEe5Zo9k+VPcsNbYWBgbM1oC9TZo9tKq6AYy8DAwNiakbcV8wQuLzXz8viCfBYDA+OGjDxQfuKKsxbpL7thYGBszWiD7Hry114uOQUDA+McRl6ytiMU6w9tbRmMgYFxGiMfklga6ip7lJe1NjEwMP49Y/ag35ay+f4tuK7FMTAwbsjIm5GzVkFblCYPdm86sRgYGNsxVhqTbbsxSTFf7/NmIAwDA+MARh5eZ0cO5z7yYQsMDIytGckzWZ4g5qfk/8p6ZgQDA2MjxnozoAW36eMwNmNgYGzKmD3rJ0lkW9bOWggYGBh7M9okbL15ORu2iJJCDAyMYxh50pYkiPlaaWpiYGCcwGiLzyRMr4fvgoqBgXEMI0/m2rblSnJZB1wMDIyNGLPULbnc+kWLcI+BgbE146oGZ55K5o3MNsXEwMDYm9EG2XwwIhnFmI1cYGBgnMkoqt7yirPxsnbsAwMDA6Md7cp3boc8onc4DAyM4xlFulYmfHmQvSA1xMDAuCGjfUprD2tbm3UTFAMDY2vGbMRhlva1z3mz0I+BgbER4xsM69sZLe7yuQAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

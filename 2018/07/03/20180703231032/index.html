@@ -19,7 +19,7 @@
     
     
     
-    <title>NodeJS —— Stream 的基本使用 | Panda Shen&#39;s Blog</title>
+    <title>NodeJS —— Stream 的基本使用 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="NodeJS,Stream">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NodeJS —— Stream 的基本使用">
-<meta property="og:url" content="https://www.pandashen.com/2018/07/03/20180703231032/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/07/03/20180703231032/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="流的介绍在 NodeJS 中，我们对文件的操作需要依赖核心模块 fs，fs 中有很基本 API 可以帮助我们读写占用内存较小的文件，如果是大文件或内存不确定也可以通过 open、read、write、close 等方法对文件进行操作，但是这样操作文件每一个步骤都要关心，非常繁琐，fs 中提供了可读流和可写流，让我们通过流来操作文件，方便我们对文件的读取和写入。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/07/03/20180703231032/stream-use.jpg">
+<meta property="og:image" content="https://www.overtaking.top/2018/07/03/20180703231032/stream-use.jpg">
 <meta property="og:updated_time" content="2019-03-04T17:43:26.985Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJS —— Stream 的基本使用">
 <meta name="twitter:description" content="流的介绍在 NodeJS 中，我们对文件的操作需要依赖核心模块 fs，fs 中有很基本 API 可以帮助我们读写占用内存较小的文件，如果是大文件或内存不确定也可以通过 open、read、write、close 等方法对文件进行操作，但是这样操作文件每一个步骤都要关心，非常繁琐，fs 中提供了可读流和可写流，让我们通过流来操作文件，方便我们对文件的读取和写入。">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/07/03/20180703231032/stream-use.jpg">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/07/03/20180703231032/stream-use.jpg">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -350,7 +350,7 @@
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/07/03/20180703231032/" target="_blank" rel="external">https://www.pandashen.com/2018/07/03/20180703231032/</a>
+    本文链接：<a href="/2018/07/03/20180703231032/" target="_blank" rel="external">https://www.overtaking.top/2018/07/03/20180703231032/</a>
 </span><br>
 
 
@@ -363,7 +363,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -389,7 +389,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/07/03/20180703231032/&title=《NodeJS —— Stream 的基本使用》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/07/03/20180703231032/&title=《NodeJS —— Stream 的基本使用》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -399,24 +399,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/07/03/20180703231032/&title=《NodeJS —— Stream 的基本使用》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/07/03/20180703231032/&title=《NodeJS —— Stream 的基本使用》 — Shen's Blog&source=
 
 流的介绍在 NodeJS 中，我们对文件的操作需要依赖核心模块 fs，fs 中有很基本 API 可以帮助我们读写占用内存较小的文件，如果是大文件或内存..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/07/03/20180703231032/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/07/03/20180703231032/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS —— Stream 的基本使用》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/07/03/20180703231032/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS —— Stream 的基本使用》 — Shen's Blog&url=https://www.overtaking.top/2018/07/03/20180703231032/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/07/03/20180703231032/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/07/03/20180703231032/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -549,7 +549,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/07/03/20180703231032/&title=《NodeJS —— Stream 的基本使用》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/07/03/20180703231032/&title=《NodeJS —— Stream 的基本使用》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -559,24 +559,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/07/03/20180703231032/&title=《NodeJS —— Stream 的基本使用》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/07/03/20180703231032/&title=《NodeJS —— Stream 的基本使用》 — Shen's Blog&source=
 
 流的介绍在 NodeJS 中，我们对文件的操作需要依赖核心模块 fs，fs 中有很基本 API 可以帮助我们读写占用内存较小的文件，如果是大文件或内存..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/07/03/20180703231032/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/07/03/20180703231032/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS —— Stream 的基本使用》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/07/03/20180703231032/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS —— Stream 的基本使用》 — Shen's Blog&url=https://www.overtaking.top/2018/07/03/20180703231032/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/07/03/20180703231032/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/07/03/20180703231032/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -587,7 +587,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aS3KDQAxFUe9/02SaKgLcJ0E5qG+PKBsDh4Hc+nw+eG2/1v7z/Tn7z/fHR9c/OueGJUOGjNcyttNFHvecR5Dpvf6gypAhYwHGUQTjxzy81u518cwyZMiQUdre8Q0fCfQyZMiQQRj9lJWTZMiQIaOWxKYJ5zmgkzDLkCFjNcZdSeYTx4/0N2TIkPEqxhau2q9qSXJwZRkyZIxm1FqYpFXZSYl50itDhow1GTzt7JTGyB0JQIYMGSsweIG+FjRr5bm0DCdDhozZjO8W9PmVi0U3GTJkDGV0BiD6zQa+WbzoxMqQIWMQgyj7hTBevCNRNJgWkSFDxgjGXSUzvr3j28Q49MuQIWMoo1Mg421L/qtiE0KGDBmjGfxByUOnAfr8sYIerAwZMkYzyMaOD0CkYP7KLu4oQ4aMBRj8lnxgghfseJCVIUPGmoxaulg7M01r41cjQ4aMoYxOwOXNxdogRdBakCFDxmgG2WXxsJiOU6T/DHHLU4YMGYMYndunQxK1YQ609ZQhQ8YyjGKpCwRi/m16fRkyZKzASJuO6QgFSUf5a4qbmjJkyHg5YwtXLd3tl+EuXrEMGTJGM/gil+blOT5y0aoaypAhYxCDBNm0xdgJx3wnK0OGjNUYtQGLWqEtzq1Jmi1DhgwZAJBuEPubSBkyZMhIx794UO68skf+N2TIkPESRn88gjcPOo2ER8ptMmTI+PeMVup40+bv/Le3NTVlyJDxPsYP24lGvH/LFmQAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3aW46EMAwFUfa/aWYBNKSuE0bCKb5GI/I43ZI7tnMc+Dkvz9071/drqxxvPDJkyPgs43x8UsZ11PMM6bq3e5AhQ8YGDBJA+eZWhWkySoYMGTLI1km4JDwZMmTIWMVIU9bnsem6MmTI2JlBQucb6WhtThkyZOzG4FX3///7lf6GDBkyPsU4w4eMTYtoaXr8Y0UZMmS0ZvAAV9sKv7SRBlwZMmTsw0gH8MV4qskbCWgKGTJktGYsK2mFFynS/w8CrgwZMpoySJo6U/vic6aXLWTIkLEDg1+GIIE4WBKH4GAnMmTIaM2oXbwgmBQ8k2zLkCGjK4MXtuISWFiAq6172xiQIUNGIwZvRtYulfJCfxq+BydcGTJkNGLUylvzqSxZN87CZciQ0ZTBF6gV9Fc1RNFYGTJkNGWk4Y+U3njaeYLneZ5BJ1aGDBktGPMb5cknmWFBgJYhQ0Y7Bn81PTKmB8qpJFmGDBmtGemk6cWLtKhHIurUhTAZMmR8lkEmDTqipQ+l1v687cTKkCGjKSM93qVlNXLETK+UyZAhY2cGn3qmFVqrCwYBV4YMGS0YM0e3tNm5qkUx+B5kyJDRjlGbupZkrpqB/yTIkCGjE4M3APj7JBynAXcwjwwZMjZgBFkvHkWOeukvQNzClCFDxsaMuHBfWjFIXGXIkCEjPCYGgXJVCi1DhowNGLwBOd+2rH0oMmTI2JlRu+JQOw6SLabhXoYMGa0Zf5XYapgb+yU8AAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

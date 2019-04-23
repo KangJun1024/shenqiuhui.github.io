@@ -19,7 +19,7 @@
     
     
     
-    <title>EventEmitter 源码分析与简易实现 | Panda Shen&#39;s Blog</title>
+    <title>EventEmitter 源码分析与简易实现 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="NodeJS,源码分析,EventEmitter">
 <meta property="og:type" content="article">
 <meta property="og:title" content="EventEmitter 源码分析与简易实现">
-<meta property="og:url" content="https://www.pandashen.com/2018/06/28/20180628204755/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/06/28/20180628204755/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="EventEmitter 简介EventEmitter 是 NodeJS 的核心模块 events 中的类，用于对 NodeJS 中的事件进行统一管理，用 events 特定的 API 对事件进行添加、触发和移除等等，核心方法的模式类似于发布订阅。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/06/28/20180628204755/event-emitter.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/06/28/20180628204755/event-emitter.png">
 <meta property="og:updated_time" content="2019-03-04T17:43:53.235Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EventEmitter 源码分析与简易实现">
 <meta name="twitter:description" content="EventEmitter 简介EventEmitter 是 NodeJS 的核心模块 events 中的类，用于对 NodeJS 中的事件进行统一管理，用 events 特定的 API 对事件进行添加、触发和移除等等，核心方法的模式类似于发布订阅。">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/06/28/20180628204755/event-emitter.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/06/28/20180628204755/event-emitter.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -346,7 +346,7 @@
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/06/28/20180628204755/" target="_blank" rel="external">https://www.pandashen.com/2018/06/28/20180628204755/</a>
+    本文链接：<a href="/2018/06/28/20180628204755/" target="_blank" rel="external">https://www.overtaking.top/2018/06/28/20180628204755/</a>
 </span><br>
 
 
@@ -359,7 +359,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -385,7 +385,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/06/28/20180628204755/&title=《EventEmitter 源码分析与简易实现》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/06/28/20180628204755/&title=《EventEmitter 源码分析与简易实现》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -395,24 +395,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/06/28/20180628204755/&title=《EventEmitter 源码分析与简易实现》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/06/28/20180628204755/&title=《EventEmitter 源码分析与简易实现》 — Shen's Blog&source=
 
 EventEmitter 简介EventEmitter 是 NodeJS 的核心模块 events 中的类，用于对 NodeJS 中的事件进行统一管理..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/06/28/20180628204755/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/06/28/20180628204755/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《EventEmitter 源码分析与简易实现》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/06/28/20180628204755/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《EventEmitter 源码分析与简易实现》 — Shen's Blog&url=https://www.overtaking.top/2018/06/28/20180628204755/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/06/28/20180628204755/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/06/28/20180628204755/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -545,7 +545,7 @@ EventEmitter 简介EventEmitter 是 NodeJS 的核心模块 events 中的类，�
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/06/28/20180628204755/&title=《EventEmitter 源码分析与简易实现》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/06/28/20180628204755/&title=《EventEmitter 源码分析与简易实现》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -555,24 +555,24 @@ EventEmitter 简介EventEmitter 是 NodeJS 的核心模块 events 中的类，�
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/06/28/20180628204755/&title=《EventEmitter 源码分析与简易实现》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/06/28/20180628204755/&title=《EventEmitter 源码分析与简易实现》 — Shen's Blog&source=
 
 EventEmitter 简介EventEmitter 是 NodeJS 的核心模块 events 中的类，用于对 NodeJS 中的事件进行统一管理..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/06/28/20180628204755/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/06/28/20180628204755/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《EventEmitter 源码分析与简易实现》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/06/28/20180628204755/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《EventEmitter 源码分析与简易实现》 — Shen's Blog&url=https://www.overtaking.top/2018/06/28/20180628204755/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/06/28/20180628204755/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/06/28/20180628204755/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -583,7 +583,7 @@ EventEmitter 简介EventEmitter 是 NodeJS 的核心模块 events 中的类，�
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKElEQVR42u3aQW4DIQwF0N7/0um2UpXkfzxNNfBYVckM8LJwwfbXVzweP8bPT/Lnn337e87XM48GBgbGbRmPl+P1AvnC+czPvn02AwYGxjmMZwvnz+Rv5aE8XxcDAwMj31C+0TzQY2BgYHwy4CZHSQwMDIzJJTbPceUJuH+4i2NgYNyQkWfdP//3n9Q3MDAwbsV4lCO/mk5KkvWuMDAwtmZM0vdrSbc8AVfvBwMD4xhG22Axv3DmKxZZQwwMjK0Z88aISctX8vno/wYGBsYNGXm5sU3o52WDJGS/OYBiYGAcwFhL0K+l25JCacvGwMA4h7F2WZ0cKNsZioYwDAyMjRh5Ur69ahbhcuki/eaAiIGBsRFj8ShWlhPW5i9CNgYGxtaMtSJivnCeeouKlK+PlRgYGJsy8uPgBW1bZRtZ8QwGBsbxjLWGsElrRVvsxMDAOIfRhteibat8qy6gYmBgbM1ow+VaI1deIm1nw8DAOJMxacVIkmhtwTIJ0xgYGCczkkmvSsDlh8ioZwQDA2NrxqT02L7b8qJmCwwMjK0Z+YW2TY2tNVsk5UwMDIwTGI9yJJtLgvikUFr8QhgYGFsw1hJeydbnobk+GmJgYGzNWEvxt5fPydX34l8aAwPjtoxJqis/Gq4dH6PyJwYGBsYggE6eKU61GBgYGGWgzNN2a40ab0qYGBgYmzLaVFrbhDHZ7sXpNgwMjBsyPpPLmiT9LytqYmBg3I/xDQtVQc9bVGjEAAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMElEQVR42u3aQW7DMAwFUd//0u62i9idTyoFRI1XBepIelkwpMjrws/963l/h79f26X1yJAhY1vG/fo8vUMO8b5Cbd/HM8iQIeMABgmgJMrx/5IwTT4lQ4YMGSmDJIj8fRkyZMjoMDpbpsWwDBkyZPBiclU5+n7cr9fiMmTI2JDBb93//++v9DdkyJCxFaMWOtNrsto6walkyJAxmsEDHG9q8jZnJ+DKkCHjNAZvK/LNyDZpI2FBPitDhoxtGemVFv9u0nZmGpQ//G7IkCFjKCMtO9O4xxufaVtUhgwZpzHSy/pa4ZqGWj5SJkOGjNmMdAyCkOKhLpxixjeCMmTI2JzRGXFIE8daYYwSRxkyZIxmpIUiH5uoFaVpqipDhowTGLwZwOtgPmbBi+SgfJUhQ8Y4Bt+gE2prDYZlwxYyZMjYnNEf8+JhmjRK+Zf1ITWUIUPGUEYacGslbq3xEAdoGTJkjGaQVKx2OD6EwVPJgCdDhoxBDF6CksuyTnuAJ5eP120yZMg4gEE24C3J9CKPl75/DFvIkCFjKCMNlLWN+UUez/1kyJBxDqNz3b+qFVpLE2XIkDGbcYdPrSVZO2gQ7mXIkDGaUVu63yrgCV+6mgwZMqYyVgXZVU2CtP0pQ4aMcxi86g2WBqle+gsQdGJlyJBxMIMHx3S0i4fyq7OoDBkyDmDUrtg613AkeZUhQ8YJDN6ArF3J8fEvXkjLkCHjHEZtxKGW9pEjpuFehgwZoxk/lDMD8Ymx+3kAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 

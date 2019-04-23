@@ -19,7 +19,7 @@
     
     
     
-    <title>Express 源码分析及简易封装 | Panda Shen&#39;s Blog</title>
+    <title>Express 源码分析及简易封装 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="NodeJS,源码分析,中间件,Express">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Express 源码分析及简易封装">
-<meta property="og:url" content="https://www.pandashen.com/2018/08/25/20180825162129/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/08/25/20180825162129/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="前言Express 是 NodeJS 的 Web 框架，与 Koa 的轻量相比，功能要更多一些，依然是当前使用最广泛的 NodeJS 框架，本篇参考 Express 的核心逻辑来实现一个简易版，Express 源码较多，逻辑复杂，看一周可能也看不完，如果你已经使用过 Express，又想快速的了解 Express 常用功能的原理，那读这篇文章是一个好的选择，也可以为读真正的源码做铺垫，本篇内容">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/08/25/20180825162129/express.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/08/25/20180825162129/express.png">
 <meta property="og:updated_time" content="2019-03-02T18:49:08.659Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Express 源码分析及简易封装">
 <meta name="twitter:description" content="前言Express 是 NodeJS 的 Web 框架，与 Koa 的轻量相比，功能要更多一些，依然是当前使用最广泛的 NodeJS 框架，本篇参考 Express 的核心逻辑来实现一个简易版，Express 源码较多，逻辑复杂，看一周可能也看不完，如果你已经使用过 Express，又想快速的了解 Express 常用功能的原理，那读这篇文章是一个好的选择，也可以为读真正的源码做铺垫，本篇内容">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/08/25/20180825162129/express.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/08/25/20180825162129/express.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -334,7 +334,7 @@
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/08/25/20180825162129/" target="_blank" rel="external">https://www.pandashen.com/2018/08/25/20180825162129/</a>
+    本文链接：<a href="/2018/08/25/20180825162129/" target="_blank" rel="external">https://www.overtaking.top/2018/08/25/20180825162129/</a>
 </span><br>
 
 
@@ -347,7 +347,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -373,7 +373,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/08/25/20180825162129/&title=《Express 源码分析及简易封装》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/08/25/20180825162129/&title=《Express 源码分析及简易封装》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -383,24 +383,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/08/25/20180825162129/&title=《Express 源码分析及简易封装》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/08/25/20180825162129/&title=《Express 源码分析及简易封装》 — Shen's Blog&source=
 
 前言Express 是 NodeJS 的 Web 框架，与 Koa 的轻量相比，功能要更多一些，依然是当前使用最广泛的 NodeJS 框架，本篇参考 ..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/08/25/20180825162129/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/08/25/20180825162129/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Express 源码分析及简易封装》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/08/25/20180825162129/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Express 源码分析及简易封装》 — Shen's Blog&url=https://www.overtaking.top/2018/08/25/20180825162129/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/08/25/20180825162129/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/08/25/20180825162129/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -533,7 +533,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/08/25/20180825162129/&title=《Express 源码分析及简易封装》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/08/25/20180825162129/&title=《Express 源码分析及简易封装》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -543,24 +543,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/08/25/20180825162129/&title=《Express 源码分析及简易封装》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/08/25/20180825162129/&title=《Express 源码分析及简易封装》 — Shen's Blog&source=
 
 前言Express 是 NodeJS 的 Web 框架，与 Koa 的轻量相比，功能要更多一些，依然是当前使用最广泛的 NodeJS 框架，本篇参考 ..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/08/25/20180825162129/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/08/25/20180825162129/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Express 源码分析及简易封装》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/08/25/20180825162129/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Express 源码分析及简易封装》 — Shen's Blog&url=https://www.overtaking.top/2018/08/25/20180825162129/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/08/25/20180825162129/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/08/25/20180825162129/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -571,7 +571,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACN0lEQVR42u3aQW7DMAxE0dz/0inQVYDWyh9SKWrqexWkjq3XBSFy9Hjg6/l9vX5+/ebq+6t71vf//NW2S4YMGbdlPJcXuWf9W05aU9fPlyFDxgmMtMiSz6SM8re8WbMMGTJkLBfHi2wNJkOGDBnp43j7um5HZciQISNlkCaWtKPpoI28a3MvLkOGjBsyasHA33z+eL4hQ4aMf8/oDPp5tMkb2mL8IEOGjNGMqwfFDeSmeICU2mCHK0OGjEGM2uifD9R2ta/F2aEMGTIGMdKSSkp2WlJrB9RkyJBxDoO/vlZ8a/Fn3FrLkCHjMEYnSuTVPY0E3twvQ4aMcQwyYkuX29qThs2zDBkyzmSkm79040ju5A2wDBkyTmDs3QKS8toa9K+fL0OGjNGM2lCsdiys320HTa8MGTJGMDqltrMIXpRR4ZYhQ8ZoBt+QpeU1DRjIdjPY4cqQIWMco3aEgi+OL31DgCpDhoyhjH7cyAOAXQFncSkyZMgYxCBlrhYApIFlUKZlyJAxlJEejEgThvSARVqIZciQcRqjdmAiyEXB9o6P3n7JN2TIkDGUUSuUuwZq6YGwNJCQIUPGDEanTU3jxs5hizdPliFDxmjG3sNevClNf0WQMmTImM0gRZb8NR6TNaLQRy1PkCFDxs0ZtdML/PhFeg9pYi+TWBkyZBzM4IElH/HXJoIyZMiQ0d+u8U1h598kQ4aM0xi8iU0jz/TONFqQIUPGCYxOMMBDAj5uS0eBMmTIGM34AiniFBkvbrq9AAAAAElFTkSuQmCC" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLUlEQVR42u3aS46DQAxFUfa/aTKOIuA+GyLhuoyiFhR1GLj9qW3D1/5zHd3ze3/tLdsTlwwZMl7L2E8v/oKjp8hbyHsvPqUMGTIWYJAAmi7dD9PkKRkyZMhI7yFhmod1GTJkyOgwULp2+ux5iilDhgwZtSL2rnKUpJ4P1uIyZMh4IYN33f//+5H5hgwZMl7FqIVOkhqSoElKX7QrGTJkjGbwAEde1hl28hL3cAUZMmSMZtQOhHU2mh4muyHnlSFDxssZnY32t0hSSbSaDBkyhjL4kJIzeOnLE9CLO2XIkDGakQ4AaotyUq3NJ0OGjNUYnaY/H0amtXXxmIUMGTJGMDola3o8goRR/g/g6y8yZMgYzeDpYNoOSxv9KeNiEitDhoxBjM5gshY600+AQrYMGTJGM/gL0iEBAadF7A2VtwwZMl7ISJtopImflruddS5qcRkyZAxi8IBbC8G1IxQ3zDFkyJAxgkF4aeuNJ4Wdp2TIkLEao58U1j5KrYgNjlzIkCFjHCPdFhlSdhp5/FCaDBkyVmYUm1/tXn3xMJkMGTKWYZCl01HBvUNNFHBlyJAxiLGHF08T+xttJYUyZMgYxOgszRtztUFmmmLKkCFjNoNvMQ2s5000flCMJKYyZMhYgRFUveE5jlo7jxfPMmTIkJFuNF25NmzYOovKkCFjAUaQroUJX6eEliFDxgqMtJWWHqRIm2hp806GDBmzGbUjDrV0kGwxHQ/IkCFjNOMD0EP6CL6D1Q0AAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 

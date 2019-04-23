@@ -19,7 +19,7 @@
     
     
     
-    <title>异步发展流程 —— 异步编程的终极大招 async/await | Panda Shen&#39;s Blog</title>
+    <title>异步发展流程 —— 异步编程的终极大招 async/await | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="JavaScript,异步,Promise,NodeJS,ES7,async&#x2F;await">
 <meta property="og:type" content="article">
 <meta property="og:title" content="异步发展流程 —— 异步编程的终极大招 async&#x2F;await">
-<meta property="og:url" content="https://www.pandashen.com/2018/06/15/20180615212040/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/06/15/20180615212040/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="前言这篇文章是异步发展流程系列的最后一篇，可能会涉及 Promise、Generators、co 等前置知识，如果对这些不是很了解可以看这个系列的前三篇：  异步发展流程 —— Promise 的基本使用 异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise 异步发展流程 —— Generators + co 让异步更优雅  如果已经具备这些前置知识，那我们继续看看今">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/06/15/20180615212040/async-await.jpg">
-<meta property="og:updated_time" content="2019-03-04T17:44:14.369Z">
+<meta property="og:image" content="https://www.overtaking.top/2018/06/15/20180615212040/async-await.jpg">
+<meta property="og:updated_time" content="2019-04-23T03:13:40.025Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="异步发展流程 —— 异步编程的终极大招 async&#x2F;await">
 <meta name="twitter:description" content="前言这篇文章是异步发展流程系列的最后一篇，可能会涉及 Promise、Generators、co 等前置知识，如果对这些不是很了解可以看这个系列的前三篇：  异步发展流程 —— Promise 的基本使用 异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise 异步发展流程 —— Generators + co 让异步更优雅  如果已经具备这些前置知识，那我们继续看看今">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/06/15/20180615212040/async-await.jpg">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/06/15/20180615212040/async-await.jpg">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -250,9 +250,9 @@
 <p><br></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote class="pullquote warning"><p>这篇文章是异步发展流程系列的最后一篇，可能会涉及 Promise、Generators、co 等前置知识，如果对这些不是很了解可以看这个系列的前三篇：</p>
 <ul>
-<li><a href="https://www.pandashen.com/2018/06/12/20180612045005/" target="_blank">异步发展流程 —— Promise 的基本使用</a></li>
-<li><a href="https://www.pandashen.com/2018/06/13/20180613193626/" target="_blank">异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise</a></li>
-<li><a href="https://www.pandashen.com/2018/06/14/20180614161413/" target="_blank">异步发展流程 —— Generators + co 让异步更优雅</a></li>
+<li><a href="https://www.overtaking.top/2018/06/12/20180612045005/" target="_blank">异步发展流程 —— Promise 的基本使用</a></li>
+<li><a href="https://www.overtaking.top/2018/06/13/20180613193626/" target="_blank">异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise</a></li>
+<li><a href="https://www.overtaking.top/2018/06/14/20180614161413/" target="_blank">异步发展流程 —— Generators + co 让异步更优雅</a></li>
 </ul>
 <p>如果已经具备这些前置知识，那我们继续看看今天的主角，JavaScript 异步编程的终极大招 <code>async/await</code>。</p>
 </blockquote>
@@ -316,13 +316,13 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-03-04T17:44:14.369Z" itemprop="dateUpdated">2019-03-05 01:44:14</time>
+    更新时间：<time datetime="2019-04-23T03:13:40.025Z" itemprop="dateUpdated">2019-04-23 11:13:40</time>
 </span><br>
 
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/06/15/20180615212040/" target="_blank" rel="external">https://www.pandashen.com/2018/06/15/20180615212040/</a>
+    本文链接：<a href="/2018/06/15/20180615212040/" target="_blank" rel="external">https://www.overtaking.top/2018/06/15/20180615212040/</a>
 </span><br>
 
 
@@ -335,7 +335,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -361,7 +361,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/06/15/20180615212040/&title=《异步发展流程 —— 异步编程的终极大招 async/await》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/06/15/20180615212040/&title=《异步发展流程 —— 异步编程的终极大招 async/await》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -371,24 +371,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/06/15/20180615212040/&title=《异步发展流程 —— 异步编程的终极大招 async/await》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/06/15/20180615212040/&title=《异步发展流程 —— 异步编程的终极大招 async/await》 — Shen's Blog&source=
 
 前言这篇文章是异步发展流程系列的最后一篇，可能会涉及 Promise、Generators、co 等前置知识，如果对这些不是很了解可以看这个系列的前三..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/06/15/20180615212040/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/06/15/20180615212040/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《异步发展流程 —— 异步编程的终极大招 async/await》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/06/15/20180615212040/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《异步发展流程 —— 异步编程的终极大招 async/await》 — Shen's Blog&url=https://www.overtaking.top/2018/06/15/20180615212040/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/06/15/20180615212040/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/06/15/20180615212040/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -521,7 +521,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/06/15/20180615212040/&title=《异步发展流程 —— 异步编程的终极大招 async/await》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/06/15/20180615212040/&title=《异步发展流程 —— 异步编程的终极大招 async/await》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -531,24 +531,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/06/15/20180615212040/&title=《异步发展流程 —— 异步编程的终极大招 async/await》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/06/15/20180615212040/&title=《异步发展流程 —— 异步编程的终极大招 async/await》 — Shen's Blog&source=
 
 前言这篇文章是异步发展流程系列的最后一篇，可能会涉及 Promise、Generators、co 等前置知识，如果对这些不是很了解可以看这个系列的前三..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/06/15/20180615212040/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/06/15/20180615212040/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《异步发展流程 —— 异步编程的终极大招 async/await》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/06/15/20180615212040/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《异步发展流程 —— 异步编程的终极大招 async/await》 — Shen's Blog&url=https://www.overtaking.top/2018/06/15/20180615212040/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/06/15/20180615212040/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/06/15/20180615212040/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -559,7 +559,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aQY6DMAwF0N7/0sy20gj6bcOC5GVVtRDyqGTFdj6feBxf4/ub/Pr/v559vp55NDAwMF7LOC5Hck3y4OvrE9iPJ2JgYGzA6IXFfEEJMp8BAwMDo7eg63l64RsDAwPjLkYeLpOtJAYGBsYkie0lqNeASfKMgYGxD+OuJPOJz4/0NzAwMF7FOIpj0k6ovqbCqjAwMJZmVEtp86JbXoArrwcDA2MbRi/UThLOJEAn32BgYKzKyG9Lpku2hkmQTUp+pztcDAyM5RjVkv2kYZkfI8vbDM3OAwYGxgsZ1XS0Gl7zhfbYGBgYazN64a9a+p80DKJ/AAMDY2lGNRInV05KdSMSBgbGooxeuMwZ+XZwMicGBsbajHkGXG0h5AE3J2FgYKzNSIrv9x6b6JX4f1yDgYGxASP/tVp06x2tqM6GgYGxAyMZ82Q1D/HlBioGBsbSjLxYPznBkTcJqi8CAwNjH0b1kETetsyLcXetBAMDY1VGteBVLcPlhzDyTeSPMyMYGBhLM5Lp8nbmc2nt6Q4XAwNjaca8YVkNuL0d6+ldGBgYizKO4piU0u5qlBbeEAYGxhKMXsGrl47Omw29Y2cYGBhrMJIl9pLMahrcbFJiYGBsw5iUuvJt5fVdk9ViYGBgJCGyN1vSKH0w4GJgYCzNyMtw85ZA1PjEwMDYgJE8rJeaTtoMj5TbMDAwXsgYpY7Fjd2kPHdDUxMDA+N9jD8sJ0upRWSTJgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKUlEQVR42u3aSw7iMBAFQO5/aWY9YgLvtcNI2OUVEsFJZdH0x49HvJ4v6+qa1+tnd3l8Y2FgYPws4/l2Xd3g9Wbvr0l2zr/9BxUDA+MARhJA20CchOn8RXx4ZgwMDIw4CCYJ4kpYx8DAwLg34L5PIt+HXQwMDIxZEfuNcnQluGNgYJzDyLvu///zV+YbGBgYP8V4litP+FZCbf1UGBgYWzPyADdL5vKitw24GBgY5zDyRltbRrZjy2SQEG2BgYGxKaN90LzIbANxG5SLDBcDA+NnGe1GK8lf+9t8dIqBgXEOI9kuPySR3LIdc+bHOzAwMPZjzBr3bRtullwW12NgYGzKqBtbwcAyf1krjb+/vsXAwNia0R6SyNths6I0f1kfJrEYGBgbMfLbtEXmSgKavJTL8hUDA2NrRh5e72qc3VzEYmBgbMrIw+7sWEabeuahfPjvgYGBsQXjriJ2NjxYCtAYGBgHMO5qpeXheBbEL3kYGBhbM/KkbXbAom3qtYNMDAyMExh5Kja7Ml95wnp52AIDA+MwxsrQsS1o8/TxMk3EwMA4jNG2+9uEcmWoWQRcDAyMLRiz1K0dds4edJgUYmBgbMf4xtb5t/emmBgYGHsz2iCbN+CSIUFbuGJgYJzMKKre+FdJsG7/AT6MMDEwMDDKYxDt0a7ZbhgYGBh31ccrbbgoxcTAwDiAkQ8g2xCZt/jbgQQGBsY5jNkRh1na941DZhgYGFsz/gDwRvoI9MAldAAAAABJRU5ErkJggg==" alt="微信分享二维码">
 </div>
 
 

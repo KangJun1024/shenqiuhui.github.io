@@ -19,7 +19,7 @@
     
     
     
-    <title>Webpack 核心模块 tapable 解析 | Panda Shen&#39;s Blog</title>
+    <title>Webpack 核心模块 tapable 解析 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="NodeJS,源码分析,Webpack,tapable">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Webpack 核心模块 tapable 解析">
-<meta property="og:url" content="https://www.pandashen.com/2018/08/06/20180806184412/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/08/06/20180806184412/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="前言Webpack 是一个现代 JavaScript 应用程序的静态模块打包器，是对前端项目实现自动化和优化必不可少的工具，Webpack 的 loader（加载器）和 plugin（插件）是由 Webpack 开发者和社区开发者共同贡献的，而目前又没有比较系统的开发文档，想写加载器和插件必须要懂 Webpack 的原理，即看懂 Webpack 的源码，tapable 则是 Webpack 依">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/08/06/20180806184412/tapable.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/08/06/20180806184412/tapable.png">
 <meta property="og:updated_time" content="2019-03-03T16:32:50.674Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Webpack 核心模块 tapable 解析">
 <meta name="twitter:description" content="前言Webpack 是一个现代 JavaScript 应用程序的静态模块打包器，是对前端项目实现自动化和优化必不可少的工具，Webpack 的 loader（加载器）和 plugin（插件）是由 Webpack 开发者和社区开发者共同贡献的，而目前又没有比较系统的开发文档，想写加载器和插件必须要懂 Webpack 的原理，即看懂 Webpack 的源码，tapable 则是 Webpack 依">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/08/06/20180806184412/tapable.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/08/06/20180806184412/tapable.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -343,7 +343,7 @@
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/08/06/20180806184412/" target="_blank" rel="external">https://www.pandashen.com/2018/08/06/20180806184412/</a>
+    本文链接：<a href="/2018/08/06/20180806184412/" target="_blank" rel="external">https://www.overtaking.top/2018/08/06/20180806184412/</a>
 </span><br>
 
 
@@ -356,7 +356,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -382,7 +382,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/08/06/20180806184412/&title=《Webpack 核心模块 tapable 解析》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/08/06/20180806184412/&title=《Webpack 核心模块 tapable 解析》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -392,24 +392,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/08/06/20180806184412/&title=《Webpack 核心模块 tapable 解析》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/08/06/20180806184412/&title=《Webpack 核心模块 tapable 解析》 — Shen's Blog&source=
 
 前言Webpack 是一个现代 JavaScript 应用程序的静态模块打包器，是对前端项目实现自动化和优化必不可少的工具，Webpack 的 loa..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/08/06/20180806184412/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/08/06/20180806184412/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Webpack 核心模块 tapable 解析》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/08/06/20180806184412/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Webpack 核心模块 tapable 解析》 — Shen's Blog&url=https://www.overtaking.top/2018/08/06/20180806184412/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/08/06/20180806184412/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/08/06/20180806184412/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -542,7 +542,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/08/06/20180806184412/&title=《Webpack 核心模块 tapable 解析》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/08/06/20180806184412/&title=《Webpack 核心模块 tapable 解析》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -552,24 +552,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/08/06/20180806184412/&title=《Webpack 核心模块 tapable 解析》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/08/06/20180806184412/&title=《Webpack 核心模块 tapable 解析》 — Shen's Blog&source=
 
 前言Webpack 是一个现代 JavaScript 应用程序的静态模块打包器，是对前端项目实现自动化和优化必不可少的工具，Webpack 的 loa..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/08/06/20180806184412/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/08/06/20180806184412/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Webpack 核心模块 tapable 解析》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/08/06/20180806184412/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Webpack 核心模块 tapable 解析》 — Shen's Blog&url=https://www.overtaking.top/2018/08/06/20180806184412/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/08/06/20180806184412/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/08/06/20180806184412/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -580,7 +580,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aS5KDMAwFwNz/0swJgCcJpgq7WaUqBLtZKPr494uv4+RK7j/79uzz9ZNHFwYGxmcZx+WV3JMsnDz/GnazIgYGxgaMalg8++31t0loTp6AgYGBMdlQvtE80GNgYGA8xcjDcVIAY2BgYPSK2GTJPOzmqeHDtTgGBsYHGZMw+vbnV+YbGBgYn2Icxes6ObsuVquvqbArDAyMpRmT9n2v6ZY34Mr7wcDAWJSRF5Dzdn811CbBvVwHY2BgfJYxH0bmqWE1oYzWwsDA2IaRhM5qm6wXfJP7MTAwdmPkYTfhVYvV/NubKhwDA2NpxqSk7LXqqgcmblbEwMBYmtF7aJIgJuGyd8Di9FcYGBiLMnqN+5wxHz9Ez8TAwFiaUS0dq+ngvPVWyAAxMDAWZeQJXK/srIbRKgkDA2MHxlN1cB6mJ4fJotQQAwNjOUbvcb3xZF7QJi8XAwNjZ0Y+2pyMMJMXVxgtYGBgLM3IF+t18vIDZ73jGr/eVjAwMD7ImATQasusd1g2+RvAwMDYh5G02HpbSdptowYfBgbGBoxksfcysflwAgMDY1XGUbwmg8n8jESZioGBsTSj1/CaH7mYHOlIEkoMDIz1GL3UcLJkknSW3zcGBsYGjELVG48ze2llb7cYGBgY8+yyF75fDLgYGBibMXqHU+dDhWgSi4GBsRCjeiQib6tVhwSvt9swMDA+yPjP9HHSnntgqImBgfE9xh+oB+TzMKfdswAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3a207DMBAFQP7/p8srEjSc401BtSdPqCRxJpW2e/HHR3w8vhzX5+Tnr60yOjAwMN6W8bg8Wsb3q56tcr16/mwYGBjnMJIAmkS5/L9JmE6uwsDAwHh2ThKUWx4GBgbG6wJuu2RbDGNgYGDkRWwSWCfFalL63lCLY2BgvCEj77r//d8vmW9gYGC8FeNRHnnCl5embfj+4akwMDC2ZuQBLlksGXa2o4JiWwYGBsamjPaCvIzMS818kBDdAgMDYztG8rj3lr5rLbYcjIGBsR8j39SVB9P2npPNFhgYGCcw1nrvbaLZkvIXgYGBcSZjMirIh5HtW6y/AQwMjI0YeUN/7fw2oWxfyg+DAQwMjO0YeeqWb07Nk78J4+kkFgMDYzvGWntrEjqTpv/1J9H3gIGBsREjXyAfBrxiIDqqvzEwMLZjTNpweemb37kooTEwMI5h5Nuz2vHAWgK6OGXFwMDYlDFvva0NOycjUgwMDIykNdamlZPNFr+siIGBcQzjf3Ow0fYLDAyMYxh58Tk5s90uFlExMDCOYeTJXDu2vGuoWfxuYGBgbMFYS93akWS7haJeFwMDY2vGXWPOa1JS7ia/DG2bDwMDYydGG2TbEnSSdBbrYmBgHMAoqt4yiudlbRv6i0wTAwPjeEb+SbtiUbhiYGBgBMXkZBjZBtkbUkMMDIw3ZOQDyOuHa5HtEBQDA+NMxtoWh7zR3z5iG+4xMDC2ZnwCMTgi4H1ejk0AAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 

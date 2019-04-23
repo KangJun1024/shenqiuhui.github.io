@@ -19,7 +19,7 @@
     
     
     
-    <title>NodeJS 实现一个提交自动检测的 Git Hook | Panda Shen&#39;s Blog</title>
+    <title>NodeJS 实现一个提交自动检测的 Git Hook | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,18 +30,18 @@
 <meta name="keywords" content="Git,代码管理&#x2F;版本控制,命令行,NodeJS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NodeJS 实现一个提交自动检测的 Git Hook">
-<meta property="og:url" content="https://www.pandashen.com/2019/04/09/20190409024640/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2019/04/09/20190409024640/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="什么是 Git HookGit Hook 是能在 Git 操作的特定重要动作发生时触发自定义脚本，也被称为 “钩子”，这样的脚本被存储在 .git/hooks 目录中，脚本分为客户端的和服务端两种，这些钩子文件的后缀名默认为 .sample，其存在的目的就是为了让这些脚本默认不被执行，如果需要其被执行则去掉后缀名，可以通过项目需求制定钩子的功能和程序编写。  实现 Hook 功能介绍本次将使用">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2019/04/09/20190409024640/git-hooks-location.png">
+<meta property="og:image" content="https://www.overtaking.top/2019/04/09/20190409024640/git-hooks-location.png">
 <meta property="og:updated_time" content="2019-04-09T10:46:59.735Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJS 实现一个提交自动检测的 Git Hook">
 <meta name="twitter:description" content="什么是 Git HookGit Hook 是能在 Git 操作的特定重要动作发生时触发自定义脚本，也被称为 “钩子”，这样的脚本被存储在 .git/hooks 目录中，脚本分为客户端的和服务端两种，这些钩子文件的后缀名默认为 .sample，其存在的目的就是为了让这些脚本默认不被执行，如果需要其被执行则去掉后缀名，可以通过项目需求制定钩子的功能和程序编写。  实现 Hook 功能介绍本次将使用">
-<meta name="twitter:image" content="https://www.pandashen.com/2019/04/09/20190409024640/git-hooks-location.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2019/04/09/20190409024640/git-hooks-location.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -346,7 +346,7 @@
 
         
 <span class="permalink">
-    本文链接：<a href="/2019/04/09/20190409024640/" target="_blank" rel="external">https://www.pandashen.com/2019/04/09/20190409024640/</a>
+    本文链接：<a href="/2019/04/09/20190409024640/" target="_blank" rel="external">https://www.overtaking.top/2019/04/09/20190409024640/</a>
 </span><br>
 
 
@@ -359,7 +359,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -385,7 +385,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2019/04/09/20190409024640/&title=《NodeJS 实现一个提交自动检测的 Git Hook》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2019/04/09/20190409024640/&title=《NodeJS 实现一个提交自动检测的 Git Hook》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -395,22 +395,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2019/04/09/20190409024640/&title=《NodeJS 实现一个提交自动检测的 Git Hook》 — Panda Shen's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2019/04/09/20190409024640/&title=《NodeJS 实现一个提交自动检测的 Git Hook》 — Shen's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2019/04/09/20190409024640/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2019/04/09/20190409024640/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 实现一个提交自动检测的 Git Hook》 — Panda Shen's Blog&url=https://www.pandashen.com/2019/04/09/20190409024640/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 实现一个提交自动检测的 Git Hook》 — Shen's Blog&url=https://www.overtaking.top/2019/04/09/20190409024640/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2019/04/09/20190409024640/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2019/04/09/20190409024640/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -430,7 +430,14 @@
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/04/16/20190416160637/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Typescript 基础知识总结</h4>
+      </a>
+    </div>
   
 
   
@@ -536,7 +543,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2019/04/09/20190409024640/&title=《NodeJS 实现一个提交自动检测的 Git Hook》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2019/04/09/20190409024640/&title=《NodeJS 实现一个提交自动检测的 Git Hook》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -546,22 +553,22 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2019/04/09/20190409024640/&title=《NodeJS 实现一个提交自动检测的 Git Hook》 — Panda Shen's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2019/04/09/20190409024640/&title=《NodeJS 实现一个提交自动检测的 Git Hook》 — Shen's Blog&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2019/04/09/20190409024640/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2019/04/09/20190409024640/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 实现一个提交自动检测的 Git Hook》 — Panda Shen's Blog&url=https://www.pandashen.com/2019/04/09/20190409024640/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 实现一个提交自动检测的 Git Hook》 — Shen's Blog&url=https://www.overtaking.top/2019/04/09/20190409024640/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2019/04/09/20190409024640/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2019/04/09/20190409024640/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -572,7 +579,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJElEQVR42u3a227CQAwFQP7/p1Opry3LsQ1I2Z19qiCQjCoZ3x6P+Fy/59kr15+TfGr9PY9PHAwMjNsyruVJbrD+7BqwxifPhoGBcQ5jHWRz2Ppxe3dJfgAwMDAweildEqCr98XAwMB4FyMpRzEwMDCqjKSI7SHz0vRLtTgGBsYNGdXBwDf//uB8AwMD4yaMq3iqw4BJU6/wVBgYGFszqqsSk6CZD0Hz6PqoTkQxMDC2YKxfrxaQ62+olq8vgjgGBsbWjCT45iPJSUitLqhhYGCcw5jcvtqs/0Qpi4GBcQKjt1oxD8G9kUD0i4GBgbEpY1J2viEnjUcO5QwXAwPj5oxeWz8pbqupXh6+/7kLBgbG1oxqsOs1znqjyjwcY2BgnMCojioLgS++phr6o0ksBgbGMYzqEkY1xZxfg4GBsTfjEw9aHU/mLb8X7TYMDIwDGElyli895KOFecMOAwNjb8b6A711h/kQtFkMY2BgHMDopYO9Ari6UhaFaQwMjE0ZeVKYF5l58K2moU+vx8DAOIbRa731ViXyd6OAjoGBsTVj0tDPg2wP0CuhMTAw9mNcxVNt0lVbb83iGQMDY2tGL6XLm2gTar5YhoGBcQIjCbLVpDC5sro69uI/gIGBcQBjEmSrjblJkvci4GJgYBzPmLfb8rSvHNAxMDAwBmsTPSQGBgbGpE+VJ4hJwlcdAGBgYJzJmCxe9BYsqqOFPDHFwMDYjvEDtwOEmsBmhyMAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3aO47DMAxF0ex/0542U1i+j9QMYOq6CgJH5klB8OPPB1/X17W+h99fe0rrkiFDxmsZ1/K6u4cEQU5In3sbgwwZMg5gkASaHs3x5I94iFmGDBkyliHyb3jylSFDhow+o5ZS16elz5UhQ8ZpDNJMkvs7zWqnDJUhQ8ZsBp+6///nP9lvyJAh41WMWuokBd+u0T+KSoYMGaMZPMHxpSZfc3YSrgwZMs5hpGtF3kbW7uHJvTgvlCFDxssZaYi11jddhZJyU4YMGbMZ6UE8WfOgCSmocGXIkDGOwQPtFHCdVLv+lQwZMk5gpEtKkhZ5uqwtUDfsWmXIkPEqRm2gzwdqacnI/9xf38iQIWM0Iy3p0rVl2pS2ylMZMmQMZXQWk/0xXJBM10+XIUPG8Qweejo429zEypAh4xhGmuzSlzPIyaTRfSgNZciQMYixa9GYzupJa1pM0DJkyBjKSMdhuwK6wBWUiTJkyDiAUQsuHZP1X7YIikIZMmQMZfDFQDrE5xefoT2sB2TIkDGUQYImS0eeXnnLil4LkyFDxmhGenS6tty11HxIuDJkyBjHqBVtpL3sB9qqbWXIkDGIsfdoPqrjLTE/TYYMGbMZfPjFeZ0lQTr+kyFDxjmM9CUMXrSlo3+e+tFbGDJkyJARFo7pE4PGVYYMGTLCMjEtItMke9vEypAhYzSDLyDTFMkbXd5Iy5Ah4zRG7RWHWtm3a8FQXGTKkCHjfYwf/H4i4EkoIikAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 

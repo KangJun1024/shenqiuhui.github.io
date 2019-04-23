@@ -19,7 +19,7 @@
     
     
     
-    <title>NodeJS 进阶 —— Koa 源码分析 | Panda Shen&#39;s Blog</title>
+    <title>NodeJS 进阶 —— Koa 源码分析 | Shen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -30,21 +30,21 @@
 <meta name="keywords" content="NodeJS,源码分析,async&#x2F;await,Koa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NodeJS 进阶 —— Koa 源码分析">
-<meta property="og:url" content="https://www.pandashen.com/2018/09/02/20180902141819/index.html">
-<meta property="og:site_name" content="Panda Shen&#39;s Blog">
+<meta property="og:url" content="https://www.overtaking.top/2018/09/02/20180902141819/index.html">
+<meta property="og:site_name" content="Shen&#39;s Blog">
 <meta property="og:description" content="前言Koa 2.x 版本是当下最流行的 NodeJS 框架，同时社区涌现出一大批围绕 Koa 2.x 的中间件以及基于 Koa 2.x 封装的企业级框架，如 egg.js，然而 Koa 本身的代码却非常精简，精简到所有文件的代码去掉注释后还不足 2000 行，本篇就围绕着这 2000 行不到的代码抽出核心逻辑进行分析，并压缩成一版只有 200 行不到的简易版 Koa。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.pandashen.com/2018/09/02/20180902141819/koa-cover.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/09/02/20180902141819/koa-dir.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/09/02/20180902141819/onion-model.png">
-<meta property="og:image" content="https://www.pandashen.com/2018/09/02/20180902141819/koa-flow-chart.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/09/02/20180902141819/koa-cover.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/09/02/20180902141819/koa-dir.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/09/02/20180902141819/onion-model.png">
+<meta property="og:image" content="https://www.overtaking.top/2018/09/02/20180902141819/koa-flow-chart.png">
 <meta property="og:updated_time" content="2019-03-28T06:58:59.565Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NodeJS 进阶 —— Koa 源码分析">
 <meta name="twitter:description" content="前言Koa 2.x 版本是当下最流行的 NodeJS 框架，同时社区涌现出一大批围绕 Koa 2.x 的中间件以及基于 Koa 2.x 封装的企业级框架，如 egg.js，然而 Koa 本身的代码却非常精简，精简到所有文件的代码去掉注释后还不足 2000 行，本篇就围绕着这 2000 行不到的代码抽出核心逻辑进行分析，并压缩成一版只有 200 行不到的简易版 Koa。">
-<meta name="twitter:image" content="https://www.pandashen.com/2018/09/02/20180902141819/koa-cover.png">
+<meta name="twitter:image" content="https://www.overtaking.top/2018/09/02/20180902141819/koa-cover.png">
     
-        <link rel="alternate" type="application/atom+xml" title="Panda Shen&#39;s Blog" href="/rss2.xml">
+        <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
     
 
     
@@ -374,7 +374,7 @@
 
         
 <span class="permalink">
-    本文链接：<a href="/2018/09/02/20180902141819/" target="_blank" rel="external">https://www.pandashen.com/2018/09/02/20180902141819/</a>
+    本文链接：<a href="/2018/09/02/20180902141819/" target="_blank" rel="external">https://www.overtaking.top/2018/09/02/20180902141819/</a>
 </span><br>
 
 
@@ -387,7 +387,7 @@
     </div>
     
     <footer>
-        <a href="https://www.pandashen.com">
+        <a href="https://www.overtaking.top">
             <img src="/img/avatar.jpg" alt="Panda Shen">
             Panda Shen
         </a>
@@ -413,7 +413,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/09/02/20180902141819/&title=《NodeJS 进阶 —— Koa 源码分析》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/09/02/20180902141819/&title=《NodeJS 进阶 —— Koa 源码分析》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -423,24 +423,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/09/02/20180902141819/&title=《NodeJS 进阶 —— Koa 源码分析》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/09/02/20180902141819/&title=《NodeJS 进阶 —— Koa 源码分析》 — Shen's Blog&source=
 
 前言Koa 2.x 版本是当下最流行的 NodeJS 框架，同时社区涌现出一大批围绕 Koa 2.x 的中间件以及基于 Koa 2.x 封装的企业级框..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/09/02/20180902141819/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/09/02/20180902141819/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 进阶 —— Koa 源码分析》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/09/02/20180902141819/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 进阶 —— Koa 源码分析》 — Shen's Blog&url=https://www.overtaking.top/2018/09/02/20180902141819/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/09/02/20180902141819/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/09/02/20180902141819/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -573,7 +573,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.pandashen.com/2018/09/02/20180902141819/&title=《NodeJS 进阶 —— Koa 源码分析》 — Panda Shen's Blog&pic=https://www.pandashen.com/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.overtaking.top/2018/09/02/20180902141819/&title=《NodeJS 进阶 —— Koa 源码分析》 — Shen's Blog&pic=https://www.overtaking.top/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -583,24 +583,24 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.pandashen.com/2018/09/02/20180902141819/&title=《NodeJS 进阶 —— Koa 源码分析》 — Panda Shen's Blog&source=
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/09/02/20180902141819/&title=《NodeJS 进阶 —— Koa 源码分析》 — Shen's Blog&source=
 
 前言Koa 2.x 版本是当下最流行的 NodeJS 框架，同时社区涌现出一大批围绕 Koa 2.x 的中间件以及基于 Koa 2.x 封装的企业级框..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.pandashen.com/2018/09/02/20180902141819/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.overtaking.top/2018/09/02/20180902141819/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 进阶 —— Koa 源码分析》 — Panda Shen's Blog&url=https://www.pandashen.com/2018/09/02/20180902141819/&via=https://www.pandashen.com" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NodeJS 进阶 —— Koa 源码分析》 — Shen's Blog&url=https://www.overtaking.top/2018/09/02/20180902141819/&via=https://www.overtaking.top" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.pandashen.com/2018/09/02/20180902141819/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.overtaking.top/2018/09/02/20180902141819/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -611,7 +611,7 @@
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACKklEQVR42u3awY7CMAxFUf7/pztbJER6nw2D4tysEC1tThbGdvJ44HE9jedv+P2vV999Xj+5NWTIkLEt41oOcg95MX8Cf68MGTJOY6Rh8d1veVAmoZzMTYYMGTLSCfGJpsFXhgwZMmqMNOCSVFKGDBkyOkVsmuSRqz+oxWXIkLEhg3fd///zV/Y3ZMiQsRXjCscati5W02UKZiVDhozRjH7aR74hhyo6G6IyZMiYzeAt+367Pw21wWLJkCFjNKPW9OeJIGnb8eB7A5YhQ8ZQBm9+1bY5a8E3DtYyZMg4hsGLSQ5OU0/e5rv5x5AhQ8ZoRtpiq7Xq0gMTN2+UIUPGaAa/iZSUJGTXElA0WxkyZAxlpIkgD8e1dLAYsmXIkDGakZaOaTqYblV2lk+GDBknMAgsLTtr4No9MmTIOI3Btxj5cQ3e7udBP9gekCFDxraMCw/eMquVuGkCKkOGjHMY/JhFP1CmCSj/lQwZMk5g8PDaSeZq9SYJ0zJkyDiH0Sli+w24NIm8OTMiQ4aMoYzagbBO8pfygsMWMmTIGM3gITUNvgTDA/dNwJUhQ8YgxhUOnvCly9HZKJUhQ8ZsRr/hlR7qIi25zhapDBkypjJ4qdlpk9UOUgTrLUOGjAMYrVbX8h7ynFoRK0OGDBkkRUuTy/SNwXtlyJAhYxkoa4dT+aKgJqAMGTIOYKRHIvjkOtsMX2m3yZAhY0NGq3TEiV2nSP7YpqYMGTL2Y/wBYYAsuuHt/P4AAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACOUlEQVR42u3aS07DQBAFwNz/0kZixYI47/WECI/Lqwg59lQWTf8ej/g6vq/8nuPH1b6l/dYDAwPjBozj9HrGSO4/f86zQ58/5ykVAwPjBow2gJ4Hx/Ojt++N/gFgYGBgxEEwD6nJ/RgYGBizgNse7jy5zFNJDAwMjFnozJO5vMX257U4BgbGBRntYOCTn/9wvoGBgXERxlFeSevt/BDtc6JTYWBgbM1IystZGjcrU1cacBgYGLsykiSsbYS1C17t+sXSzhoGBsYFGW3zPQ+gsyFlnlwO5xsYGBiXZcxWKPLh5ey4bbMPAwNjV8ZsYatYgAgSvjesdGBgYNyGMWv05yE4TzTrHw4DA2Nrxqzh1Zaysx2JtnjGwMC4G2OWurXJX9vye/EcDAyMGzDyIJukbkWf701rHxgYGHsz8he3xe1KQM+DOAYGxt6MldKxTRDbxlzRnsPAwNiasdIImyV/sxCfh2MMDIw7MNqB5WwAMBuCFufEwMDYjrGyBtEeqA3KxQ+HgYGxKSNP+JJgmpesbYkbJYIYGBhbM5LydZYa5ktjean8y50YGBhbM1aSuZWlsXYIGoVgDAyMTRlHeeUJ3yzg5o22F5NYDAyMjRjr0Xo4f4i/uzSJxcDA2IgxW61YH0zOhpfReAADA2NTRjs4bAHrsT8aZGJgYNyescJLwvqskYeBgYGRM+pkriyhPxRwMTAw/jEjKWJnf0/SuzxZfBFwMTAwNmW0BWQyqsxL3Hx0+gYMBgbG9RhfQDDRP8V5zicAAAAASUVORK5CYII=" alt="微信分享二维码">
 </div>
 
 
