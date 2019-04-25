@@ -31,10 +31,10 @@
         <category>Git</category>
       </categories>
       <tags>
-        <tag>NodeJS</tag>
         <tag>Git</tag>
         <tag>代码管理/版本控制</tag>
         <tag>命令行</tag>
+        <tag>NodeJS</tag>
       </tags>
   </entry>
   <entry>
@@ -325,8 +325,8 @@
       </categories>
       <tags>
         <tag>HTTP</tag>
-        <tag>NodeJS</tag>
         <tag>命令行</tag>
+        <tag>NodeJS</tag>
         <tag>http-server</tag>
         <tag>npm</tag>
       </tags>
