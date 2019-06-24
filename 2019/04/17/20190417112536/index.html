@@ -26,19 +26,19 @@
     
     
     <meta name="keywords" content="JavaScript,ES6">
-    <meta name="description" content="前言在 JavaScript 中想获取某一个对象的属性名，有多种方法可供选择。  for in Object.keys Object.getOwnPropertyNames Object.getOwnPropertySymbols Reflect.ownKeys  在获取对象属性名的众多方法中，其实有各自的区别和用途，但经常容易被混淆，本篇文章会将这些方法的区别介绍清楚。 创建对象案例下面来创">
+    <meta name="description" content="前言在 JavaScript 中想获取某一个对象的属性名，有多种方法可供选择。  for in Object.keys Object.getOwnPropertyNames Object.getOwnPropertySymbols Reflect.ownKeys  在获取对象属性名的众多方法中，其实有各自的区别和用途，但经常容易被混淆，本篇文章会将这些方法的区别介绍清楚。">
 <meta name="keywords" content="JavaScript,ES6">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript 获取对象属性名的方法和区别">
 <meta property="og:url" content="https://www.overtaking.top/2019/04/17/20190417112536/index.html">
 <meta property="og:site_name" content="Shen&#39;s Blog">
-<meta property="og:description" content="前言在 JavaScript 中想获取某一个对象的属性名，有多种方法可供选择。  for in Object.keys Object.getOwnPropertyNames Object.getOwnPropertySymbols Reflect.ownKeys  在获取对象属性名的众多方法中，其实有各自的区别和用途，但经常容易被混淆，本篇文章会将这些方法的区别介绍清楚。 创建对象案例下面来创">
+<meta property="og:description" content="前言在 JavaScript 中想获取某一个对象的属性名，有多种方法可供选择。  for in Object.keys Object.getOwnPropertyNames Object.getOwnPropertySymbols Reflect.ownKeys  在获取对象属性名的众多方法中，其实有各自的区别和用途，但经常容易被混淆，本篇文章会将这些方法的区别介绍清楚。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.overtaking.top/2019/04/17/20190417112536/get-object-key.png">
-<meta property="og:updated_time" content="2019-04-17T10:38:51.980Z">
+<meta property="og:updated_time" content="2019-06-22T20:17:16.259Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript 获取对象属性名的方法和区别">
-<meta name="twitter:description" content="前言在 JavaScript 中想获取某一个对象的属性名，有多种方法可供选择。  for in Object.keys Object.getOwnPropertyNames Object.getOwnPropertySymbols Reflect.ownKeys  在获取对象属性名的众多方法中，其实有各自的区别和用途，但经常容易被混淆，本篇文章会将这些方法的区别介绍清楚。 创建对象案例下面来创">
+<meta name="twitter:description" content="前言在 JavaScript 中想获取某一个对象的属性名，有多种方法可供选择。  for in Object.keys Object.getOwnPropertyNames Object.getOwnPropertySymbols Reflect.ownKeys  在获取对象属性名的众多方法中，其实有各自的区别和用途，但经常容易被混淆，本篇文章会将这些方法的区别介绍清楚。">
 <meta name="twitter:image" content="https://www.overtaking.top/2019/04/17/20190417112536/get-object-key.png">
     
         <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
@@ -243,6 +243,7 @@
 <li><code>Reflect.ownKeys</code></li>
 </ul>
 <p>在获取对象属性名的众多方法中，其实有各自的区别和用途，但经常容易被混淆，本篇文章会将这些方法的区别介绍清楚。</p>
+<a id="more"></a>
 <h2 id="创建对象案例"><a href="#创建对象案例" class="headerlink" title="创建对象案例"></a>创建对象案例</h2><p>下面来创建一个对象的案例让这些方法来获取属性，再通过结果来看区别。</p>
 <figure class="highlight js"><figcaption><span>父类，继承自 Object.prototype</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> parent = <span class="built_in">Object</span>.create(<span class="built_in">Object</span>.prototype, &#123;</span><br><span class="line">  a: &#123;</span><br><span class="line">    value: <span class="number">1</span>,</span><br><span class="line">    writable: <span class="literal">true</span>,</span><br><span class="line">    enumerable: <span class="literal">true</span>,</span><br><span class="line">    configurable: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  b: &#123;</span><br><span class="line">    value: <span class="number">2</span>,</span><br><span class="line">    writable: <span class="literal">true</span>,</span><br><span class="line">    enumerable: <span class="literal">false</span>,</span><br><span class="line">    configurable: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  [<span class="built_in">Symbol</span>(<span class="string">'symbolParent'</span>)]: &#123;</span><br><span class="line">    value: <span class="number">3</span>,</span><br><span class="line">    writable: <span class="literal">true</span>,</span><br><span class="line">    enumerable: <span class="literal">true</span>,</span><br><span class="line">    configurable: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <figure class="highlight js"><figcaption><span>子类，继承自 parent</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> child = <span class="built_in">Object</span>.create(parent, &#123;</span><br><span class="line">  c: &#123;</span><br><span class="line">    value: <span class="number">4</span>,</span><br><span class="line">    writable: <span class="literal">true</span>,</span><br><span class="line">    enumerable: <span class="literal">true</span>,</span><br><span class="line">    configurable: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  d: &#123;</span><br><span class="line">    value: <span class="number">5</span>,</span><br><span class="line">    writable: <span class="literal">true</span>,</span><br><span class="line">    enumerable: <span class="literal">false</span>,</span><br><span class="line">    configurable: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  [<span class="built_in">Symbol</span>(<span class="string">'symbolChild'</span>)]: &#123;</span><br><span class="line">    value: <span class="number">6</span>,</span><br><span class="line">    writable: <span class="literal">true</span>,</span><br><span class="line">    enumerable: <span class="literal">true</span>,</span><br><span class="line">    configurable: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
@@ -290,7 +291,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-04-17T10:38:51.980Z" itemprop="dateUpdated">2019-04-17 18:38:51</time>
+    更新时间：<time datetime="2019-06-22T20:17:16.259Z" itemprop="dateUpdated">2019-06-23 04:17:16</time>
 </span><br>
 
 
@@ -345,7 +346,13 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2019/04/17/20190417112536/&title=《JavaScript 获取对象属性名的方法和区别》 — Shen's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2019/04/17/20190417112536/&title=《JavaScript 获取对象属性名的方法和区别》 — Shen's Blog&source=
+
+前言在 JavaScript 中想获取某一个对象的属性名，有多种方法可供选择。
+
+for in
+Object.keys
+Object.getOwnPr..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -503,7 +510,13 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2019/04/17/20190417112536/&title=《JavaScript 获取对象属性名的方法和区别》 — Shen's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2019/04/17/20190417112536/&title=《JavaScript 获取对象属性名的方法和区别》 — Shen's Blog&source=
+
+前言在 JavaScript 中想获取某一个对象的属性名，有多种方法可供选择。
+
+for in
+Object.keys
+Object.getOwnPr..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>

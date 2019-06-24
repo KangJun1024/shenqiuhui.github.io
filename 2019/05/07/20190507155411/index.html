@@ -26,20 +26,20 @@
     
     
     <meta name="keywords" content="Hooks,React">
-    <meta name="description" content="React Hooks 简介React Hooks 是 16.8 版本中正式加入的特性，配合函数组件使用，在没有 Hooks 之前，函数组件使用场景非常有限，只适合编写纯展示性的 UI 组件，其余复杂的场景不得不使用类组件，而 Hooks 的主要作用是在函数组件中使用原本所不具备的 React 特性。  React Hooks 产生的动机在业务开发中，数据主要存在两种形式，业务数据和 UI 数">
+    <meta name="description" content="React Hooks 简介React Hooks 是 16.8 版本中正式加入的特性，配合函数组件使用，在没有 Hooks 之前，函数组件使用场景非常有限，只适合编写纯展示性的 UI 组件，其余复杂的场景不得不使用类组件，而 Hooks 的主要作用是在函数组件中使用原本所不具备的 React 特性。">
 <meta name="keywords" content="Hooks,React">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React 基础篇 —— React Hooks">
 <meta property="og:url" content="https://www.overtaking.top/2019/05/07/20190507155411/index.html">
 <meta property="og:site_name" content="Shen&#39;s Blog">
-<meta property="og:description" content="React Hooks 简介React Hooks 是 16.8 版本中正式加入的特性，配合函数组件使用，在没有 Hooks 之前，函数组件使用场景非常有限，只适合编写纯展示性的 UI 组件，其余复杂的场景不得不使用类组件，而 Hooks 的主要作用是在函数组件中使用原本所不具备的 React 特性。  React Hooks 产生的动机在业务开发中，数据主要存在两种形式，业务数据和 UI 数">
+<meta property="og:description" content="React Hooks 简介React Hooks 是 16.8 版本中正式加入的特性，配合函数组件使用，在没有 Hooks 之前，函数组件使用场景非常有限，只适合编写纯展示性的 UI 组件，其余复杂的场景不得不使用类组件，而 Hooks 的主要作用是在函数组件中使用原本所不具备的 React 特性。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.overtaking.top/2019/05/07/20190507155411/react-hooks.jpeg">
 <meta property="og:image" content="https://www.overtaking.top/2019/05/07/20190507155411/usedebugvalue.png">
-<meta property="og:updated_time" content="2019-06-22T08:24:06.442Z">
+<meta property="og:updated_time" content="2019-06-24T03:37:16.978Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React 基础篇 —— React Hooks">
-<meta name="twitter:description" content="React Hooks 简介React Hooks 是 16.8 版本中正式加入的特性，配合函数组件使用，在没有 Hooks 之前，函数组件使用场景非常有限，只适合编写纯展示性的 UI 组件，其余复杂的场景不得不使用类组件，而 Hooks 的主要作用是在函数组件中使用原本所不具备的 React 特性。  React Hooks 产生的动机在业务开发中，数据主要存在两种形式，业务数据和 UI 数">
+<meta name="twitter:description" content="React Hooks 简介React Hooks 是 16.8 版本中正式加入的特性，配合函数组件使用，在没有 Hooks 之前，函数组件使用场景非常有限，只适合编写纯展示性的 UI 组件，其余复杂的场景不得不使用类组件，而 Hooks 的主要作用是在函数组件中使用原本所不具备的 React 特性。">
 <meta name="twitter:image" content="https://www.overtaking.top/2019/05/07/20190507155411/react-hooks.jpeg">
     
         <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
@@ -237,6 +237,7 @@
 <p><br></p>
 <h2 id="React-Hooks-简介"><a href="#React-Hooks-简介" class="headerlink" title="React Hooks 简介"></a>React Hooks 简介</h2><blockquote class="pullquote default"><p><code>React Hooks</code> 是 <code>16.8</code> 版本中正式加入的特性，配合函数组件使用，在没有 <code>Hooks</code> 之前，函数组件使用场景非常有限，只适合编写纯展示性的 <code>UI</code> 组件，其余复杂的场景不得不使用类组件，而 <code>Hooks</code> 的主要作用是在函数组件中使用原本所不具备的 <code>React</code> 特性。</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="React-Hooks-产生的动机"><a href="#React-Hooks-产生的动机" class="headerlink" title="React Hooks 产生的动机"></a>React Hooks 产生的动机</h2><p>在业务开发中，数据主要存在两种形式，业务数据和 <code>UI</code> 数据，我们需要将这两种数据区分开，而有时数据又在组件之间存在共用关系，情况稍微复杂，参数传递的方式就无法满足需求，于是就会有状态管理进入到项目中（<code>Redux</code>、<code>Mobx</code>）等，会增加开发者的学习成本和项目的维护成本。</p>
 <p>使用 <code>React</code> 的开发者都知道，<code>React</code> 主张组件化，就是把业务页面拆分成多个组件进行组合、嵌套、渲染。为了保证项目质量，开发者会花费大量精力在项目的模块化、状态数据最小化以及功能解耦上，而一部分组件会因为数据状态的共享耦合在一起，这时需要使用高阶组件、属性渲染、渲染回调等更高级的 <code>React</code> 特性去解耦，但是会增加代码的复杂程度、降低代码的可读性，在渲染时也会增加 <code>DOM</code> 的层级。</p>
 <p>上面这些实际问题促成了 <code>React Hooks</code> 的诞生，而在有 <code>Hooks</code> 后官方也越来越推荐使用函数组件，主要原因总结如下。</p>
@@ -407,7 +408,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-06-22T08:24:06.442Z" itemprop="dateUpdated">2019-06-22 16:24:06</time>
+    更新时间：<time datetime="2019-06-24T03:37:16.978Z" itemprop="dateUpdated">2019-06-24 11:37:16</time>
 </span><br>
 
 
@@ -462,7 +463,9 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2019/05/07/20190507155411/&title=《React 基础篇 —— React Hooks》 — Shen's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2019/05/07/20190507155411/&title=《React 基础篇 —— React Hooks》 — Shen's Blog&source=
+
+React Hooks 简介React Hooks 是 16.8 版本中正式加入的特性，配合函数组件使用，在没有 Hooks 之前，函数组件使用场景非..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -613,7 +616,9 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2019/05/07/20190507155411/&title=《React 基础篇 —— React Hooks》 — Shen's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2019/05/07/20190507155411/&title=《React 基础篇 —— React Hooks》 — Shen's Blog&source=
+
+React Hooks 简介React Hooks 是 16.8 版本中正式加入的特性，配合函数组件使用，在没有 Hooks 之前，函数组件使用场景非..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
