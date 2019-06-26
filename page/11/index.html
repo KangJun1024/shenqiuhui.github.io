@@ -191,6 +191,62 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-20170630162209" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2017-06-30 16:22:09" datetime="2017-06-30T08:22:09.000Z" itemprop="datePublished">2017-06-30</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
+
+
+
+        
+<span id="/2017/06/30/20170630162209/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="简单封装一个靠谱的检测数据类型模块">
+    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
+</span>
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2017/06/30/20170630162209/">简单封装一个靠谱的检测数据类型模块</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+
+简介本篇主要对 JavaScript 数据类型检测做一些介绍，并封装一个相对靠谱的数据类型检测模块。
+
+常见检测数据类型的三种方式typeoftypeof 可以满足大部分基本数据类型的检测，如 number、string、boolean、undefined 和 symbol，对于 null 使用 typeof 则会直接返回 object，对于引用类型的检测，只有 function 是可以正确返回的，其他都返回 object，可以看出 typeof 只适用于部分场景，并不是那么的靠谱。
+    
+
+        <a href="/2017/06/30/20170630162209/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据类型检测/">数据类型检测</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-20170612130942" class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -572,6 +628,8 @@ MathJax.Hub.Queue(function() {
         var meta = 'nick,mail'.split(',').filter(function(item){
           return META.indexOf(item) > -1
         });
+
+        var aaa = "true";
 
         new Valine({
             el: '#comments',

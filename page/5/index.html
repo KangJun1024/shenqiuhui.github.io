@@ -191,6 +191,61 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-20180727140233" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-07-27 14:02:33" datetime="2018-07-27T06:02:33.000Z" itemprop="datePublished">2018-07-27</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/NodeJS/">NodeJS</a></li></ul>
+
+
+
+        
+<span id="/2018/07/27/20180727140233/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="NodeJS 多进程和集群">
+    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
+</span>
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/07/27/20180727140233/">NodeJS 多进程和集群</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+
+进程和线程“进程” 是计算机系统进行资源分配和调度的基本单位，我们可以理解为计算机每开启一个任务就会创建至少一个进程来处理，有时会创建多个，如 Chrome 浏览器的选项卡，其目的是为了防止一个进程挂掉而应用停止工作，而 “线程” 是程序执行流的最小单元，NodeJS 默认是单进程、单线程的，我们将这个进程称为主进程，也可以通过 child_process 模块创建子进程实现多进程，我们称这些子进程为 “工作进程”，并且归主进程管理，进程之间默认是不能通信的，且所有子进程执行任务都是异步的。
+
+    
+
+        <a href="/2018/07/27/20180727140233/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cluster/">Cluster</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/process/">process</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-20180726122146" class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -465,61 +520,6 @@ AST 抽象语法树简介AST（Abstract Syntax Tree）是源代码的抽象语�
 
         </li>
     
-        <li class="post-list-item fade">
-            <article id="post-20180718181823" class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-07-18 18:18:23" datetime="2018-07-18T10:18:23.000Z" itemprop="datePublished">2018-07-18</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/HTTP/">HTTP</a></li></ul>
-
-
-
-        
-<span id="/2018/07/18/20180718181823/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="NodeJS 服务器实现 gzip 压缩">
-    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
-</span>
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/07/18/20180718181823/">NodeJS 服务器实现 gzip 压缩</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-
-概述在浏览器向服务器请求静态资源时，服务器为了减小在网络传输过程中消耗的流量和时间，都是将静态资源经过压缩后返回给服务器的，实现压缩的算法有 deflate 和 gzip 等，最常用的是 gzip 压缩。
-
-    
-
-        <a href="/2018/07/18/20180718181823/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gzip/">gzip</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http-headers/">http-headers</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
     </ul>
 
     
@@ -680,6 +680,8 @@ MathJax.Hub.Queue(function() {
         var meta = 'nick,mail'.split(',').filter(function(item){
           return META.indexOf(item) > -1
         });
+
+        var aaa = "true";
 
         new Valine({
             el: '#comments',
