@@ -26,19 +26,19 @@
     
     
     <meta name="keywords" content="JavaScript,设计模式">
-    <meta name="description" content="前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 JavaScript 表现，其他文章链接如下：  《设计模式 JS 表现 —— 单例模式》   简单工厂模式“简单工厂模式” 是由一个工厂对象决定创建出哪一种产品类的实例">
+    <meta name="description" content="前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 JavaScript 表现。">
 <meta name="keywords" content="JavaScript,设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式 JS 表现 —— 工厂模式">
 <meta property="og:url" content="https://www.overtaking.top/2018/09/25/20180925190503/index.html">
 <meta property="og:site_name" content="Shen&#39;s Blog">
-<meta property="og:description" content="前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 JavaScript 表现，其他文章链接如下：  《设计模式 JS 表现 —— 单例模式》   简单工厂模式“简单工厂模式” 是由一个工厂对象决定创建出哪一种产品类的实例">
+<meta property="og:description" content="前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 JavaScript 表现。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.overtaking.top/2018/09/25/20180925190503/factory.jpg">
-<meta property="og:updated_time" content="2019-06-26T08:22:44.812Z">
+<meta property="og:updated_time" content="2019-06-26T08:28:42.743Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式 JS 表现 —— 工厂模式">
-<meta name="twitter:description" content="前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 JavaScript 表现，其他文章链接如下：  《设计模式 JS 表现 —— 单例模式》   简单工厂模式“简单工厂模式” 是由一个工厂对象决定创建出哪一种产品类的实例">
+<meta name="twitter:description" content="前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 JavaScript 表现。">
 <meta name="twitter:image" content="https://www.overtaking.top/2018/09/25/20180925190503/factory.jpg">
     
         <link rel="alternate" type="application/atom+xml" title="Shen&#39;s Blog" href="/rss2.xml">
@@ -234,11 +234,13 @@
         <div class="post-content" id="post-content" itemprop="postContent">
             <img src="/2018/09/25/20180925190503/factory.jpg" title="工厂模式">
 <p><br></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote class="pullquote info"><p>这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 <code>JavaScript</code> 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 <code>JavaScript</code> 表现，其他文章链接如下：</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote class="pullquote info"><p>这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 <code>JavaScript</code> 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 <code>JavaScript</code> 表现。</p>
+</blockquote>
+<a id="more"></a>
+<p><strong>其他文章链接如下：</strong></p>
 <ul>
 <li><a target="_blank">《设计模式 JS 表现 —— 单例模式》</a></li>
 </ul>
-</blockquote>
 <h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><p>“简单工厂模式” 是由一个工厂对象决定创建出哪一种产品类的实例。</p>
 <figure class="highlight js"><figcaption><span>直接创建子类实例</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 父类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Plant</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">  &#125;</span><br><span class="line">  grow() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'I am growing!'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子类 —— Apple</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Apple</span> <span class="keyword">extends</span> <span class="title">Plant</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name, flavour) &#123;</span><br><span class="line">    <span class="keyword">super</span>(name);</span><br><span class="line">    <span class="keyword">this</span>.flavour = flavour;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子类 —— Orange</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Orange</span> <span class="keyword">extends</span> <span class="title">Plant</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name, flavour) &#123;</span><br><span class="line">    <span class="keyword">super</span>(name);</span><br><span class="line">    <span class="keyword">this</span>.flavour = flavour;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 直接创建子类的实例</span></span><br><span class="line"><span class="keyword">let</span> apple = <span class="keyword">new</span> Apple(<span class="string">'苹果'</span>, <span class="string">'甜'</span>);</span><br><span class="line"><span class="keyword">let</span> orange = <span class="keyword">new</span> Orange(<span class="string">'橘子'</span>, <span class="string">'酸'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(apple.flavour); <span class="comment">// 甜</span></span><br><span class="line"><span class="built_in">console</span>.log(orange.flavour); <span class="comment">// 酸</span></span><br></pre></td></tr></table></figure>
 <p>上面创建子类实例的方式是直接使用 <code>new</code> 关键字直接创建，这种创建方式使产生的实例和具体的类紧紧的耦合在一起，并依赖于类的具体实现，如果在子类可能随时发生变化的代码中，将对维护造成麻烦，使用 “简单工厂模式” 可以对产生的实例和具体的类进行解耦，且不必关心子类的具体实现和在未来是否发生变化。</p>
@@ -285,7 +287,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-06-26T08:22:44.812Z" itemprop="dateUpdated">2019-06-26 16:22:44</time>
+    更新时间：<time datetime="2019-06-26T08:28:42.743Z" itemprop="dateUpdated">2019-06-26 16:28:42</time>
 </span><br>
 
 
@@ -340,7 +342,9 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/09/25/20180925190503/&title=《设计模式 JS 表现 —— 工厂模式》 — Shen's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/09/25/20180925190503/&title=《设计模式 JS 表现 —— 工厂模式》 — Shen's Blog&source=
+
+前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -498,7 +502,9 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/09/25/20180925190503/&title=《设计模式 JS 表现 —— 工厂模式》 — Shen's Blog&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.overtaking.top/2018/09/25/20180925190503/&title=《设计模式 JS 表现 —— 工厂模式》 — Shen's Blog&source=
+
+前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
