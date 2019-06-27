@@ -35,7 +35,7 @@
 <meta property="og:description" content="前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 JavaScript 表现。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.overtaking.top/2018/09/25/20180925190503/factory.jpg">
-<meta property="og:updated_time" content="2019-06-26T08:28:42.743Z">
+<meta property="og:updated_time" content="2019-06-26T17:30:31.122Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式 JS 表现 —— 工厂模式">
 <meta name="twitter:description" content="前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 JavaScript 表现。">
@@ -189,6 +189,7 @@
 
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/设计模式/">设计模式</a></li></ul>
 
+
             
         </h5>
     </div>
@@ -263,7 +264,7 @@
 <h2 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h2><p>“抽象工厂模式” 是指当有多个抽象角色时，可以提供一个接口，不必指定 “产品” 具体的情况下，创建多个产品族中的产品对象。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 父类 —— Icon</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Icon</span> </span>&#123;</span><br><span class="line">  render() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 父类 —— Button</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Button</span> </span>&#123;</span><br><span class="line">  render() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子类 —— AppleIcon 苹果图标</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppleIcon</span> <span class="keyword">extends</span> <span class="title">Icon</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'绘制 Mac 的图标'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子类 —— AppleButton 苹果按钮</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppleButton</span> <span class="keyword">extends</span> <span class="title">Button</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'绘制 Mac 的按钮'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子类 —— WindowsIcon Windows 图标</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WindowsIcon</span> <span class="keyword">extends</span> <span class="title">Icon</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'绘制 Windows 的图标'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子类 —— WindowsButton Windows 按钮</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WindowsButton</span> <span class="keyword">extends</span> <span class="title">Button</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'绘制 Windows 的按钮'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 父类工厂</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">  createIcon() &#123;&#125; <span class="comment">// 创建图标</span></span><br><span class="line">  createButton() &#123;&#125; <span class="comment">// 创建按钮</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子类工厂 —— AppleFactory 用于创建苹果族产品实例</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppleFactory</span> <span class="keyword">extends</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">  createIcon() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> AppleIcon();</span><br><span class="line">  &#125;</span><br><span class="line">  createButton() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> AppleButton();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子类工厂 —— WindowsFactory 用于创建 Windows 族产品实例</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WindowsFactory</span> <span class="keyword">extends</span> <span class="title">Factory</span> </span>&#123;</span><br><span class="line">  createIcon() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> WindowsIcon();</span><br><span class="line">  &#125;</span><br><span class="line">  createButton() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> WindowsButton();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建苹果工厂实例</span></span><br><span class="line"><span class="keyword">let</span> appleFactory = <span class="keyword">new</span> AppleFactory();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建苹果族产品</span></span><br><span class="line">appleFactory.createIcon().render(); <span class="comment">// 绘制 Mac 的图标</span></span><br><span class="line">appleFactory.createButton().render(); <span class="comment">// 绘制 Mac 的按钮</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 Windows 工厂实例</span></span><br><span class="line"><span class="keyword">let</span> wondowsFactory = <span class="keyword">new</span> WindowsFactory();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 Windows 族产品</span></span><br><span class="line">wondowsFactory.createIcon().render(); <span class="comment">// 绘制 Windows 的图标</span></span><br><span class="line">wondowsFactory.createButton().render(); <span class="comment">// 绘制 Windows 的按钮</span></span><br></pre></td></tr></table></figure>
 <p>在上面案例中，按照 “抽象工厂模式” 的说法，多个抽象角色指的是 <code>Apple</code> 和 <code>Windows</code>，<code>Icon</code> 和 <code>Button</code>，工厂分为 <code>AppleFactory</code> 和 <code>WindowsFactory</code> 两类，可以分别创建对应产品的 <code>Icon</code> 和 <code>Button</code> 实例。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote class="pullquote success"><p>上面几种工厂模式中，“简单工厂模式” 在框架开发中使用居多，“工厂方法模式” 更多在一些比较老的且复杂的项目中用作业务模块封装和抽象，“抽象工厂模式” 在前端并不常用，应用于后端偏多。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote class="pullquote success"><p>上面几种工厂模式中，“简单工厂模式” 在框架开发中使用居多，“工厂方法模式” 更多在一些比较老的且复杂的项目中用作业务模块封装和抽象，“抽象工厂模式” 在前端并不常用，应用于后端偏多，最后附上 <a href="https://github.com/shenqiuhui/design-pattern-js/tree/master/2.factory" target="_blank">案例地址</a>。</p>
 </blockquote>
 
         </div>
@@ -287,7 +288,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-06-26T08:28:42.743Z" itemprop="dateUpdated">2019-06-26 16:28:42</time>
+    更新时间：<time datetime="2019-06-26T17:30:31.122Z" itemprop="dateUpdated">2019-06-27 01:30:31</time>
 </span><br>
 
 
@@ -382,9 +383,9 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2018/10/02/20181002041434/" id="post-prev" class="post-nav-link">
+      <a href="/2018/09/26/20180926201447/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Webpack4 —— 基础篇</h4>
+        <h4 class="title">设计模式 JS 表现 —— 单例模式</h4>
       </a>
     </div>
   
@@ -593,15 +594,14 @@ MathJax.Hub.Queue(function() {
 
 
     <!-- Valine Comments -->
-    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@1.3.4/dist/Valine.min.js"></script>
     <!-- Valine Comments script -->
     <script>
         var META = ['nick','mail','link'];
         var meta = 'nick,mail'.split(',').filter(function(item){
           return META.indexOf(item) > -1
         });
-
-        var aaa = "true";
 
         new Valine({
             el: '#comments',
