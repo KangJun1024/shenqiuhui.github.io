@@ -25,9 +25,9 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="JavaScript,设计模式">
+    <meta name="keywords" content="JavaScript,设计模式,创建型模式">
     <meta name="description" content="前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 JavaScript 表现。">
-<meta name="keywords" content="JavaScript,设计模式">
+<meta name="keywords" content="JavaScript,设计模式,创建型模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式 JS 表现 —— 单例模式">
 <meta property="og:url" content="https://www.overtaking.top/2018/09/26/20180926201447/index.html">
@@ -35,7 +35,8 @@
 <meta property="og:description" content="前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 JavaScript 表现。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.overtaking.top/2018/09/26/20180926201447/single.jpg">
-<meta property="og:updated_time" content="2019-06-27T14:10:15.268Z">
+<meta property="og:image" content="https://www.overtaking.top/2018/09/26/20180926201447/singleton-uml.jpg">
+<meta property="og:updated_time" content="2019-06-27T18:58:23.148Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式 JS 表现 —— 单例模式">
 <meta name="twitter:description" content="前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 JavaScript 表现。">
@@ -241,8 +242,18 @@
 <p><strong>其他文章链接如下：</strong></p>
 <ul>
 <li><a href="https://www.overtaking.top/2018/09/25/20180925190503/" target="_blank">《设计模式 JS 表现 —— 工厂模式》</a></li>
+<li><a href="https://www.overtaking.top/2018/09/27/20180927230432/" target="_blank">《设计模式 JS 表现 —— 适配器模式》</a></li>
 </ul>
 <h2 id="普通单例模式"><a href="#普通单例模式" class="headerlink" title="普通单例模式"></a>普通单例模式</h2><p>“单例模式” 就是通过类创建实例后，每次创建和获取都返回同一个实例，下面是 “单例模式” 最基本的实现。</p>
+<p><br></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/09/26/20180926201447/singleton-uml.jpg" alt="单例模式 UML 图" title>
+                </div>
+                <div class="image-caption">单例模式 UML 图</div>
+            </figure>
+<p><br></p>
 <figure class="highlight js"><figcaption><span>ES6 写法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(name) &#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> getInstance(name) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.instance) &#123;</span><br><span class="line">      <span class="keyword">this</span>.instance = <span class="keyword">new</span> Person(name);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> w1 = Person.getInstance(<span class="string">'hello'</span>);</span><br><span class="line"><span class="keyword">let</span> w2 = Person.getInstance(<span class="string">'world'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(w1 === w2); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight js"><figcaption><span>ES5 写法</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person.getInstance = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> instance;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!instance) &#123;</span><br><span class="line">      instance = <span class="keyword">new</span> Person(name);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> w1 = Person.getInstance(<span class="string">'hello'</span>);</span><br><span class="line"><span class="keyword">let</span> w2 = Person.getInstance(<span class="string">'world'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(w1 === w2); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 <p>上面分别用 <code>ES6</code> 和 <code>ES5</code> 的方式实现了一个基本的单例模式，创建 <code>Person</code> 的实例时需要通过 <code>getInstance</code> 静态方法，这样第一次会创建一个实例，再次调用时会将之前创建的实例返回，达到单例的目的。</p>
@@ -295,7 +306,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-06-27T14:10:15.268Z" itemprop="dateUpdated">2019-06-27 22:10:15</time>
+    更新时间：<time datetime="2019-06-27T18:58:23.148Z" itemprop="dateUpdated">2019-06-28 02:58:23</time>
 </span><br>
 
 
@@ -330,7 +341,7 @@
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/创建型模式/">创建型模式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设计模式/">设计模式</a></li></ul>
 
 
             
@@ -390,9 +401,9 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2018/10/02/20181002041434/" id="post-prev" class="post-nav-link">
+      <a href="/2018/09/27/20180927230432/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Webpack4 —— 基础篇</h4>
+        <h4 class="title">设计模式 JS 表现 —— 适配器模式</h4>
       </a>
     </div>
   
