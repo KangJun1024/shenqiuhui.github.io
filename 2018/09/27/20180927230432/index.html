@@ -36,7 +36,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.overtaking.top/2018/09/27/20180927230432/adapter.jpg">
 <meta property="og:image" content="https://www.overtaking.top/2018/09/27/20180927230432/adapter-uml.jpg">
-<meta property="og:updated_time" content="2019-06-28T18:50:06.490Z">
+<meta property="og:updated_time" content="2019-06-30T03:50:19.536Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式 JS 表现 —— 适配器模式">
 <meta name="twitter:description" content="前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 JavaScript 表现。">
@@ -243,6 +243,7 @@
 <ul>
 <li><a href="https://www.overtaking.top/2018/09/25/20180925190503/" target="_blank">《设计模式 JS 表现 —— 工厂模式》</a></li>
 <li><a href="https://www.overtaking.top/2018/09/26/20180926201447/" target="_blank">《设计模式 JS 表现 —— 单例模式》</a></li>
+<li><a href="https://www.overtaking.top/2018/09/28/20180928030105/" target="_blank">《设计模式 JS 表现 —— 装饰器模式》</a></li>
 </ul>
 <h2 id="适配器模式的概念"><a href="#适配器模式的概念" class="headerlink" title="适配器模式的概念"></a>适配器模式的概念</h2><p>“适配器模式” 是指类的使用者和类的接口定义格式不符合时，通过一个中间类进行转换。</p>
 <p><br></p>
@@ -254,7 +255,7 @@
                 <div class="image-caption">适配器模式 UML 图</div>
             </figure>
 <p><br></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类 Power</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Power</span> </span>&#123;</span><br><span class="line">  charge() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'220V'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 适配器</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Adaptor</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(Power) &#123;</span><br><span class="line">    <span class="keyword">this</span>.power = <span class="keyword">new</span> Power();</span><br><span class="line">  &#125;</span><br><span class="line">  charge() &#123;</span><br><span class="line">    <span class="keyword">let</span> v = <span class="keyword">this</span>.power.charge();</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;v&#125;</span> =&gt; 12V`</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类 Power 的使用者</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Notepad</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(Power) &#123;</span><br><span class="line">    <span class="keyword">this</span>.adaptor = <span class="keyword">new</span> Adaptor(Power);</span><br><span class="line">  &#125;</span><br><span class="line">  use() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.adaptor.charge());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> notepad = <span class="keyword">new</span> Notepad(Power);</span><br><span class="line">notepad.use(); <span class="comment">// 220V =&gt; 12V</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 类 Power</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Power</span> </span>&#123;</span><br><span class="line">  charge() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'220V'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 适配器</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Adaptor</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(Power) &#123;</span><br><span class="line">    <span class="keyword">this</span>.power = <span class="keyword">new</span> Power();</span><br><span class="line">  &#125;</span><br><span class="line">  chargeTransform() &#123;</span><br><span class="line">    <span class="keyword">let</span> v = <span class="keyword">this</span>.power.charge();</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;v&#125;</span> =&gt; 12V`</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类 Power 的使用者</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Notepad</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(Power) &#123;</span><br><span class="line">    <span class="keyword">this</span>.adaptor = <span class="keyword">new</span> Adaptor(Power);</span><br><span class="line">  &#125;</span><br><span class="line">  use() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.adaptor.chargeTransform());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> notepad = <span class="keyword">new</span> Notepad(Power);</span><br><span class="line">notepad.use(); <span class="comment">// 220V =&gt; 12V</span></span><br></pre></td></tr></table></figure>
 <p>上面代码中有三个类，<code>Power</code> 类为电源，提供 <code>220V</code> 电压，<code>Notepad</code> 为我们的电子设备，使用电压 <code>22V</code>，明显两个类是不匹配的，此时的 <code>Adaptor</code> 就是一个适配器，作用是连接 <code>Power</code> 与 <code>Notepad</code>，将 <code>220V</code> 转换为 <code>22V</code>。</p>
 <blockquote class="pullquote warning"><p><strong>适配器模式中，通常作为适配器的类内部会存储被转换类实例的引用。</strong></p>
 </blockquote>
@@ -289,7 +290,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-06-28T18:50:06.490Z" itemprop="dateUpdated">2019-06-29 02:50:06</time>
+    更新时间：<time datetime="2019-06-30T03:50:19.536Z" itemprop="dateUpdated">2019-06-30 11:50:19</time>
 </span><br>
 
 
@@ -384,9 +385,9 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2018/10/02/20181002041434/" id="post-prev" class="post-nav-link">
+      <a href="/2018/09/28/20180928030105/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Webpack4 —— 基础篇</h4>
+        <h4 class="title">设计模式 JS 表现 —— 装饰器模式</h4>
       </a>
     </div>
   
