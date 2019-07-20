@@ -191,6 +191,63 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-20180702122923" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-07-02 12:29:23" datetime="2018-07-02T04:29:23.000Z" itemprop="datePublished">2018-07-02</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/NodeJS/">NodeJS</a></li></ul>
+
+
+
+        
+<span id="/2018/07/02/20180702122923/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="NodeJS 树结构遍历 —— 深度优先和广度优先">
+    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
+</span>
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/07/02/20180702122923/">NodeJS 树结构遍历 —— 深度优先和广度优先</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+
+树的基本概念树（Tree）是 n 个结点的有限集，n 为 0 时，称为空树，在任意一棵非空树中有且仅有一个特定的被称为根（Root）的结点，当 n 大于 1 时，其余结点可分为 m 个互不相交的有限集 T1、T2、......、Tm，其中每一个集合本身又是一棵树，并且称为 SubTree，即根的子树。
+
+需要强调的是，n&gt;0 时根结点是唯一的，不可能存在多个根结点，m&gt;0 时，子树的个数没有限制，但它们一定是互不相交的。
+从根开始定义起，根为第一层，根的孩子为第二层，若某结点在第 l 层，则其子树就在第 l+1 层，其双亲在同一层的结点互为 “堂兄弟”，树中结点的最大层级数称为树的深度（Depth）或高度。
+    
+
+        <a href="/2018/07/02/20180702122923/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES6/">ES6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES7/">ES7</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Promise/">Promise</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/async-await/">async/await</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fs/">fs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/异步/">异步</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构/">数据结构</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-20180630172601" class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -458,61 +515,6 @@ CommonJS 概述CommonJS 是一种模块化的标准，而 NodeJS 是这种标准
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/柯里化/">柯里化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高阶函数/">高阶函数</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-20180621113025" class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-06-21 11:30:25" datetime="2018-06-21T03:30:25.000Z" itemprop="datePublished">2018-06-21</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaScript/">JavaScript</a></li></ul>
-
-
-
-        
-<span id="/2018/06/21/20180621113025/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="Canvas + WebSocket + Redis 实现一个视频弹幕">
-    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
-</span>
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/06/21/20180621113025/">Canvas + WebSocket + Redis 实现一个视频弹幕</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-
-页面布局首先，我们需要实现页面布局，在根目录创建 index.html 布局中我们需要有一个 video 多媒体标签引入我们的本地视频，添加输入弹幕的输入框、确认发送的按钮、颜色选择器、字体大小滑动条，创建一个 style.css 来调整页面布局的样式，这里我们顺便创建一个 index.js 文件用于后续实现我们的核心逻辑，先引入到页面当中。
-
-    
-
-        <a href="/2018/06/21/20180621113025/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSS/">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Canvas/">Canvas</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTML/">HTML</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebSocket/">WebSocket</a></li></ul>
 
     </div>
     
