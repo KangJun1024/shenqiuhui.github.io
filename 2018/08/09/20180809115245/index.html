@@ -65,7 +65,7 @@
 
 
 
-<link rel="mask-icon" href="/img/logo.svg" color>
+<link rel="mask-icon" href="/img/logo.svg" color="">
 
 
 
@@ -250,7 +250,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/09/20180809115245/student-score-course.png" alt="完整表关系图" title>
+                    <img src="/2018/08/09/20180809115245/student-score-course.png" alt="完整表关系图" title="">
                 </div>
                 <div class="image-caption">完整表关系图</div>
             </figure>
@@ -328,7 +328,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/09/20180809115245/tables.png" alt="表的具体数据" title>
+                    <img src="/2018/08/09/20180809115245/tables.png" alt="表的具体数据" title="">
                 </div>
                 <div class="image-caption">表的具体数据</div>
             </figure>
@@ -501,7 +501,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/09/20180809115245/group.jpg" alt="成绩表分组数据" title>
+                    <img src="/2018/08/09/20180809115245/group.jpg" alt="成绩表分组数据" title="">
                 </div>
                 <div class="image-caption">成绩表分组数据</div>
             </figure>
@@ -555,7 +555,7 @@
 <li><code>ANY</code> 关键字代表任何一个，查询数据的筛选条件只要满足子查询返回数据的任意一条即可。</li>
 </ul>
 <p>查询 <code>student</code> 表中年龄大于等于所有人的学生信息。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> <span class="string">`student`</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="string">`age`</span> &gt;= <span class="keyword">ALL</span> (</span><br><span class="line">  <span class="keyword">SELECT</span> <span class="string">`age`</span></span><br><span class="line">  <span class="keyword">FROM</span> <span class="string">`student`</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 结果查到了欧阳锋</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> <span class="string">`student`</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="string">`age`</span> &gt;= ALL (</span><br><span class="line">  <span class="keyword">SELECT</span> <span class="string">`age`</span></span><br><span class="line">  <span class="keyword">FROM</span> <span class="string">`student`</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 结果查到了欧阳锋</span></span><br></pre></td></tr></table></figure>
 <p>查询 <code>student</code> 表中年龄大于某些人的学生信息。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> <span class="string">`student`</span></span><br><span class="line"><span class="keyword">WHERE</span> <span class="string">`age`</span> &gt; <span class="keyword">SOME</span> (</span><br><span class="line">  <span class="keyword">SELECT</span> <span class="string">`age`</span></span><br><span class="line">  <span class="keyword">FROM</span> <span class="string">`student`</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 结果查到除杨过以外的所有人（因为杨过年龄最小）</span></span><br></pre></td></tr></table></figure>
 <p>查询 <code>student</code> 表中年龄大于任意一个人的学生信息。</p>
@@ -571,7 +571,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/09/20180809115245/table-join.jpg" alt="表连接类型韦恩图" title>
+                    <img src="/2018/08/09/20180809115245/table-join.jpg" alt="表连接类型韦恩图" title="">
                 </div>
                 <div class="image-caption">表连接类型韦恩图</div>
             </figure>
@@ -584,7 +584,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/09/20180809115245/inner-join-result.png" alt="内连接查询结果" title>
+                    <img src="/2018/08/09/20180809115245/inner-join-result.png" alt="内连接查询结果" title="">
                 </div>
                 <div class="image-caption">内连接查询结果</div>
             </figure>
@@ -596,7 +596,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/09/20180809115245/left-join-result.png" alt="左外连接查询结果" title>
+                    <img src="/2018/08/09/20180809115245/left-join-result.png" alt="左外连接查询结果" title="">
                 </div>
                 <div class="image-caption">左外连接查询结果</div>
             </figure>
@@ -608,7 +608,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/2018/08/09/20180809115245/right-join-result.png" alt="右外连接查询结果" title>
+                    <img src="/2018/08/09/20180809115245/right-join-result.png" alt="右外连接查询结果" title="">
                 </div>
                 <div class="image-caption">右外连接查询结果</div>
             </figure>

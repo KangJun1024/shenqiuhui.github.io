@@ -1,217 +1,1776 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>https://www.overtaking.top/2018/10/05/20181005161213/</loc>
+    <lastmod>2019-07-23T15:03:44.595Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式 JS 表现 —— 状态模式</title>
+        <pubTime>2018-10-05T08:12:13.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>设计模式</tag>
+         
+        <tag>行为型模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.overtaking.top/2018/09/29/20180929025641/</loc>
+    <lastmod>2019-07-22T11:00:17.863Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式 JS 表现 —— 代理模式</title>
+        <pubTime>2018-09-28T18:56:41.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>设计模式</tag>
+         
+        <tag>结构型模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.overtaking.top/2018/10/01/20181001165125/</loc>
+    <lastmod>2019-07-22T11:00:02.415Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式 JS 表现 —— 外观模式</title>
+        <pubTime>2018-10-01T08:51:25.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>设计模式</tag>
+         
+        <tag>结构型模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
   <url>
     <loc>https://www.overtaking.top/2018/10/04/20181004114907/</loc>
-    <lastmod>2019-07-20</lastmod>
-  </url>  <url>
-    <loc>https://www.overtaking.top/2018/10/01/20181001165125/</loc>
-    <lastmod>2019-07-20</lastmod>
-  </url>  <url>
-    <loc>https://www.overtaking.top/2018/09/29/20180929025641/</loc>
-    <lastmod>2019-07-20</lastmod>
-  </url>  <url>
-    <loc>https://www.overtaking.top/2018/09/28/20180928030105/</loc>
-    <lastmod>2019-07-20</lastmod>
-  </url>  <url>
-    <loc>https://www.overtaking.top/2018/09/27/20180927230432/</loc>
-    <lastmod>2019-07-20</lastmod>
-  </url>  <url>
-    <loc>https://www.overtaking.top/2018/09/26/20180926201447/</loc>
-    <lastmod>2019-07-20</lastmod>
-  </url>  <url>
+    <lastmod>2019-07-22T10:59:22.852Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式 JS 表现 —— 发布/订阅和观察者模式</title>
+        <pubTime>2018-10-04T03:49:07.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>设计模式</tag>
+         
+        <tag>行为型模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/09/25/20180925190503/</loc>
-    <lastmod>2019-07-20</lastmod>
-  </url>  <url>
+    <lastmod>2019-07-22T08:23:58.748Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式 JS 表现 —— 工厂模式</title>
+        <pubTime>2018-09-25T11:05:03.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>设计模式</tag>
+         
+        <tag>创建型模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.overtaking.top/2018/09/26/20180926201447/</loc>
+    <lastmod>2019-07-22T08:23:55.820Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式 JS 表现 —— 单例模式</title>
+        <pubTime>2018-09-26T12:14:47.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>设计模式</tag>
+         
+        <tag>创建型模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.overtaking.top/2018/09/27/20180927230432/</loc>
+    <lastmod>2019-07-22T08:23:52.319Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式 JS 表现 —— 适配器模式</title>
+        <pubTime>2018-09-27T15:04:32.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>设计模式</tag>
+         
+        <tag>结构型模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.overtaking.top/2018/09/28/20180928030105/</loc>
+    <lastmod>2019-07-22T08:23:49.274Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式 JS 表现 —— 装饰器模式</title>
+        <pubTime>2018-09-27T19:01:05.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>设计模式</tag>
+         
+        <tag>结构型模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/06/30/20180630172601/</loc>
-    <lastmod>2019-06-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-06-28T18:21:47.026Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS 文件操作 —— fs 基本使用</title>
+        <pubTime>2018-06-30T09:26:01.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>fs</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2019/04/16/20190416160637/</loc>
-    <lastmod>2019-06-26</lastmod>
-  </url>  <url>
+    <lastmod>2019-06-26T06:43:56.126Z</lastmod>
+    <data>
+        <display>
+        <title>TypeScript 基础知识总结</title>
+        <pubTime>2019-04-16T08:06:37.000Z</pubTime>
+        
+        <tag>TypeScript</tag>
+         
+         
+           
+             
+              <breadCrumb title="TypeScript" url="https://www.overtaking.top/categories/TypeScript/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/09/02/20180902141819/</loc>
-    <lastmod>2019-06-24</lastmod>
-  </url>  <url>
+    <lastmod>2019-06-24T03:40:29.314Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS 进阶 —— Koa 源码分析</title>
+        <pubTime>2018-09-02T06:18:19.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>源码分析</tag>
+         
+        <tag>async/await</tag>
+         
+        <tag>Koa</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/10/02/20181002041434/</loc>
-    <lastmod>2019-06-24</lastmod>
-  </url>  <url>
+    <lastmod>2019-06-24T03:38:37.754Z</lastmod>
+    <data>
+        <display>
+        <title>Webpack4 —— 基础篇</title>
+        <pubTime>2018-10-01T20:14:34.000Z</pubTime>
+        
+        <tag>Webpack</tag>
+         
+         
+           
+             
+              <breadCrumb title="Webpack" url="https://www.overtaking.top/categories/Webpack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2019/05/07/20190507155411/</loc>
-    <lastmod>2019-06-24</lastmod>
-  </url>  <url>
+    <lastmod>2019-06-24T03:37:16.978Z</lastmod>
+    <data>
+        <display>
+        <title>React 基础篇 —— React Hooks</title>
+        <pubTime>2019-05-07T07:54:11.000Z</pubTime>
+        
+        <tag>Hooks</tag>
+         
+        <tag>React</tag>
+         
+         
+           
+             
+              <breadCrumb title="React" url="https://www.overtaking.top/categories/React/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2019/04/17/20190417112536/</loc>
-    <lastmod>2019-06-22</lastmod>
-  </url>  <url>
+    <lastmod>2019-06-22T20:17:16.259Z</lastmod>
+    <data>
+        <display>
+        <title>JavaScript 获取对象属性名的方法和区别</title>
+        <pubTime>2019-04-17T03:25:36.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>ES6</tag>
+         
+         
+           
+             
+              <breadCrumb title="JavaScript" url="https://www.overtaking.top/categories/JavaScript/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2019/04/09/20190409024640/</loc>
-    <lastmod>2019-06-22</lastmod>
-  </url>  <url>
+    <lastmod>2019-06-22T20:16:49.070Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS 实现一个提交自动检测的 Git Hook</title>
+        <pubTime>2019-04-08T18:46:40.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>Git</tag>
+         
+        <tag>命令行</tag>
+         
+        <tag>代码管理/版本控制</tag>
+         
+        <tag>Hooks</tag>
+         
+         
+           
+             
+              <breadCrumb title="Git" url="https://www.overtaking.top/categories/Git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2019/03/27/20190327025116/</loc>
-    <lastmod>2019-06-22</lastmod>
-  </url>  <url>
+    <lastmod>2019-06-22T20:16:41.952Z</lastmod>
+    <data>
+        <display>
+        <title>Git 系列之 Github 团队协作</title>
+        <pubTime>2019-03-26T18:51:16.000Z</pubTime>
+        
+        <tag>Git</tag>
+         
+        <tag>代码管理/版本控制</tag>
+         
+        <tag>Github</tag>
+         
+         
+           
+             
+              <breadCrumb title="Git" url="https://www.overtaking.top/categories/Git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/08/06/20180806184412/</loc>
-    <lastmod>2019-05-07</lastmod>
-  </url>  <url>
+    <lastmod>2019-05-07T07:57:28.231Z</lastmod>
+    <data>
+        <display>
+        <title>Webpack 核心模块 tapable 解析</title>
+        <pubTime>2018-08-06T10:44:12.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>源码分析</tag>
+         
+        <tag>Webpack</tag>
+         
+        <tag>Hooks</tag>
+         
+        <tag>tapable</tag>
+         
+         
+           
+             
+              <breadCrumb title="Webpack" url="https://www.overtaking.top/categories/Webpack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+    
+  <url>
     <loc>https://www.overtaking.top/2019/03/15/20190315115008/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:21:20.730Z</lastmod>
+    <data>
+        <display>
+        <title>Git 系列之实战技及巧注意事项总结</title>
+        <pubTime>2019-03-15T03:50:08.000Z</pubTime>
+        
+        <tag>Git</tag>
+         
+        <tag>命令行</tag>
+         
+        <tag>代码管理/版本控制</tag>
+         
+         
+           
+             
+              <breadCrumb title="Git" url="https://www.overtaking.top/categories/Git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/09/15/20180915194439/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:21:12.417Z</lastmod>
+    <data>
+        <display>
+        <title>React 基础篇 —— 生命周期详解</title>
+        <pubTime>2018-09-15T11:44:39.000Z</pubTime>
+        
+        <tag>React</tag>
+         
+        <tag>生命周期</tag>
+         
+         
+           
+             
+              <breadCrumb title="React" url="https://www.overtaking.top/categories/React/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/09/06/20180906170854/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:21:05.460Z</lastmod>
+    <data>
+        <display>
+        <title>Koa2 洋葱模型 —— compose 串联中间件的四种实现</title>
+        <pubTime>2018-09-06T09:08:54.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>源码分析</tag>
+         
+        <tag>async/await</tag>
+         
+        <tag>Koa</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/08/28/20180828022147/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:21:00.733Z</lastmod>
+    <data>
+        <display>
+        <title>Express 中间件 body-parser 原理分析</title>
+        <pubTime>2018-08-27T18:21:47.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>Express</tag>
+         
+        <tag>源码分析</tag>
+         
+        <tag>中间件</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/08/17/20180817153635/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:20:55.970Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS 使用 cookie 和 session</title>
+        <pubTime>2018-08-17T07:36:35.000Z</pubTime>
+        
+        <tag>cookie/session</tag>
+         
+        <tag>NodeJS</tag>
+         
+        <tag>Koa</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/08/14/20180814131241/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:20:50.167Z</lastmod>
+    <data>
+        <display>
+        <title>MySQL —— 简单聊一聊数据库设计</title>
+        <pubTime>2018-08-14T05:12:41.000Z</pubTime>
+        
+        <tag>MySQL</tag>
+         
+        <tag>数据库</tag>
+         
+         
+           
+             
+              <breadCrumb title="SQL" url="https://www.overtaking.top/categories/SQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/08/09/20180809115245/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:20:43.944Z</lastmod>
+    <data>
+        <display>
+        <title>MySQL —— SQL 语句总结</title>
+        <pubTime>2018-08-09T03:52:45.000Z</pubTime>
+        
+        <tag>MySQL</tag>
+         
+        <tag>数据库</tag>
+         
+         
+           
+             
+              <breadCrumb title="SQL" url="https://www.overtaking.top/categories/SQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/08/08/20180808012303/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:20:38.548Z</lastmod>
+    <data>
+        <display>
+        <title>MySQL —— 数据库基础</title>
+        <pubTime>2018-08-07T17:23:03.000Z</pubTime>
+        
+        <tag>MySQL</tag>
+         
+        <tag>数据库</tag>
+         
+         
+           
+             
+              <breadCrumb title="SQL" url="https://www.overtaking.top/categories/SQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/26/20180726122146/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:20:30.178Z</lastmod>
+    <data>
+        <display>
+        <title>Webpack —— tree-staking 解析</title>
+        <pubTime>2018-07-26T04:21:46.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>源码分析</tag>
+         
+        <tag>Webpack</tag>
+         
+        <tag>Babel</tag>
+         
+        <tag>AST</tag>
+         
+        <tag>tree-staking</tag>
+         
+         
+           
+             
+              <breadCrumb title="Webpack" url="https://www.overtaking.top/categories/Webpack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/22/20180722110147/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:20:21.987Z</lastmod>
+    <data>
+        <display>
+        <title>命令行工具 —— 手写类似 http-server 的静态服务器</title>
+        <pubTime>2018-07-22T03:01:47.000Z</pubTime>
+        
+        <tag>HTTP</tag>
+         
+        <tag>NodeJS</tag>
+         
+        <tag>命令行</tag>
+         
+        <tag>http-server</tag>
+         
+        <tag>npm</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/09/20180709185149/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:14:27.133Z</lastmod>
+    <data>
+        <display>
+        <title>HTTP 基础</title>
+        <pubTime>2018-07-09T10:51:49.000Z</pubTime>
+        
+        <tag>HTTP</tag>
+         
+        <tag>NodeJS</tag>
+         
+        <tag>TCP</tag>
+         
+         
+           
+             
+              <breadCrumb title="HTTP" url="https://www.overtaking.top/categories/HTTP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/04/20180704175217/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:13:59.836Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS —— 流的原理分析与简易实现</title>
+        <pubTime>2018-07-04T09:52:17.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>Stream</tag>
+         
+        <tag>源码分析</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/02/20180702122923/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:13:55.022Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS 树结构遍历 —— 深度优先和广度优先</title>
+        <pubTime>2018-07-02T04:29:23.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>ES6</tag>
+         
+        <tag>异步</tag>
+         
+        <tag>Promise</tag>
+         
+        <tag>ES7</tag>
+         
+        <tag>async/await</tag>
+         
+        <tag>数据结构</tag>
+         
+        <tag>fs</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/06/15/20180615212040/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:13:40.025Z</lastmod>
+    <data>
+        <display>
+        <title>异步发展流程 —— 异步编程的终极大招 async/await</title>
+        <pubTime>2018-06-15T13:20:40.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>NodeJS</tag>
+         
+        <tag>异步</tag>
+         
+        <tag>Promise</tag>
+         
+        <tag>ES7</tag>
+         
+        <tag>async/await</tag>
+         
+         
+           
+             
+              <breadCrumb title="异步" url="https://www.overtaking.top/categories/%E5%BC%82%E6%AD%A5/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/06/14/20180614161413/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:13:33.111Z</lastmod>
+    <data>
+        <display>
+        <title>异步发展流程 —— Generators + co 让异步更优雅</title>
+        <pubTime>2018-06-14T08:14:13.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>NodeJS</tag>
+         
+        <tag>ES6</tag>
+         
+        <tag>异步</tag>
+         
+        <tag>Promise</tag>
+         
+        <tag>Generators</tag>
+         
+         
+           
+             
+              <breadCrumb title="异步" url="https://www.overtaking.top/categories/%E5%BC%82%E6%AD%A5/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/06/13/20180613193626/</loc>
-    <lastmod>2019-04-23</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-23T03:13:28.498Z</lastmod>
+    <data>
+        <display>
+        <title>异步发展流程 —— 手写一个符合 Promise/A+ 规范的 Promise</title>
+        <pubTime>2018-06-13T11:36:26.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>源码分析</tag>
+         
+        <tag>ES6</tag>
+         
+        <tag>异步</tag>
+         
+        <tag>Promise</tag>
+         
+         
+           
+             
+              <breadCrumb title="异步" url="https://www.overtaking.top/categories/%E5%BC%82%E6%AD%A5/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/06/12/20180612045005/</loc>
-    <lastmod>2019-04-15</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-15T02:30:02.669Z</lastmod>
+    <data>
+        <display>
+        <title>异步发展流程 —— Promise 的基本使用</title>
+        <pubTime>2018-06-11T20:50:05.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>ES6</tag>
+         
+        <tag>异步</tag>
+         
+        <tag>Promise</tag>
+         
+         
+           
+             
+              <breadCrumb title="异步" url="https://www.overtaking.top/categories/%E5%BC%82%E6%AD%A5/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2017/05/24/20170524162030/</loc>
-    <lastmod>2019-04-12</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-12T02:51:47.536Z</lastmod>
+    <data>
+        <display>
+        <title>JavaScript 基础 —— call、apply 和 bind 的原理</title>
+        <pubTime>2017-05-24T08:20:30.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+         
+           
+             
+              <breadCrumb title="JavaScript" url="https://www.overtaking.top/categories/JavaScript/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2017/05/22/20170522115959/</loc>
-    <lastmod>2019-04-11</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-11T08:08:52.200Z</lastmod>
+    <data>
+        <display>
+        <title>JavaScript 基础 —— new 的实现原理</title>
+        <pubTime>2017-05-22T03:59:59.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>面向对象</tag>
+         
+         
+           
+             
+              <breadCrumb title="JavaScript" url="https://www.overtaking.top/categories/JavaScript/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2017/07/09/20170709131856/</loc>
-    <lastmod>2019-04-10</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-10T18:04:13.109Z</lastmod>
+    <data>
+        <display>
+        <title>浅谈 JavaScript 原型链</title>
+        <pubTime>2017-07-09T05:18:56.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>面向对象</tag>
+         
+        <tag>原型链</tag>
+         
+         
+           
+             
+              <breadCrumb title="JavaScript" url="https://www.overtaking.top/categories/JavaScript/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2017/07/10/20170710162724/</loc>
-    <lastmod>2019-04-10</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-10T18:03:59.151Z</lastmod>
+    <data>
+        <display>
+        <title>JavaScript 的继承方式及优缺点</title>
+        <pubTime>2017-07-10T08:27:24.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>面向对象</tag>
+         
+        <tag>继承</tag>
+         
+         
+           
+             
+              <breadCrumb title="JavaScript" url="https://www.overtaking.top/categories/JavaScript/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2019/03/10/20190310233856/</loc>
-    <lastmod>2019-04-10</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-10T18:02:01.032Z</lastmod>
+    <data>
+        <display>
+        <title>Git 系列之 .git 内部刨析</title>
+        <pubTime>2019-03-10T15:38:56.000Z</pubTime>
+        
+        <tag>Git</tag>
+         
+        <tag>命令行</tag>
+         
+        <tag>代码管理/版本控制</tag>
+         
+         
+           
+             
+              <breadCrumb title="Git" url="https://www.overtaking.top/categories/Git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/08/20/20180820200342/</loc>
-    <lastmod>2019-04-09</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-09T03:22:07.761Z</lastmod>
+    <data>
+        <display>
+        <title>Koa2 中间件原理解析 —— 看了就会写</title>
+        <pubTime>2018-08-20T12:03:42.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>中间件</tag>
+         
+        <tag>async/await</tag>
+         
+        <tag>Koa</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2017/12/14/20171214024101/</loc>
-    <lastmod>2019-04-08</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-08T18:49:02.786Z</lastmod>
+    <data>
+        <display>
+        <title>Git 命令总结，从零到熟悉</title>
+        <pubTime>2017-12-13T18:41:01.000Z</pubTime>
+        
+        <tag>Git</tag>
+         
+        <tag>命令行</tag>
+         
+        <tag>代码管理/版本控制</tag>
+         
+        <tag>Linux</tag>
+         
+         
+           
+             
+              <breadCrumb title="Git" url="https://www.overtaking.top/categories/Git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/27/20180727140233/</loc>
-    <lastmod>2019-04-02</lastmod>
-  </url>  <url>
+    <lastmod>2019-04-02T10:49:16.903Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS 多进程和集群</title>
+        <pubTime>2018-07-27T06:02:33.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>process</tag>
+         
+        <tag>Cluster</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/25/20180725130233/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T09:03:34.747Z</lastmod>
+    <data>
+        <display>
+        <title>AST 抽象语法树</title>
+        <pubTime>2018-07-25T05:02:33.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>Webpack</tag>
+         
+        <tag>Babel</tag>
+         
+        <tag>AST</tag>
+         
+         
+           
+             
+              <breadCrumb title="Webpack" url="https://www.overtaking.top/categories/Webpack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/09/19/20180919002629/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T06:59:43.014Z</lastmod>
+    <data>
+        <display>
+        <title>React 基础篇 —— 组件间的参数传递</title>
+        <pubTime>2018-09-18T16:26:29.000Z</pubTime>
+        
+        <tag>React</tag>
+         
+         
+           
+             
+              <breadCrumb title="React" url="https://www.overtaking.top/categories/React/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/09/10/20180910025959/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T06:59:26.186Z</lastmod>
+    <data>
+        <display>
+        <title>React 基础篇 —— 带你走进 React 世界</title>
+        <pubTime>2018-09-09T18:59:59.000Z</pubTime>
+        
+        <tag>数据类型检测</tag>
+         
+        <tag>ES7</tag>
+         
+        <tag>React</tag>
+         
+        <tag>脚手架</tag>
+         
+         
+           
+             
+              <breadCrumb title="React" url="https://www.overtaking.top/categories/React/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/08/16/20180816141146/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T06:58:13.297Z</lastmod>
+    <data>
+        <display>
+        <title>通过一个案例理解 JWT</title>
+        <pubTime>2018-08-16T06:11:46.000Z</pubTime>
+        
+        <tag>HTTP</tag>
+         
+        <tag>cookie/session</tag>
+         
+        <tag>源码分析</tag>
+         
+        <tag>JWT</tag>
+         
+        <tag>Vue</tag>
+         
+         
+           
+             
+              <breadCrumb title="HTTP" url="https://www.overtaking.top/categories/HTTP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/20/20180720110647/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T06:56:02.311Z</lastmod>
+    <data>
+        <display>
+        <title>HTTP 缓存的那些事儿</title>
+        <pubTime>2018-07-20T03:06:47.000Z</pubTime>
+        
+        <tag>性能优化</tag>
+         
+        <tag>HTTP</tag>
+         
+        <tag>NodeJS</tag>
+         
+         
+           
+             
+              <breadCrumb title="HTTP" url="https://www.overtaking.top/categories/HTTP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/19/20180719190551/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T06:55:58.266Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS 加密 —— crypto 模块</title>
+        <pubTime>2018-07-19T11:05:51.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>加密</tag>
+         
+        <tag>crypto</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/14/20180714150009/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T06:55:48.117Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS 服务器实现资源防盗链</title>
+        <pubTime>2018-07-14T07:00:09.000Z</pubTime>
+        
+        <tag>HTTP</tag>
+         
+        <tag>NodeJS</tag>
+         
+        <tag>http-headers</tag>
+         
+        <tag>资源防盗链</tag>
+         
+         
+           
+             
+              <breadCrumb title="HTTP" url="https://www.overtaking.top/categories/HTTP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/13/20180713130808/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T06:55:39.112Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS 使用 Range 请求实现下载功能</title>
+        <pubTime>2018-07-13T05:08:08.000Z</pubTime>
+        
+        <tag>HTTP</tag>
+         
+        <tag>NodeJS</tag>
+         
+        <tag>范围请求</tag>
+         
+        <tag>http-headers</tag>
+         
+         
+           
+             
+              <breadCrumb title="HTTP" url="https://www.overtaking.top/categories/HTTP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/05/20180705125501/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T06:55:33.433Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS —— 自定义流的实现</title>
+        <pubTime>2018-07-05T04:55:01.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>Stream</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/06/29/20180629115313/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T06:55:09.512Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS —— Buffer 解读</title>
+        <pubTime>2018-06-29T03:53:13.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>Buffer</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/06/23/20180623084025/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T06:55:04.195Z</lastmod>
+    <data>
+        <display>
+        <title>高阶函数应用 —— 柯里化与反柯里化</title>
+        <pubTime>2018-06-23T00:40:25.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>高阶函数</tag>
+         
+        <tag>柯里化</tag>
+         
+         
+           
+             
+              <breadCrumb title="JavaScript" url="https://www.overtaking.top/categories/JavaScript/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/06/21/20180621113025/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T06:54:48.815Z</lastmod>
+    <data>
+        <display>
+        <title>Canvas + WebSocket + Redis 实现一个视频弹幕</title>
+        <pubTime>2018-06-21T03:30:25.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>HTML</tag>
+         
+        <tag>CSS</tag>
+         
+        <tag>Canvas</tag>
+         
+        <tag>WebSocket</tag>
+         
+        <tag>Redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="JavaScript" url="https://www.overtaking.top/categories/JavaScript/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/06/11/20180611010638/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T06:54:28.861Z</lastmod>
+    <data>
+        <display>
+        <title>九种 “姿势” 让你彻底解决跨域问题</title>
+        <pubTime>2018-06-10T17:06:38.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>HTTP</tag>
+         
+        <tag>跨域</tag>
+         
+        <tag>JSONP</tag>
+         
+         
+           
+             
+              <breadCrumb title="HTTP" url="https://www.overtaking.top/categories/HTTP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2017/07/02/20170702182645/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T06:51:44.308Z</lastmod>
+    <data>
+        <display>
+        <title>封装一个 cookie 功能</title>
+        <pubTime>2017-07-02T10:26:45.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>HTTP</tag>
+         
+        <tag>cookie/session</tag>
+         
+         
+           
+             
+              <breadCrumb title="HTTP" url="https://www.overtaking.top/categories/HTTP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2017/05/19/20170519135903/</loc>
-    <lastmod>2019-03-28</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-28T06:51:35.299Z</lastmod>
+    <data>
+        <display>
+        <title>Hexo 中 Markdown 特殊字符的处理方法</title>
+        <pubTime>2017-05-19T05:59:03.000Z</pubTime>
+        
+        <tag>Hexo</tag>
+         
+         
+           
+             
+              <breadCrumb title="Hexo" url="https://www.overtaking.top/categories/Hexo/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/17/20180717111807/</loc>
-    <lastmod>2019-03-26</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-26T07:32:57.367Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS 实现多语言</title>
+        <pubTime>2018-07-17T03:18:07.000Z</pubTime>
+        
+        <tag>HTTP</tag>
+         
+        <tag>NodeJS</tag>
+         
+        <tag>http-headers</tag>
+         
+        <tag>multi-language</tag>
+         
+         
+           
+             
+              <breadCrumb title="HTTP" url="https://www.overtaking.top/categories/HTTP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2017/06/12/20170612130942/</loc>
-    <lastmod>2019-03-04</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-04T18:05:36.311Z</lastmod>
+    <data>
+        <display>
+        <title>前端优化 —— 函数的节流和防抖</title>
+        <pubTime>2017-06-12T05:09:42.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>性能优化</tag>
+         
+         
+           
+             
+              <breadCrumb title="JavaScript" url="https://www.overtaking.top/categories/JavaScript/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2017/06/30/20170630162209/</loc>
-    <lastmod>2019-03-04</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-04T18:01:20.540Z</lastmod>
+    <data>
+        <display>
+        <title>简单封装一个靠谱的检测数据类型模块</title>
+        <pubTime>2017-06-30T08:22:09.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>数据类型检测</tag>
+         
+         
+           
+             
+              <breadCrumb title="JavaScript" url="https://www.overtaking.top/categories/JavaScript/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/03/28/20180328140039/</loc>
-    <lastmod>2019-03-04</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-04T17:44:47.834Z</lastmod>
+    <data>
+        <display>
+        <title>模拟 Vue 手写一个 MVVM</title>
+        <pubTime>2018-03-28T06:00:39.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>源码分析</tag>
+         
+        <tag>Vue</tag>
+         
+        <tag>MVVM</tag>
+         
+         
+           
+             
+              <breadCrumb title="Vue" url="https://www.overtaking.top/categories/Vue/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/06/26/20180626142825/</loc>
-    <lastmod>2019-03-04</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-04T17:43:58.970Z</lastmod>
+    <data>
+        <display>
+        <title>CommonJS 模块化简易实现</title>
+        <pubTime>2018-06-26T06:28:25.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>NodeJS</tag>
+         
+        <tag>源码分析</tag>
+         
+        <tag>CommonJS</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/06/28/20180628204755/</loc>
-    <lastmod>2019-03-04</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-04T17:43:53.235Z</lastmod>
+    <data>
+        <display>
+        <title>EventEmitter 源码分析与简易实现</title>
+        <pubTime>2018-06-28T12:47:55.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>源码分析</tag>
+         
+        <tag>EventEmitter</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/03/20180703231032/</loc>
-    <lastmod>2019-03-04</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-04T17:43:26.985Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS —— Stream 的基本使用</title>
+        <pubTime>2018-07-03T15:10:32.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>Stream</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/08/20180708120357/</loc>
-    <lastmod>2019-03-04</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-04T17:43:10.449Z</lastmod>
+    <data>
+        <display>
+        <title>基于 TCP 实现简易聊天室</title>
+        <pubTime>2018-07-08T04:03:57.000Z</pubTime>
+        
+        <tag>HTTP</tag>
+         
+        <tag>NodeJS</tag>
+         
+        <tag>TCP</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/12/20180712195514/</loc>
-    <lastmod>2019-03-04</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-04T17:42:56.162Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS 搭建 HTTP 服务器</title>
+        <pubTime>2018-07-12T11:55:14.000Z</pubTime>
+        
+        <tag>HTTP</tag>
+         
+        <tag>NodeJS</tag>
+         
+         
+           
+             
+              <breadCrumb title="HTTP" url="https://www.overtaking.top/categories/HTTP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/16/20180716155948/</loc>
-    <lastmod>2019-03-04</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-04T17:42:41.453Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS 服务器数据处理（表单、json 字符串和普通字符串）</title>
+        <pubTime>2018-07-16T07:59:48.000Z</pubTime>
+        
+        <tag>HTTP</tag>
+         
+        <tag>NodeJS</tag>
+         
+        <tag>http-headers</tag>
+         
+         
+           
+             
+              <breadCrumb title="HTTP" url="https://www.overtaking.top/categories/HTTP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/03/25/20180325170208/</loc>
-    <lastmod>2019-03-04</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-04T17:31:31.387Z</lastmod>
+    <data>
+        <display>
+        <title>浅析 event-loop 事件轮询</title>
+        <pubTime>2018-03-25T09:02:08.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>NodeJS</tag>
+         
+        <tag>异步</tag>
+         
+        <tag>Promise</tag>
+         
+         
+           
+             
+              <breadCrumb title="异步" url="https://www.overtaking.top/categories/%E5%BC%82%E6%AD%A5/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/06/20180706120428/</loc>
-    <lastmod>2019-03-03</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-03T18:55:42.159Z</lastmod>
+    <data>
+        <display>
+        <title>使用 NodeJS 可读流实现 “行读取器”</title>
+        <pubTime>2018-07-06T04:04:28.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>Stream</tag>
+         
+        <tag>LineReader</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/07/18/20180718181823/</loc>
-    <lastmod>2019-03-03</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-03T18:00:08.434Z</lastmod>
+    <data>
+        <display>
+        <title>NodeJS 服务器实现 gzip 压缩</title>
+        <pubTime>2018-07-18T10:18:23.000Z</pubTime>
+        
+        <tag>HTTP</tag>
+         
+        <tag>NodeJS</tag>
+         
+        <tag>http-headers</tag>
+         
+        <tag>gzip</tag>
+         
+         
+           
+             
+              <breadCrumb title="HTTP" url="https://www.overtaking.top/categories/HTTP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/08/25/20180825162129/</loc>
-    <lastmod>2019-03-02</lastmod>
-  </url>  <url>
+    <lastmod>2019-03-02T18:49:08.659Z</lastmod>
+    <data>
+        <display>
+        <title>Express 源码分析及简易封装</title>
+        <pubTime>2018-08-25T08:21:29.000Z</pubTime>
+        
+        <tag>NodeJS</tag>
+         
+        <tag>Express</tag>
+         
+        <tag>源码分析</tag>
+         
+        <tag>中间件</tag>
+         
+         
+           
+             
+              <breadCrumb title="NodeJS" url="https://www.overtaking.top/categories/NodeJS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/09/21/20180921182754/</loc>
-    <lastmod>2019-03-02</lastmod>
-  </url>
+    <lastmod>2019-03-02T15:32:06.802Z</lastmod>
+    <data>
+        <display>
+        <title>React 基础篇 —— Router 4.0 的基本使用</title>
+        <pubTime>2018-09-21T10:27:54.000Z</pubTime>
+        
+        <tag>React</tag>
+         
+        <tag>Router</tag>
+         
+         
+           
+             
+              <breadCrumb title="React" url="https://www.overtaking.top/categories/React/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
 </urlset>

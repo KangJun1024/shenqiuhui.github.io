@@ -52,7 +52,7 @@
 
 
 
-<link rel="mask-icon" href="/img/logo.svg" color>
+<link rel="mask-icon" href="/img/logo.svg" color="">
 
 
 
@@ -189,6 +189,61 @@
 <div class="container body-wrap">
 
     <ul class="post-list">
+    
+        <li class="post-list-item fade">
+            <article id="post-20180820200342" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-08-20 20:03:42" datetime="2018-08-20T12:03:42.000Z" itemprop="datePublished">2018-08-20</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/NodeJS/">NodeJS</a></li></ul>
+
+
+
+        
+<span id="/2018/08/20/20180820200342/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="Koa2 中间件原理解析 —— 看了就会写">
+    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
+</span>
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/08/20/20180820200342/">Koa2 中间件原理解析 —— 看了就会写</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+
+前言Koa 2.x 版本是当下最流行的 NodeJS 框架，Koa 2.0 的源码特别精简，不像 Express 封装的功能那么多，所以大部分的功能都是由 Koa 开发团队（同 Express 是一家出品）和社区贡献者针对 Koa 对 NodeJS 的封装特性实现的中间件来提供的，用法非常简单，就是引入中间件，并调用 Koa 的 use 方法使用在对应的位置，这样就可以通过在内部操作 ctx 实现一些功能，我们接下来就讨论常用中间件的实现原理以及我们应该如何开发一个 Koa 中间件供自己和别人使用。
+
+    
+
+        <a href="/2018/08/20/20180820200342/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Koa/">Koa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/async-await/">async/await</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/中间件/">中间件</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
     
         <li class="post-list-item fade">
             <article id="post-20180817153635" class="article-card article-type-post" itemprop="blogPost">
@@ -458,61 +513,6 @@ JWT 简述JWT（json web token）是为了在网络应用环境之间传递声�
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-20180806184412" class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-08-06 18:44:12" datetime="2018-08-06T10:44:12.000Z" itemprop="datePublished">2018-08-06</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Webpack/">Webpack</a></li></ul>
-
-
-
-        
-<span id="/2018/08/06/20180806184412/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="Webpack 核心模块 tapable 解析">
-    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
-</span>
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/08/06/20180806184412/">Webpack 核心模块 tapable 解析</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-
-前言Webpack 是一个现代 JavaScript 应用程序的静态模块打包器，是对前端项目实现自动化和优化必不可少的工具，Webpack 的 loader（加载器）和 plugin（插件）是由 Webpack 开发者和社区开发者共同贡献的，而目前又没有比较系统的开发文档，想写加载器和插件必须要懂 Webpack 的原理，即看懂 Webpack 的源码，tapable 则是 Webpack 依赖的核心库，可以说不懂 tapable 就看不懂 Webpack 源码，所以本篇会对 tapable 提供的类进行解析和模拟。
-
-    
-
-        <a href="/2018/08/06/20180806184412/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hooks/">Hooks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Webpack/">Webpack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tapable/">tapable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/源码分析/">源码分析</a></li></ul>
 
     </div>
     

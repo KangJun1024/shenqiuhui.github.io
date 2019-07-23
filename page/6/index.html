@@ -52,7 +52,7 @@
 
 
 
-<link rel="mask-icon" href="/img/logo.svg" color>
+<link rel="mask-icon" href="/img/logo.svg" color="">
 
 
 
@@ -189,6 +189,61 @@
 <div class="container body-wrap">
 
     <ul class="post-list">
+    
+        <li class="post-list-item fade">
+            <article id="post-20180806184412" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-08-06 18:44:12" datetime="2018-08-06T10:44:12.000Z" itemprop="datePublished">2018-08-06</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Webpack/">Webpack</a></li></ul>
+
+
+
+        
+<span id="/2018/08/06/20180806184412/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="Webpack 核心模块 tapable 解析">
+    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
+</span>
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/08/06/20180806184412/">Webpack 核心模块 tapable 解析</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+
+前言Webpack 是一个现代 JavaScript 应用程序的静态模块打包器，是对前端项目实现自动化和优化必不可少的工具，Webpack 的 loader（加载器）和 plugin（插件）是由 Webpack 开发者和社区开发者共同贡献的，而目前又没有比较系统的开发文档，想写加载器和插件必须要懂 Webpack 的原理，即看懂 Webpack 的源码，tapable 则是 Webpack 依赖的核心库，可以说不懂 tapable 就看不懂 Webpack 源码，所以本篇会对 tapable 提供的类进行解析和模拟。
+
+    
+
+        <a href="/2018/08/06/20180806184412/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hooks/">Hooks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Webpack/">Webpack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tapable/">tapable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/源码分析/">源码分析</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
     
         <li class="post-list-item fade">
             <article id="post-20180727140233" class="article-card article-type-post" itemprop="blogPost">
@@ -458,61 +513,6 @@ AST 抽象语法树简介AST（Abstract Syntax Tree）是源代码的抽象语�
     <div class="post-footer">
         
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能优化/">性能优化</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-20180719190551" class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-07-19 19:05:51" datetime="2018-07-19T11:05:51.000Z" itemprop="datePublished">2018-07-19</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/NodeJS/">NodeJS</a></li></ul>
-
-
-
-        
-<span id="/2018/07/19/20180719190551/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="NodeJS 加密 —— crypto 模块">
-    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
-</span>
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/07/19/20180719190551/">NodeJS 加密 —— crypto 模块</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-
-加密简介加密是以某种算法改变原有的信息数据，使得未授权用户即使获得了已加密信息，因不知解密的方法，无法得知信息真正的含义，通过这种方式提高网络数据传输的安全性，加密算法常见的有哈希算法、HMAC 算法、签名、对称性加密算法和非对称性加密算法，加密算法也分为可逆和不可逆，比如 md5 就是不可逆加密，只能暴力破解（撞库），我们在 NodeJS 开发中就是直接使用这些加密算法，crypto 模块提供了加密功能，包含对 OpenSSL 的哈希、HMAC、加密、解密、签名以及验证功能的一整套封装，核心模块，使用时不需安装。
-
-    
-
-        <a href="/2018/07/19/20180719190551/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/crypto/">crypto</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/加密/">加密</a></li></ul>
 
     </div>
     
