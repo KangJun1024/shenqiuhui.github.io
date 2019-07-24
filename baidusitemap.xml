@@ -4,84 +4,12 @@
 
     
   <url>
-    <loc>https://www.overtaking.top/2018/10/05/20181005161213/</loc>
-    <lastmod>2019-07-23T15:12:50.612Z</lastmod>
+    <loc>https://www.overtaking.top/2018/10/06/20181006014812/</loc>
+    <lastmod>2019-07-24T07:13:16.878Z</lastmod>
     <data>
         <display>
-        <title>设计模式 JS 表现 —— 状态模式</title>
-        <pubTime>2018-10-05T08:12:13.000Z</pubTime>
-        
-        <tag>JavaScript</tag>
-         
-        <tag>设计模式</tag>
-         
-        <tag>行为型模式</tag>
-         
-         
-           
-             
-              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.overtaking.top/2018/09/29/20180929025641/</loc>
-    <lastmod>2019-07-22T11:00:17.863Z</lastmod>
-    <data>
-        <display>
-        <title>设计模式 JS 表现 —— 代理模式</title>
-        <pubTime>2018-09-28T18:56:41.000Z</pubTime>
-        
-        <tag>JavaScript</tag>
-         
-        <tag>设计模式</tag>
-         
-        <tag>结构型模式</tag>
-         
-         
-           
-             
-              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.overtaking.top/2018/10/01/20181001165125/</loc>
-    <lastmod>2019-07-22T11:00:02.415Z</lastmod>
-    <data>
-        <display>
-        <title>设计模式 JS 表现 —— 外观模式</title>
-        <pubTime>2018-10-01T08:51:25.000Z</pubTime>
-        
-        <tag>JavaScript</tag>
-         
-        <tag>设计模式</tag>
-         
-        <tag>结构型模式</tag>
-         
-         
-           
-             
-              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.overtaking.top/2018/10/04/20181004114907/</loc>
-    <lastmod>2019-07-22T10:59:22.852Z</lastmod>
-    <data>
-        <display>
-        <title>设计模式 JS 表现 —— 发布/订阅和观察者模式</title>
-        <pubTime>2018-10-04T03:49:07.000Z</pubTime>
+        <title>设计模式 JS 表现 —— 策略模式</title>
+        <pubTime>2018-10-05T17:48:12.000Z</pubTime>
         
         <tag>JavaScript</tag>
          
@@ -101,7 +29,7 @@
     
   <url>
     <loc>https://www.overtaking.top/2018/09/25/20180925190503/</loc>
-    <lastmod>2019-07-22T08:23:58.748Z</lastmod>
+    <lastmod>2019-07-23T17:55:56.820Z</lastmod>
     <data>
         <display>
         <title>设计模式 JS 表现 —— 工厂模式</title>
@@ -125,7 +53,7 @@
     
   <url>
     <loc>https://www.overtaking.top/2018/09/26/20180926201447/</loc>
-    <lastmod>2019-07-22T08:23:55.820Z</lastmod>
+    <lastmod>2019-07-23T17:55:53.453Z</lastmod>
     <data>
         <display>
         <title>设计模式 JS 表现 —— 单例模式</title>
@@ -149,7 +77,7 @@
     
   <url>
     <loc>https://www.overtaking.top/2018/09/27/20180927230432/</loc>
-    <lastmod>2019-07-22T08:23:52.319Z</lastmod>
+    <lastmod>2019-07-23T17:55:50.151Z</lastmod>
     <data>
         <display>
         <title>设计模式 JS 表现 —— 适配器模式</title>
@@ -173,7 +101,7 @@
     
   <url>
     <loc>https://www.overtaking.top/2018/09/28/20180928030105/</loc>
-    <lastmod>2019-07-22T08:23:49.274Z</lastmod>
+    <lastmod>2019-07-23T17:55:48.461Z</lastmod>
     <data>
         <display>
         <title>设计模式 JS 表现 —— 装饰器模式</title>
@@ -184,6 +112,102 @@
         <tag>设计模式</tag>
          
         <tag>结构型模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.overtaking.top/2018/09/29/20180929025641/</loc>
+    <lastmod>2019-07-23T17:55:43.599Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式 JS 表现 —— 代理模式</title>
+        <pubTime>2018-09-28T18:56:41.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>设计模式</tag>
+         
+        <tag>结构型模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.overtaking.top/2018/10/01/20181001165125/</loc>
+    <lastmod>2019-07-23T17:55:40.319Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式 JS 表现 —— 外观模式</title>
+        <pubTime>2018-10-01T08:51:25.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>设计模式</tag>
+         
+        <tag>结构型模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.overtaking.top/2018/10/04/20181004114907/</loc>
+    <lastmod>2019-07-23T17:55:35.595Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式 JS 表现 —— 发布/订阅和观察者模式</title>
+        <pubTime>2018-10-04T03:49:07.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>设计模式</tag>
+         
+        <tag>行为型模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="设计模式" url="https://www.overtaking.top/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.overtaking.top/2018/10/05/20181005161213/</loc>
+    <lastmod>2019-07-23T17:55:20.224Z</lastmod>
+    <data>
+        <display>
+        <title>设计模式 JS 表现 —— 状态模式</title>
+        <pubTime>2018-10-05T08:12:13.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+        <tag>设计模式</tag>
+         
+        <tag>行为型模式</tag>
          
          
            

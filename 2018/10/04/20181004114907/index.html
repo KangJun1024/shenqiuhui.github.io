@@ -35,7 +35,7 @@
 <meta property="og:description" content="前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 JavaScript 表现。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.overtaking.top/2018/10/04/20181004114907/observer.jpg">
-<meta property="og:updated_time" content="2019-07-22T10:59:22.852Z">
+<meta property="og:updated_time" content="2019-07-23T17:55:35.595Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式 JS 表现 —— 发布&#x2F;订阅和观察者模式">
 <meta name="twitter:description" content="前言这是关于设计模式的系列文章，在每篇文章中将对常见设计模式进行讲解，因为针对前端方向，而且前端常用语言 JavaScript 本身是弱类型，面向对象（模拟面向对象）编程的实现相较于其他强类型语言实现更为繁琐，所以代码主要以 JavaScript 表现。">
@@ -247,6 +247,7 @@
 <li><a href="https://www.overtaking.top/2018/09/29/20180929025641/" target="_blank">《设计模式 JS 表现 —— 代理模式》</a></li>
 <li><a href="https://www.overtaking.top/2018/10/01/20181001165125/" target="_blank">《设计模式 JS 表现 —— 外观模式》</a></li>
 <li><a href="https://www.overtaking.top/2018/10/05/20181005161213/" target="_blank">《设计模式 JS 表现 —— 状态模式》</a></li>
+<li><a href="https://www.overtaking.top/2018/10/06/20181006014812/" target="_blank">《设计模式 JS 表现 —— 策略模式》</a></li>
 </ul>
 <h2 id="发布-订阅模式"><a href="#发布-订阅模式" class="headerlink" title="发布/订阅模式"></a>发布/订阅模式</h2><h3 id="发布-订阅模式实现"><a href="#发布-订阅模式实现" class="headerlink" title="发布/订阅模式实现"></a>发布/订阅模式实现</h3><p>在说 “观察者模式” 之前一定要说一下 “发布/订阅模式”，因为这两个模式非常相似又有些不同，最重要的是都是使用频繁的设计模式。</p>
 <figure class="highlight js"><figcaption><span>发布/订阅的类</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Event</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.events = &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  on(type, fn) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.events[type]) &#123;</span><br><span class="line">      <span class="keyword">this</span>.events[type] = [ fn ];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.events[type].push(fn);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  emit(type) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.events[type]) &#123;</span><br><span class="line">      <span class="keyword">this</span>.events[type].forEach(<span class="function"><span class="params">fn</span> =&gt;</span> fn());</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -297,7 +298,7 @@
     <div class="content">
         
 <span class="post-time">
-    更新时间：<time datetime="2019-07-22T10:59:22.852Z" itemprop="dateUpdated">2019-07-22 18:59:22</time>
+    更新时间：<time datetime="2019-07-23T17:55:35.595Z" itemprop="dateUpdated">2019-07-24 01:55:35</time>
 </span><br>
 
 
