@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>https://www.overtaking.top/2017/05/24/20170524162030/</loc>
+    <lastmod>2019-08-10T08:38:22.749Z</lastmod>
+    <data>
+        <display>
+        <title>JavaScript 基础 —— call、apply 和 bind 的原理</title>
+        <pubTime>2017-05-24T08:20:30.000Z</pubTime>
+        
+        <tag>JavaScript</tag>
+         
+         
+           
+             
+              <breadCrumb title="JavaScript" url="https://www.overtaking.top/categories/JavaScript/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/10/06/20181006014812/</loc>
     <lastmod>2019-07-24T07:13:16.878Z</lastmod>
     <data>
@@ -870,26 +890,6 @@
            
              
               <breadCrumb title="异步" url="https://www.overtaking.top/categories/%E5%BC%82%E6%AD%A5/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.overtaking.top/2017/05/24/20170524162030/</loc>
-    <lastmod>2019-04-12T02:51:47.536Z</lastmod>
-    <data>
-        <display>
-        <title>JavaScript 基础 —— call、apply 和 bind 的原理</title>
-        <pubTime>2017-05-24T08:20:30.000Z</pubTime>
-        
-        <tag>JavaScript</tag>
-         
-         
-           
-             
-              <breadCrumb title="JavaScript" url="https://www.overtaking.top/categories/JavaScript/"/>
           
         </display>
     </data>
