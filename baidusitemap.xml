@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>https://www.overtaking.top/2018/09/15/20180915194439/</loc>
+    <lastmod>2019-08-12T08:53:35.273Z</lastmod>
+    <data>
+        <display>
+        <title>React 基础篇 —— 生命周期详解</title>
+        <pubTime>2018-09-15T11:44:39.000Z</pubTime>
+        
+        <tag>React</tag>
+         
+        <tag>生命周期</tag>
+         
+         
+           
+             
+              <breadCrumb title="React" url="https://www.overtaking.top/categories/React/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2017/05/24/20170524162030/</loc>
     <lastmod>2019-08-10T08:38:22.749Z</lastmod>
     <data>
@@ -472,28 +494,6 @@
            
              
               <breadCrumb title="Git" url="https://www.overtaking.top/categories/Git/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.overtaking.top/2018/09/15/20180915194439/</loc>
-    <lastmod>2019-04-23T03:21:12.417Z</lastmod>
-    <data>
-        <display>
-        <title>React 基础篇 —— 生命周期详解</title>
-        <pubTime>2018-09-15T11:44:39.000Z</pubTime>
-        
-        <tag>React</tag>
-         
-        <tag>生命周期</tag>
-         
-         
-           
-             
-              <breadCrumb title="React" url="https://www.overtaking.top/categories/React/"/>
           
         </display>
     </data>
