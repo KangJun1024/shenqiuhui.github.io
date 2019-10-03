@@ -564,8 +564,8 @@
       <tags>
         <tag>HTTP</tag>
         <tag>NodeJS</tag>
-        <tag>范围请求</tag>
         <tag>http-headers</tag>
+        <tag>范围请求</tag>
       </tags>
   </entry>
   <entry>
@@ -895,6 +895,18 @@
         <tag>JavaScript</tag>
         <tag>面向对象</tag>
         <tag>原型链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[正则表达式基础知识总结]]></title>
+    <url>%2F2017%2F07%2F04%2F20170704154632%2F</url>
+    <content type="text"><![CDATA[正则表达式的创建字面量1const reg = /test/g; 构造函数1const reg = new RegExp('test', 'g'); 创建正则表达式有两种方式，使用字面量创建和通过构造函数创建，构造函数创建是使用字符串创建，可以动态生成正则表达式，构造函数中的第二个参数是修饰符。 正则表达式修饰符正则表达式中包含一些修饰符用来决定匹配的模式，如忽略大小写、全局匹配等。 i：忽略大小写，如 /test/i，可以匹配 test、TEST、Test、tEsT 等； g：全局匹配，在查找到第一个匹配项时不会停止，会继续向后查找到所有的匹配项； m：允许多行匹配，对获取 textarea 和 html 标签中的内容很有用； y：开始贪婪匹配，开启贪婪匹配时会试图从最后一个匹配的位置开始； u：允许使用 Unicode 点转义符，如 \u...。 修饰符可以多个同时作用于同一个正则，如 /test/ig 或 new RegExp(&#39;test&#39;, &#39;ig&#39;)。 术语和操作符精确匹配除了非特殊字符和操作符之外，字符必须准确出现在表达式中，称为精确匹配，如 /test/，代表 t 连接 e，e 连接 s，s 连接 t。 匹配字符集 [abc] 代表匹配 a、b、c 中任意一个字符； [^abc] 代表匹配除了 a、b、c 的任意一个字符； [a-z] 代表匹配小写字母 a 到 z 的任意一个字符，[A-Z]、[0-9] 同理； 起止符号 ^ 直接链接匹配的字符时，代表匹配以该串字符开头； $ 直接链接匹配的字符时，代表匹配以该串字符结尾。 转义如果想匹配在正则表达式中带有语义的字符需要对字符进行转义，如匹配 [、]、.、$、(、)、^ 等，需使用 \ 或 \\ 进行转义，如 \[ 或 \\[。 在字面量中创建的正则使用 \ 进行转义，使用构造函数创建的正则，由于传入的字符串，所以需要使用 \\ 进行转义。 匹配重复出现 ?：表示匹配连续 0 个或 1 个； +：表示匹配连续 1 个或多个； *：表示匹配连续 0 个、1 个或多个； {n}: 表示匹配连续 n 个； {m, n} 表示匹配连续 m 到 n 个； {m,} 表示匹配连续 m 个以上。 贪婪和非贪婪匹配正则匹配默认是贪婪模式，可以匹配所有可能的字符，会直接匹配到最后，使用 ? 可以转换为非贪婪匹配。 例如 /a+/ 对于字符串 aaaaa, 会匹配 aaaaa，/a+?/ 则只会匹配到 a。 预定义字符集希望匹配的内容有些无法用字符表示，如回车、空格，或者想快速匹配一些预定义的字符，下面是预定义字符集的表。 预定义元字符匹配的字符集\t水平制表符\b空格\v垂直制表符\f换页符\r回车符\n换行符\cA:\cZ控制字符\u0000:\uFFFF十六进制 Unicode 码\x00:\xFF十六进制 ASCII 码.匹配除换行字符（\r、\n、\u2028 和 \u2029）以外的任意字符\d匹配任意十进制数字，等价于 [0-9]\D匹配除了十进制数字以外的任意字符，等价于 [^0-9]\w匹配任何字母、数字和下划线，等价于 [A-Za-z0-9_]\W匹配除了字母、数字和下划线之外的字符，等价于 [^A-Za-z0-9_]\s匹配任意空白字符（包括空格、制表符、换页符等）\S匹配除空白字符外的任意字符\b匹配单词边界\B匹配非单词边界（单词内部） 或操作符或操作符使用 | 表示，如 /a|b/ 可以匹配字符 a 或者 b。 分组想要匹配某一个单词或者满足某一匹配规则的一段字符，可以使用分组实现，使用 () 进行分组。 如 /(ab)+/ 可以匹配一个或多个 ab 字符，/(ab)+|(cd)+/ 可以匹配一个或多个 ab 或 cd 字符。 反向引用反向引用指可以快速引用某一个分组所匹配出的结果作为当前的匹配规则，通常用 \1 或 \2 等表示，数字位置对应当前正则中第几个分组。 如 /&lt;(\w+)&gt;(.+)&lt;\/\1&gt;/ 可以用来匹配类似 &lt;div&gt;hello&lt;/div&gt; 等 html 标签。 捕获匹配的片段matchmatch 方法是字符串方法，参数为正则表达式，未匹配返回 null，匹配结果返回数组，数组元素如下： 索引 0：为匹配到的源字符串； 索引 1 ~ length - 3：匹配到的分组对应的值； 索引 length - 2：匹配到分组起始单词所在源字符串中的索引位置； 索引 length - 1：源字符串。 execexec 是正则表达式对象的实例方法，参数为字符串，匹配结果与 match 相似。 match 与 exec 的主要区别在于对正则表达式 g 修饰符的处理，全局模式下 match 可以匹配到全部内容，而 exec 分为多次调用才可以匹配出全部内容。 被动子表达式在复杂并且存在分组嵌套的正则表达式中，我们希望有些分组不被捕获，可以通过在分组起始括号后加 ?: 实现。 1const pattern = /((hello-)+)world/; 修改为1const pattern = /((?:hello-)+)world/; 正则替换 replace如果想对一个字符串中匹配出的某些匹配项进行替换可以使用 replace，第一个参数为正则表达式，第二个参数可以传入要替换的内容，会完全按照正则匹配的规则进行替换，如果第二个参数传入的是函数，则会在匹配时调用这个函数，并将函数的返回值作为该次匹配的替换值。 函数的参数与 match 方法类似，第一个参数为正则匹配的值，第二到倒数第三个参数为分组的匹配项等等，不同的是 match 成功匹配的结果为数组，而 replace 为传入参数的参数列表。 将短横线连接的单词转换成驼峰式1234567const word = 'border-bottom-width';word.replace(/-(\w)/g, (match, group) =&gt; &#123; return group.toUpperCase();&#125;);console.log(word); // borderBottomWidth 解析查询字符串1234567891011const parse = (query) =&gt; &#123; const result = &#123;&#125;; query.replace(/([^&amp;=]+)=([^&amp;]*)/g, (full, key, value) =&gt; &#123; result[key] = value; &#125;); return result;&#125;console.log(parse('a=1&amp;b=2&amp;c=3')); // &#123;a: "1", b: "2", c: "3"&#125; 使用正则表达式解决常见问题匹配带换行的内容我们经常希望匹配某一段字符串中包括换行的某段内容，比如要匹配爬虫爬到的 html 页面中某个标签中的全部内容。 在正则的预定义字符集中的 . 可以匹配所有字符，但是不包括换行，可以用于匹配一行中满足条件的字符，如果匹配多行可以使用 [\S\s]* 或 (:?.|\s)* 来实现。 匹配 id 为 container 内的所有标签12345678910111213const html = `&lt;div id="container"&gt; &lt;span&gt;Hello&lt;/span&gt; &lt;b&gt;world!&lt;/b&gt;&lt;/div&gt;`;const reg = /&lt;div id="container"&gt;([\S\s]*?)&lt;\/div&gt;/;const content = html.match(reg)[1];console.log(content);// &lt;span&gt;Hello&lt;/span&gt;// &lt;b&gt;world!&lt;/b&gt; 匹配 Unicode 字符有时匹配的字符不知要包含常见字符，还要包含特殊的符号等等，可以通过匹配 Unicode 编码来实现，因为 Unicode 编码所包含的范围更全。 匹配 CSS 属性选择器12345const text = "data-v-6fb581d0";const reg = /[\w\u0080-\uFFFF_-]+/;console.log(text.match(reg)[0]) // data-v-6fb581d0 匹配转义字符在有些时候需要匹配的字符串中可以匹配出反斜杠连接的单词，比如一个库的开发者实现 CSS 选择器引擎时，需要支持转译字符，这样用户可以在写 CSS 属性是使用 . 等转译字符。 1234567891011121314151617const tests = [ 'formUpdate', 'form\\.update', 'form\\:update', '\\f\\o\\r\\m\\u\\p\\d\\a\\t\\e'];const pattern = /^((\w+)|(\\.))+$/;for (let i = 0; i &lt; tests.length; i++) &#123; console.log(tests[i].match(pattern)[0]);&#125;// formUpdate// \form\.update// form\:update// \f\o\r\m\u\p\d\a\t\e]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>正则</tag>
       </tags>
   </entry>
   <entry>
