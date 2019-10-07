@@ -4,8 +4,28 @@
 
     
   <url>
+    <loc>https://www.overtaking.top/2018/11/10/20181110203121/</loc>
+    <lastmod>2019-10-07T16:44:45.445Z</lastmod>
+    <data>
+        <display>
+        <title>Webpack4 —— 优化篇</title>
+        <pubTime>2018-11-10T12:31:21.000Z</pubTime>
+        
+        <tag>Webpack</tag>
+         
+         
+           
+             
+              <breadCrumb title="Webpack" url="https://www.overtaking.top/categories/Webpack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.overtaking.top/2018/10/02/20181002041434/</loc>
-    <lastmod>2019-10-07T12:25:55.917Z</lastmod>
+    <lastmod>2019-10-07T15:41:23.731Z</lastmod>
     <data>
         <display>
         <title>Webpack4 —— 基础篇</title>
@@ -676,9 +696,9 @@
          
         <tag>源码分析</tag>
          
-        <tag>Babel</tag>
-         
         <tag>Webpack</tag>
+         
+        <tag>Babel</tag>
          
         <tag>AST</tag>
          
@@ -1098,9 +1118,9 @@
         
         <tag>NodeJS</tag>
          
-        <tag>Babel</tag>
-         
         <tag>Webpack</tag>
+         
+        <tag>Babel</tag>
          
         <tag>AST</tag>
          
