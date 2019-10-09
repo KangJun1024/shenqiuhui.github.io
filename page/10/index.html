@@ -191,6 +191,61 @@
     <ul class="post-list">
     
         <li class="post-list-item fade">
+            <article id="post-20180629115313" class="article-card article-type-post" itemprop="blogPost">
+
+    <div class="post-meta">
+        <time class="post-time" title="2018-06-29 11:53:13" datetime="2018-06-29T03:53:13.000Z" itemprop="datePublished">2018-06-29</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/NodeJS/">NodeJS</a></li></ul>
+
+
+
+        
+<span id="/2018/06/29/20180629115313/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="NodeJS —— Buffer 解读">
+    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
+</span>
+
+
+    </div>
+
+    
+
+
+  
+    <h3 class="post-title" itemprop="name">
+      <a class="post-title-link" href="/2018/06/29/20180629115313/">NodeJS —— Buffer 解读</a>
+    </h3>
+  
+
+
+
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+
+    
+        
+
+Buffer 概述在 ES6 引入 TypedArray 之前，JavaScript 语言没有读取或操作二进制数据流的机制。 Buffer 类被引入作为 NodeJS API 的一部分，使其可以在 TCP 流或文件系统操作等场景中处理二进制数据流。Buffer 属于 Global 对象，使用时不需引入，且 Buffer 的大小在创建时确定，无法调整。
+
+    
+
+        <a href="/2018/06/29/20180629115313/" class="post-more waves-effect waves-button">
+            阅读全文…
+        </a>
+    </div>
+    
+    <div class="post-footer">
+        
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Buffer/">Buffer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li></ul>
+
+    </div>
+    
+</article>
+
+        </li>
+    
+        <li class="post-list-item fade">
             <article id="post-20180628204755" class="article-card article-type-post" itemprop="blogPost">
 
     <div class="post-meta">
@@ -471,61 +526,6 @@ CommonJS 概述CommonJS 是一种模块化的标准，而 NodeJS 是这种标准
 
         </li>
     
-        <li class="post-list-item fade">
-            <article id="post-20180614161413" class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2018-06-14 16:14:13" datetime="2018-06-14T08:14:13.000Z" itemprop="datePublished">2018-06-14</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/异步/">异步</a></li></ul>
-
-
-
-        
-<span id="/2018/06/14/20180614161413/" class="leancloud-visitors" title="文章总阅读量" data-flag-title="异步发展流程 —— Generators + co 让异步更优雅">
-    <i class="icon icon-eye icon-pr post-meta-item-text"></i><span class="leancloud-visitors-count"></span>
-</span>
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2018/06/14/20180614161413/">异步发展流程 —— Generators + co 让异步更优雅</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        
-
-Generators 简介Generator 函数是 ES6 提供的一种异步编程解决方案，是一个生成器，用于生成一个遍历器的函数，语法行为与传统函数完全不同。
-
-    
-
-        <a href="/2018/06/14/20180614161413/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ES6/">ES6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Generators/">Generators</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript/">JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJS/">NodeJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Promise/">Promise</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/异步/">异步</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
     </ul>
 
     
@@ -679,8 +679,8 @@ MathJax.Hub.Queue(function() {
 
 
     <!-- Valine Comments -->
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src="//unpkg.com/valine@1.3.4/dist/Valine.min.js"></script>
+    <!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
     <!-- Valine Comments script -->
     <script>
         var META = ['nick','mail','link'];
@@ -695,7 +695,7 @@ MathJax.Hub.Queue(function() {
             appId: "RqIV72rdY61eUlDassFQDxPG-gzGzoHsz",
             appKey: "Mvo4cTDcS9hw0l03mINzvdNk",
             avatar: "mm",
-            placeholder: "说点什么",
+            placeholder: "欢迎交流，一定记得留下邮箱哦！",
             visitor: "true" === 'true',
             highlight: "true" === 'true',
             meta: meta.length === 0 ? META : meta,
